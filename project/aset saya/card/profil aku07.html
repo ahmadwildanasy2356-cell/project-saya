@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahmad Wildan — Academic Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Inter:wght@400;600&family=Cairo:wght@400;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #0F172A;
+      --slate: #1E293B;
+      --white: #FFFFFF;
+      --ivory: #F8FAFC;
+      --gold: #D4AF37;
+      --gold-dark: #B8952E;
+      --radius: 20px;
+      --transition: all 0.3s ease;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      background-color: var(--navy);
+      color: var(--ivory);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Arabic font stack */
+    body[data-lang="ar"] {
+      font-family: 'Cairo', 'Amiri', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      z-index: 1000;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .navbar .brand {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ivory);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      position: relative;
+      display: inline-block;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--ivory);
+      padding: 0.45rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .lang-btn:hover {
+      background: rgba(212, 175, 55, 0.15);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: 110%;
+      right: 0;
+      background: var(--slate);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      padding: 0.5rem;
+      display: none;
+      flex-direction: column;
+      min-width: 160px;
+      box-shadow: var(--shadow);
+    }
+
+    .lang-menu.show {
+      display: flex;
+    }
+
+    .lang-option {
+      background: transparent;
+      border: none;
+      color: var(--ivory);
+      padding: 0.5rem 0.8rem;
+      text-align: left;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .lang-option:hover,
+    .lang-option.active {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      padding: 6rem 0 4rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      margin: 0.2rem;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      text-align: center;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-dark);
+      transform: scale(1.03);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    /* Hero */
+    #home .hero-content {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-name {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: #cbd5e1;
+      margin-bottom: 2rem;
+    }
+
+    /* Education Timeline */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(212, 175, 55, 0.3);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -0.6rem;
+      top: 1.4rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.6rem 1rem;
+      }
+      .nav-links {
+        gap: 0.8rem;
+      }
+      .hero-name {
+        font-size: 2.4rem;
+      }
+      section {
+        padding: 4rem 0 2rem;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .timeline {
+        padding-left: 1rem;
+      }
+      .timeline-item {
+        padding-left: 1.5rem;
+      }
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body data-lang="id">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">Ahmad Wildan</div>
+    <div class="nav-links">
+      <a href="#home" data-i18n="nav.home">Beranda</a>
+      <a href="#about" data-i18n="nav.about">Tentang</a>
+      <a href="#education" data-i18n="nav.education">Pendidikan</a>
+      <a href="#achievements" data-i18n="nav.achievements">Prestasi</a>
+      <a href="#languages" data-i18n="nav.languages">Bahasa</a>
+      <a href="#certificates" data-i18n="nav.certificates">Sertifikat</a>
+      <a href="#contact" data-i18n="nav.contact">Kontak</a>
+
+      <!-- Language Switcher -->
+      <div class="lang-switcher">
+        <button class="lang-btn" id="lang-btn" aria-label="Language Switcher">
+          🌐 <span id="current-lang-label">ID</span>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <button class="lang-option active" data-lang="id">🇮🇩 Bahasa Indonesia</button>
+          <button class="lang-option" data-lang="en">🇬🇧 English</button>
+          <button class="lang-option" data-lang="ar">🇸🇦 العربية</button>
+          <button class="lang-option" data-lang="zh">🇨🇳 中文</button>
+          <button class="lang-option" data-lang="ko">🇰🇷 한국어</button>
+          <button class="lang-option" data-lang="ja">🇯🇵 日本語</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- HOME / HERO -->
+    <section id="home">
+      <div class="container hero-content">
+        <h1 class="hero-name" data-i18n="hero.name">Ahmad Wildan</h1>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">Pelajar Sastra Arab & Ilmu Syariah | Penggemar Bahasa & Teknologi</p>
+        <p class="hero-bio" data-i18n="hero.bio">Lulusan MA Al Irsyad PIAT 7 yang berdedikasi tinggi, memiliki fondasi akademik kuat, berfokus pada sastra Arab, ilmu syariah, komunikasi multi-bahasa, serta dasar teknologi web.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#education" class="btn btn-gold" data-i18n="hero.cta_primary">Lihat Perjalanan Akademik</a>
+          <a href="https://wa.me/6281259730289?text=Halo%20Ahmad%2C%20saya%20ingin%20menghubungi%20Anda%20mengenai%20portofolio%20dan%20kesempatan%20akademik%2Fproyek." target="_blank" rel="noopener" class="btn btn-outline" data-i18n="hero.cta_secondary">Chat on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title" data-i18n="about.title">Tentang Saya</h2>
+        <div class="card" style="max-width:800px; margin:0 auto;">
+          <p data-i18n="about.story">Saya adalah lulusan MA Al Irsyad PIAT 7 dengan perjalanan akademik yang konsisten (Peringkat 1 dari kelas 7–12) dan aktif mengikuti berbagai kompetisi sains serta bahasa. Memiliki ketertarikan pada pendidikan, bahasa, ilmu syariah, sastra Arab, dan teknologi.</p>
+        </div>
+        <div class="grid grid-3" style="margin-top:2rem;">
+          <div class="card">
+            <h3 data-i18n="principles.consistency.title">KONSISTENSI</h3>
+            <p data-i18n="principles.consistency.desc">Peringkat 1 terus menerus dari kelas 7 hingga 12.</p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="principles.curiosity.title">RASA INGIN TAHU</h3>
+            <p data-i18n="principles.curiosity.desc">Pembelajar aktif dalam ilmu syariah, bahasa internasional, dan teknologi web.</p>
+          </div>
+          <div class="card">
+            <h3 data-i18n="principles.growth.title">PERTUMBUHAN</h3>
+            <p data-i18n="principles.growth.desc">Perkembangan akademik berkelanjutan dari sekolah menengah hingga diploma Summa Cum Laude dan studi universitas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="container">
+        <h2 class="section-title" data-i18n="education.title">Riwayat Pendidikan</h2>
+        <div class="timeline">
+          <!-- 1. Sousse University -->
+          <div class="timeline-item card">
+            <h3 data-i18n="education.1.institution">Sousse University</h3>
+            <p data-i18n="education.1.field">Sastra Arab / Arabic Literature</p>
+            <span class="badge" data-i18n="education.1.status">Diterima</span>
+          </div>
+          <!-- 2. Study in Saudi -->
+          <div class="timeline-item card">
+            <h3 data-i18n="education.2.institution">Study in Saudi</h3>
+            <p data-i18n="education.2.field"></p>
+            <span class="badge" data-i18n="education.2.status">Proses Berkas / Application & Document Process</span>
+          </div>
+          <!-- 3. ZAD Academy -->
+          <div class="timeline-item card">
+            <h3 data-i18n="education.3.institution">ZAD Academy</h3>
+            <p data-i18n="education.3.field">Islamic Studies / Ilmu Syariah</p>
+            <span class="badge" data-i18n="education.3.status">Masih Aktif Belajar</span>
+          </div>
+          <!-- 4. Markaz Ulum -->
+          <div class="timeline-item card">
+            <h3 data-i18n="education.4.institution">Markaz Ulum</h3>
+            <p data-i18n="education.4.field">Diploma Syariah</p>
+            <p><span class="badge" data-i18n="education.4.gpa">IPK 4.00 (Summa Cum Laude)</span> <span class="badge" data-i18n="education.4.uts">UTS 97.76</span></p>
+          </div>
+          <!-- 5. MA Al Irsyad PIAT 7 -->
+          <div class="timeline-item card">
+            <h3 data-i18n="education.5.institution">MA Al Irsyad PIAT 7</h3>
+            <p data-i18n="education.5.field">Peringkat 1 dari kelas 7 sampai 12</p>
+            <p><span class="badge" data-i18n="education.5.avg">Rata-rata ~95</span> <span class="badge" data-i18n="education.5.peak">Tertinggi 97.10 (Kelas 12, Semester 1)</span></p>
+          </div>
+          <!-- 6. MTs -->
+          <div class="timeline-item card">
+            <h3 data-i18n="education.6.institution">MTs</h3>
+            <p data-i18n="education.6.field">KSN Bidang IPA</p>
+            <span class="badge" data-i18n="education.6.status">Juara Harapan 2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS / HONORS -->
+    <section id="achievements">
+      <div class="container">
+        <h2 class="section-title" data-i18n="achievements.title">Prestasi & Penghargaan</h2>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>KSN Bidang IPA</h3>
+            <span class="badge" data-i18n="achievements.1">Juara Harapan 2</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="achievements.2.title">Olimpiade Bahasa Arab (OBA) Kab. Batu</h3>
+            <span class="badge" data-i18n="achievements.2.result">Juara 2</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="achievements.3.title">Olimpiade Bahasa Arab (OBA) Provinsi</h3>
+            <span class="badge" data-i18n="achievements.3.result">Peringkat 5</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="achievements.4.title">Academic Excellence Award</h3>
+            <span class="badge" data-i18n="achievements.4.result">Peringkat 1 selama 6 tahun (Kelas 7–12)</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="achievements.5.title">Rata-rata Akademik Tertinggi</h3>
+            <span class="badge" data-i18n="achievements.5.result">97.10 (Kelas 12, Semester 1)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGUAGES & SKILLS MATRIX -->
+    <section id="languages">
+      <div class="container">
+        <h2 class="section-title" data-i18n="languages.title">Bahasa & Keterampilan</h2>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>🇸🇦 <span data-i18n="languages.arabic">Bahasa Arab</span></h3>
+            <span class="badge" data-i18n="languages.arabic_level">Advanced / C1 (Tes Hamzah)</span>
+          </div>
+          <div class="card">
+            <h3>🇬🇧 <span data-i18n="languages.english">English</span></h3>
+            <span class="badge" data-i18n="languages.english_level">Professional / TOEFL 587</span>
+          </div>
+          <div class="card">
+            <h3>🇮🇩 <span data-i18n="languages.indonesian">Bahasa Indonesia</span></h3>
+            <span class="badge" data-i18n="languages.indonesian_level">Native</span>
+          </div>
+          <div class="card">
+            <h3>🇨🇳 <span data-i18n="languages.mandarin">Mandarin Chinese</span></h3>
+            <span class="badge" data-i18n="languages.mandarin_level">Basic (Sertifikat Peking University)</span>
+          </div>
+          <div class="card">
+            <h3>🇰🇷 <span data-i18n="languages.korean">Korean</span></h3>
+            <span class="badge" data-i18n="languages.korean_level">Basic</span>
+          </div>
+          <div class="card">
+            <h3>🇯🇵 <span data-i18n="languages.japanese">Japanese</span></h3>
+            <span class="badge" data-i18n="languages.japanese_level">Basic</span>
+          </div>
+          <div class="card">
+            <h3>💻 <span data-i18n="languages.tech">Technology</span> (HTML, CSS, JavaScript)</h3>
+            <span class="badge" data-i18n="languages.tech_level">Basic Foundation (Rumah IT Indonesia)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section id="certificates">
+      <div class="container">
+        <h2 class="section-title" data-i18n="certificates.title">Sertifikat</h2>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3 data-i18n="certificates.1.title">Tes Kemampuan Bahasa Arab (Hamzah C1)</h3>
+            <span class="badge" data-i18n="certificates.1.category">Bahasa</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="certificates.2.title">TOEFL ITP (Skor 587)</h3>
+            <span class="badge" data-i18n="certificates.2.category">Bahasa</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="certificates.3.title">Sertifikat Mandarin Dasar Peking University</h3>
+            <span class="badge" data-i18n="certificates.3.category">Bahasa</span>
+          </div>
+          <div class="card">
+            <h3 data-i18n="certificates.4.title">Diploma Syariah — Markaz Ulum (IPK 4.00 Summa Cum Laude)</h3>
+            <span class="badge" data-i18n="certificates.4.category">Akademik</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT & FOOTER -->
+    <section id="contact">
+      <div class="container" style="text-align:center;">
+        <h2 class="section-title" data-i18n="contact.title">Hubungi Saya</h2>
+        <p style="max-width:600px; margin:0 auto 2rem;" data-i18n="contact.desc">Punya kesempatan akademik, ide kolaborasi, atau proyek? Jangan ragu untuk menghubungi saya.</p>
+        <a href="https://wa.me/6281259730289?text=Halo%20Ahmad%2C%20saya%20ingin%20menghubungi%20Anda%20mengenai%20portofolio%20dan%20kesempatan%20akademik%2Fproyek." target="_blank" rel="noopener" class="btn btn-gold" data-i18n="contact.button">Chat on WhatsApp</a>
+        <p style="margin-top:1.5rem; font-size:1.3rem; font-weight:700; color:var(--gold);">081259730289</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n="footer.text">© 2026 Ahmad Wildan. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ==================== I18N DICTIONARY ====================
+    const translations = {
+      id: {
+        'nav.home': 'Beranda',
+        'nav.about': 'Tentang',
+        'nav.education': 'Pendidikan',
+        'nav.achievements': 'Prestasi',
+        'nav.languages': 'Bahasa',
+        'nav.certificates': 'Sertifikat',
+        'nav.contact': 'Kontak',
+        'hero.name': 'Ahmad Wildan',
+        'hero.subtitle': 'Pelajar Sastra Arab & Ilmu Syariah | Penggemar Bahasa & Teknologi',
+        'hero.bio': 'Lulusan MA Al Irsyad PIAT 7 yang berdedikasi tinggi, memiliki fondasi akademik kuat, berfokus pada sastra Arab, ilmu syariah, komunikasi multi-bahasa, serta dasar teknologi web.',
+        'hero.cta_primary': 'Lihat Perjalanan Akademik',
+        'hero.cta_secondary': 'Chat on WhatsApp',
+        'about.title': 'Tentang Saya',
+        'about.story': 'Saya adalah lulusan MA Al Irsyad PIAT 7 dengan perjalanan akademik yang konsisten (Peringkat 1 dari kelas 7–12) dan aktif mengikuti berbagai kompetisi sains serta bahasa. Memiliki ketertarikan pada pendidikan, bahasa, ilmu syariah, sastra Arab, dan teknologi.',
+        'principles.consistency.title': 'KONSISTENSI',
+        'principles.consistency.desc': 'Peringkat 1 terus menerus dari kelas 7 hingga 12.',
+        'principles.curiosity.title': 'RASA INGIN TAHU',
+        'principles.curiosity.desc': 'Pembelajar aktif dalam ilmu syariah, bahasa internasional, dan teknologi web.',
+        'principles.growth.title': 'PERTUMBUHAN',
+        'principles.growth.desc': 'Perkembangan akademik berkelanjutan dari sekolah menengah hingga diploma Summa Cum Laude dan studi universitas.',
+        'education.title': 'Riwayat Pendidikan',
+        'education.1.institution': 'Sousse University',
+        'education.1.field': 'Sastra Arab / Arabic Literature',
+        'education.1.status': 'Diterima',
+        'education.2.institution': 'Study in Saudi',
+        'education.2.field': '',
+        'education.2.status': 'Proses Berkas / Application & Document Process',
+        'education.3.institution': 'ZAD Academy',
+        'education.3.field': 'Islamic Studies / Ilmu Syariah',
+        'education.3.status': 'Masih Aktif Belajar',
+        'education.4.institution': 'Markaz Ulum',
+        'education.4.field': 'Diploma Syariah',
+        'education.4.gpa': 'IPK 4.00 (Summa Cum Laude)',
+        'education.4.uts': 'UTS 97.76',
+        'education.5.institution': 'MA Al Irsyad PIAT 7',
+        'education.5.field': 'Peringkat 1 dari kelas 7 sampai 12',
+        'education.5.avg': 'Rata-rata ~95',
+        'education.5.peak': 'Tertinggi 97.10 (Kelas 12, Semester 1)',
+        'education.6.institution': 'MTs',
+        'education.6.field': 'KSN Bidang IPA',
+        'education.6.status': 'Juara Harapan 2',
+        'achievements.title': 'Prestasi & Penghargaan',
+        'achievements.1': 'Juara Harapan 2',
+        'achievements.2.title': 'Olimpiade Bahasa Arab (OBA) Kab. Batu',
+        'achievements.2.result': 'Juara 2',
+        'achievements.3.title': 'Olimpiade Bahasa Arab (OBA) Provinsi',
+        'achievements.3.result': 'Peringkat 5',
+        'achievements.4.title': 'Academic Excellence Award',
+        'achievements.4.result': 'Peringkat 1 selama 6 tahun (Kelas 7–12)',
+        'achievements.5.title': 'Rata-rata Akademik Tertinggi',
+        'achievements.5.result': '97.10 (Kelas 12, Semester 1)',
+        'languages.title': 'Bahasa & Keterampilan',
+        'languages.arabic': 'Bahasa Arab',
+        'languages.arabic_level': 'Advanced / C1 (Tes Hamzah)',
+        'languages.english': 'English',
+        'languages.english_level': 'Professional / TOEFL 587',
+        'languages.indonesian': 'Bahasa Indonesia',
+        'languages.indonesian_level': 'Native',
+        'languages.mandarin': 'Mandarin Chinese',
+        'languages.mandarin_level': 'Basic (Sertifikat Peking University)',
+        'languages.korean': 'Korean',
+        'languages.korean_level': 'Basic',
+        'languages.japanese': 'Japanese',
+        'languages.japanese_level': 'Basic',
+        'languages.tech': 'Technology (HTML, CSS, JavaScript)',
+        'languages.tech_level': 'Basic Foundation (Rumah IT Indonesia)',
+        'certificates.title': 'Sertifikat',
+        'certificates.1.title': 'Tes Kemampuan Bahasa Arab (Hamzah C1)',
+        'certificates.1.category': 'Bahasa',
+        'certificates.2.title': 'TOEFL ITP (Skor 587)',
+        'certificates.2.category': 'Bahasa',
+        'certificates.3.title': 'Sertifikat Mandarin Dasar Peking University',
+        'certificates.3.category': 'Bahasa',
+        'certificates.4.title': 'Diploma Syariah — Markaz Ulum (IPK 4.00 Summa Cum Laude)',
+        'certificates.4.category': 'Akademik',
+        'contact.title': 'Hubungi Saya',
+        'contact.desc': 'Punya kesempatan akademik, ide kolaborasi, atau proyek? Jangan ragu untuk menghubungi saya.',
+        'contact.button': 'Chat on WhatsApp',
+        'footer.text': '© 2026 Ahmad Wildan. All rights reserved.'
+      },
+      en: {
+        'nav.home': 'Home',
+        'nav.about': 'About',
+        'nav.education': 'Education',
+        'nav.achievements': 'Achievements',
+        'nav.languages': 'Languages',
+        'nav.certificates': 'Certificates',
+        'nav.contact': 'Contact',
+        'hero.name': 'Ahmad Wildan',
+        'hero.subtitle': 'Student of Arabic Literature & Islamic Studies | Language & Tech Enthusiast',
+        'hero.bio': 'A dedicated learner from MA Al Irsyad PIAT 7 with a strong academic foundation, a passion for Arabic literature, Islamic jurisprudence, multilingual communication, and growing tech skills.',
+        'hero.cta_primary': 'View Academic Pathway',
+        'hero.cta_secondary': 'Chat on WhatsApp',
+        'about.title': 'About Me',
+        'about.story': 'Alumnus of MA Al Irsyad PIAT 7 with a consistent track record of academic excellence (Rank 1 from Grade 7 to 12) and active participation in science and language competitions.',
+        'principles.consistency.title': 'CONSISTENCY',
+        'principles.consistency.desc': 'Rank 1 continuously from Grade 7 to 12.',
+        'principles.curiosity.title': 'CURIOSITY',
+        'principles.curiosity.desc': 'Active learner across Islamic jurisprudence, international languages, and web technologies.',
+        'principles.growth.title': 'GROWTH',
+        'principles.growth.desc': 'Continuous academic progression from high school to Summa Cum Laude diploma and university studies.',
+        'education.title': 'Education Timeline',
+        'education.1.institution': 'Sousse University',
+        'education.1.field': 'Arabic Literature / Sastra Arab',
+        'education.1.status': 'Accepted',
+        'education.2.institution': 'Study in Saudi',
+        'education.2.field': '',
+        'education.2.status': 'Application & Document Process',
+        'education.3.institution': 'ZAD Academy',
+        'education.3.field': 'Islamic Studies / Ilmu Syariah',
+        'education.3.status': 'Currently Studying',
+        'education.4.institution': 'Markaz Ulum',
+        'education.4.field': 'Diploma Syariah',
+        'education.4.gpa': 'GPA 4.00 (Summa Cum Laude)',
+        'education.4.uts': 'Midterm Exam: 97.76',
+        'education.5.institution': 'MA Al Irsyad PIAT 7',
+        'education.5.field': 'Rank 1 from Grade 7 to 12',
+        'education.5.avg': 'Average ~95',
+        'education.5.peak': 'Peak Highest Record: 97.10 (Grade 12, Semester 1)',
+        'education.6.institution': 'MTs',
+        'education.6.field': 'KSN Bidang IPA',
+        'education.6.status': 'Juara Harapan 2',
+        'achievements.title': 'Honors & Achievements',
+        'achievements.1': 'Juara Harapan 2',
+        'achievements.2.title': 'Olimpiade Bahasa Arab (OBA) Kab. Batu',
+        'achievements.2.result': 'Juara 2',
+        'achievements.3.title': 'Olimpiade Bahasa Arab (OBA) Provinsi',
+        'achievements.3.result': 'Peringkat 5',
+        'achievements.4.title': 'Academic Excellence Award',
+        'achievements.4.result': 'Rank 1 for 6 consecutive years (Grades 7–12)',
+        'achievements.5.title': 'Highest Academic Average',
+        'achievements.5.result': '97.10 (Grade 12, Semester 1)',
+        'languages.title': 'Languages & Skills Matrix',
+        'languages.arabic': 'Arabic',
+        'languages.arabic_level': 'Advanced / C1 (Hamzah Test)',
+        'languages.english': 'English',
+        'languages.english_level': 'Professional / TOEFL 587',
+        'languages.indonesian': 'Indonesian',
+        'languages.indonesian_level': 'Native',
+        'languages.mandarin': 'Mandarin Chinese',
+        'languages.mandarin_level': 'Basic (Peking University Certificate)',
+        'languages.korean': 'Korean',
+        'languages.korean_level': 'Basic',
+        'languages.japanese': 'Japanese',
+        'languages.japanese_level': 'Basic',
+        'languages.tech': 'Technology (HTML, CSS, JavaScript)',
+        'languages.tech_level': 'Basic Foundation (Rumah IT Indonesia)',
+        'certificates.title': 'Certificates & Credentials',
+        'certificates.1.title': 'Arabic Proficiency Test (Hamzah C1)',
+        'certificates.1.category': 'Language',
+        'certificates.2.title': 'TOEFL ITP (Score: 587)',
+        'certificates.2.category': 'Language',
+        'certificates.3.title': 'Peking University Mandarin Basic Certificate',
+        'certificates.3.category': 'Language',
+        'certificates.4.title': 'Diploma Syariah — Markaz Ulum (IPK 4.00 Summa Cum Laude)',
+        'certificates.4.category': 'Academic',
+        'contact.title': "Let's Connect",
+        'contact.desc': 'Have an academic opportunity, collaboration idea, or project in mind? Feel free to reach out.',
+        'contact.button': 'Chat on WhatsApp',
+        'footer.text': '© 2026 Ahmad Wildan. All rights reserved.'
+      },
+      ar: {
+        'nav.home': 'الرئيسية',
+        'nav.about': 'نبذة',
+        'nav.education': 'التعليم',
+        'nav.achievements': 'الإنجازات',
+        'nav.languages': 'اللغات',
+        'nav.certificates': 'الشهادات',
+        'nav.contact': 'اتصل',
+        'hero.name': 'أحمد ولدان',
+        'hero.subtitle': 'طالب الأدب العربي والشريعة الإسلامية | مهتم باللغات والتقنية',
+        'hero.bio': 'خريج مدرسة الإرشاد الإسلامية (MA Al Irsyad PIAT 7)، شغوف بالأدب العربي، العلوم الشرعية، التواصل متعدد اللغات، والتقنية.',
+        'hero.cta_primary': 'عرض المسار الأكاديمي',
+        'hero.cta_secondary': 'الدردشة عبر واتساب',
+        'about.title': 'نبذة عني',
+        'about.story': 'خريج MA Al Irsyad PIAT 7 بسجل أكاديمي ثابت (المرتبة الأولى من الصف 7 إلى 12) ومشاركة نشطة في مسابقات العلوم واللغة.',
+        'principles.consistency.title': 'الاتساق',
+        'principles.consistency.desc': 'المرتبة الأولى باستمرار من الصف 7 إلى 12.',
+        'principles.curiosity.title': 'الفضول',
+        'principles.curiosity.desc': 'متعلم نشط في الشريعة الإسلامية، اللغات الدولية، وتقنيات الويب.',
+        'principles.growth.title': 'النمو',
+        'principles.growth.desc': 'تقدم أكاديمي مستمر من المدرسة الثانوية إلى دبلوم بامتياز مع مرتبة الشرف والدراسات الجامعية.',
+        'education.title': 'المسار التعليمي',
+        'education.1.institution': 'جامعة سوسة',
+        'education.1.field': 'الأدب العربي / Sastra Arab',
+        'education.1.status': 'مقبول',
+        'education.2.institution': 'الدراسة في السعودية',
+        'education.2.field': '',
+        'education.2.status': 'عملية التقديم والمستندات',
+        'education.3.institution': 'ZAD Academy',
+        'education.3.field': 'الدراسات الإسلامية / Ilmu Syariah',
+        'education.3.status': 'ما زال يدرس حالياً',
+        'education.4.institution': 'مركز العلوم',
+        'education.4.field': 'دبلوم الشريعة',
+        'education.4.gpa': 'المعدل التراكمي 4.00 (Summa Cum Laude)',
+        'education.4.uts': 'امتحان منتصف الفصل: 97.76',
+        'education.5.institution': 'MA Al Irsyad PIAT 7',
+        'education.5.field': 'المرتبة الأولى من الصف 7 إلى 12',
+        'education.5.avg': 'المتوسط ~95',
+        'education.5.peak': 'أعلى معدل قياسي: 97.10 (الصف 12، الفصل الأول)',
+        'education.6.institution': 'المدرسة المتوسطة',
+        'education.6.field': 'KSN Bidang IPA',
+        'education.6.status': 'Juara Harapan 2',
+        'achievements.title': 'التكريمات والإنجازات',
+        'achievements.1': 'Juara Harapan 2',
+        'achievements.2.title': 'Olimpiade Bahasa Arab (OBA) Kab. Batu',
+        'achievements.2.result': 'Juara 2',
+        'achievements.3.title': 'Olimpiade Bahasa Arab (OBA) Provinsi',
+        'achievements.3.result': 'Peringkat 5',
+        'achievements.4.title': 'جائزة التميز الأكاديمي',
+        'achievements.4.result': 'المرتبة الأولى لمدة 6 سنوات متتالية (الصف 7–12)',
+        'achievements.5.title': 'أعلى متوسط أكاديمي',
+        'achievements.5.result': '97.10 (الصف 12، الفصل الأول)',
+        'languages.title': 'مصفوفة اللغات والمهارات',
+        'languages.arabic': 'العربية',
+        'languages.arabic_level': 'متقدم / C1 (اختبار حمزة)',
+        'languages.english': 'الإنجليزية',
+        'languages.english_level': 'احترافي / TOEFL 587',
+        'languages.indonesian': 'الإندونيسية',
+        'languages.indonesian_level': 'اللغة الأم',
+        'languages.mandarin': 'الصينية المندرينية',
+        'languages.mandarin_level': 'أساسي (شهادة جامعة بكين)',
+        'languages.korean': 'الكورية',
+        'languages.korean_level': 'أساسي',
+        'languages.japanese': 'اليابانية',
+        'languages.japanese_level': 'أساسي',
+        'languages.tech': 'التقنية (HTML, CSS, JavaScript)',
+        'languages.tech_level': 'أساسي (Rumah IT Indonesia)',
+        'certificates.title': 'الشهادات والاعتمادات',
+        'certificates.1.title': 'اختبار إجادة اللغة العربية (حمزة C1)',
+        'certificates.1.category': 'لغة',
+        'certificates.2.title': 'TOEFL ITP (النتيجة: 587)',
+        'certificates.2.category': 'لغة',
+        'certificates.3.title': 'شهادة اللغة الصينية الأساسية من جامعة بكين',
+        'certificates.3.category': 'لغة',
+        'certificates.4.title': 'دبلوم الشريعة — مركز العلوم (IPK 4.00 Summa Cum Laude)',
+        'certificates.4.category': 'أكاديمي',
+        'contact.title': 'تواصل معي',
+        'contact.desc': 'هل لديك فرصة أكاديمية أو فكرة تعاون أو مشروع؟ لا تتردد في التواصل معي.',
+        'contact.button': 'الدردشة عبر واتساب',
+        'footer.text': '© 2026 أحمد ولدان. جميع الحقوق محفوظة.'
+      },
+      zh: {
+        'nav.home': '首页',
+        'nav.about': '关于',
+        'nav.education': '教育背景',
+        'nav.achievements': '成就',
+        'nav.languages': '语言',
+        'nav.certificates': '证书',
+        'nav.contact': '联系',
+        'hero.name': 'Ahmad Wildan',
+        'hero.subtitle': '阿拉伯文学与伊斯兰研究学生 | 语言与科技爱好者',
+        'hero.bio': 'MA Al Irsyad PIAT 7 的优秀毕业生，拥有扎实的学术基础，热爱阿拉伯文学、伊斯兰法学、多语言交流及网页技术。',
+        'hero.cta_primary': '查看学术历程',
+        'hero.cta_secondary': 'WhatsApp 聊天',
+        'about.title': '关于我',
+        'about.story': 'MA Al Irsyad PIAT 7 校友，学术表现优异（7至12年级连续第一名），积极参加科学与语言竞赛。',
+        'principles.consistency.title': '坚持',
+        'principles.consistency.desc': '7至12年级连续第一。',
+        'principles.curiosity.title': '好奇',
+        'principles.curiosity.desc': '积极学习伊斯兰法学、国际语言和网页技术。',
+        'principles.growth.title': '成长',
+        'principles.growth.desc': '从高中到以最优等成绩（Summa Cum Laude）毕业，再到大学学习的持续进步。',
+        'education.title': '教育时间线',
+        'education.1.institution': '苏斯大学',
+        'education.1.field': '阿拉伯文学 / Sastra Arab',
+        'education.1.status': '已录取',
+        'education.2.institution': '沙特留学',
+        'education.2.field': '',
+        'education.2.status': '申请与文件流程中',
+        'education.3.institution': 'ZAD Academy',
+        'education.3.field': '伊斯兰研究 / Ilmu Syariah',
+        'education.3.status': '当前在读',
+        'education.4.institution': 'Markaz Ulum',
+        'education.4.field': '伊斯兰法文凭',
+        'education.4.gpa': 'GPA 4.00 (Summa Cum Laude)',
+        'education.4.uts': '期中考试: 97.76',
+        'education.5.institution': 'MA Al Irsyad PIAT 7',
+        'education.5.field': '7至12年级连续第一',
+        'education.5.avg': '平均分 ~95',
+        'education.5.peak': '最高纪录: 97.10（12年级第一学期）',
+        'education.6.institution': 'MTs',
+        'education.6.field': 'KSN Bidang IPA',
+        'education.6.status': 'Juara Harapan 2',
+        'achievements.title': '荣誉与成就',
+        'achievements.1': 'Juara Harapan 2',
+        'achievements.2.title': '阿拉伯语奥林匹克（OBA）Batu 区',
+        'achievements.2.result': 'Juara 2',
+        'achievements.3.title': '阿拉伯语奥林匹克（OBA）省级',
+        'achievements.3.result': 'Peringkat 5',
+        'achievements.4.title': '学术卓越奖',
+        'achievements.4.result': '连续6年第一（7–12年级）',
+        'achievements.5.title': '最高平均分',
+        'achievements.5.result': '97.10（12年级第一学期）',
+        'languages.title': '语言与技能矩阵',
+        'languages.arabic': '阿拉伯语',
+        'languages.arabic_level': '高级 / C1（Hamzah 测试）',
+        'languages.english': '英语',
+        'languages.english_level': '专业 / TOEFL 587',
+        'languages.indonesian': '印尼语',
+        'languages.indonesian_level': '母语',
+        'languages.mandarin': '普通话',
+        'languages.mandarin_level': '基础（北京大学证书）',
+        'languages.korean': '韩语',
+        'languages.korean_level': '基础',
+        'languages.japanese': '日语',
+        'languages.japanese_level': '基础',
+        'languages.tech': '技术（HTML, CSS, JavaScript）',
+        'languages.tech_level': '基础（Rumah IT Indonesia）',
+        'certificates.title': '证书与资质',
+        'certificates.1.title': '阿拉伯语水平测试（Hamzah C1）',
+        'certificates.1.category': '语言',
+        'certificates.2.title': 'TOEFL ITP（分数: 587）',
+        'certificates.2.category': '语言',
+        'certificates.3.title': '北京大学普通话基础证书',
+        'certificates.3.category': '语言',
+        'certificates.4.title': '伊斯兰法文凭 — Markaz Ulum（IPK 4.00 Summa Cum Laude）',
+        'certificates.4.category': '学术',
+        'contact.title': '联系我',
+        'contact.desc': '有学术机会、合作想法或项目？欢迎联系。',
+        'contact.button': 'WhatsApp 聊天',
+        'footer.text': '© 2026 Ahmad Wildan。保留所有权利。'
+      },
+      ko: {
+        'nav.home': '홈',
+        'nav.about': '소개',
+        'nav.education': '학력',
+        'nav.achievements': '성과',
+        'nav.languages': '언어',
+        'nav.certificates': '자격증',
+        'nav.contact': '연락처',
+        'hero.name': 'Ahmad Wildan',
+        'hero.subtitle': '아랍 문학 및 이슬람학 전공 학생 | 언어 및 기술 애호가',
+        'hero.bio': 'MA Al Irsyad PIAT 7 졸업생으로 탄탄한 학업 성취를 바탕으로 아랍 문학, 이슬람학, 다국어 소통 및 웹 기술에 열정을 가진 인재.',
+        'hero.cta_primary': '학업 여정 보기',
+        'hero.cta_secondary': 'WhatsApp으로 채팅',
+        'about.title': '소개',
+        'about.story': 'MA Al Irsyad PIAT 7 졸업생으로 7학년부터 12학년까지 연속 1위를 기록했으며 과학 및 언어 대회에 적극적으로 참여했습니다.',
+        'principles.consistency.title': '일관성',
+        'principles.consistency.desc': '7학년부터 12학년까지 연속 1위.',
+        'principles.curiosity.title': '호기심',
+        'principles.curiosity.desc': '이슬람 법학, 국제 언어, 웹 기술을 적극적으로 학습.',
+        'principles.growth.title': '성장',
+        'principles.growth.desc': '고등학교부터 Summa Cum Laude 졸업 및 대학 진학까지 지속적인 학업 발전.',
+        'education.title': '학력 타임라인',
+        'education.1.institution': '수스 대학교',
+        'education.1.field': '아랍 문학 / Sastra Arab',
+        'education.1.status': '합격',
+        'education.2.institution': '사우디 유학',
+        'education.2.field': '',
+        'education.2.status': '지원 및 서류 진행 중',
+        'education.3.institution': 'ZAD Academy',
+        'education.3.field': '이슬람 연구 / Ilmu Syariah',
+        'education.3.status': '현재 재학 중',
+        'education.4.institution': 'Markaz Ulum',
+        'education.4.field': '샤리아 디플로마',
+        'education.4.gpa': 'GPA 4.00 (Summa Cum Laude)',
+        'education.4.uts': '중간고사: 97.76',
+        'education.5.institution': 'MA Al Irsyad PIAT 7',
+        'education.5.field': '7학년부터 12학년까지 1위',
+        'education.5.avg': '평균 ~95',
+        'education.5.peak': '최고 기록: 97.10 (12학년 1학기)',
+        'education.6.institution': 'MTs',
+        'education.6.field': 'KSN Bidang IPA',
+        'education.6.status': 'Juara Harapan 2',
+        'achievements.title': '수상 및 성과',
+        'achievements.1': 'Juara Harapan 2',
+        'achievements.2.title': '아랍어 올림피아드 (OBA) Batu 시',
+        'achievements.2.result': 'Juara 2',
+        'achievements.3.title': '아랍어 올림피아드 (OBA) 도 대회',
+        'achievements.3.result': 'Peringkat 5',
+        'achievements.4.title': '학업 우수상',
+        'achievements.4.result': '6년 연속 1위 (7–12학년)',
+        'achievements.5.title': '최고 평균 점수',
+        'achievements.5.result': '97.10 (12학년 1학기)',
+        'languages.title': '언어 및 기술 매트릭스',
+        'languages.arabic': '아랍어',
+        'languages.arabic_level': '고급 / C1 (Hamzah 시험)',
+        'languages.english': '영어',
+        'languages.english_level': '전문가 / TOEFL 587',
+        'languages.indonesian': '인도네시아어',
+        'languages.indonesian_level': '모국어',
+        'languages.mandarin': '중국어',
+        'languages.mandarin_level': '기초 (베이징대학교 수료증)',
+        'languages.korean': '한국어',
+        'languages.korean_level': '기초',
+        'languages.japanese': '일본어',
+        'languages.japanese_level': '기초',
+        'languages.tech': '기술 (HTML, CSS, JavaScript)',
+        'languages.tech_level': '기초 (Rumah IT Indonesia)',
+        'certificates.title': '자격증 및 자격',
+        'certificates.1.title': '아랍어 능력 시험 (Hamzah C1)',
+        'certificates.1.category': '언어',
+        'certificates.2.title': 'TOEFL ITP (점수: 587)',
+        'certificates.2.category': '언어',
+        'certificates.3.title': '베이징대학교 중국어 기초 수료증',
+        'certificates.3.category': '언어',
+        'certificates.4.title': '샤리아 디플로마 — Markaz Ulum (IPK 4.00 Summa Cum Laude)',
+        'certificates.4.category': '학업',
+        'contact.title': '연락하기',
+        'contact.desc': '학업 기회, 협업 아이디어 또는 프로젝트가 있으신가요? 편하게 연락주세요.',
+        'contact.button': 'WhatsApp으로 채팅',
+        'footer.text': '© 2026 Ahmad Wildan. 모든 권리 보유.'
+      },
+      ja: {
+        'nav.home': 'ホーム',
+        'nav.about': '自己紹介',
+        'nav.education': '学歴',
+        'nav.achievements': '実績',
+        'nav.languages': '言語',
+        'nav.certificates': '資格',
+        'nav.contact': '連絡先',
+        'hero.name': 'Ahmad Wildan',
+        'hero.subtitle': 'アラビア文学・イスラム学専攻学生 | 言語・テクノロジー愛好家',
+        'hero.bio': 'MA Al Irsyad PIAT 7 卒業生。優れた学業実績を持ち、アラビア文学、イスラム学、多言語コミュニケーション、Web技術に情熱を注ぐ学生。',
+        'hero.cta_primary': '学業の道のりを見る',
+        'hero.cta_secondary': 'WhatsAppでチャット',
+        'about.title': '自己紹介',
+        'about.story': 'MA Al Irsyad PIAT 7 卒業生で、7年生から12年生まで連続1位を達成し、科学・言語コンテストに積極的に参加しました。',
+        'principles.consistency.title': '一貫性',
+        'principles.consistency.desc': '7年生から12年生まで連続1位。',
+        'principles.curiosity.title': '好奇心',
+        'principles.curiosity.desc': 'イスラム法学、国際言語、Web技術を積極的に学習。',
+        'principles.growth.title': '成長',
+        'principles.growth.desc': '高校からSumma Cum Laude卒業、大学進学まで継続的な学業の進歩。',
+        'education.title': '学歴タイムライン',
+        'education.1.institution': 'スース大学',
+        'education.1.field': 'アラビア文学 / Sastra Arab',
+        'education.1.status': '合格',
+        'education.2.institution': 'サウジ留学',
+        'education.2.field': '',
+        'education.2.status': '申請・書類手続き中',
+        'education.3.institution': 'ZAD Academy',
+        'education.3.field': 'イスラム研究 / Ilmu Syariah',
+        'education.3.status': '現在学習中',
+        'education.4.institution': 'Markaz Ulum',
+        'education.4.field': 'シャリーア・ディプロマ',
+        'education.4.gpa': 'GPA 4.00 (Summa Cum Laude)',
+        'education.4.uts': '中間試験: 97.76',
+        'education.5.institution': 'MA Al Irsyad PIAT 7',
+        'education.5.field': '7年生から12年生まで1位',
+        'education.5.avg': '平均 ~95',
+        'education.5.peak': '最高記録: 97.10（12年生1学期）',
+        'education.6.institution': 'MTs',
+        'education.6.field': 'KSN Bidang IPA',
+        'education.6.status': 'Juara Harapan 2',
+        'achievements.title': '栄誉と実績',
+        'achievements.1': 'Juara Harapan 2',
+        'achievements.2.title': 'アラビア語オリンピック（OBA）バトゥ市',
+        'achievements.2.result': 'Juara 2',
+        'achievements.3.title': 'アラビア語オリンピック（OBA）州大会',
+        'achievements.3.result': 'Peringkat 5',
+        'achievements.4.title': '学業優秀賞',
+        'achievements.4.result': '6年連続1位（7～12年生）',
+        'achievements.5.title': '最高平均点',
+        'achievements.5.result': '97.10（12年生1学期）',
+        'languages.title': '言語・スキルマトリックス',
+        'languages.arabic': 'アラビア語',
+        'languages.arabic_level': '上級 / C1（Hamzahテスト）',
+        'languages.english': '英語',
+        'languages.english_level': 'プロフェッショナル / TOEFL 587',
+        'languages.indonesian': 'インドネシア語',
+        'languages.indonesian_level': '母語',
+        'languages.mandarin': '中国語',
+        'languages.mandarin_level': '基礎（北京大学修了証）',
+        'languages.korean': '韓国語',
+        'languages.korean_level': '基礎',
+        'languages.japanese': '日本語',
+        'languages.japanese_level': '基礎',
+        'languages.tech': 'テクノロジー (HTML, CSS, JavaScript)',
+        'languages.tech_level': '基礎（Rumah IT Indonesia）',
+        'certificates.title': '証明書と資格',
+        'certificates.1.title': 'アラビア語能力テスト（Hamzah C1）',
+        'certificates.1.category': '言語',
+        'certificates.2.title': 'TOEFL ITP（スコア: 587）',
+        'certificates.2.category': '言語',
+        'certificates.3.title': '北京大学中国語基礎修了証',
+        'certificates.3.category': '言語',
+        'certificates.4.title': 'シャリーア・ディプロマ — Markaz Ulum（IPK 4.00 Summa Cum Laude）',
+        'certificates.4.category': '学業',
+        'contact.title': 'お問い合わせ',
+        'contact.desc': '学業の機会、コラボレーション、プロジェクトのアイデアがあればお気軽にご連絡ください。',
+        'contact.button': 'WhatsAppでチャット',
+        'footer.text': '© 2026 Ahmad Wildan. 無断複写・転載を禁じます。'
+      }
+    };
+
+    // ==================== LANGUAGE SWITCHER ====================
+    const langBtn = document.getElementById('lang-btn');
+    const langMenu = document.getElementById('lang-menu');
+    const currentLangLabel = document.getElementById('current-lang-label');
+    const langOptions = document.querySelectorAll('.lang-option');
+    const htmlElement = document.documentElement;
+    const body = document.body;
+
+    // Load saved language
+    const savedLang = localStorage.getItem('aw-lang') || 'id';
+    setLanguage(savedLang);
+
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', () => {
+      langMenu.classList.remove('show');
+    });
+
+    langOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const lang = option.dataset.lang;
+        setLanguage(lang);
+        langMenu.classList.remove('show');
+        localStorage.setItem('aw-lang', lang);
+      });
+    });
+
+    function setLanguage(lang) {
+      const dict = translations[lang];
+      if (!dict) return;
+
+      // Update lang attributes
+      htmlElement.lang = lang;
+      htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      body.dataset.lang = lang;
+
+      // Update text content for all elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Update current language label
+      const langNames = {
+        id: 'ID',
+        en: 'EN',
+        ar: 'AR',
+        zh: 'ZH',
+        ko: 'KO',
+        ja: 'JA'
+      };
+      currentLangLabel.textContent = langNames[lang] || 'ID';
+
+      // Update active class on options
+      langOptions.forEach(opt => {
+        if (opt.dataset.lang === lang) {
+          opt.classList.add('active');
+        } else {
+          opt.classList.remove('active');
+        }
+      });
+
+      // Update WhatsApp link with correct message (same for all languages)
+      const waMessage = "Halo Ahmad, saya ingin menghubungi Anda mengenai portofolio dan kesempatan akademik/proyek.";
+      const waUrl = `https://wa.me/6281259730289?text=${encodeURIComponent(waMessage)}`;
+      document.querySelectorAll('a[href*="wa.me/6281259730289"]').forEach(a => {
+        a.href = waUrl;
+      });
+    }
+
+    // ==================== INTERSECTION OBSERVER FOR FADE-IN ====================
+    const fadeElements = document.querySelectorAll('.card, .section-title, .hero-content, .timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
+    });
+
+    // ==================== NAVBAR ACTIVE LINK ON SCROLL ====================
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    function setActiveLink() {
+      let current = 'home';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+  </script>
+</body>
+</html>

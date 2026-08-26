@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="id" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Task Management System</title>
+    
+    <!-- Tailwind CSS CDN (diizinkan) -->
+    <script>
+        tailwind = { config: { darkMode: 'class' } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome untuk ikon (opsional, agar tampilan lebih profesional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== CSS Kustom untuk variabel tema dan animasi ===== */
+        :root {
+            --bg-body: #f8fafc;
+            --text-primary: #1e293b;
+            --card-bg: #ffffff;
+            --border-light: #e2e8f0;
+        }
+        
+        .dark {
+            --bg-body: #0f172a;
+            --text-primary: #f1f5f9;
+            --card-bg: #1e293b;
+            --border-light: #334155;
+        }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-light);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Animasi untuk item baru */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .task-item {
+            animation: fadeInUp 0.3s ease-out;
+        }
+        
+        /* Scrollbar halus */
+        .task-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .task-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .task-list::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        
+        /* Overdue highlight */
+        .overdue {
+            border-left: 4px solid #ef4444 !important;
+            background-color: rgba(239, 68, 68, 0.05);
+        }
+        .due-today {
+            border-left: 4px solid #f59e0b !important;
+            background-color: rgba(245, 158, 11, 0.05);
+        }
+        
+        /* Checkbox custom */
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #94a3b8;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+        .custom-checkbox:checked {
+            background-color: #6c5ce7;
+            border-color: #6c5ce7;
+        }
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Input styling */
+        input, select, textarea {
+            outline: none;
+        }
+        input:focus, select:focus {
+            border-color: #6c5ce7 !important;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        <!-- ===== HEADER ===== -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <h1 class="text-3xl font-bold flex items-center gap-3">
+                <span class="text-indigo-600 dark:text-indigo-400"><i class="fas fa-tasks"></i></span>
+                Task Manager Pro
+            </h1>
+            <div class="flex flex-wrap gap-2">
+                <!-- Toggle Dark Mode -->
+                <button id="darkModeToggle" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                    <span>Dark Mode</span>
+                </button>
+                <!-- Export -->
+                <button id="exportBtn" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
+                    <i class="fas fa-download"></i>
+                    <span>Ekspor Data</span>
+                </button>
+                <!-- Import -->
+                <label for="importFile" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2 cursor-pointer">
+                    <i class="fas fa-upload"></i>
+                    <span>Impor Data</span>
+                </label>
+                <input type="file" id="importFile" accept=".json,application/json" class="hidden">
+            </div>
+        </header>
+
+        <!-- ===== DASBOARD STATISTIK ===== -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="card rounded-xl p-5 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Tugas</span>
+                    <i class="fas fa-list text-indigo-500"></i>
+                </div>
+                <p id="totalCount" class="text-2xl font-bold mt-2">0</p>
+            </div>
+            <div class="card rounded-xl p-5 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Belum Selesai</span>
+                    <i class="fas fa-clock text-amber-500"></i>
+                </div>
+                <p id="pendingCount" class="text-2xl font-bold mt-2">0</p>
+            </div>
+            <div class="card rounded-xl p-5 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Selesai</span>
+                    <i class="fas fa-check-circle text-green-500"></i>
+                </div>
+                <p id="completedCount" class="text-2xl font-bold mt-2">0</p>
+            </div>
+        </section>
+        
+        <!-- Progress Bar -->
+        <div class="card rounded-xl p-4 mb-6 shadow-sm">
+            <div class="flex justify-between mb-2">
+                <span class="text-sm font-medium">Progres Penyelesaian</span>
+                <span id="progressPercent" class="text-sm font-semibold">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
+                <div id="progressBar" class="bg-indigo-500 h-3 rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- ===== FORM TAMBAH TUGAS ===== -->
+        <section class="card rounded-xl p-5 mb-6 shadow-sm">
+            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <i class="fas fa-plus-circle text-indigo-500"></i> Tambah Tugas Baru
+            </h2>
+            <form id="taskForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Nama Tugas -->
+                <div class="lg:col-span-3">
+                    <input type="text" id="taskName" placeholder="Nama tugas / kegiatan..." required
+                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:outline-none">
+                </div>
+                <!-- Kategori -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Kategori</label>
+                    <select id="taskCategory" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                        <option value="Sekolah">Sekolah</option>
+                        <option value="Rumah">Rumah</option>
+                        <option value="Pribadi">Pribadi</option>
+                        <option value="Kompetisi">Kompetisi</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <!-- Prioritas -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Prioritas</label>
+                    <select id="taskPriority" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                        <option value="Tinggi">Tinggi</option>
+                        <option value="Sedang" selected>Sedang</option>
+                        <option value="Rendah">Rendah</option>
+                    </select>
+                </div>
+                <!-- Tanggal & Waktu -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Tenggat</label>
+                    <input type="datetime-local" id="taskDueDate" required
+                        class="w-full px-3 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                </div>
+                <!-- Tombol Submit -->
+                <div class="lg:col-span-3">
+                    <button type="submit" class="w-full md:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition flex items-center justify-center gap-2">
+                        <i class="fas fa-plus"></i> Tambahkan Tugas
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ===== KONTROL PENCARIAN & FILTER ===== -->
+        <section class="card rounded-xl p-4 mb-6 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Search -->
+                <div class="md:col-span-2">
+                    <input type="text" id="searchInput" placeholder="Cari tugas..." 
+                        class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                </div>
+                <!-- Filter Kategori -->
+                <select id="filterCategory" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                    <option value="all">Semua Kategori</option>
+                    <option value="Sekolah">Sekolah</option>
+                    <option value="Rumah">Rumah</option>
+                    <option value="Pribadi">Pribadi</option>
+                    <option value="Kompetisi">Kompetisi</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+                <!-- Filter Prioritas -->
+                <select id="filterPriority" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                    <option value="all">Semua Prioritas</option>
+                    <option value="Tinggi">Tinggi</option>
+                    <option value="Sedang">Sedang</option>
+                    <option value="Rendah">Rendah</option>
+                </select>
+                <!-- Sortir -->
+                <select id="sortBy" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                    <option value="dateAsc">Tanggal Terdekat</option>
+                    <option value="dateDesc">Tanggal Terjauh</option>
+                    <option value="priorityHigh">Prioritas Tinggi</option>
+                    <option value="priorityLow">Prioritas Rendah</option>
+                    <option value="nameAsc">Nama A-Z</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- ===== DAFTAR TUGAS ===== -->
+        <section class="card rounded-xl p-4 shadow-sm">
+            <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">
+                <i class="fas fa-list-ul text-indigo-500"></i> Daftar Tugas
+            </h2>
+            <ul id="taskList" class="task-list max-h-[60vh] overflow-y-auto pr-2 space-y-3">
+                <!-- Tugas akan dirender di sini -->
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        (function() {
+            // ===== KONSTANTA & STATE =====
+            const STORAGE_KEY = 'advancedTaskManager';
+            let tasks = [];
+            let currentFilter = { category: 'all', priority: 'all', search: '', sortBy: 'dateAsc' };
+            
+            // ===== DOM ELEMENTS =====
+            const taskForm = document.getElementById('taskForm');
+            const taskName = document.getElementById('taskName');
+            const taskCategory = document.getElementById('taskCategory');
+            const taskPriority = document.getElementById('taskPriority');
+            const taskDueDate = document.getElementById('taskDueDate');
+            const taskList = document.getElementById('taskList');
+            const searchInput = document.getElementById('searchInput');
+            const filterCategory = document.getElementById('filterCategory');
+            const filterPriority = document.getElementById('filterPriority');
+            const sortBy = document.getElementById('sortBy');
+            const totalCount = document.getElementById('totalCount');
+            const pendingCount = document.getElementById('pendingCount');
+            const completedCount = document.getElementById('completedCount');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = document.getElementById('progressPercent');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const exportBtn = document.getElementById('exportBtn');
+            const importFile = document.getElementById('importFile');
+            
+            // ===== FUNGSI UTAMA =====
+            // Muat data dari localStorage
+            function loadTasks() {
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    if (stored) {
+                        tasks = JSON.parse(stored);
+                        if (!Array.isArray(tasks)) tasks = [];
+                    } else {
+                        tasks = [];
+                    }
+                } catch (e) {
+                    console.error('Gagal memuat data tugas:', e);
+                    tasks = [];
+                }
+            }
+            
+            // Simpan data ke localStorage
+            function saveTasks() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+                } catch (e) {
+                    console.error('Gagal menyimpan data tugas:', e);
+                }
+            }
+            
+            // Muat tema dari localStorage
+            function loadTheme() {
+                const storedTheme = localStorage.getItem('taskManagerTheme');
+                if (storedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+            
+            // Simpan tema ke localStorage
+            function saveTheme(theme) {
+                localStorage.setItem('taskManagerTheme', theme);
+            }
+            
+            // Format tanggal untuk tampilan
+            function formatDueDate(timestamp) {
+                if (!timestamp) return '-';
+                const date = new Date(timestamp);
+                const options = { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return date.toLocaleDateString('id-ID', options);
+            }
+            
+            // Cek status overdue
+            function getDueStatus(timestamp, completed) {
+                if (completed) return 'none';
+                const now = Date.now();
+                const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+                const todayEnd = new Date(); todayEnd.setHours(23,59,59,999);
+                
+                if (timestamp < now) {
+                    return 'overdue'; // sudah lewat
+                } else if (timestamp >= todayStart.getTime() && timestamp <= todayEnd.getTime()) {
+                    return 'today'; // hari ini
+                }
+                return 'future';
+            }
+            
+            // Dapatkan kelas untuk prioritas
+            function getPriorityColor(priority) {
+                switch(priority) {
+                    case 'Tinggi': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300';
+                    case 'Sedang': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300';
+                    case 'Rendah': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
+                    default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+                }
+            }
+            
+            // Dapatkan ikon prioritas
+            function getPriorityIcon(priority) {
+                switch(priority) {
+                    case 'Tinggi': return '🔴';
+                    case 'Sedang': return '🟡';
+                    case 'Rendah': return '🔵';
+                    default: return '⚪';
+                }
+            }
+            
+            // Render daftar tugas berdasarkan filter & sortir
+            function renderTasks() {
+                // Terapkan filter
+                let filtered = tasks.filter(task => {
+                    // Filter kategori
+                    if (currentFilter.category !== 'all' && task.category !== currentFilter.category) return false;
+                    // Filter prioritas
+                    if (currentFilter.priority !== 'all' && task.priority !== currentFilter.priority) return false;
+                    // Filter pencarian
+                    if (currentFilter.search.trim() !== '') {
+                        const keyword = currentFilter.search.toLowerCase();
+                        if (!task.name.toLowerCase().includes(keyword) && 
+                            !task.category.toLowerCase().includes(keyword) &&
+                            !task.priority.toLowerCase().includes(keyword)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+                
+                // Sortir
+                filtered.sort((a, b) => {
+                    switch (currentFilter.sortBy) {
+                        case 'dateAsc':
+                            return (a.dueDate || 0) - (b.dueDate || 0);
+                        case 'dateDesc':
+                            return (b.dueDate || 0) - (a.dueDate || 0);
+                        case 'priorityHigh':
+                            const priorityOrder = { 'Tinggi': 1, 'Sedang': 2, 'Rendah': 3 };
+                            return (priorityOrder[a.priority] || 2) - (priorityOrder[b.priority] || 2);
+                        case 'priorityLow':
+                            const priorityOrderRev = { 'Tinggi': 3, 'Sedang': 2, 'Rendah': 1 };
+                            return (priorityOrderRev[a.priority] || 2) - (priorityOrderRev[b.priority] || 2);
+                        case 'nameAsc':
+                            return a.name.localeCompare(b.name);
+                        default:
+                            return 0;
+                    }
+                });
+                
+                // Kosongkan list
+                taskList.innerHTML = '';
+                
+                if (filtered.length === 0) {
+                    const emptyLi = document.createElement('li');
+                    emptyLi.className = 'text-center py-8 text-slate-500 dark:text-slate-400';
+                    emptyLi.innerHTML = '<i class="fas fa-clipboard-list text-3xl mb-2 block"></i> Tidak ada tugas ditemukan';
+                    taskList.appendChild(emptyLi);
+                } else {
+                    filtered.forEach(task => {
+                        const li = document.createElement('li');
+                        li.className = 'task-item card rounded-lg p-4 flex flex-col md:flex-row md:items-center gap-3';
+                        
+                        // Tambahkan kelas overdue/today
+                        const dueStatus = getDueStatus(task.dueDate, task.completed);
+                        if (dueStatus === 'overdue') li.classList.add('overdue');
+                        else if (dueStatus === 'today') li.classList.add('due-today');
+                        
+                        // Checkbox
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.className = 'custom-checkbox';
+                        checkbox.checked = task.completed;
+                        checkbox.addEventListener('change', () => toggleTask(task.id));
+                        
+                        // Info container
+                        const infoDiv = document.createElement('div');
+                        infoDiv.className = 'flex-1';
+                        
+                        // Nama tugas
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = `font-medium block ${task.completed ? 'line-through text-slate-400 dark:text-slate-500' : ''}`;
+                        nameSpan.textContent = task.name;
+                        infoDiv.appendChild(nameSpan);
+                        
+                        // Meta info (kategori, prioritas, due date)
+                        const metaDiv = document.createElement('div');
+                        metaDiv.className = 'flex flex-wrap gap-2 mt-2 items-center text-sm';
+                        
+                        // Kategori badge
+                        const categoryBadge = document.createElement('span');
+                        categoryBadge.className = 'px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium';
+                        categoryBadge.textContent = task.category;
+                        metaDiv.appendChild(categoryBadge);
+                        
+                        // Prioritas badge
+                        const priorityBadge = document.createElement('span');
+                        priorityBadge.className = `px-2 py-0.5 rounded-full text-xs font-medium ${getPriorityColor(task.priority)}`;
+                        priorityBadge.innerHTML = `${getPriorityIcon(task.priority)} ${task.priority}`;
+                        metaDiv.appendChild(priorityBadge);
+                        
+                        // Due date
+                        const dueSpan = document.createElement('span');
+                        dueSpan.className = 'text-slate-600 dark:text-slate-400';
+                        dueSpan.innerHTML = `<i class="far fa-calendar-alt mr-1"></i>${formatDueDate(task.dueDate)}`;
+                        if (dueStatus === 'overdue') {
+                            dueSpan.classList.add('text-red-500', 'dark:text-red-400', 'font-semibold');
+                            dueSpan.innerHTML += ' <span class="text-xs bg-red-100 dark:bg-red-900/30 px-1.5 py-0.5 rounded ml-1">Terlambat</span>';
+                        } else if (dueStatus === 'today') {
+                            dueSpan.classList.add('text-amber-600', 'dark:text-amber-400');
+                            dueSpan.innerHTML += ' <span class="text-xs bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded ml-1">Hari ini</span>';
+                        }
+                        metaDiv.appendChild(dueSpan);
+                        
+                        infoDiv.appendChild(metaDiv);
+                        
+                        // Tombol hapus
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'self-start md:self-center text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition';
+                        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                        deleteBtn.title = 'Hapus tugas';
+                        deleteBtn.addEventListener('click', () => deleteTask(task.id));
+                        
+                        li.appendChild(checkbox);
+                        li.appendChild(infoDiv);
+                        li.appendChild(deleteBtn);
+                        
+                        taskList.appendChild(li);
+                    });
+                }
+                
+                updateDashboard();
+            }
+            
+            // Perbarui dasbor statistik
+            function updateDashboard() {
+                const total = tasks.length;
+                const completed = tasks.filter(t => t.completed).length;
+                const pending = total - completed;
+                
+                totalCount.textContent = total;
+                pendingCount.textContent = pending;
+                completedCount.textContent = completed;
+                
+                const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+                progressBar.style.width = percent + '%';
+                progressPercent.textContent = percent + '%';
+            }
+            
+            // Tambah tugas baru
+            function addTask(name, category, priority, dueDate) {
+                const timestamp = dueDate ? new Date(dueDate).getTime() : null;
+                const newTask = {
+                    id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+                    name: name,
+                    category: category,
+                    priority: priority,
+                    dueDate: timestamp,
+                    completed: false,
+                    createdAt: Date.now()
+                };
+                tasks.push(newTask);
+                saveTasks();
+                renderTasks();
+            }
+            
+            // Toggle status selesai
+            function toggleTask(id) {
+                tasks = tasks.map(task => 
+                    task.id === id ? { ...task, completed: !task.completed } : task
+                );
+                saveTasks();
+                renderTasks();
+            }
+            
+            // Hapus tugas
+            function deleteTask(id) {
+                if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+                    tasks = tasks.filter(task => task.id !== id);
+                    saveTasks();
+                    renderTasks();
+                }
+            }
+            
+            // Ekspor data ke file JSON
+            function exportData() {
+                const dataStr = JSON.stringify(tasks, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'backup_tugas_' + new Date().toISOString().slice(0,10) + '.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            // Impor data dari file JSON
+            function importData(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const imported = JSON.parse(e.target.result);
+                        if (Array.isArray(imported)) {
+                            if (confirm('Impor akan menggabungkan dengan data yang ada. Lanjutkan?')) {
+                                // Gabungkan (hindari duplikat ID)
+                                const existingIds = new Set(tasks.map(t => t.id));
+                                imported.forEach(task => {
+                                    if (!task.id || !existingIds.has(task.id)) {
+                                        tasks.push(task);
+                                    }
+                                });
+                                saveTasks();
+                                renderTasks();
+                                alert('Data berhasil diimpor!');
+                            }
+                        } else {
+                            alert('Format file tidak valid. Harap gunakan file backup yang benar.');
+                        }
+                    } catch (error) {
+                        alert('Gagal mengimpor file. Pastikan file JSON valid.');
+                        console.error(error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+            
+            // ===== EVENT LISTENERS =====
+            // Submit form tambah
+            taskForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = taskName.value.trim();
+                const category = taskCategory.value;
+                const priority = taskPriority.value;
+                const dueDate = taskDueDate.value;
+                
+                if (!name) {
+                    alert('Nama tugas tidak boleh kosong!');
+                    return;
+                }
+                if (!dueDate) {
+                    alert('Tanggal tenggat harus diisi!');
+                    return;
+                }
+                
+                addTask(name, category, priority, dueDate);
+                
+                // Reset form
+                taskName.value = '';
+                taskCategory.value = 'Sekolah';
+                taskPriority.value = 'Sedang';
+                taskDueDate.value = '';
+                taskName.focus();
+            });
+            
+            // Pencarian
+            searchInput.addEventListener('input', function() {
+                currentFilter.search = searchInput.value;
+                renderTasks();
+            });
+            
+            // Filter kategori
+            filterCategory.addEventListener('change', function() {
+                currentFilter.category = filterCategory.value;
+                renderTasks();
+            });
+            
+            // Filter prioritas
+            filterPriority.addEventListener('change', function() {
+                currentFilter.priority = filterPriority.value;
+                renderTasks();
+            });
+            
+            // Sortir
+            sortBy.addEventListener('change', function() {
+                currentFilter.sortBy = sortBy.value;
+                renderTasks();
+            });
+            
+            // Toggle dark mode
+            darkModeToggle.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                saveTheme(isDark ? 'dark' : 'light');
+            });
+            
+            // Ekspor
+            exportBtn.addEventListener('click', exportData);
+            
+            // Impor
+            importFile.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    importData(file);
+                }
+                // Reset input file agar bisa memilih file yang sama lagi
+                importFile.value = '';
+            });
+            
+            // ===== INISIALISASI =====
+            function init() {
+                loadTheme();
+                loadTasks();
+                
+                // Set default datetime-local ke sekarang + 1 jam
+                const now = new Date();
+                now.setHours(now.getHours() + 1);
+                const isoStr = now.toISOString().slice(0, 16); // format untuk datetime-local
+                taskDueDate.value = isoStr;
+                
+                renderTasks();
+            }
+            
+            init();
+        })();
+    </script>
+</body>
+</html>

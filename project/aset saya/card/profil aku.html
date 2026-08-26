@@ -1,0 +1,606 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Ahmad Wildan Asy Syifa · Portofolio Santri Polyglot</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Konfigurasi Tailwind: tema Emerald + Gold -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'emerald-dark': '#022c22',
+            'emerald-deep': '#064e3b',
+            'gold': '#d4a847',
+            'gold-light': '#f2d57a',
+            'gold-dark': '#b8942c',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* custom tambahan: efek glow, transisi, smooth scroll, border pulse */
+    * { scroll-behavior: smooth; }
+    body {
+      background: #022c22;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    .bg-glass {
+      background: rgba(2, 44, 34, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .text-grad-gold {
+      background: linear-gradient(135deg, #f2d57a, #d4a847, #b8942c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .border-gold-glow {
+      border-color: #d4a847;
+      box-shadow: 0 0 20px rgba(212, 168, 71, 0.15);
+    }
+    .btn-gold {
+      background: linear-gradient(145deg, #f2d57a, #d4a847);
+      color: #022c22;
+      transition: all 0.25s ease;
+    }
+    .btn-gold:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(212, 168, 71, 0.4);
+    }
+    .pulse-gold {
+      animation: pulseGlow 2.5s infinite;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(212, 168, 71, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(212, 168, 71, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(212, 168, 71, 0); }
+    }
+    .card-glow {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid rgba(212, 168, 71, 0.15);
+    }
+    .card-glow:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 25px rgba(212, 168, 71, 0.25);
+      border-color: #d4a847;
+    }
+    .progress-bar {
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      overflow: hidden;
+      height: 8px;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #d4a847, #f2d57a);
+      border-radius: 999px;
+      height: 100%;
+      transition: width 1.2s ease;
+    }
+    /* timeline dot */
+    .timeline-dot {
+      width: 16px;
+      height: 16px;
+      background: #d4a847;
+      border-radius: 50%;
+      border: 3px solid #022c22;
+      box-shadow: 0 0 0 3px #d4a847;
+      flex-shrink: 0;
+    }
+    .timeline-line {
+      width: 2px;
+      background: linear-gradient(180deg, #d4a847, rgba(212,168,71,0.2));
+      flex-shrink: 0;
+    }
+    /* border pulse untuk kartu kompetisi PAI */
+    .border-pulse-gold {
+      animation: borderPulse 2s ease-in-out infinite;
+    }
+    @keyframes borderPulse {
+      0% { border-color: rgba(212, 168, 71, 0.3); box-shadow: 0 0 0 0 rgba(212, 168, 71, 0.2); }
+      50% { border-color: #d4a847; box-shadow: 0 0 20px 5px rgba(212, 168, 71, 0.3); }
+      100% { border-color: rgba(212, 168, 71, 0.3); box-shadow: 0 0 0 0 rgba(212, 168, 71, 0.2); }
+    }
+    /* mobile menu toggle */
+    #mobile-menu {
+      transition: all 0.3s ease;
+    }
+    /* scrollbar custom */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #022c22; }
+    ::-webkit-scrollbar-thumb { background: #d4a847; border-radius: 99px; }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="sticky top-0 z-50 bg-glass border-b border-gold/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-3 md:py-4">
+        <!-- Logo: Nama Lengkap -->
+        <div class="flex items-center gap-2">
+          <span class="text-xl"><i class="fas fa-crown text-gold"></i></span>
+          <span class="font-bold text-sm md:text-base tracking-tight text-white">
+            Ahmad Wildan <span class="text-gold">Asy Syifa</span>
+          </span>
+        </div>
+
+        <!-- Desktop menu -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-white/80">
+          <a href="#hero" class="hover:text-gold transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">Beranda</a>
+          <a href="#tentang" class="hover:text-gold transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+          <a href="#prestasi" class="hover:text-gold transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">Prestasi</a>
+          <a href="#kemampuan" class="hover:text-gold transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">Kemampuan</a>
+          <a href="#kontak" class="hover:text-gold transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">Kontak</a>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <button id="menu-toggle" class="md:hidden text-2xl text-white/80 focus:outline-none" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile menu dropdown -->
+      <div id="mobile-menu" class="md:hidden hidden pb-4 flex flex-col gap-3 border-t border-gold/10 pt-3 text-sm text-white/80">
+        <a href="#hero" class="hover:text-gold transition px-2 py-1.5">Beranda</a>
+        <a href="#tentang" class="hover:text-gold transition px-2 py-1.5">Tentang</a>
+        <a href="#prestasi" class="hover:text-gold transition px-2 py-1.5">Prestasi</a>
+        <a href="#kemampuan" class="hover:text-gold transition px-2 py-1.5">Kemampuan</a>
+        <a href="#kontak" class="hover:text-gold transition px-2 py-1.5">Kontak</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section id="hero" class="relative overflow-hidden pt-20 pb-28 md:pt-28 md:pb-36 px-4 sm:px-6 lg:px-8" data-aos="zoom-out" data-aos-duration="1200">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <!-- kiri: teks -->
+      <div data-aos="fade-right" data-aos-delay="200">
+        <span class="inline-block bg-gold/10 text-gold-light text-xs font-semibold px-4 py-1.5 rounded-full border border-gold/30 mb-5">
+          <i class="fas fa-star mr-1"></i> Santri · Polyglot · Tech Enthusiast
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white">
+          Bridging Islamic Knowledge, <br>
+          <span class="text-grad-gold">Languages</span> &amp; <span class="text-grad-gold">Modern Tech</span>
+        </h1>
+        <p class="mt-5 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed">
+          Saya <span class="text-gold-light font-semibold">Ahmad Wildan Asy Syifa</span>, mahasiswa Sastra Arab di Tunisia, santri berprestasi dengan IPK sempurna 4.00, penguasaan 5+ bahasa asing, dan keterampilan Front-End Web Developer. Siap membawa nilai-nilai keislaman ke dalam karya digital global.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#kontak" class="btn-gold text-emerald-dark font-bold px-8 py-3.5 rounded-full shadow-lg pulse-gold hover:shadow-gold/40 transition-all inline-flex items-center gap-2">
+            <i class="fas fa-paper-plane"></i> Hubungi Saya
+          </a>
+          <a href="#prestasi" class="bg-white/5 border border-gold/20 text-white/90 px-8 py-3.5 rounded-full hover:bg-white/10 transition backdrop-blur-sm inline-flex items-center gap-2">
+            <i class="fas fa-trophy text-gold"></i> Lihat Prestasi
+          </a>
+        </div>
+        <div class="flex flex-wrap gap-5 mt-7 text-sm text-white/50">
+          <span><i class="fas fa-check-circle text-gold mr-1.5"></i> IPK 4.00</span>
+          <span><i class="fas fa-check-circle text-gold mr-1.5"></i> 5+ Bahasa</span>
+          <span><i class="fas fa-check-circle text-gold mr-1.5"></i> TOEFL 587</span>
+        </div>
+      </div>
+
+      <!-- kanan: visual geometris -->
+      <div class="flex justify-center" data-aos="fade-left" data-aos-delay="300">
+        <div class="relative w-full max-w-sm aspect-square rounded-full bg-gradient-to-br from-emerald-900/60 via-emerald-800/40 to-gold/20 border border-gold/20 backdrop-blur-sm flex items-center justify-center p-8 shadow-2xl shadow-gold/10">
+          <div class="absolute inset-0 rounded-full border-4 border-gold/10 animate-pulse"></div>
+          <div class="text-center">
+            <span class="text-7xl sm:text-8xl block mb-3"><i class="fas fa-user-graduate text-gold drop-shadow-glow"></i></span>
+            <span class="block text-2xl font-bold text-white">Ahmad Wildan</span>
+            <span class="block text-lg text-gold-light">Santri · Polyglot · Coder</span>
+            <div class="flex justify-center gap-4 mt-4 text-gold/60 text-2xl">
+              <i class="fas fa-code"></i>
+              <i class="fas fa-language"></i>
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+          </div>
+          <!-- ornamen geometris -->
+          <div class="absolute -top-4 -right-4 w-20 h-20 bg-gold/10 rounded-full border border-gold/20"></div>
+          <div class="absolute -bottom-6 -left-6 w-28 h-28 bg-emerald-800/30 rounded-full border border-gold/10"></div>
+        </div>
+      </div>
+    </div>
+    <!-- efek background -->
+    <div class="absolute -top-60 -right-60 w-[500px] h-[500px] bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-60 -left-60 w-[500px] h-[500px] bg-emerald-800/20 rounded-full blur-3xl pointer-events-none"></div>
+  </section>
+
+  <!-- ========== STATISTIK / HIGHLIGHT ========== -->
+  <section class="py-12 border-y border-gold/10 bg-emerald-dark/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div data-aos="fade-up" data-aos-delay="100">
+        <p class="text-3xl md:text-4xl font-bold text-grad-gold">4.00</p>
+        <p class="text-white/60 text-xs uppercase tracking-wider mt-1">IPK · Summa Cum Laude</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="200">
+        <p class="text-3xl md:text-4xl font-bold text-grad-gold">95+</p>
+        <p class="text-white/60 text-xs uppercase tracking-wider mt-1">Rata-rata Kelulusan</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="300">
+        <p class="text-3xl md:text-4xl font-bold text-grad-gold">587</p>
+        <p class="text-white/60 text-xs uppercase tracking-wider mt-1">TOEFL Score</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="400">
+        <p class="text-3xl md:text-4xl font-bold text-grad-gold">5+</p>
+        <p class="text-white/60 text-xs uppercase tracking-wider mt-1">Bahasa Dikuasai</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TENTANG / TENTANG DIRI ========== -->
+  <section id="tentang" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+        Tentang <span class="text-grad-gold">Saya</span>
+      </h2>
+      <p class="text-center text-white/50 max-w-2xl mx-auto mb-12" data-aos="fade-down" data-aos-delay="100">
+        Perjalanan akademik dan spiritual yang membentuk karakter global
+      </p>
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div data-aos="fade-right" data-aos-delay="150">
+          <div class="bg-emerald-900/30 backdrop-blur-sm rounded-2xl p-6 border border-gold/15 shadow-xl">
+            <p class="text-white/80 leading-relaxed text-sm md:text-base">
+              Saya <span class="text-gold-light font-semibold">Ahmad Wildan Asy Syifa</span>, seorang santri berprestasi yang menempuh pendidikan di jalur beasiswa Kementerian Agama di Tunisia, sekaligus mahasiswa Diploma Syariah dengan IPK sempurna 4.00. Sejak kecil, saya terbiasa dengan disiplin akademik tinggi — selalu meraih peringkat 1 selama 6 tahun di MA Al-Irsyad PIAT 7 dengan rata-rata 95+.
+            </p>
+            <p class="text-white/80 leading-relaxed text-sm md:text-base mt-3">
+              Selain kecintaan pada ilmu agama dan sastra Arab, saya memiliki <span class="text-gold-light font-semibold">kemampuan multilingual</span> yang luas: Arab, Mandarin (bersertifikat dari Peking University), Korea, Jepang, dan Inggris. Saya juga aktif mengembangkan diri di bidang teknologi sebagai <span class="text-gold-light font-semibold">Front-End Web Developer</span> alumni Rumah IT Indonesia.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="bg-gold/10 text-gold-light text-xs px-3 py-1 rounded-full border border-gold/20">Sastra Arab</span>
+              <span class="bg-gold/10 text-gold-light text-xs px-3 py-1 rounded-full border border-gold/20">Diploma Syariah</span>
+              <span class="bg-gold/10 text-gold-light text-xs px-3 py-1 rounded-full border border-gold/20">Front-End Dev</span>
+            </div>
+          </div>
+        </div>
+        <div data-aos="fade-left" data-aos-delay="250">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-emerald-900/20 rounded-xl p-5 text-center border border-gold/10 card-glow">
+              <span class="text-3xl text-gold block"><i class="fas fa-graduation-cap"></i></span>
+              <p class="text-white/70 text-xs mt-2">Sousse University</p>
+              <p class="text-gold-light font-semibold text-sm">Sastra Arab</p>
+            </div>
+            <div class="bg-emerald-900/20 rounded-xl p-5 text-center border border-gold/10 card-glow">
+              <span class="text-3xl text-gold block"><i class="fas fa-mosque"></i></span>
+              <p class="text-white/70 text-xs mt-2">Markaz Ulum</p>
+              <p class="text-gold-light font-semibold text-sm">IPK 4.00</p>
+            </div>
+            <div class="bg-emerald-900/20 rounded-xl p-5 text-center border border-gold/10 card-glow">
+              <span class="text-3xl text-gold block"><i class="fas fa-code"></i></span>
+              <p class="text-white/70 text-xs mt-2">Rumah IT</p>
+              <p class="text-gold-light font-semibold text-sm">Front-End Dev</p>
+            </div>
+            <div class="bg-emerald-900/20 rounded-xl p-5 text-center border border-gold/10 card-glow">
+              <span class="text-3xl text-gold block"><i class="fas fa-language"></i></span>
+              <p class="text-white/70 text-xs mt-2">Polyglot</p>
+              <p class="text-gold-light font-semibold text-sm">5+ Bahasa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TIMELINE PENDIDIKAN ========== -->
+  <section id="pendidikan" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-emerald-dark/30">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+        Jalur <span class="text-grad-gold">Pendidikan</span>
+      </h2>
+      <p class="text-center text-white/50 max-w-xl mx-auto mb-12" data-aos="fade-down" data-aos-delay="100">
+        Perjalanan akademik dari pesantren hingga universitas di Timur Tengah
+      </p>
+      <div class="space-y-6">
+        <!-- timeline 1 -->
+        <div class="flex gap-5" data-aos="fade-right" data-aos-delay="150">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line h-16"></div>
+          </div>
+          <div class="bg-emerald-900/30 backdrop-blur-sm rounded-xl p-5 flex-1 border border-gold/10 hover:border-gold/30 transition">
+            <span class="text-xs text-gold-light font-semibold uppercase tracking-wider">2024 - Sekarang</span>
+            <h3 class="text-lg font-bold text-white">Sousse University, Tunisia</h3>
+            <p class="text-white/60 text-sm">Mahasiswa Sastra Arab · Jalur Beasiswa Kementerian</p>
+            <span class="inline-block mt-2 bg-gold/10 text-gold-light text-xs px-3 py-0.5 rounded-full border border-gold/20">Beasiswa</span>
+          </div>
+        </div>
+        <!-- timeline 2 -->
+        <div class="flex gap-5" data-aos="fade-right" data-aos-delay="200">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line h-16"></div>
+          </div>
+          <div class="bg-emerald-900/30 backdrop-blur-sm rounded-xl p-5 flex-1 border border-gold/10 hover:border-gold/30 transition">
+            <span class="text-xs text-gold-light font-semibold uppercase tracking-wider">2023 - Sekarang</span>
+            <h3 class="text-lg font-bold text-white">Markaz Ulum · Diploma Syariah</h3>
+            <p class="text-white/60 text-sm">IPK 4.00 · Summa Cum Laude · Nilai UTS 97.76</p>
+            <span class="inline-block mt-2 bg-gold/10 text-gold-light text-xs px-3 py-0.5 rounded-full border border-gold/20">IPK Sempurna</span>
+          </div>
+        </div>
+        <!-- timeline 3 -->
+        <div class="flex gap-5" data-aos="fade-right" data-aos-delay="250">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line h-16"></div>
+          </div>
+          <div class="bg-emerald-900/30 backdrop-blur-sm rounded-xl p-5 flex-1 border border-gold/10 hover:border-gold/30 transition">
+            <span class="text-xs text-gold-light font-semibold uppercase tracking-wider">2023 - Sekarang</span>
+            <h3 class="text-lg font-bold text-white">Zad Academy</h3>
+            <p class="text-white/60 text-sm">Mahasiswa · Kajian Keislaman & Bahasa</p>
+            <span class="inline-block mt-2 bg-gold/10 text-gold-light text-xs px-3 py-0.5 rounded-full border border-gold/20">Akademik</span>
+          </div>
+        </div>
+        <!-- timeline 4 -->
+        <div class="flex gap-5" data-aos="fade-right" data-aos-delay="300">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="bg-emerald-900/30 backdrop-blur-sm rounded-xl p-5 flex-1 border border-gold/10 hover:border-gold/30 transition">
+            <span class="text-xs text-gold-light font-semibold uppercase tracking-wider">2015 - 2021</span>
+            <h3 class="text-lg font-bold text-white">MA Al-Irsyad PIAT 7</h3>
+            <p class="text-white/60 text-sm">Ranking 1 (Kelas 7-12) · Rata-rata 95 · Tertinggi 97.10</p>
+            <span class="inline-block mt-2 bg-gold/10 text-gold-light text-xs px-3 py-0.5 rounded-full border border-gold/20">Ranking 1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRESTASI & SERTIFIKASI ========== -->
+  <section id="prestasi" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+        Prestasi &amp; <span class="text-grad-gold">Sertifikasi</span>
+      </h2>
+      <p class="text-center text-white/50 max-w-xl mx-auto mb-12" data-aos="fade-down" data-aos-delay="100">
+        Penghargaan dan sertifikat yang menjadi bukti dedikasi dan kompetensi
+      </p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- card 1: OBA -->
+        <div class="bg-emerald-900/30 backdrop-blur-sm rounded-2xl p-6 text-center border border-gold/15 card-glow" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-4xl text-gold mb-3"><i class="fas fa-trophy"></i></div>
+          <h3 class="text-white font-bold text-sm">Juara 2 OBA</h3>
+          <p class="text-white/50 text-xs mt-1">Olimpiade Bahasa Arab · Batu</p>
+          <p class="text-gold-light text-xs font-semibold mt-2">Peringkat 5 Tingkat Provinsi</p>
+        </div>
+        <!-- card 2: KSN IPA -->
+        <div class="bg-emerald-900/30 backdrop-blur-sm rounded-2xl p-6 text-center border border-gold/15 card-glow" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-4xl text-gold mb-3"><i class="fas fa-flask"></i></div>
+          <h3 class="text-white font-bold text-sm">Juara Harapan 2 KSN</h3>
+          <p class="text-white/50 text-xs mt-1">Kompetisi Sains Nasional · IPA</p>
+          <p class="text-gold-light text-xs font-semibold mt-2">Tingkat MTs</p>
+        </div>
+        <!-- card 3: Kompetisi PAI Nasional (dengan border pulse) -->
+        <div class="bg-emerald-900/30 backdrop-blur-sm rounded-2xl p-6 text-center border-2 border-gold/40 card-glow border-pulse-gold" data-aos="fade-up" data-aos-delay="300">
+          <div class="relative inline-block">
+            <span class="absolute -top-1 -right-1 flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-gold"></span>
+            </span>
+            <div class="text-4xl text-gold mb-3"><i class="fas fa-star"></i></div>
+          </div>
+          <h3 class="text-white font-bold text-sm">Kompetisi PAI Nasional</h3>
+          <p class="text-white/50 text-xs mt-1">Active Participant · Finalist</p>
+          <p class="text-gold-light text-xs font-semibold mt-2 animate-pulse">🔥 Kompetisi Terbaru</p>
+        </div>
+        <!-- card 4: Sertifikat Hamzah C1 -->
+        <div class="bg-emerald-900/30 backdrop-blur-sm rounded-2xl p-6 text-center border border-gold/15 card-glow" data-aos="fade-up" data-aos-delay="400">
+          <div class="text-4xl text-gold mb-3"><i class="fas fa-certificate"></i></div>
+          <h3 class="text-white font-bold text-sm">Sertifikat Hamzah C1</h3>
+          <p class="text-white/50 text-xs mt-1">Bahasa Arab · Level Mahir</p>
+          <p class="text-gold-light text-xs font-semibold mt-2">Kompetensi Tinggi</p>
+        </div>
+        <!-- card 5: Mandarin Peking University -->
+        <div class="bg-emerald-900/30 backdrop-blur-sm rounded-2xl p-6 text-center border border-gold/15 card-glow" data-aos="fade-up" data-aos-delay="500">
+          <div class="text-4xl text-gold mb-3"><i class="fas fa-university"></i></div>
+          <h3 class="text-white font-bold text-sm">Mandarin · Peking Univ</h3>
+          <p class="text-white/50 text-xs mt-1">Sertifikasi Bahasa Mandarin</p>
+          <p class="text-gold-light text-xs font-semibold mt-2">Peking University</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== KEMAMPUAN (BAHASA & TECH) ========== -->
+  <section id="kemampuan" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-emerald-dark/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+        Kemampuan <span class="text-grad-gold">Saya</span>
+      </h2>
+      <p class="text-center text-white/50 max-w-xl mx-auto mb-12" data-aos="fade-down" data-aos-delay="100">
+        Penguasaan bahasa dan keterampilan teknologi
+      </p>
+      <div class="grid md:grid-cols-2 gap-10">
+        <!-- kolom kiri: bahasa -->
+        <div data-aos="fade-right" data-aos-delay="150">
+          <h3 class="text-xl font-bold text-white mb-5 flex items-center gap-2">
+            <i class="fas fa-language text-gold"></i> Lingual Skills
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Arab</span><span class="text-gold-light">Advanced (C1)</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:92%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Mandarin</span><span class="text-gold-light">Intermediate+</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:70%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Korea</span><span class="text-gold-light">Intermediate</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:55%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Jepang</span><span class="text-gold-light">Basic+</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:45%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Inggris</span><span class="text-gold-light">Advanced (TOEFL 587)</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:85%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- kolom kanan: tech -->
+        <div data-aos="fade-left" data-aos-delay="250">
+          <h3 class="text-xl font-bold text-white mb-5 flex items-center gap-2">
+            <i class="fas fa-code text-gold"></i> Tech Skills
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>HTML5</span><span class="text-gold-light">Expert</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>CSS3</span><span class="text-gold-light">Expert</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:85%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>JavaScript</span><span class="text-gold-light">Intermediate+</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:70%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Tailwind CSS</span><span class="text-gold-light">Proficient</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm text-white/70"><span>Front-End Development</span><span class="text-gold-light">Alumni Rumah IT</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FORMULIR KONTAK ========== -->
+  <section id="kontak" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-emerald-900/30 backdrop-blur-sm rounded-3xl p-6 md:p-10 border border-gold/15 shadow-2xl" data-aos="flip-up" data-aos-duration="900">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-2">Hubungi <span class="text-grad-gold">Saya</span></h2>
+        <p class="text-center text-white/50 mb-8">Isi form di bawah, saya akan merespon via WhatsApp</p>
+        <form id="kontak-form" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-white/70 mb-1">Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="Nama Anda" required
+                   class="w-full rounded-xl bg-white/5 border border-gold/20 px-4 py-3 text-white placeholder-white/30 focus:ring-2 focus:ring-gold focus:border-transparent transition">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-white/70 mb-1">Tujuan Menghubungi</label>
+            <select id="tujuan" required
+                    class="w-full rounded-xl bg-white/5 border border-gold/20 px-4 py-3 text-white focus:ring-2 focus:ring-gold focus:border-transparent transition">
+              <option value="" class="text-black">-- Pilih --</option>
+              <option value="Penawaran Project Web" class="text-black">Penawaran Project Web</option>
+              <option value="Kerja Sama" class="text-black">Kerja Sama / Kolaborasi</option>
+              <option value="Silaturahmi" class="text-black">Silaturahmi / Konsultasi</option>
+              <option value="Lainnya" class="text-black">Lainnya</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-white/70 mb-1">Pesan</label>
+            <textarea id="pesan" rows="4" placeholder="Tulis pesan Anda di sini..." 
+                      class="w-full rounded-xl bg-white/5 border border-gold/20 px-4 py-3 text-white placeholder-white/30 focus:ring-2 focus:ring-gold focus:border-transparent transition"></textarea>
+          </div>
+          <button type="submit" id="btn-kirim-wa"
+                  class="w-full btn-gold text-emerald-dark font-bold py-3.5 rounded-xl shadow-lg hover:shadow-gold/30 transition-all text-lg flex items-center justify-center gap-3">
+            <i class="fab fa-whatsapp text-xl"></i> Kirim via WhatsApp
+          </button>
+          <p class="text-xs text-white/30 text-center">Data Anda aman dan langsung terhubung ke WhatsApp saya</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-emerald-dark/80 border-t border-gold/10 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-xl text-gold"><i class="fas fa-crown"></i></span>
+        <span class="font-semibold text-white/80">Ahmad Wildan Asy Syifa</span>
+        <span class="text-white/30 text-xs hidden sm:inline">· 2026</span>
+      </div>
+      <div class="flex gap-6 text-white/50">
+        <a href="#" class="hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-gold transition"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="hover:text-gold transition"><i class="fab fa-github"></i></a>
+        <a href="#" class="hover:text-gold transition"><i class="fab fa-youtube"></i></a>
+      </div>
+      <p class="text-white/30 text-xs">Dibangun dengan <i class="fas fa-heart text-gold/60"></i> untuk berdakwah di era digital</p>
+    </div>
+  </footer>
+
+  <!-- ========== AOS + INISIALISASI ========== -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Inisialisasi AOS
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true
+    });
+
+    // ========== MOBILE HAMBURGER ==========
+    const toggleBtn = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    toggleBtn.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+      const icon = toggleBtn.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+    // tutup menu saat link di klik
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        toggleBtn.querySelector('i').className = 'fas fa-bars';
+      });
+    });
+
+    // ========== FORM WA DENGAN VALIDASI ==========
+    const form = document.getElementById('kontak-form');
+    const namaInput = document.getElementById('nama');
+    const tujuanSelect = document.getElementById('tujuan');
+    const pesanInput = document.getElementById('pesan');
+    const btnKirim = document.getElementById('btn-kirim-wa');
+
+    // Nomor WhatsApp tujuan (ganti dengan nomor Anda)
+    const NOMOR_WA = '6281259730289';
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nama = namaInput.value.trim();
+      const tujuan = tujuanSelect.value;
+      const pesan = pesanInput.value.trim();
+
+      // validasi
+      if (nama === '' || tujuan === '') {
+        alert('⚠️ Nama dan Tujuan Menghubungi wajib diisi!');
+        return;
+      }
+
+      // susun pesan rapi
+      let text = `Halo Ahmad Wildan Asy Syifa! Saya ${nama} ingin menghubungi Anda.%0A`;
+      text += `Tujuan: ${tujuan}%0A`;
+      if (pesan !== '') {
+        text += `Pesan: ${pesan}%0A`;
+      }
+      text += `%0A( dikirim dari Portofolio Anda )`;
+
+      // buka WhatsApp
+      const url = `https://wa.me/${NOMOR_WA}?text=${text}`;
+      window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>
+```

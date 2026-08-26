@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- 
+    ═══════════════════════════════════════════════════
+    A4 PROFESSIONAL CV · AHMAD WILDAN ASY SYIFA
+    Design: Deep Navy Blue · Gold Accents · Cream Paper
+    Layout: Two-Column · Print-Ready (210mm x 297mm)
+    ═══════════════════════════════════════════════════
+    ✅ PERBAIKAN: TOEFL 607 = Hamzah C1 (digabung jadi 1)
+    ✅ PERBAIKAN: Foto headshot otomatis menyesuaikan lingkaran
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahmad Wildan Asy Syifa · CV</title>
+  
+  <!-- Google Font (Clean Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========================================
+       PRINT & PAGE SETUP (A4 / 300 DPI)
+    ======================================== */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #c8c0b0; /* preview bg */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== MAIN CV WRAPPER (A4) ===== */
+    .cv {
+      width: 210mm;
+      min-height: 297mm;
+      max-width: 210mm;
+      background: #fdfcf8; /* cream paper base */
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 20px 60px rgba(10, 30, 46, 0.25);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    /* ========================================
+       LEFT COLUMN · DEEP NAVY + GOLD TRIM
+    ======================================== */
+    .left-col {
+      width: 32%;
+      background: #0a1e2e; /* deep navy blue */
+      padding: 36px 22px 32px;
+      color: #e8e4da;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      border-right: 3px solid #c9a84c; /* brilliant gold trim */
+      flex-shrink: 0;
+    }
+
+    /* Headshot / Initials Placeholder */
+    .headshot {
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .headshot-circle {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #1a3a52, #0a1e2e);
+      border: 3px solid #c9a84c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      font-weight: 600;
+      color: #fdfcf8;
+      letter-spacing: 1px;
+      box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.15);
+      overflow: hidden; /* penting agar foto tidak keluar dari lingkaran */
+    }
+    /* 🔥 ATURAN BARU UNTUK FOTO AGAR PAS DI LINGKARAN */
+    .headshot-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* memotong foto agar proporsional mengisi lingkaran */
+      border-radius: 50%;
+      display: block;
+    }
+    .headshot-sub {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #b8b0a0;
+      border-top: 1px solid rgba(201, 168, 76, 0.25);
+      padding-top: 8px;
+      display: inline-block;
+    }
+
+    /* Left Section Titles */
+    .left-col h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c9a84c; /* gold */
+      border-bottom: 2px solid rgba(201, 168, 76, 0.25);
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+    }
+
+    /* Contact items */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: #d6d0c4;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .contact-item .icon {
+      font-size: 1.15rem;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+      color: #c9a84c;
+    }
+
+    /* Language & Skill items */
+    .lang-item, .skill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .lang-item .lang-name, .skill-item .skill-name {
+      font-weight: 400;
+      color: #e8e4da;
+    }
+    .lang-item .lang-level, .skill-item .skill-level {
+      font-weight: 300;
+      font-size: 0.7rem;
+      color: #b8b0a0;
+      background: rgba(201, 168, 76, 0.12);
+      padding: 2px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      white-space: nowrap;
+    }
+    .lang-item .lang-level.gold {
+      color: #c9a84c;
+      border-color: #c9a84c;
+      background: rgba(201, 168, 76, 0.08);
+    }
+
+    /* Small proficiency dots (visual flair) */
+    .proficiency-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-top: 2px;
+    }
+    .proficiency-dots .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .proficiency-dots .dot.filled {
+      background: #c9a84c;
+    }
+    .proficiency-dots .dot.partial {
+      background: rgba(201, 168, 76, 0.5);
+    }
+
+    /* ========================================
+       RIGHT COLUMN · CREAM BACKGROUND
+    ======================================== */
+    .right-col {
+      width: 68%;
+      padding: 36px 38px 32px;
+      background: #fdfcf8; /* cream */
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Header */
+    .cv-header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0a1e2e;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+    .cv-header h1 .gold {
+      color: #c9a84c;
+      font-weight: 600;
+    }
+    .cv-header .subtitle {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #1a3a52;
+      letter-spacing: 0.03em;
+      background: rgba(201, 168, 76, 0.08);
+      display: inline-block;
+      padding: 4px 18px;
+      border-radius: 30px;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      margin-top: 2px;
+    }
+
+    /* Right Section Titles */
+    .right-col h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0a1e2e;
+      border-bottom: 2px solid #c9a84c;
+      padding-bottom: 5px;
+      margin-bottom: 14px;
+    }
+
+    /* Summary */
+    .summary p {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #1e2e3e;
+      font-weight: 400;
+    }
+    .summary p strong {
+      color: #0a1e2e;
+      font-weight: 600;
+    }
+
+    /* Education / Awards Lists */
+    .edu-item, .award-item {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-size: 0.82rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(10, 30, 46, 0.04);
+    }
+    .edu-item:last-child, .award-item:last-child {
+      border-bottom: none;
+    }
+    .edu-item .badge-status {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 10px;
+      border-radius: 30px;
+      flex-shrink: 0;
+      background: #e8e4da;
+      color: #0a1e2e;
+      border: 1px solid #d6d0c4;
+    }
+    .edu-item .badge-status.current {
+      background: #0a1e2e;
+      color: #fdfcf8;
+      border-color: #0a1e2e;
+    }
+    .edu-item .badge-status.accepted {
+      background: #c9a84c;
+      color: #0a1e2e;
+      border-color: #c9a84c;
+      font-weight: 700;
+    }
+    .edu-item .badge-status.pending {
+      background: transparent;
+      color: #5a6a7a;
+      border-style: dashed;
+      border-color: #9a8a7a;
+    }
+    .edu-item .edu-desc {
+      color: #1e2e3e;
+      font-weight: 400;
+    }
+    .edu-item .edu-desc strong {
+      color: #0a1e2e;
+      font-weight: 600;
+    }
+    .edu-item .edu-meta {
+      font-size: 0.7rem;
+      color: #5a6a7a;
+      margin-left: 4px;
+    }
+
+    .award-item .award-icon {
+      font-size: 1rem;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+      color: #c9a84c;
+    }
+    .award-item .award-desc {
+      color: #1e2e3e;
+      font-weight: 400;
+    }
+    .award-item .award-desc strong {
+      color: #0a1e2e;
+      font-weight: 600;
+    }
+    .award-item .award-level {
+      font-size: 0.7rem;
+      color: #5a6a7a;
+      background: rgba(201, 168, 76, 0.08);
+      padding: 1px 10px;
+      border-radius: 30px;
+      margin-left: 6px;
+      white-space: nowrap;
+      border: 1px solid rgba(201, 168, 76, 0.1);
+    }
+
+    /* ========================================
+       PRINT OPTIMIZATION (300 DPI READY)
+    ======================================== */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        margin: 0;
+        display: block;
+      }
+      .cv {
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        box-shadow: none;
+        border-radius: 0;
+        page-break-after: avoid;
+      }
+      .left-col, .right-col {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      .left-col {
+        background: #0a1e2e !important;
+        border-right: 3px solid #c9a84c !important;
+      }
+      .right-col {
+        background: #fdfcf8 !important;
+      }
+      .headshot-circle {
+        background: #0a1e2e !important;
+        border-color: #c9a84c !important;
+        box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.1) !important;
+      }
+      /* Pastikan foto tetap kelihatan saat print */
+      .headshot-circle img {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .edu-item .badge-status.current {
+        background: #0a1e2e !important;
+        color: #fdfcf8 !important;
+      }
+      .edu-item .badge-status.accepted {
+        background: #c9a84c !important;
+        color: #0a1e2e !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    /* ========================================
+       PRINT BUTTON (Screen Only)
+    ======================================== */
+    .print-btn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: #0a1e2e;
+      color: #fdfcf8;
+      border: 2px solid #c9a84c;
+      padding: 12px 28px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(10, 30, 46, 0.3);
+      transition: all 0.2s;
+      z-index: 999;
+      letter-spacing: 0.03em;
+    }
+    .print-btn:hover {
+      background: #c9a84c;
+      color: #0a1e2e;
+      border-color: #0a1e2e;
+      transform: scale(1.03);
+    }
+    @media print {
+      .print-btn {
+        display: none !important;
+      }
+    }
+
+    /* ========================================
+       RESPONSIVE (Screen preview)
+    ======================================== */
+    @media screen and (max-width: 800px) {
+      body {
+        padding: 12px;
+      }
+      .cv {
+        width: 100%;
+        max-width: 100%;
+        min-height: auto;
+        flex-direction: column;
+        border-radius: 8px;
+      }
+      .left-col {
+        width: 100%;
+        border-right: none;
+        border-bottom: 4px solid #c9a84c;
+        padding: 24px 20px;
+      }
+      .right-col {
+        width: 100%;
+        padding: 24px 20px;
+      }
+      .cv-header h1 {
+        font-size: 2.2rem;
+      }
+      .headshot-circle {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== CV ==================== -->
+  <div class="cv">
+
+    <!-- ===== LEFT COLUMN · NAVY ===== -->
+    <div class="left-col">
+
+      <!-- Headshot dengan FOTO -->
+      <div class="headshot">
+        <div class="headshot-circle">
+          <!-- 
+            ⚠️ PASTIKAN FILE FOTO BERNAMA "pas_foto.png" 
+            BERADA DI FOLDER YANG SAMA DENGAN FILE HTML INI.
+            Jika masih pakai spasi, ganti jadi "pas foto.png" 
+          -->
+          <img src="pas foto.png" alt="Foto Ahmad Wildan Asy Syifa">
+        </div>
+        <span class="headshot-sub">Ahmad Wildan Asy Syifa</span>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3>📌 Contact</h3>
+        <div class="contact-item"><span class="icon">📞</span> +62 812 3456 7890</div>
+        <div class="contact-item"><span class="icon">✉️</span> wildan.asy@edu.portfolio</div>
+        <div class="contact-item"><span class="icon">📍</span> Indonesia · Global Reach</div>
+        <div class="contact-item"><span class="icon">🔗</span> linkedin.com/in/awildan</div>
+      </div>
+
+      <!-- Languages (✅ TOEFL 607 = Hamzah C1 digabung) -->
+      <div>
+        <h3>🌐 Languages</h3>
+        <div class="lang-item">
+          <span class="lang-name">English</span>
+          <span class="lang-level gold">TOEFL 607 · Hamzah C1</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Mandarin</span>
+          <span class="lang-level">Peking U · Basic</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Korean</span>
+          <span class="lang-level">Conversational</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Japanese</span>
+          <span class="lang-level">Basic Grammar</span>
+        </div>
+        <!-- Visual dots for quick proficiency -->
+        <div style="display:flex; gap:18px; margin-top:8px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.6rem; color:#b8b0a0;">
+            <span>English</span>
+            <span class="proficiency-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.6rem; color:#b8b0a0;">
+            <span>Mandarin</span>
+            <span class="proficiency-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.6rem; color:#b8b0a0;">
+            <span>Korean</span>
+            <span class="proficiency-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot partial"></span><span class="dot"></span><span class="dot"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Skills -->
+      <div>
+        <h3>⚙️ Technical</h3>
+        <div class="skill-item">
+          <span class="skill-name">HTML5</span>
+          <span class="skill-level">Structuring</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">CSS3</span>
+          <span class="skill-level">Styling</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">JavaScript</span>
+          <span class="skill-level">Interactivity</span>
+        </div>
+        <div style="margin-top:10px; font-size:0.65rem; color:#b8b0a0; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px;">
+          🏫 Rumah IT Indonesia · Web Dev Basics
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== RIGHT COLUMN · CREAM ===== -->
+    <div class="right-col">
+
+      <!-- Header -->
+      <div class="cv-header">
+        <h1>Ahmad Wildan <span class="gold">Asy Syifa</span></h1>
+        <div class="subtitle">Summa Cum Laude Diploma Syariah Candidate · Multilingual Tech Enthusiast</div>
+      </div>
+
+      <!-- Professional Summary -->
+      <div class="summary">
+        <h3>📋 Profile Summary</h3>
+        <p>
+          <strong>MA Al Irsyad Piat 7</strong> graduate · Consistent <strong>Rank #1</strong> from MTs to MA 
+          (6 consecutive years) with a <strong>95 academic average</strong> and a <strong>97.10 peak score</strong>. 
+          Proven excellence through national & provincial competitions. Currently pursuing a 
+          <strong>Diploma Syariah (GPA 4.00)</strong> at Markaz Ulum and advancing technical skills 
+          at Zad Academy. Accepted into <strong>Sousse University</strong> for Arabic Literature with 
+          a pending application for advanced studies in Saudi Arabia.
+        </p>
+      </div>
+
+      <!-- Education Timeline -->
+      <div>
+        <h3>🎓 Education Roadmap</h3>
+        <div class="edu-item">
+          <span class="badge-status current">Current</span>
+          <span class="edu-desc"><strong>Markaz Ulum</strong> · Diploma Syariah</span>
+          <span class="edu-meta">GPA 4.00 (Summa Cum Laude)</span>
+        </div>
+        <div class="edu-item">
+          <span class="badge-status current">Current</span>
+          <span class="edu-desc"><strong>Zad Academy</strong> · Tech Development Program</span>
+          <span class="edu-meta">Web Dev Basics</span>
+        </div>
+        <div class="edu-item">
+          <span class="badge-status accepted">Accepted</span>
+          <span class="edu-desc"><strong>Sousse University</strong> · Sastra Arab</span>
+          <span class="edu-meta">Tunisia · Admission secured</span>
+        </div>
+        <div class="edu-item">
+          <span class="badge-status pending">Pending</span>
+          <span class="edu-desc"><strong>Saudi Arabia University</strong> · Advanced Studies</span>
+          <span class="edu-meta">Application in progress</span>
+        </div>
+      </div>
+
+      <!-- Awards & Achievements (✅ TOEFL 607 = Hamzah C1 digabung) -->
+      <div>
+        <h3>🏅 Awards & Achievements</h3>
+        <div class="award-item">
+          <span class="award-icon">🔬</span>
+          <span class="award-desc"><strong>KSN Science Competition</strong> · Runner-up 2</span>
+          <span class="award-level">National Level</span>
+        </div>
+        <div class="award-item">
+          <span class="award-icon">🌍</span>
+          <span class="award-desc"><strong>OBA Arabic Olympiad</strong> · 2nd Place</span>
+          <span class="award-level">City Level (Kota Batu)</span>
+        </div>
+        <div class="award-item">
+          <span class="award-icon">🏆</span>
+          <span class="award-desc"><strong>OBA Arabic Olympiad</strong> · Top 5</span>
+          <span class="award-level">Provincial Level</span>
+        </div>
+        <!-- ✅ SATU ENTRI: TOEFL 607 + Hamzah C1 -->
+        <div class="award-item">
+          <span class="award-icon">📜</span>
+          <span class="award-desc"><strong>TOEFL 607 · Hamzah C1</strong> · English Proficiency</span>
+          <span class="award-level">Certified</span>
+        </div>
+        <div class="award-item">
+          <span class="award-icon">🎓</span>
+          <span class="award-desc"><strong>Peking University</strong> · Mandarin Certification</span>
+          <span class="award-level">Basic Proficiency</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== PRINT BUTTON (screen only) ===== -->
+  <button class="print-btn no-print" onclick="window.print()">⬇️ Download PDF (Print)</button>
+
+  <script>
+    // Optional: auto-prompt for print on load (disabled to avoid annoyance).
+    // Uncomment the line below if you want the print dialog to open automatically.
+    // window.onload = function() { window.print(); };
+  </script>
+</body>
+</html>

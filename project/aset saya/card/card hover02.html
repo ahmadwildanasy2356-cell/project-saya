@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll · Transformasi Kompleks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #05070e;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+           SCROLL PROGRESS BAR
+           ============================================================ */
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.08s ease-out;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+        }
+
+        /* ============================================================
+           NAVIGASI STICKY
+           ============================================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(5, 7, 14, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 0.8rem 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .navbar .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .navbar .logo span {
+            -webkit-text-fill-color: #fff;
+            opacity: 0.3;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #fff;
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* ============================================================
+           SECTIONS — BASE
+           ============================================================ */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ============================================================
+           SECTION 1 — HERO
+           ============================================================ */
+        #hero {
+            min-height: 110vh;
+            background: radial-gradient(ellipse at 20% 30%, #161b2b, #05070e);
+            justify-content: center;
+            text-align: center;
+            padding-top: 8rem;
+        }
+
+        #hero .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1.5rem;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.6s ease;
+        }
+
+        #hero .hero-title {
+            font-size: clamp(2.8rem, 10vw, 6.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        #hero .hero-title.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #hero .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 1.5rem;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+            line-height: 1.7;
+        }
+
+        #hero .hero-sub.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #hero .hero-cta {
+            margin-top: 2.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        #hero .hero-cta.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 2.2rem;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 2.2rem;
+            border-radius: 40px;
+            background: transparent;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.04);
+        }
+
+        /* Hero background particles */
+        #hero .hero-particles {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: floatParticle 20s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: bounceDown 2.5s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .scroll-indicator .mouse {
+            width: 24px;
+            height: 38px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .scroll-indicator .mouse .wheel {
+            width: 3px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 8px;
+            animation: scrollWheel 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollWheel {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(12px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceDown {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(6px);
+            }
+        }
+
+        /* ============================================================
+           SECTION 2 — ABOUT
+           ============================================================ */
+        #about {
+            background: #0b0e1a;
+            min-height: 100vh;
+        }
+
+        #about .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        #about .section-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        #about .section-title.reveal {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        #about .section-title .highlight {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #about .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .about-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .about-card p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           SECTION 3 — FEATURES (FIXED - lebih jelas)
+           ============================================================ */
+        #features {
+            background: #05070e;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        #features .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        #features .section-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        #features .section-title.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #features .section-title .highlight {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card.reveal {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05), rgba(167, 139, 250, 0.05));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-card .num {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .feature-card .icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .icon {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.7;
+        }
+
+        .feature-card .feature-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ============================================================
+           SECTION 4 — STATS / COUNTER
+           ============================================================ */
+        #stats {
+            background: #0b0e1a;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        #stats .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .stat-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .stat-item.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item .number {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 0.3rem;
+            letter-spacing: 0.04em;
+        }
+
+        /* ============================================================
+           SECTION 5 — GALLERY (3D POP-UP EFFECT)
+           ============================================================ */
+        #gallery {
+            background: #05070e;
+            min-height: 120vh;
+        }
+
+        #gallery .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        #gallery .section-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        #gallery .section-title.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #gallery .section-title .highlight {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #gallery .gallery-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        #gallery .gallery-sub.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.8rem;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ----- GALLERY ITEM DENGAN EFEK 3D POP-UP ----- */
+        .gallery-item {
+            aspect-ratio: 1 / 1.2;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            perspective: 800px;
+            opacity: 0;
+            transform: scale(0.85) rotate(2deg);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .gallery-item.reveal {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .gallery-item:nth-child(2) {
+            transition-delay: 0.08s;
+        }
+        .gallery-item:nth-child(3) {
+            transition-delay: 0.16s;
+        }
+        .gallery-item:nth-child(4) {
+            transition-delay: 0.24s;
+        }
+        .gallery-item:nth-child(5) {
+            transition-delay: 0.32s;
+        }
+        .gallery-item:nth-child(6) {
+            transition-delay: 0.40s;
+        }
+
+        .gallery-item .gallery-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 16px;
+        }
+
+        .gallery-item:hover .gallery-inner {
+            transform: rotateY(-8deg) rotateX(6deg) scale(1.05);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .gallery-item .gallery-img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.08);
+        }
+
+        /* Glow overlay */
+        .gallery-item .gallery-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(167, 139, 250, 0.15));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .gallery-item:hover .gallery-glow {
+            opacity: 1;
+        }
+
+        /* Overlay info di bawah */
+        .gallery-item .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem 1.5rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 2;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-item .gallery-overlay span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: block;
+        }
+
+        .gallery-item .gallery-overlay small {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+
+        /* badge di pojok */
+        .gallery-item .gallery-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.55rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.3);
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-badge {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ============================================================
+           SECTION 6 — FOOTER
+           ============================================================ */
+        #footer {
+            min-height: 50vh;
+            background: #0b0e1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            justify-content: center;
+            text-align: center;
+        }
+
+        #footer .footer-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        #footer .footer-title.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #footer .footer-title .highlight {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #footer .footer-sub {
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        #footer .footer-sub.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #footer .footer-social {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        #footer .footer-social.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #footer .footer-social a {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        #footer .footer-social a:hover {
+            color: #fff;
+            transform: scale(1.1) translateY(-3px);
+        }
+
+        #footer .footer-copy {
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.04em;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.2rem;
+            }
+            .navbar.scrolled {
+                padding: 0.6rem 1.2rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .nav-links a {
+                font-size: 0.7rem;
+            }
+
+            #hero .hero-title {
+                font-size: clamp(2rem, 10vw, 3.5rem);
+            }
+
+            section {
+                padding: 4rem 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-item .gallery-overlay span {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .logo {
+                font-size: 1.1rem;
+            }
+            .nav-links {
+                gap: 0.7rem;
+            }
+            .nav-links a {
+                font-size: 0.6rem;
+            }
+            .btn-primary,
+            .btn-outline {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.75rem;
+            }
+            .feature-card {
+                padding: 1.8rem 1.2rem;
+            }
+            .about-card {
+                padding: 1.5rem 1rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .gallery-item {
+                aspect-ratio: 1 / 1.1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PROGRESS BAR ===== -->
+    <div id="scrollProgress"></div>
+
+    <!-- ===== NAVIGASI ===== -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">Nexus<span>Studio</span></a>
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+        </ul>
+    </nav>
+
+    <!-- =============================================================
+    SECTION 1 — HERO
+    ============================================================= -->
+    <section id="hero">
+        <!-- Particles -->
+        <div class="hero-particles" id="particles"></div>
+
+        <div class="section-inner">
+            <div class="hero-badge" id="heroBadge"><i class="fas fa-sparkles" style="margin-right:6px;"></i>Next Generation</div>
+            <h1 class="hero-title" id="heroTitle">Scroll to<br />Transform</h1>
+            <p class="hero-sub" id="heroSub">Eksplorasi pengalaman scroll yang kompleks dengan efek parallax, scale, opacity, dan rotasi – semuanya dalam satu halaman.</p>
+            <div class="hero-cta" id="heroCta">
+                <a href="#about" class="btn-primary"><i class="fas fa-arrow-down"></i> Mulai Jelajahi</a>
+                <a href="#gallery" class="btn-outline"><i class="fas fa-images"></i> Lihat Galeri</a>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="mouse"><div class="wheel"></div></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- =============================================================
+    SECTION 2 — ABOUT
+    ============================================================= -->
+    <section id="about">
+        <div class="section-inner">
+            <p class="section-label">✦ Tentang Kami</p>
+            <h2 class="section-title" id="aboutTitle">
+                Membangun <span class="highlight">Pengalaman</span><br />Digital yang Mendalam
+            </h2>
+            <p style="color:rgba(255,255,255,0.4); max-width:600px; line-height:1.8; font-size:0.95rem; opacity:0; transform:translateY(20px); transition:all 0.8s ease 0.2s;" id="aboutDesc">
+                Setiap elemen dirancang untuk merespons gerakan scroll Anda – dari transisi halus hingga transformasi dramatis.
+            </p>
+
+            <div class="about-grid">
+                <div class="about-card" data-delay="0">
+                    <div class="icon"><i class="fas fa-cube"></i></div>
+                    <h4>3D Perspective</h4>
+                    <p>Efek rotasi dan kemiringan yang mengikuti kursor.</p>
+                </div>
+                <div class="about-card" data-delay="100">
+                    <div class="icon"><i class="fas fa-arrows-spin"></i></div>
+                    <h4>Scroll Transform</h4>
+                    <p>Scale, opacity, translate – semuanya berubah saat scroll.</p>
+                </div>
+                <div class="about-card" data-delay="200">
+                    <div class="icon"><i class="fas fa-layer-group"></i></div>
+                    <h4>Parallax Layers</h4>
+                    <p>Kedalaman visual dengan gerakan yang berbeda tiap lapisan.</p>
+                </div>
+                <div class="about-card" data-delay="300">
+                    <div class="icon"><i class="fas fa-bolt"></i></div>
+                    <h4>Real-time Feedback</h4>
+                    <p>Progress bar, sticky nav, dan indikator scroll yang responsif.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================================
+    SECTION 3 — FEATURES (FIXED)
+    ============================================================= -->
+    <section id="features">
+        <div class="section-inner">
+            <p class="section-label">✦ Fitur Unggulan</p>
+            <h2 class="section-title" id="featuresTitle">
+                <span class="highlight">Teknologi</span> di Balik<br />Pengalaman Ini
+            </h2>
+
+            <div class="features-grid">
+                <div class="feature-card" data-delay="0">
+                    <div class="num">01</div>
+                    <div class="icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Lightning Fast</h3>
+                    <p>Performa optimasi dengan transisi CSS dan JavaScript yang ringan.</p>
+                    <span class="feature-tag">⚡ 60fps</span>
+                </div>
+                <div class="feature-card" data-delay="100">
+                    <div class="num">02</div>
+                    <div class="icon"><i class="fas fa-palette"></i></div>
+                    <h3>Visual Rich</h3>
+                    <p>Gradien, glow, blur, dan efek modern yang memukau mata.</p>
+                    <span class="feature-tag">🎨 Premium</span>
+                </div>
+                <div class="feature-card" data-delay="200">
+                    <div class="num">03</div>
+                    <div class="icon"><i class="fas fa-mobile-screen"></i></div>
+                    <h3>Fully Responsive</h3>
+                    <p>Pengalaman konsisten di desktop, tablet, dan ponsel.</p>
+                    <span class="feature-tag">📱 All Devices</span>
+                </div>
+                <div class="feature-card" data-delay="300">
+                    <div class="num">04</div>
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h3>Clean Code</h3>
+                    <p>Struktur HTML, CSS, dan JavaScript yang rapi dan terorganisir.</p>
+                    <span class="feature-tag">🧹 Maintainable</span>
+                </div>
+                <div class="feature-card" data-delay="400">
+                    <div class="num">05</div>
+                    <div class="icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Zero Dependencies</h3>
+                    <p>Murni vanilla – tidak perlu library tambahan.</p>
+                    <span class="feature-tag">📦 No Libs</span>
+                </div>
+                <div class="feature-card" data-delay="500">
+                    <div class="num">06</div>
+                    <div class="icon"><i class="fas fa-shield-halved"></i></div>
+                    <h3>Secure & Fast</h3>
+                    <p>Dibangun dengan prinsip keamanan dan kecepatan terbaik.</p>
+                    <span class="feature-tag">🛡️ Secure</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================================
+    SECTION 4 — STATS / COUNTER
+    ============================================================= -->
+    <section id="stats">
+        <div class="section-inner">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="number" data-target="12">0</div>
+                    <div class="label">Tahun Pengalaman</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" data-target="350">0</div>
+                    <div class="label">Proyek Selesai</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" data-target="98">0</div>
+                    <div class="label">Kepuasan Klien (%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" data-target="24">0</div>
+                    <div class="label">Penghargaan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================================
+    SECTION 5 — GALLERY (3D POP-UP EFFECT)
+    ============================================================= -->
+    <section id="gallery">
+        <div class="section-inner">
+            <p class="section-label">✦ Portofolio</p>
+            <h2 class="section-title" id="galleryTitle">
+                Galeri <span class="highlight">Karya</span>
+            </h2>
+            <p class="gallery-sub" id="gallerySub">Hover atau sentuh kartu untuk melihat efek 3D</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-inner">
+                        <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=500&h=600&fit=crop&q=80');"></div>
+                        <div class="gallery-glow"></div>
+                        <span class="gallery-badge">✦ Featured</span>
+                        <div class="gallery-overlay">
+                            <span>Project Alpha</span>
+                            <small>UI/UX Design</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-inner">
+                        <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1600267185393-e158a98703de?w=500&h=600&fit=crop&q=80');"></div>
+                        <div class="gallery-glow"></div>
+                        <span class="gallery-badge">✦ Pro</span>
+                        <div class="gallery-overlay">
+                            <span>Nexus Pro</span>
+                            <small>Web Development</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-inner">
+                        <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500&h=600&fit=crop&q=80');"></div>
+                        <div class="gallery-glow"></div>
+                        <span class="gallery-badge">✦ Limited</span>
+                        <div class="gallery-overlay">
+                            <span>Aurora Edge</span>
+                            <small>Brand Identity</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-inner">
+                        <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=500&h=600&fit=crop&q=80');"></div>
+                        <div class="gallery-glow"></div>
+                        <span class="gallery-badge">✦ Ultimate</span>
+                        <div class="gallery-overlay">
+                            <span>Stellar</span>
+                            <small>Mobile App</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-inner">
+                        <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&h=600&fit=crop&q=80');"></div>
+                        <div class="gallery-glow"></div>
+                        <span class="gallery-badge">✦ Secure</span>
+                        <div class="gallery-overlay">
+                            <span>Cyber Guard</span>
+                            <small>Security</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-inner">
+                        <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500&h=600&fit=crop&q=80');"></div>
+                        <div class="gallery-glow"></div>
+                        <span class="gallery-badge">✦ Dream</span>
+                        <div class="gallery-overlay">
+                            <span>Dreamscape</span>
+                            <small>Creative</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================================================
+    SECTION 6 — FOOTER
+    ============================================================= -->
+    <section id="footer">
+        <div class="section-inner">
+            <h2 class="footer-title" id="footerTitle">
+                Siap <span class="highlight">Mewujudkan</span><br />Ide Anda?
+            </h2>
+            <p class="footer-sub" id="footerSub">Mari kita bangun sesuatu yang luar biasa bersama.</p>
+            <div class="footer-social" id="footerSocial">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="footer-copy">© 2026 Nexus Studio. All rights reserved.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    JAVASCRIPT — SEMUA EFEK SCROLL
+    ============================================================ -->
+    <script>
+        (function() {
+
+            // =========================================================
+            // 1. PARTICLES BACKGROUND
+            // =========================================================
+            (function createParticles() {
+                const container = document.getElementById('particles');
+                if (!container) return;
+                for (let i = 0; i < 40; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    p.style.animationDuration = (15 + Math.random() * 20) + 's';
+                    p.style.animationDelay = (Math.random() * 20) + 's';
+                    p.style.width = (2 + Math.random() * 6) + 'px';
+                    p.style.height = p.style.width;
+                    p.style.opacity = 0.2 + Math.random() * 0.3;
+                    container.appendChild(p);
+                }
+            })();
+
+            // =========================================================
+            // 2. HERO REVEAL ON LOAD
+            // =========================================================
+            setTimeout(() => {
+                document.getElementById('heroTitle')?.classList.add('reveal');
+                document.getElementById('heroSub')?.classList.add('reveal');
+                document.getElementById('heroCta')?.classList.add('reveal');
+                document.getElementById('heroBadge')?.style.setProperty('opacity', '1');
+            }, 200);
+
+            // =========================================================
+            // 3. SCROLL PROGRESS BAR
+            // =========================================================
+            const progressBar = document.getElementById('scrollProgress');
+
+            function updateProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+            }
+            window.addEventListener('scroll', updateProgress);
+
+            // =========================================================
+            // 4. NAVBAR SCROLLED STATE
+            // =========================================================
+            const navbar = document.getElementById('navbar');
+
+            function updateNavbar() {
+                if (window.scrollY > 80) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            window.addEventListener('scroll', updateNavbar);
+
+            // =========================================================
+            // 5. ACTIVE NAV LINK
+            // =========================================================
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const top = section.offsetTop - 120;
+                    const height = section.offsetHeight;
+                    if (window.scrollY >= top && window.scrollY < top + height) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+                });
+            }
+            window.addEventListener('scroll', updateActiveNav);
+
+            // =========================================================
+            // 6. ABOUT SECTION — REVEAL ON SCROLL
+            // =========================================================
+            const aboutTitle = document.getElementById('aboutTitle');
+            const aboutDesc = document.getElementById('aboutDesc');
+            const aboutCards = document.querySelectorAll('.about-card');
+
+            let aboutRevealed = false;
+
+            function revealAbout() {
+                const rect = document.getElementById('about').getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7 && !aboutRevealed) {
+                    aboutRevealed = true;
+                    aboutTitle?.classList.add('reveal');
+                    aboutDesc?.style.setProperty('opacity', '1');
+                    aboutDesc?.style.setProperty('transform', 'translateY(0)');
+                    aboutCards.forEach((card, i) => {
+                        const delay = parseInt(card.dataset.delay) || 0;
+                        setTimeout(() => {
+                            card.classList.add('reveal');
+                        }, delay);
+                    });
+                }
+            }
+            window.addEventListener('scroll', revealAbout);
+
+            // =========================================================
+            // 7. FEATURES — REVEAL
+            // =========================================================
+            const featuresTitle = document.getElementById('featuresTitle');
+            const featureCards = document.querySelectorAll('.feature-card');
+            let featuresRevealed = false;
+
+            function revealFeatures() {
+                const rect = document.getElementById('features').getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7 && !featuresRevealed) {
+                    featuresRevealed = true;
+                    featuresTitle?.classList.add('reveal');
+                    featureCards.forEach((card, i) => {
+                        const delay = parseInt(card.dataset.delay) || 0;
+                        setTimeout(() => {
+                            card.classList.add('reveal');
+                        }, delay);
+                    });
+                }
+            }
+            window.addEventListener('scroll', revealFeatures);
+
+            // =========================================================
+            // 8. STATS — COUNTER ANIMATION
+            // =========================================================
+            const statItems = document.querySelectorAll('.stat-item');
+            let statsAnimated = false;
+
+            function animateStats() {
+                const section = document.getElementById('stats');
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.75 && !statsAnimated) {
+                    statsAnimated = true;
+                    statItems.forEach((item, i) => {
+                        setTimeout(() => {
+                            item.classList.add('reveal');
+                        }, i * 150);
+                    });
+
+                    const numbers = document.querySelectorAll('.stat-item .number');
+                    numbers.forEach(num => {
+                        const target = parseInt(num.dataset.target);
+                        if (!target) return;
+                        let current = 0;
+                        const increment = Math.ceil(target / 60);
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            num.textContent = current;
+                        }, 25);
+                    });
+                }
+            }
+            window.addEventListener('scroll', animateStats);
+
+            // =========================================================
+            // 9. GALLERY — REVEAL
+            // =========================================================
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const galleryTitle = document.getElementById('galleryTitle');
+            const gallerySub = document.getElementById('gallerySub');
+            let galleryRevealed = false;
+
+            function revealGallery() {
+                const section = document.getElementById('gallery');
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7 && !galleryRevealed) {
+                    galleryRevealed = true;
+                    galleryTitle?.classList.add('reveal');
+                    gallerySub?.classList.add('reveal');
+                    galleryItems.forEach((item, i) => {
+                        setTimeout(() => {
+                            item.classList.add('reveal');
+                        }, i * 80);
+                    });
+                }
+            }
+            window.addEventListener('scroll', revealGallery);
+
+            // =========================================================
+            // 10. FOOTER — REVEAL
+            // =========================================================
+            const footerTitle = document.getElementById('footerTitle');
+            const footerSub = document.getElementById('footerSub');
+            const footerSocial = document.getElementById('footerSocial');
+            let footerRevealed = false;
+
+            function revealFooter() {
+                const section = document.getElementById('footer');
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7 && !footerRevealed) {
+                    footerRevealed = true;
+                    footerTitle?.classList.add('reveal');
+                    footerSub?.classList.add('reveal');
+                    footerSocial?.classList.add('reveal');
+                }
+            }
+            window.addEventListener('scroll', revealFooter);
+
+            // =========================================================
+            // 11. HERO PARALLAX
+            // =========================================================
+            function heroParallax() {
+                const hero = document.getElementById('hero');
+                const scroll = window.scrollY;
+                const heroHeight = hero.offsetHeight;
+                if (scroll < heroHeight) {
+                    const progress = scroll / heroHeight;
+                    const title = document.querySelector('#hero .hero-title');
+                    const sub = document.querySelector('#hero .hero-sub');
+                    const cta = document.querySelector('#hero .hero-cta');
+                    if (title) {
+                        title.style.transform = `translateY(${progress * 60}px) scale(${1 - progress * 0.05})`;
+                        title.style.opacity = 1 - progress * 0.5;
+                    }
+                    if (sub) {
+                        sub.style.transform = `translateY(${progress * 40}px)`;
+                        sub.style.opacity = 1 - progress * 0.6;
+                    }
+                    if (cta) {
+                        cta.style.transform = `translateY(${progress * 30}px)`;
+                        cta.style.opacity = 1 - progress * 0.7;
+                    }
+                }
+            }
+            window.addEventListener('scroll', heroParallax);
+
+            // =========================================================
+            // 12. GALLERY 3D — efek tambahan mengikuti mouse
+            // =========================================================
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                const inner = item.querySelector('.gallery-inner');
+
+                item.addEventListener('mousemove', (e) => {
+                    const rect = item.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+
+                    inner.style.transition = 'transform 0.08s ease-out';
+                    inner.style.transform =
+                        `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.05)`;
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    inner.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                    inner.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+                });
+            });
+
+            // =========================================================
+            // 13. SMOOTH ANCHOR SCROLL
+            // =========================================================
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // =========================================================
+            // 14. INITIAL CALLS
+            // =========================================================
+            updateProgress();
+            updateNavbar();
+            updateActiveNav();
+            revealAbout();
+            revealFeatures();
+            animateStats();
+            revealGallery();
+            revealFooter();
+            heroParallax();
+
+            // Trigger sekali lagi setelah load
+            setTimeout(() => {
+                revealAbout();
+                revealFeatures();
+                animateStats();
+                revealGallery();
+                revealFooter();
+            }, 500);
+
+        })();
+    </script>
+
+</body>
+</html>

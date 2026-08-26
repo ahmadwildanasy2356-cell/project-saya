@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>Xenolith Architecture Lab – Brutalist Luxury</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: { 800: '#1E293B', 900: '#0F172A' },
+            neutral: { 950: '#0C0A09' },
+            lime: { 400: '#A3E635' },
+          },
+          fontFamily: {
+            mono: ['"Fira Code"', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
+
+  <!-- Custom CSS -->
+  <style>
+    /* ===== BRUTALIST NAV ===== */
+    .nav-brutal {
+      background: #0C0A09;
+      border-bottom: 1px solid #1E293B;
+      transition: background 0.3s ease;
+    }
+
+    .nav-link {
+      position: relative;
+      font-family: 'Fira Code', monospace;
+      font-weight: 400;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94A3B8;
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #A3E635;
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover {
+      color: #F8FAFC;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-capsule {
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: transparent;
+      color: #F8FAFC;
+      border: 1px solid #A3E635;
+      padding: 0.6rem 1.8rem;
+      border-radius: 999px;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 20px rgba(163, 230, 53, 0);
+    }
+    .btn-capsule:hover {
+      background: #A3E635;
+      color: #0C0A09;
+      box-shadow: 0 0 40px rgba(163, 230, 53, 0.15);
+    }
+
+    /* ===== HERO REVEAL ===== */
+    .hero-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #0C0A09;
+    }
+
+    .base-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .interior-reveal {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 2;
+      clip-path: circle(120px at var(--tx, 50%) var(--ty, 50%));
+      transition: clip-path 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: clip-path;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: linear-gradient(135deg, rgba(12,10,9,0.5) 0%, rgba(12,10,9,0.15) 40%, rgba(12,10,9,0.6) 100%);
+      pointer-events: none;
+    }
+
+    /* ===== HERO CONTENT ===== */
+    .hero-content {
+      position: absolute;
+      z-index: 10;
+      left: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      max-width: 520px;
+      pointer-events: none;
+    }
+    .hero-title {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 4.2rem;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      color: #F8FAFC;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7);
+    }
+    .hero-title .highlight {
+      color: #A3E635;
+    }
+    .hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: #94A3B8;
+      margin-top: 0.5rem;
+      letter-spacing: 0.04em;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .left-button {
+      background-color: #0C0A09;
+      color: #F8FAFC;
+      border-radius: 10px;
+      padding: 1rem 2.8rem;
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(163, 230, 53, 0.25);
+      transition: all 0.3s ease;
+      pointer-events: auto;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 1.8rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+    .left-button:hover {
+      background-color: #A3E635;
+      color: #0C0A09;
+      border-color: #A3E635;
+      transform: scale(1.03);
+      box-shadow: 0 8px 50px rgba(163, 230, 53, 0.15);
+    }
+
+    /* ===== STATISTICS ===== */
+    .stat-number {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 3.2rem;
+      color: #A3E635;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    /* ===== KINETIC CARDS ===== */
+    .kinetic-card {
+      background: rgba(12, 10, 9, 0.6);
+      border: 1px solid rgba(30, 41, 59, 0.4);
+      border-radius: 8px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.1s linear;
+      will-change: transform, box-shadow;
+      cursor: default;
+    }
+    .kinetic-card:hover {
+      transform: translate(-8px, -8px);
+      box-shadow: 12px 12px 0 rgba(12, 10, 9, 0.9), 0 0 40px rgba(163, 230, 53, 0.05);
+      border-color: rgba(163, 230, 53, 0.2);
+    }
+    .kinetic-card .icon-wrapper {
+      color: #94A3B8;
+      transition: color 0.15s ease;
+    }
+    .kinetic-card:hover .icon-wrapper {
+      color: #A3E635;
+    }
+    .kinetic-card h3 {
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #F8FAFC;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 0.8rem;
+    }
+    .kinetic-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: #94A3B8;
+      margin-top: 0.3rem;
+    }
+
+    /* ===== GALLERY FILTER ===== */
+    .gallery-item {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      will-change: transform, opacity;
+    }
+    .gallery-item.hidden {
+      opacity: 0;
+      transform: scale(0.92) translateY(12px);
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .filter-btn {
+      font-family: 'Fira Code', monospace;
+      font-weight: 400;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(30, 41, 59, 0.3);
+      color: #94A3B8;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .filter-btn:hover {
+      border-color: #A3E635;
+      color: #F8FAFC;
+    }
+    .filter-btn.active {
+      background: #A3E635;
+      border-color: #A3E635;
+      color: #0C0A09;
+      font-weight: 600;
+    }
+
+    /* ===== CONTACT GLOW ===== */
+    .glow-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.4);
+      color: #F8FAFC;
+      padding: 0.75rem 0.5rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+    }
+    .glow-input:focus {
+      border-bottom-color: #A3E635;
+      box-shadow: 0 4px 24px rgba(163, 230, 53, 0.08);
+    }
+    .glow-input::placeholder {
+      color: rgba(148, 163, 184, 0.3);
+      font-weight: 300;
+    }
+
+    .btn-submit {
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: transparent;
+      color: #F8FAFC;
+      border: 1px solid #A3E635;
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+    .btn-submit:hover {
+      background: #A3E635;
+      color: #0C0A09;
+    }
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ===== TOAST HOLOGRAM ===== */
+    .toast-holo {
+      background: rgba(12, 10, 9, 0.92);
+      border: 1px solid #A3E635;
+      box-shadow: 0 0 40px rgba(163, 230, 53, 0.05), inset 0 0 40px rgba(163, 230, 53, 0.02);
+      transform: translateY(80px) scale(0.95);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+      backdrop-filter: blur(8px);
+    }
+    .toast-holo.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    .toast-holo .toast-icon {
+      color: #A3E635;
+      font-size: 1.2rem;
+      margin-right: 0.75rem;
+    }
+
+    /* ===== SOCIAL LASER BLINK ===== */
+    .social-icon {
+      font-family: 'Inter', sans-serif;
+      transition: color 0.15s ease, transform 0.15s ease;
+      color: #475569;
+      display: inline-block;
+    }
+    .social-icon:hover {
+      color: #A3E635;
+      transform: scale(1.15);
+      animation: laserBlink 0.6s ease 2;
+    }
+    @keyframes laserBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero-content {
+        left: 5%;
+        top: auto;
+        bottom: 25%;
+        transform: none;
+        max-width: 90%;
+      }
+      .hero-title {
+        font-size: 2.8rem;
+      }
+      .hero-sub {
+        font-size: 0.95rem;
+      }
+      .left-button {
+        padding: 0.8rem 1.8rem;
+        font-size: 0.8rem;
+      }
+      .stat-number {
+        font-size: 2.2rem;
+      }
+      .interior-reveal {
+        clip-path: circle(80px at var(--tx, 50%) var(--ty, 50%));
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      .hero-content {
+        bottom: 30%;
+      }
+      .interior-reveal {
+        clip-path: circle(60px at var(--tx, 50%) var(--ty, 50%));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="nav-brutal fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3 flex items-center justify-between">
+    <div class="font-mono font-bold text-xl tracking-tight">
+      <span class="text-white">XENO</span><span class="text-lime-400">LITH</span>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#hero" class="nav-link">Beranda</a>
+      <a href="#stats" class="nav-link">Statistik</a>
+      <a href="#services" class="nav-link">Proyek</a>
+      <a href="#gallery" class="nav-link">Arsip</a>
+      <a href="#contact" class="nav-link">Konsultasi</a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-4">
+      <a href="#contact" class="btn-capsule">Mulai Cetak Biru</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburgerBtn" class="md:hidden flex flex-col gap-1.5 p-1 focus:outline-none" aria-label="Toggle menu">
+      <span class="block w-7 h-0.5 bg-white transition-all duration-300"></span>
+      <span class="block w-7 h-0.5 bg-white transition-all duration-300"></span>
+      <span class="block w-7 h-0.5 bg-white transition-all duration-300"></span>
+    </button>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobileNav" class="md:hidden fixed top-[64px] left-0 w-full bg-neutral-950/98 border-b border-slate-800/50 transform -translate-y-full transition-transform duration-300 ease-in-out">
+      <div class="flex flex-col items-center gap-5 py-8 text-sm font-mono text-slate-400">
+        <a href="#hero" class="mobile-link hover:text-white transition-colors">Beranda</a>
+        <a href="#stats" class="mobile-link hover:text-white transition-colors">Statistik</a>
+        <a href="#services" class="mobile-link hover:text-white transition-colors">Proyek</a>
+        <a href="#gallery" class="mobile-link hover:text-white transition-colors">Arsip</a>
+        <a href="#contact" class="mobile-link hover:text-white transition-colors">Konsultasi</a>
+        <a href="#contact" class="btn-capsule text-sm">Mulai Cetak Biru</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO (IMMERSIVE REVEAL) ==================== -->
+  <section id="hero" class="hero-container">
+    <!-- Base Background (exterior brutalist) -->
+    <img class="base-bg" 
+         src="https://images.unsplash.com/photo-1486718448742-163732cd1544?w=1400&q=80" 
+         alt="Exterior brutalist structure" 
+         loading="eager" />
+
+    <!-- Interior Reveal Layer (luxury villa interior) -->
+    <img class="interior-reveal" 
+         id="interiorReveal"
+         src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1400&q=80" 
+         alt="Luxury villa interior reveal" 
+         loading="eager" />
+
+    <!-- Overlay gradasi -->
+    <div class="hero-overlay"></div>
+
+    <!-- Hero Content (kiri bawah) -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="highlight">Spatial</span><br />
+        Brutalism
+      </h1>
+      <p class="hero-sub">Obsidian Cliffside · Brutalist Oasis · Sub-Zero Pavilion</p>
+      <a href="#contact" class="left-button">Eksplorasi Ruang</a>
+    </div>
+  </section>
+
+  <!-- ==================== STATISTICS ==================== -->
+  <section id="stats" class="py-20 bg-neutral-950 border-b border-slate-800/50">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <div class="stat-number" data-target="420">0</div>
+        <p class="text-sm font-mono uppercase tracking-widest text-slate-400 mt-1">K+ Sqft Dirancang</p>
+      </div>
+      <div>
+        <div class="stat-number" data-target="18">0</div>
+        <p class="text-sm font-mono uppercase tracking-widest text-slate-400 mt-1">World Awards</p>
+      </div>
+      <div>
+        <div class="stat-number" data-target="100">0</div>
+        <p class="text-sm font-mono uppercase tracking-widest text-slate-400 mt-1">% Struktur Ekstrem</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES (KINETIC CARDS) ==================== -->
+  <section id="services" class="py-20 bg-neutral-950">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-mono font-bold text-center mb-12">
+        <span class="text-white">Proyek</span> <span class="text-lime-400">Andalan</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Card 1: Obsidian Cliffside -->
+        <div class="kinetic-card">
+          <div class="icon-wrapper text-4xl">
+            <i data-lucide="mountain"></i>
+          </div>
+          <h3>Obsidian Cliffside</h3>
+          <p>Vila tebing dengan struktur beton ekspos dan pemandangan laut dramatis.</p>
+        </div>
+        <!-- Card 2: Brutalist Oasis -->
+        <div class="kinetic-card">
+          <div class="icon-wrapper text-4xl">
+            <i data-lucide="droplets"></i>
+          </div>
+          <h3>Brutalist Oasis</h3>
+          <p>Sanctuary gurun dengan kolam infinity dan dinding batu monumental.</p>
+        </div>
+        <!-- Card 3: Sub-Zero Pavilion -->
+        <div class="kinetic-card">
+          <div class="icon-wrapper text-4xl">
+            <i data-lucide="snowflake"></i>
+          </div>
+          <h3>Sub-Zero Pavilion</h3>
+          <p>Paviliun es dengan material termal dan fasad kaca berlapis ganda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GALLERY (ARCHITECTURE ARCHIVE) ==================== -->
+  <section id="gallery" class="py-20 bg-neutral-950 border-t border-slate-800/50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-mono font-bold text-center mb-8">
+        <span class="text-white">Arsip</span> <span class="text-lime-400">Struktural</span>
+      </h2>
+
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="ocean">Ocean</button>
+        <button class="filter-btn" data-filter="desert">Desert</button>
+        <button class="filter-btn" data-filter="alpine">Alpine</button>
+      </div>
+
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+        <!-- JS akan isi -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT (SECURE BRIEF FORM) ==================== -->
+  <section id="contact" class="py-20 bg-neutral-950 border-t border-slate-800/50">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-mono font-bold text-center mb-10">
+        <span class="text-white">Konsultasi</span> <span class="text-lime-400">Proyek</span>
+      </h2>
+      <form id="contactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <input type="text" id="nameInput" placeholder="Nama Perusahaan" required
+                 class="glow-input" />
+        </div>
+        <div>
+          <input type="email" id="emailInput" placeholder="Alamat Email" required
+                 class="glow-input" />
+        </div>
+        <div>
+          <input type="text" id="projectInput" placeholder="Nama Proyek" required
+                 class="glow-input" />
+        </div>
+        <div>
+          <input type="text" id="locationInput" placeholder="Lokasi (kota/negara)" required
+                 class="glow-input" />
+        </div>
+        <div class="md:col-span-2">
+          <input type="number" id="areaInput" placeholder="Perkiraan Luas (m²)" required min="10"
+                 class="glow-input" />
+        </div>
+        <div class="md:col-span-2">
+          <textarea id="messageInput" rows="4" placeholder="Deskripsi proyek, gaya arsitektur, anggaran..." 
+                    class="glow-input resize-y"></textarea>
+        </div>
+        <div class="md:col-span-2">
+          <button id="submitBtn" type="submit" class="btn-submit flex items-center justify-center gap-3">
+            <span id="btnText">Kirim Brief</span>
+            <i id="btnSpinner" data-lucide="loader-circle" class="animate-spin hidden w-5 h-5"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-neutral-950 border-t border-slate-800/50 py-12">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h4 class="font-mono font-bold text-sm text-lime-400 uppercase tracking-wider">XENOLITH</h4>
+        <p class="text-slate-500 text-xs mt-2">&copy; 2026 Xenolith Architecture Lab. All rights reserved.</p>
+      </div>
+      <div>
+        <h4 class="font-mono font-bold text-xs text-slate-400 uppercase tracking-wider">Peta Situs</h4>
+        <ul class="space-y-1 text-xs text-slate-500 mt-2">
+          <li><a href="#hero" class="hover:text-lime-400 transition">Beranda</a></li>
+          <li><a href="#stats" class="hover:text-lime-400 transition">Statistik</a></li>
+          <li><a href="#services" class="hover:text-lime-400 transition">Proyek</a></li>
+          <li><a href="#gallery" class="hover:text-lime-400 transition">Arsip</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-mono font-bold text-xs text-slate-400 uppercase tracking-wider">Regulasi</h4>
+        <ul class="space-y-1 text-xs text-slate-500 mt-2">
+          <li>IBC 2024 Compliance</li>
+          <li>LEED Platinum Ready</li>
+          <li>Seismic Zone Design</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-mono font-bold text-xs text-slate-400 uppercase tracking-wider">Jejaring</h4>
+        <div class="flex gap-4 mt-2">
+          <a href="#" aria-label="Instagram" class="social-icon text-slate-500 text-xl"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="LinkedIn" class="social-icon text-slate-500 text-xl"><i data-lucide="linkedin"></i></a>
+          <a href="#" aria-label="YouTube" class="social-icon text-slate-500 text-xl"><i data-lucide="youtube"></i></a>
+          <a href="#" aria-label="Behance" class="social-icon text-slate-500 text-xl"><i data-lucide="figma"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="toast-holo fixed bottom-6 right-6 z-[999] rounded-lg px-6 py-4 max-w-sm flex items-center">
+    <span class="toast-icon">◈</span>
+    <span id="toastMessage" class="text-slate-200 font-mono text-sm">Brief terkirim!</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    /**
+     * ============================================================
+     *  Xenolith Architecture Lab – Immersive Reveal + All Logic
+     *  Menggunakan optional chaining (?.) dan dibungkus DOMContentLoaded.
+     * ============================================================
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // =============================================================
+      //  1. NAVIGATION – STATE MACHINE
+      // =============================================================
+      const hamburgerBtn = document.querySelector('#hamburgerBtn');
+      const mobileNav = document.querySelector('#mobileNav');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+      let navOpen = false;
+
+      function toggleNav() {
+        navOpen = !navOpen;
+        if (mobileNav) {
+          mobileNav.classList.toggle('-translate-y-full', !navOpen);
+          mobileNav.classList.toggle('translate-y-0', navOpen);
+        }
+        if (hamburgerBtn) {
+          const bars = hamburgerBtn.querySelectorAll('span');
+          if (bars.length === 3) {
+            if (navOpen) {
+              bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+              bars[1].style.opacity = '0';
+              bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+              bars[0].style.transform = 'none';
+              bars[1].style.opacity = '1';
+              bars[2].style.transform = 'none';
+            }
+          }
+        }
+      }
+
+      hamburgerBtn?.addEventListener('click', toggleNav);
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (navOpen) toggleNav();
+        });
+      });
+      window.addEventListener('orientationchange', function() {
+        if (navOpen) toggleNav();
+      });
+
+      // =============================================================
+      //  2. IMMERSIVE REVEAL – MOUSE TRACKING
+      // =============================================================
+      const heroContainer = document.querySelector('.hero-container');
+      const interiorReveal = document.querySelector('#interiorReveal');
+
+      function updateReveal(e) {
+        if (!heroContainer || !interiorReveal) return;
+        const rect = heroContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const tx = x - 24;
+        const ty = y - 18;
+        interiorReveal.style.setProperty('--tx', tx + 'px');
+        interiorReveal.style.setProperty('--ty', ty + 'px');
+      }
+
+      heroContainer?.addEventListener('mousemove', updateReveal);
+
+      // Touch support
+      heroContainer?.addEventListener('touchmove', function(e) {
+        const touch = e.touches[0];
+        if (!touch) return;
+        const rect = heroContainer.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        const tx = x - 24;
+        const ty = y - 18;
+        interiorReveal?.style.setProperty('--tx', tx + 'px');
+        interiorReveal?.style.setProperty('--ty', ty + 'px');
+      }, { passive: true });
+
+      // =============================================================
+      //  3. STATISTICS – INTERSECTION OBSERVER
+      // =============================================================
+      const statNumbers = document.querySelectorAll('.stat-number');
+      let statsAnimated = false;
+
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !statsAnimated) {
+            statsAnimated = true;
+            statNumbers.forEach(el => {
+              const target = parseInt(el.getAttribute('data-target'), 10);
+              if (isNaN(target)) return;
+              let current = 0;
+              const increment = Math.ceil(target / 45);
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                  el.textContent = target + (el.getAttribute('data-target') === '420' ? 'K+' : '');
+                  clearInterval(timer);
+                } else {
+                  el.textContent = current;
+                }
+              }, 25);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      statNumbers.forEach(el => statsObserver.observe(el));
+
+      // =============================================================
+      //  4. GALLERY – DATA FILTER
+      // =============================================================
+      const galleryData = [
+        { title: 'Cliffside Villa, Santorini', category: 'ocean', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&q=80' },
+        { title: 'Desert Sanctuary, Dubai', category: 'desert', img: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80' },
+        { title: 'Alpine Lodge, Swiss Alps', category: 'alpine', img: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=400&q=80' },
+        { title: 'Oceanic Observatory, NZ', category: 'ocean', img: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&q=80' },
+        { title: 'Desert Pavilion, Arizona', category: 'desert', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80' },
+        { title: 'Glacial Retreat, Norway', category: 'alpine', img: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?w=400&q=80' },
+      ];
+
+      const grid = document.querySelector('#galleryGrid');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      function renderGallery(filter = 'all') {
+        if (!grid) return;
+        const filtered = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
+        const currentItems = grid.querySelectorAll('.gallery-item');
+        currentItems.forEach(item => {
+          item.classList.add('hidden');
+        });
+
+        setTimeout(() => {
+          grid.innerHTML = '';
+          filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item relative rounded-md overflow-hidden bg-neutral-900 aspect-[4/3] border border-slate-800/30';
+            div.innerHTML = `
+              <img src="${item.img}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-neutral-950/90 to-transparent">
+                <p class="text-white font-mono text-xs font-semibold">${item.title}</p>
+              </div>
+            `;
+            grid.appendChild(div);
+          });
+          grid.querySelectorAll('.gallery-item').forEach(el => {
+            el.classList.remove('hidden');
+            el.style.opacity = '0';
+            el.style.transform = 'scale(0.95)';
+            requestAnimationFrame(() => {
+              el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              el.style.opacity = '1';
+              el.style.transform = 'scale(1)';
+            });
+          });
+        }, 300);
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderGallery(this.getAttribute('data-filter'));
+        });
+      });
+      renderGallery('all');
+
+      // =============================================================
+      //  5. CONTACT FORM – VALIDASI, LOADING, TOAST
+      // =============================================================
+      const form = document.querySelector('#contactForm');
+      const emailInput = document.querySelector('#emailInput');
+      const projectInput = document.querySelector('#projectInput');
+      const areaInput = document.querySelector('#areaInput');
+      const submitBtn = document.querySelector('#submitBtn');
+      const btnText = document.querySelector('#btnText');
+      const btnSpinner = document.querySelector('#btnSpinner');
+      const toast = document.querySelector('#toast');
+      const toastMsg = document.querySelector('#toastMessage');
+
+      function showToast(message, isSuccess = true) {
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = message;
+        toast.style.borderColor = isSuccess ? '#A3E635' : '#EF4444';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      form?.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = emailInput?.value?.trim() || '';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast('❌ Email tidak valid!', false);
+          return;
+        }
+
+        const project = projectInput?.value?.trim() || '';
+        if (project.length < 3) {
+          showToast('❌ Nama proyek minimal 3 karakter!', false);
+          return;
+        }
+
+        const area = parseInt(areaInput?.value, 10);
+        if (isNaN(area) || area < 10) {
+          showToast('❌ Luas minimal 10 m²!', false);
+          return;
+        }
+
+        if (submitBtn && btnText && btnSpinner) {
+          submitBtn.disabled = true;
+          btnText.textContent = 'MENGALIBRASI STRUKTUR RUANG...';
+          btnSpinner.classList.remove('hidden');
+        }
+
+        setTimeout(() => {
+          if (submitBtn && btnText && btnSpinner) {
+            submitBtn.disabled = false;
+            btnText.textContent = 'Kirim Brief';
+            btnSpinner.classList.add('hidden');
+          }
+          showToast('✅ Brief berhasil dikirim!', true);
+          form?.reset();
+        }, 2000);
+      });
+
+      // =============================================================
+      //  6. LUCIDE ICONS
+      // =============================================================
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      console.log('✅ Xenolith Architecture Lab – siap dan stabil.');
+    });
+  </script>
+
+</body>
+</html>

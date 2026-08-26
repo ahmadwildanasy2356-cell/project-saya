@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Bimbel Bee Smart | Belajar Fun & Happy</title>
+    <meta name="description" content="Bimbel Bee Smart menyediakan bimbingan belajar untuk kelas TK dan SD dengan pilihan privat, belajar berdua, dan kelas klasikal maksimal 5 orang. Guru datang langsung ke rumah." />
+
+    <!-- ===== PRELOAD ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+
+    <!-- ===== AOS ===== -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- ===== FONTAWESOME ===== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- ===== TAILWIND ===== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065' },
+                        sage: { 50: '#f3f7f4', 100: '#e0ebe4', 200: '#c2d6cb', 300: '#a3c1b2', 400: '#85ab99', 500: '#6d9581', 600: '#567a67', 700: '#3f5f4d', 800: '#2a4534', 900: '#1a2e22' },
+                        honey: { 50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* === GLOBAL === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #faf8f5;
+            overflow-x: hidden;
+            color: #1e1b2e;
+        }
+
+        /* === LOADING SCREEN === */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #faf8f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #loading-screen .loader-flower {
+            font-size: 4rem;
+            animation: flowerGrow 2s ease forwards;
+        }
+        @keyframes flowerGrow {
+            0% {
+                transform: scale(0.2) rotate(-20deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(0.6) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1) rotate(5deg);
+                opacity: 1;
+            }
+        }
+        #loading-screen .loader-text {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #4c1d95;
+            letter-spacing: 2px;
+        }
+        #loading-screen .loader-bar {
+            width: 180px;
+            height: 3px;
+            background: #e5e0eb;
+            border-radius: 99px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        #loading-screen .loader-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7c3aed, #6d9581);
+            border-radius: 99px;
+            transition: width 0.3s ease;
+        }
+        #loading-screen .loader-sub {
+            font-size: 0.75rem;
+            color: #8b7a9e;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* === THREE.JS CANVAS === */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === GLASS NAVBAR === */
+        .glass-nav {
+            background: rgba(255, 252, 248, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(76, 29, 149, 0.06);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+        .glass-nav.scrolled {
+            background: rgba(255, 252, 248, 0.92);
+            box-shadow: 0 4px 30px rgba(76, 29, 149, 0.06);
+        }
+
+        /* === BUTTON === */
+        .btn-primary {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(76, 29, 149, 0.25);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(76, 29, 149, 0.35);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #4c1d95;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            border: 2px solid rgba(76, 29, 149, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-outline:hover {
+            border-color: #4c1d95;
+            background: rgba(76, 29, 149, 0.05);
+            transform: translateY(-2px);
+        }
+        .btn-wa {
+            background: #25D366;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-wa:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        /* === MOBILE MENU === */
+        #mobile-menu {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 600px;
+            opacity: 1;
+            padding-top: 14px;
+            padding-bottom: 18px;
+        }
+
+        /* === GLASS CARD === */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 40px rgba(76, 29, 149, 0.06);
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf8f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c3aed;
+            border-radius: 99px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+        }
+
+        /* === FAQ ACCORDION === */
+        .faq-item {
+            border-bottom: 1px solid rgba(76, 29, 149, 0.06);
+            padding: 0.75rem 0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1e1b2e;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+            gap: 1rem;
+        }
+        .faq-question:hover {
+            color: #4c1d95;
+        }
+        .faq-question .icon {
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            color: #7c3aed;
+        }
+        .faq-question.open .icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+            padding: 0 0.5rem;
+            color: #4a4560;
+        }
+        .faq-answer.open {
+            max-height: 300px;
+            opacity: 1;
+            padding: 0.75rem 0.5rem 0.25rem;
+        }
+
+        /* === FLOATING WHATSAPP === */
+        .wa-float {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            background: #25D366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.35);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+        .wa-float:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.45);
+        }
+        .wa-float .label {
+            display: none;
+            position: absolute;
+            right: 70px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+        }
+        .wa-float:hover .label {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .wa-float {
+                width: 56px;
+                height: 56px;
+                font-size: 1.5rem;
+                bottom: 1rem;
+                right: 1rem;
+            }
+            .wa-float .label {
+                display: none !important;
+            }
+        }
+
+        /* === SECTION DIVIDER === */
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #7c3aed, #6d9581);
+            margin: 0.5rem auto 1.5rem;
+        }
+
+        /* === CUSTOM CURSOR === */
+        .custom-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(124, 58, 237, 0.5);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor.hover {
+            width: 28px;
+            height: 28px;
+            background: rgba(124, 58, 237, 0.15);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+        @media (max-width: 1024px) {
+            .custom-cursor {
+                display: none;
+            }
+        }
+
+        /* === SCROLL INDICATOR === */
+        .scroll-indicator {
+            animation: bounceDown 2s ease-in-out infinite;
+        }
+        @keyframes bounceDown {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(12px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- LOADING SCREEN                                               -->
+    <!-- ============================================================ -->
+    <div id="loading-screen">
+        <div class="loader-flower">🌱</div>
+        <div class="loader-text">Bee Smart</div>
+        <div class="loader-bar">
+            <div class="loader-bar-inner" id="loader-bar-inner"></div>
+        </div>
+        <div class="loader-sub">sedang menumbuhkan bunga...</div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- CUSTOM CURSOR                                                -->
+    <!-- ============================================================ -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+
+    <!-- ============================================================ -->
+    <!-- THREE.JS CANVAS                                               -->
+    <!-- ============================================================ -->
+    <div id="three-canvas"></div>
+
+    <!-- ============================================================ -->
+    <!-- FLOATING WHATSAPP                                            -->
+    <!-- ============================================================ -->
+    <a href="https://wa.me/6282231287181?text=Halo%20Cikgu%20Bu%20As%2C%20saya%20ingin%20mendapatkan%20informasi%20tentang%20Bimbel%20Bee%20Smart."
+    target="_blank" class="wa-float" aria-label="Chat WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="label">Chat dengan Bee Smart</span>
+</a>
+
+<!-- ============================================================ -->
+<!-- NAVBAR                                                        -->
+<!-- ============================================================ -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-nav" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 md:h-20">
+
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center gap-2.5 group">
+                <span class="text-2xl text-violet-600 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-bug"></i>
+                </span>
+                <div class="leading-tight">
+                    <span class="block text-sm md:text-base font-bold text-violet-900">Bee Smart</span>
+                    <span class="block text-[10px] md:text-xs text-slate-400 font-medium">Belajar · Fun · Happy</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="#hero" class="hover:text-violet-700 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full">Beranda</a>
+                <a href="#tentang" class="hover:text-violet-700 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+                <a href="#program" class="hover:text-violet-700 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full">Program</a>
+                <a href="#kelas" class="hover:text-violet-700 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full">Kelas</a>
+                <a href="#keunggulan" class="hover:text-violet-700 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full">Keunggulan</a>
+                <a href="#faq" class="hover:text-violet-700 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full">FAQ</a>
+                <a href="#kontak" class="btn-primary text-sm py-2 px-5">
+                    <i class="fas fa-pencil-alt"></i> Daftar
+                </a>
+            </nav>
+
+            <!-- Mobile Hamburger -->
+            <button id="hamburger-btn" class="md:hidden text-2xl text-slate-700 focus:outline-none" aria-label="Buka menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden flex flex-col gap-3 text-sm font-medium text-slate-600 border-t border-violet-100/30">
+            <a href="#hero" class="hover:text-violet-700 transition py-1.5 px-2 rounded-lg hover:bg-violet-50">Beranda</a>
+            <a href="#tentang" class="hover:text-violet-700 transition py-1.5 px-2 rounded-lg hover:bg-violet-50">Tentang</a>
+            <a href="#program" class="hover:text-violet-700 transition py-1.5 px-2 rounded-lg hover:bg-violet-50">Program</a>
+            <a href="#kelas" class="hover:text-violet-700 transition py-1.5 px-2 rounded-lg hover:bg-violet-50">Kelas</a>
+            <a href="#keunggulan" class="hover:text-violet-700 transition py-1.5 px-2 rounded-lg hover:bg-violet-50">Keunggulan</a>
+            <a href="#faq" class="hover:text-violet-700 transition py-1.5 px-2 rounded-lg hover:bg-violet-50">FAQ</a>
+            <a href="#kontak" class="btn-primary text-center justify-center py-2.5 px-4 rounded-full">Daftar Sekarang</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- HERO SECTION                                                  -->
+<!-- ============================================================ -->
+<section id="hero" class="relative min-h-screen flex items-center pt-20 pb-12 md:pt-28 md:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Background overlay agar teks terbaca -->
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-50/30 via-white/40 to-sage-50/30 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-10 items-center relative z-10">
+        <!-- Kiri: Copy -->
+        <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1.5 rounded-full border border-violet-200/60 mb-4">
+                <i class="fas fa-bug mr-1.5"></i> BIMBEL ANAK
+            </span>
+            <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-violet-900">
+                Belajar Jadi Lebih <br />
+                <span class="text-violet-600">Fun &amp; Happy!</span>
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-lg leading-relaxed">
+                Belajar bersama <span class="font-semibold text-violet-700">Cikgu Bu As</span> dengan suasana belajar yang nyaman, menyenangkan, dan sesuai kebutuhan siswa.
+            </p>
+            <div class="mt-7 flex flex-wrap gap-4">
+                <a href="#kontak" class="btn-primary">
+                    <i class="fab fa-whatsapp"></i> Daftar Sekarang
+                </a>
+                <a href="#program" class="btn-outline">
+                    Jelajahi Program <i class="fas fa-arrow-down ml-1"></i>
+                </a>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-6 text-sm text-slate-500">
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> TK</span>
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> SD</span>
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> Privat</span>
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> Kelompok Kecil</span>
+            </div>
+        </div>
+
+        <!-- Kanan: Placeholder untuk 3D (akan diisi Three.js) -->
+        <div class="flex justify-center md:justify-end" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
+            <div class="relative w-full max-w-sm aspect-square rounded-3xl bg-gradient-to-br from-violet-100/40 via-white/60 to-sage-100/40 border border-white/40 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-violet-200/20 overflow-hidden">
+                <div class="text-center">
+                    <span class="text-7xl sm:text-8xl block mb-3">🐝</span>
+                    <span class="block text-xl font-bold text-violet-900">Bee Smart</span>
+                    <span class="block text-sm text-slate-500">Belajar Fun &amp; Happy</span>
+                    <div class="flex justify-center gap-4 mt-3 text-2xl text-violet-400/60">
+                        <i class="fas fa-book"></i>
+                        <i class="fas fa-pencil-alt"></i>
+                        <i class="fas fa-smile"></i>
+                    </div>
+                </div>
+                <!-- Floating glow -->
+                <div class="absolute -inset-8 bg-violet-200/10 rounded-full blur-3xl -z-10"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-400 scroll-indicator hidden md:block">
+        <i class="fas fa-chevron-down text-xl"></i>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TENTANG SECTION                                               -->
+<!-- ============================================================ -->
+<section id="tentang" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-violet-50/20 to-transparent pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1 rounded-full border border-violet-200/50 mb-2">
+                <i class="fas fa-seedling mr-1"></i> Tentang Kami
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-violet-900">
+                Kenalan dengan <span class="text-violet-600">Bee Smart</span>
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-slate-500 text-sm max-w-2xl mx-auto">
+                Teman belajar yang membuat proses belajar menjadi lebih menyenangkan.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div data-aos="fade-right" data-aos-delay="100">
+                <div class="glass-card p-6 md:p-8">
+                    <p class="text-slate-700 leading-relaxed text-base">
+                        <span class="font-bold text-violet-700">Bimbel Bee Smart</span> hadir untuk memberikan pengalaman belajar yang nyaman dan menyenangkan bagi anak, dengan pilihan pembelajaran privat maupun kelompok kecil.
+                    </p>
+                    <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-violet-50/60 rounded-xl p-3 border border-violet-100/30">
+                            <span class="text-2xl block text-violet-500"><i class="fas fa-book-open"></i></span>
+                            <span class="text-xs font-semibold text-slate-700">Belajar</span>
+                        </div>
+                        <div class="bg-violet-50/60 rounded-xl p-3 border border-violet-100/30">
+                            <span class="text-2xl block text-violet-500"><i class="fas fa-seedling"></i></span>
+                            <span class="text-xs font-semibold text-slate-700">Bertumbuh</span>
+                        </div>
+                        <div class="bg-violet-50/60 rounded-xl p-3 border border-violet-100/30">
+                            <span class="text-2xl block text-violet-500"><i class="fas fa-star"></i></span>
+                            <span class="text-xs font-semibold text-slate-700">Berkembang</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-aos="fade-left" data-aos-delay="200">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-br from-violet-100/50 to-sage-100/50 rounded-2xl p-5 text-center border border-white/40 shadow-sm">
+                        <span class="text-3xl block text-violet-500 mb-2"><i class="fas fa-user-graduate"></i></span>
+                        <span class="text-sm font-semibold text-slate-700">Cikgu Bu As</span>
+                        <span class="text-xs text-slate-500 block">Pendidik Berpengalaman</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-violet-100/50 to-sage-100/50 rounded-2xl p-5 text-center border border-white/40 shadow-sm">
+                        <span class="text-3xl block text-violet-500 mb-2"><i class="fas fa-home"></i></span>
+                        <span class="text-sm font-semibold text-slate-700">Guru ke Rumah</span>
+                        <span class="text-xs text-slate-500 block">Belajar Praktis</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-violet-100/50 to-sage-100/50 rounded-2xl p-5 text-center border border-white/40 shadow-sm">
+                        <span class="text-3xl block text-violet-500 mb-2"><i class="fas fa-smile"></i></span>
+                        <span class="text-sm font-semibold text-slate-700">Fun Learning</span>
+                        <span class="text-xs text-slate-500 block">Metode Menyenangkan</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-violet-100/50 to-sage-100/50 rounded-2xl p-5 text-center border border-white/40 shadow-sm">
+                        <span class="text-3xl block text-violet-500 mb-2"><i class="fas fa-calendar-alt"></i></span>
+                        <span class="text-sm font-semibold text-slate-700">Jadwal Fleksibel</span>
+                        <span class="text-xs text-slate-500 block">Menyesuaikan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PROGRAM SECTION                                               -->
+<!-- ============================================================ -->
+<section id="program" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-violet-50/10 to-white relative">
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1 rounded-full border border-violet-200/50 mb-2">
+                <i class="fas fa-graduation-cap mr-1"></i> Program Belajar
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-violet-900">
+                Program <span class="text-violet-600">Belajar</span>
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-slate-500 text-sm max-w-2xl mx-auto">
+                Pilihan pembelajaran untuk kebutuhan anak.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- TK -->
+            <div class="glass-card p-6 md:p-8 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-start gap-4">
+                    <span class="text-4xl text-violet-400"><i class="fas fa-book"></i></span>
+                    <div>
+                        <span class="inline-block bg-violet-100 text-violet-700 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">KELAS TK</span>
+                        <h3 class="text-xl font-bold text-violet-900">🧸 Kelas TK</h3>
+                        <ul class="mt-3 space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check-circle text-violet-500 mr-2"></i> 📖 Membaca</li>
+                            <li><i class="fas fa-check-circle text-violet-500 mr-2"></i> 🔢 Jarimatika</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SD -->
+            <div class="glass-card p-6 md:p-8 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-start gap-4">
+                    <span class="text-4xl text-sage-400"><i class="fas fa-school"></i></span>
+                    <div>
+                        <span class="inline-block bg-sage-100 text-sage-700 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">KELAS SD</span>
+                        <h3 class="text-xl font-bold text-violet-900">🎒 Kelas SD</h3>
+                        <ul class="mt-3 space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check-circle text-sage-500 mr-2"></i> 📚 Semua Mata Pelajaran</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KELAS SECTION                                                 -->
+<!-- ============================================================ -->
+<section id="kelas" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1 rounded-full border border-violet-200/50 mb-2">
+                <i class="fas fa-users mr-1"></i> Pilihan Kelas
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-violet-900">
+                Pilihan <span class="text-violet-600">Kelas</span>
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-slate-500 text-sm max-w-2xl mx-auto">
+                Pilih mode belajar yang paling sesuai dengan kebutuhan anak.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Privat -->
+            <div class="glass-card p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-user"></i></span>
+                <span class="inline-block bg-violet-100 text-violet-700 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">PRIVAT</span>
+                <h3 class="text-xl font-bold text-violet-900">1 Orang</h3>
+                <p class="text-sm text-slate-500 mt-2">Fokus penuh dari Cikgu Bu As</p>
+            </div>
+
+            <!-- Berdua -->
+            <div class="glass-card p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-users"></i></span>
+                <span class="inline-block bg-violet-100 text-violet-700 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">BELAJAR BERDUA</span>
+                <h3 class="text-xl font-bold text-violet-900">2 Orang</h3>
+                <p class="text-sm text-slate-500 mt-2">Belajar bersama teman dekat</p>
+            </div>
+
+            <!-- Klasikal -->
+            <div class="glass-card p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-people-arrows"></i></span>
+                <span class="inline-block bg-violet-100 text-violet-700 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">KLASIKAL</span>
+                <h3 class="text-xl font-bold text-violet-900">Max 5 Orang</h3>
+                <p class="text-sm text-slate-500 mt-2">Kelompok kecil yang kondusif</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- HOME VISIT - GURU DATANG KE RUAH                              -->
+<!-- ============================================================ -->
+<section id="homevisit" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-violet-50/20 to-white relative">
+    <div class="max-w-4xl mx-auto relative z-10">
+        <div class="glass-card p-8 md:p-12 text-center" data-aos="flip-up" data-aos-duration="1000">
+            <span class="text-6xl block mb-4">🏠</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-violet-900">
+                Guru Datang Langsung ke Rumah
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-slate-600 max-w-lg mx-auto leading-relaxed">
+                Belajar dengan lebih praktis dan nyaman di rumah. Orang tua tidak perlu repot mengantar-jemput.
+            </p>
+            <div class="mt-6 flex justify-center gap-6 text-sm text-slate-500">
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> Praktis</span>
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> Nyaman</span>
+                <span><i class="fas fa-check-circle text-violet-500 mr-1.5"></i> Fleksibel</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KEUNGGULAN SECTION                                            -->
+<!-- ============================================================ -->
+<section id="keunggulan" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1 rounded-full border border-violet-200/50 mb-2">
+                <i class="fas fa-star mr-1"></i> Keunggulan
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-violet-900">
+                Kenapa <span class="text-violet-600">Bee Smart</span>?
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="glass-card p-5 flex items-start gap-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="50">
+                <span class="text-2xl text-violet-400"><i class="fas fa-home"></i></span>
+                <div><h4 class="font-bold text-slate-800">Guru datang ke rumah</h4><p class="text-sm text-slate-500">Belajar praktis tanpa repot antar-jemput.</p></div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="100">
+                <span class="text-2xl text-violet-400"><i class="fas fa-user"></i></span>
+                <div><h4 class="font-bold text-slate-800">Privat 1 orang</h4><p class="text-sm text-slate-500">Fokus penuh pada perkembangan anak.</p></div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="150">
+                <span class="text-2xl text-violet-400"><i class="fas fa-users"></i></span>
+                <div><h4 class="font-bold text-slate-800">Belajar berdua</h4><p class="text-sm text-slate-500">Belajar bersama teman agar lebih seru.</p></div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="200">
+                <span class="text-2xl text-violet-400"><i class="fas fa-people-arrows"></i></span>
+                <div><h4 class="font-bold text-slate-800">Klasikal max 5 orang</h4><p class="text-sm text-slate-500">Interaktif namun tetap kondusif.</p></div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="250">
+                <span class="text-2xl text-violet-400"><i class="fas fa-smile"></i></span>
+                <div><h4 class="font-bold text-slate-800">Belajar Fun &amp; Happy</h4><p class="text-sm text-slate-500">Metode menyenangkan penuh kasih sayang.</p></div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="300">
+                <span class="text-2xl text-violet-400"><i class="fas fa-calendar-alt"></i></span>
+                <div><h4 class="font-bold text-slate-800">Jadwal menyesuaikan</h4><p class="text-sm text-slate-500">Fleksibel dengan waktu luang anak.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- HOW IT WORKS                                                  -->
+<!-- ============================================================ -->
+<section id="howitworks" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-violet-50/10 to-white relative">
+    <div class="max-w-4xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1 rounded-full border border-violet-200/50 mb-2">
+                <i class="fas fa-route mr-1"></i> Cara Kerja
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-violet-900">
+                Bagaimana <span class="text-violet-600">Mulai</span>?
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="space-y-4">
+            <div class="flex items-start gap-5 p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-violet-100/30" data-aos="fade-right" data-aos-delay="50">
+                <span class="flex-shrink-0 w-10 h-10 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center font-bold text-sm">1</span>
+                <div><h4 class="font-bold text-slate-800">Hubungi Kami</h4><p class="text-sm text-slate-500">Chat melalui WhatsApp dengan Cikgu Bu As.</p></div>
+            </div>
+            <div class="flex items-start gap-5 p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-violet-100/30" data-aos="fade-right" data-aos-delay="100">
+                <span class="flex-shrink-0 w-10 h-10 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center font-bold text-sm">2</span>
+                <div><h4 class="font-bold text-slate-800">Konsultasikan Kebutuhan</h4><p class="text-sm text-slate-500">Sampaikan kelas dan kebutuhan belajar anak.</p></div>
+            </div>
+            <div class="flex items-start gap-5 p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-violet-100/30" data-aos="fade-right" data-aos-delay="150">
+                <span class="flex-shrink-0 w-10 h-10 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center font-bold text-sm">3</span>
+                <div><h4 class="font-bold text-slate-800">Tentukan Jadwal</h4><p class="text-sm text-slate-500">Jadwal menyesuaikan kesepakatan dan ketersediaan.</p></div>
+            </div>
+            <div class="flex items-start gap-5 p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-violet-100/30" data-aos="fade-right" data-aos-delay="200">
+                <span class="flex-shrink-0 w-10 h-10 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center font-bold text-sm">4</span>
+                <div><h4 class="font-bold text-slate-800">Mulai Belajar</h4><p class="text-sm text-slate-500">Guru datang ke rumah dan belajar pun dimulai!</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCHEDULE & PAYMENT                                            -->
+<!-- ============================================================ -->
+<section id="schedule" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-5xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Schedule -->
+            <div class="glass-card p-6 md:p-8 text-center" data-aos="fade-right" data-aos-delay="100">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-calendar-alt"></i></span>
+                <h3 class="text-xl font-bold text-violet-900">Jadwal</h3>
+                <div class="section-divider mx-auto"></div>
+                <p class="text-slate-600 leading-relaxed">Menyesuaikan kesepakatan dan ketersediaan.</p>
+                <div class="mt-4 text-sm text-slate-500">
+                    <i class="fas fa-clock text-violet-400 mr-1.5"></i> Senin – Sabtu, 10.00 – 15.00
+                </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="glass-card p-6 md:p-8 text-center" data-aos="fade-left" data-aos-delay="200">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-wallet"></i></span>
+                <h3 class="text-xl font-bold text-violet-900">Pembayaran</h3>
+                <div class="section-divider mx-auto"></div>
+                <p class="text-slate-600 leading-relaxed">Bisa dikomunikasikan secara kekeluargaan. 💛</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FAQ SECTION                                                   -->
+<!-- ============================================================ -->
+<section id="faq" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-violet-50/10 to-white relative">
+    <div class="max-w-3xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down">
+            <span class="inline-block bg-violet-100 text-violet-700 text-xs font-semibold px-4 py-1 rounded-full border border-violet-200/50 mb-2">
+                <i class="fas fa-question-circle mr-1"></i> FAQ
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-violet-900">
+                Pertanyaan <span class="text-violet-600">Umum</span>
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="glass-card p-6 md:p-8">
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah guru datang ke rumah?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Ya, guru datang langsung ke rumah untuk memberikan pembelajaran yang lebih praktis dan nyaman.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah tersedia kelas privat?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Tersedia kelas privat untuk 1 orang dengan fokus penuh pada perkembangan anak.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah bisa belajar berdua?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Bisa! Tersedia pilihan belajar berdua agar anak lebih bersemangat bersama teman dekat.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Berapa maksimal siswa dalam kelas klasikal?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Maksimal 5 orang dalam satu kelas agar tetap kondusif dan interaktif.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apa program kelas TK?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Program TK meliputi Membaca dan Jarimatika (metode berhitung cepat menggunakan jari).</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apa program kelas SD?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Program SD mencakup semua mata pelajaran dan bimbingan PR sekolah.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="350">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah jadwal bisa menyesuaikan?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Jadwal sangat fleksibel dan dapat menyesuaikan dengan waktu luang anak.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Bagaimana pembayaran?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Pembayaran dapat dikomunikasikan secara kekeluargaan dan fleksibel.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FINAL GARDEN CTA                                              -->
+<!-- ============================================================ -->
+<section id="kontak" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-100/20 via-white to-sage-100/20 pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto relative z-10">
+        <div class="text-center" data-aos="zoom-in" data-aos-duration="1200">
+            <span class="text-7xl block mb-4">🌷</span>
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-violet-900 leading-tight">
+                Yuk, Mulai Belajar <br />
+                <span class="text-violet-600">Bersama Bee Smart!</span>
+            </h2>
+            <p class="mt-3 text-slate-600 max-w-md mx-auto">
+                Belajar Fun, Happy, dan menyenangkan bersama Cikgu Bu As.
+            </p>
+
+            <div class="mt-8 flex flex-col items-center gap-4">
+                <a href="https://wa.me/6282231287181?text=Halo%20Cikgu%20Bu%20As%2C%20saya%20ingin%20mendapatkan%20informasi%20tentang%20Bimbel%20Bee%20Smart."
+                target="_blank" class="btn-wa text-lg px-10 py-4">
+                <i class="fab fa-whatsapp"></i> 💬 Chat via WhatsApp
+            </a>
+            <span class="text-sm text-slate-400">0822-3128-7181</span>
+            <span class="text-xs text-slate-400 bg-white/60 px-4 py-1.5 rounded-full border border-violet-100/30">
+                <i class="fas fa-clock text-violet-400 mr-1"></i> Senin–Sabtu, 10.00–15.00
+            </span>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<footer class="bg-violet-950 text-white/70 border-t border-violet-800/50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl text-violet-300"><i class="fas fa-bug"></i></span>
+                <span class="font-bold text-white">Bee Smart</span>
+                <span class="text-violet-400/50 text-xs hidden sm:inline">· Belajar Fun &amp; Happy</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-5 text-violet-300/60">
+                <a href="#hero" class="hover:text-white transition">Beranda</a>
+                <a href="#tentang" class="hover:text-white transition">Tentang</a>
+                <a href="#program" class="hover:text-white transition">Program</a>
+                <a href="#kelas" class="hover:text-white transition">Kelas</a>
+                <a href="#keunggulan" class="hover:text-white transition">Keunggulan</a>
+                <a href="#faq" class="hover:text-white transition">FAQ</a>
+                <a href="#kontak" class="hover:text-white transition">Kontak</a>
+            </div>
+            <div class="text-xs text-violet-400/40">
+                <i class="fas fa-phone-alt mr-1"></i> 0822-3128-7181
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-violet-800/30 text-center text-xs text-violet-400/40">
+            © 2026 Bimbel Bee Smart. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS: AOS, GSAP, THREE.JS, INTERACTIONS                  -->
+<!-- ============================================================ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+</script>
+
+<script>
+    // ================================================================
+    // 1. AOS INIT
+    // ================================================================
+    AOS.init({
+        duration: 800,
+        once: false,
+        mirror: false,
+        easing: 'ease-out-cubic',
+    });
+
+    // ================================================================
+    // 2. LOADING SCREEN
+    // ================================================================
+    (function loadingScreen() {
+        const bar = document.getElementById('loader-bar-inner');
+        const screen = document.getElementById('loading-screen');
+        let progress = 0;
+
+        function updateLoading() {
+            progress += 1 + Math.random() * 3;
+            if (progress > 100) progress = 100;
+            bar.style.width = progress + '%';
+
+            // Update text based on progress
+            const sub = document.querySelector('.loader-sub');
+            if (progress < 30) sub.textContent = 'menumbuhkan akar...';
+            else if (progress < 60) sub.textContent = 'batang mulai tumbuh...';
+            else if (progress < 85) sub.textContent = 'kelopak membuka...';
+            else sub.textContent = 'bunga mekar! 🌸';
+
+            if (progress < 100) {
+                setTimeout(updateLoading, 80 + Math.random() * 120);
+            } else {
+                setTimeout(() => {
+                    screen.classList.add('hidden');
+                    // Start 3D scene after loading
+                    initThreeJS();
+                }, 400);
+            }
+        }
+        updateLoading();
+    })();
+
+    // ================================================================
+    // 3. THREE.JS 3D SCENE — BEE SMART LEARNING GARDEN
+    // ================================================================
+    let threeInitialized = false;
+
+    function initThreeJS() {
+        if (threeInitialized) return;
+        threeInitialized = true;
+
+        const container = document.getElementById('three-canvas');
+        if (!container) return;
+
+        const scene = new THREE.Scene();
+        scene.background = null;
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0.8, 6);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+            powerPreference: "high-performance",
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
+
+        // --- LIGHTS ---
+        const ambient = new THREE.AmbientLight(0x404060, 0.5);
+        scene.add(ambient);
+
+        const hemi = new THREE.HemisphereLight(0xffeedd, 0x446655, 0.8);
+        scene.add(hemi);
+
+        const sun = new THREE.DirectionalLight(0xffeedd, 1.2);
+        sun.position.set(5, 8, 4);
+        sun.castShadow = true;
+        sun.shadow.mapSize.width = 1024;
+        sun.shadow.mapSize.height = 1024;
+        const d = 6;
+        sun.shadow.camera.left = -d;
+        sun.shadow.camera.right = d;
+        sun.shadow.camera.top = d;
+        sun.shadow.camera.bottom = -d;
+        sun.shadow.camera.near = 2;
+        sun.shadow.camera.far = 15;
+        scene.add(sun);
+
+        const fill = new THREE.DirectionalLight(0x8888ff, 0.4);
+        fill.position.set(-4, 3, -3);
+        scene.add(fill);
+
+        // --- GROUND (transparent disc) ---
+        const groundGeo = new THREE.CircleGeometry(3.5, 32);
+        const groundMat = new THREE.MeshStandardMaterial({
+            color: 0x8fa89b,
+            transparent: true,
+            opacity: 0.15,
+            roughness: 0.8,
+            metalness: 0,
+            side: THREE.DoubleSide,
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.4;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // --- GROUND GRASS RING ---
+        const grassRingGeo = new THREE.RingGeometry(0.8, 3.2, 48);
+        const grassRingMat = new THREE.MeshStandardMaterial({
+            color: 0x7a9a8a,
+            transparent: true,
+            opacity: 0.12,
+            roughness: 1,
+            metalness: 0,
+            side: THREE.DoubleSide,
+        });
+        const grassRing = new THREE.Mesh(grassRingGeo, grassRingMat);
+        grassRing.rotation.x = -Math.PI / 2;
+        grassRing.position.y = -0.38;
+        scene.add(grassRing);
+
+        // --- FLOWERS (procedural) ---
+        const flowers = [];
+        const flowerColors = [0x7c3aed, 0x8b5cf6, 0xa78bfa, 0xc4b5fd, 0xddd6fe, 0x6d9581, 0x85ab99, 0xfcd34d];
+
+        function createFlower(color, x, z, scale) {
+            const group = new THREE.Group();
+
+            // Stem
+            const stemCurve = new THREE.QuadraticBezierCurve3(
+                new THREE.Vector3(0, -0.3, 0),
+                new THREE.Vector3(0.08, 0.1, 0.04),
+                new THREE.Vector3(0, 0.6, 0)
+            );
+            const stemPoints = stemCurve.getPoints(8);
+            const stemGeo = new THREE.TubeGeometry(
+                new THREE.CatmullRomCurve3(stemPoints), 6, 0.025, 4, false
+            );
+            const stemMat = new THREE.MeshStandardMaterial({
+                color: 0x5a7a5a,
+                roughness: 0.8,
+                metalness: 0,
+            });
+            const stem = new THREE.Mesh(stemGeo, stemMat);
+            group.add(stem);
+
+            // Leaves
+            for (let i = 0; i < 2; i++) {
+                const leafGeo = new THREE.SphereGeometry(0.07, 4, 4);
+                const leafMat = new THREE.MeshStandardMaterial({
+                    color: 0x6a8a6a,
+                    roughness: 0.9,
+                    metalness: 0,
+                });
+                const leaf = new THREE.Mesh(leafGeo, leafMat);
+                leaf.scale.set(0.8 + Math.random() * 0.6, 0.15, 0.4);
+                leaf.position.set(0.06 + i * 0.04, 0.2 + i * 0.2, 0.02);
+                leaf.rotation.z = (i === 0 ? 0.6 : -0.6) + (Math.random() - 0.5) * 0.3;
+                group.add(leaf);
+            }
+
+            // Petals
+            const petalCount = 6 + Math.floor(Math.random() * 4);
+            const petalMat = new THREE.MeshPhysicalMaterial({
+                color: color,
+                roughness: 0.3,
+                metalness: 0,
+                transparent: true,
+                opacity: 0.85,
+                side: THREE.DoubleSide,
+                clearcoat: 0.1,
+            });
+            const petalGroup = new THREE.Group();
+            for (let i = 0; i < petalCount; i++) {
+                const angle = (i / petalCount) * Math.PI * 2 + Math.random() * 0.1;
+                const petalGeo = new THREE.SphereGeometry(0.12, 6, 6);
+                const petal = new THREE.Mesh(petalGeo, petalMat);
+                petal.scale.set(0.9 + Math.random() * 0.4, 0.2 + Math.random() * 0.15, 0.3 + Math.random() * 0.2);
+                petal.position.set(Math.sin(angle) * 0.18, 0.04, Math.cos(angle) * 0.18);
+                petal.rotation.x = -0.3 + Math.random() * 0.6;
+                petal.rotation.y = angle;
+                petal.rotation.z = 0.2 + Math.random() * 0.3;
+                petalGroup.add(petal);
+            }
+            petalGroup.position.y = 0.55;
+            group.add(petalGroup);
+
+            // Center
+            const centerMat = new THREE.MeshPhysicalMaterial({
+                color: 0xfcd34d,
+                emissive: 0xfcd34d,
+                emissiveIntensity: 0.15,
+                roughness: 0.2,
+                metalness: 0.1,
+            });
+            const center = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), centerMat);
+            center.position.y = 0.58;
+            group.add(center);
+
+            group.position.set(x, 0, z);
+            group.scale.set(scale, scale, scale);
+
+            // Store flower data
+            const data = {
+                group,
+                stem,
+                petalGroup,
+                center,
+                baseY: 0,
+                phase: Math.random() * Math.PI * 2,
+                windSpeed: 0.3 + Math.random() * 0.4,
+                windAmt: 0.005 + Math.random() * 0.01,
+                petalCount,
+                color,
+                scale,
+            };
+
+            scene.add(group);
+            return data;
+        }
+
+        // Generate flowers in a garden layout
+        const flowerPositions = [];
+        for (let i = 0; i < 18; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 0.6 + Math.random() * 2.2;
+            const x = Math.sin(angle) * radius;
+            const z = Math.cos(angle) * radius;
+            const color = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+            const scale = 0.6 + Math.random() * 0.8;
+            const f = createFlower(color, x, z, scale);
+            flowers.push(f);
+            flowerPositions.push({ x, z });
+        }
+
+        // --- BEE (simple 3D bee) ---
+        const beeGroup = new THREE.Group();
+        // Body
+        const bodyMat = new THREE.MeshPhysicalMaterial({
+            color: 0xfbbf24,
+            roughness: 0.4,
+            metalness: 0.1,
+            clearcoat: 0.2,
+        });
+        const body = new THREE.Mesh(new THREE.SphereGeometry(0.18, 8, 8), bodyMat);
+        body.scale.set(1.2, 0.8, 0.9);
+        beeGroup.add(body);
+
+        // Stripes
+        for (let i = 0; i < 3; i++) {
+            const stripeMat = new THREE.MeshPhysicalMaterial({
+                color: 0x2d1b4e,
+                roughness: 0.6,
+                metalness: 0.1,
+            });
+            const stripe = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.04, 8), stripeMat);
+            stripe.position.x = -0.08 + i * 0.08;
+            stripe.rotation.z = Math.PI / 2;
+            stripe.scale.set(1, 1, 0.8);
+            beeGroup.add(stripe);
+        }
+
+        // Head
+        const headMat = new THREE.MeshPhysicalMaterial({
+            color: 0x2d1b4e,
+            roughness: 0.5,
+            metalness: 0.1,
+        });
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), headMat);
+        head.position.x = 0.2;
+        head.scale.set(1, 0.9, 0.9);
+        beeGroup.add(head);
+
+        // Eyes
+        const eyeMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            roughness: 0.1,
+            metalness: 0,
+        });
+        const eyePositions = [
+            [0.25, 0.04, 0.07],
+            [0.25, -0.04, 0.07]
+        ];
+        eyePositions.forEach(pos => {
+            const eye = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 6), eyeMat);
+            eye.position.set(pos[0], pos[1], pos[2]);
+            beeGroup.add(eye);
+            const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.015, 6, 6),
+                new THREE.MeshPhysicalMaterial({ color: 0x000000, roughness: 0.1 }));
+            pupil.position.set(pos[0] + 0.02, pos[1], pos[2] + 0.035);
+            beeGroup.add(pupil);
+        });
+
+        // Wings
+        const wingMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.4,
+            roughness: 0.1,
+            metalness: 0,
+            side: THREE.DoubleSide,
+            clearcoat: 0.3,
+        });
+        for (let side = -1; side <= 1; side += 2) {
+            const wing = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.15), wingMat);
+            wing.position.set(0, 0.12, side * 0.15);
+            wing.rotation.x = 0.2;
+            wing.rotation.z = side * 0.5;
+            beeGroup.add(wing);
+            beeGroup.wings = beeGroup.wings || [];
+            beeGroup.wings.push(wing);
+        }
+
+        // Stinger
+        const stingerMat = new THREE.MeshPhysicalMaterial({
+            color: 0x2d1b4e,
+            roughness: 0.5,
+        });
+        const stinger = new THREE.Mesh(new THREE.ConeGeometry(0.02, 0.08, 4), stingerMat);
+        stinger.position.x = -0.22;
+        stinger.rotation.z = Math.PI / 2;
+        beeGroup.add(stinger);
+
+        beeGroup.scale.set(0.8, 0.8, 0.8);
+        beeGroup.position.set(-1.2, 0.6, 0.8);
+        scene.add(beeGroup);
+
+        // --- FLOATING LETTERS (A, B, C) ---
+        function createFloatingLetter(char, color, x, y, z) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 64, 64);
+            ctx.fillStyle = color;
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(char, 32, 34);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            const mat = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                opacity: 0.3,
+                depthWrite: false,
+            });
+            const sprite = new THREE.Sprite(mat);
+            sprite.position.set(x, y, z);
+            sprite.scale.set(0.5, 0.5, 1);
+            scene.add(sprite);
+            return sprite;
+        }
+
+        const letters = [];
+        letters.push(createFloatingLetter('A', '#7c3aed', -1.8, 1.2, -1.2));
+        letters.push(createFloatingLetter('B', '#6d9581', 0.2, 1.5, -1.8));
+        letters.push(createFloatingLetter('C', '#a78bfa', 1.6, 1.0, -1.0));
+        letters.push(createFloatingLetter('1', '#fcd34d', -0.8, 1.8, -1.5));
+        letters.push(createFloatingLetter('2', '#85ab99', 1.2, 1.6, -0.8));
+        letters.push(createFloatingLetter('3', '#8b5cf6', -1.4, 1.4, 0.2));
+
+        // --- PARTICLES (pollen/glow) ---
+        const particleCount = 120;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePos = new Float32Array(particleCount * 3);
+        const particleSizes = new Float32Array(particleCount);
+        for (let i = 0; i < particleCount; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const r = 0.5 + Math.random() * 2.5;
+            particlePos[i * 3] = Math.sin(theta) * r;
+            particlePos[i * 3 + 1] = -0.2 + Math.random() * 1.6;
+            particlePos[i * 3 + 2] = Math.cos(theta) * r;
+            particleSizes[i] = 0.01 + Math.random() * 0.03;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
+
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xc4b5fd,
+            size: 0.025,
+            transparent: true,
+            opacity: 0.35,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // --- MOUSE TRACKING ---
+        let mouseX = 0,
+            mouseY = 0;
+        let targetCameraX = 0,
+            targetCameraY = 0.8;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // Also track touch for mobile
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(touch.clientY / window.innerHeight) * 2 + 1;
+            }
+        }, { passive: true });
+
+        // --- SCROLL EFFECT ---
+        let scrollY = 0;
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        }, { passive: true });
+
+        // --- ANIMATION LOOP ---
+        let time = 0;
+        let beeTargetX = -1.2,
+            beeTargetZ = 0.8;
+        let beePhase = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            // --- Camera follow mouse ---
+            targetCameraX += (mouseX * 1.0 - targetCameraX) * 0.03;
+            targetCameraY += (0.8 + mouseY * 0.4 - targetCameraY) * 0.03;
+            camera.position.x += (targetCameraX - camera.position.x) * 0.02;
+            camera.position.y += (targetCameraY - camera.position.y) * 0.02;
+            camera.lookAt(0, 0.2, 0);
+
+            // --- Flowers wind animation ---
+            flowers.forEach((f, idx) => {
+                const sway = Math.sin(time * f.windSpeed + f.phase) * f.windAmt;
+                const swayZ = Math.cos(time * f.windSpeed * 0.7 + f.phase * 1.3) * f.windAmt * 0.7;
+                f.group.rotation.z = sway;
+                f.group.rotation.x = swayZ;
+
+                // Slight bloom pulse
+                const pulse = 1 + Math.sin(time * 0.5 + f.phase) * 0.02;
+                f.petalGroup.scale.set(pulse, pulse, pulse);
+                f.center.material.emissiveIntensity = 0.1 + Math.sin(time * 0.8 + f.phase) * 0.05;
+            });
+
+            // --- Bee flight path (figure-8) ---
+            beePhase += 0.008;
+            const radiusX = 1.6;
+            const radiusZ = 1.2;
+            const beeX = Math.sin(beePhase) * radiusX;
+            const beeZ = Math.cos(beePhase * 0.7) * radiusZ;
+            const beeY = 0.4 + Math.sin(beePhase * 1.3) * 0.25 + 0.15;
+
+            beeGroup.position.x += (beeX - beeGroup.position.x) * 0.02;
+            beeGroup.position.z += (beeZ - beeGroup.position.z) * 0.02;
+            beeGroup.position.y += (beeY - beeGroup.position.y) * 0.02;
+
+            // Bee rotation to face movement direction
+            const angle = Math.atan2(
+                beeGroup.position.x - beeGroup.position.x,
+                beeGroup.position.z - beeGroup.position.z
+            );
+            beeGroup.rotation.y = Math.atan2(
+                Math.sin(beePhase) * radiusX - Math.sin(beePhase - 0.01) * radiusX,
+                Math.cos(beePhase * 0.7) * radiusZ - Math.cos((beePhase - 0.01) * 0.7) * radiusZ
+            ) + Math.PI / 2;
+
+            // Wings flapping
+            if (beeGroup.wings) {
+                const wingAngle = Math.sin(time * 12) * 0.4;
+                beeGroup.wings.forEach((wing, i) => {
+                    wing.rotation.x = wingAngle + (i === 0 ? 0.1 : -0.1);
+                });
+            }
+
+            // --- Particles rotation ---
+            particles.rotation.y += 0.001;
+            particles.rotation.x += 0.0005;
+
+            // --- Floating letters gentle bob ---
+            letters.forEach((l, i) => {
+                l.position.y += Math.sin(time * 0.5 + i * 1.5) * 0.0003;
+                l.material.opacity = 0.2 + Math.sin(time * 0.4 + i * 0.7) * 0.1;
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // --- RESIZE ---
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+
+        // Expose for debugging
+        window.__scene = scene;
+        window.__camera = camera;
+        window.__renderer = renderer;
+    }
+
+    // ================================================================
+    // 4. NAVBAR SCROLL GLASS EFFECT
+    // ================================================================
+    (function navbarScroll() {
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const current = window.scrollY;
+            if (current > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            lastScroll = current;
+        }, { passive: true });
+    })();
+
+    // ================================================================
+    // 5. MOBILE MENU TOGGLE
+    // ================================================================
+    (function mobileMenu() {
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        let open = false;
+
+        btn.addEventListener('click', () => {
+            open = !open;
+            menu.classList.toggle('open');
+            btn.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('open');
+                open = false;
+                btn.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+    })();
+
+    // ================================================================
+    // 6. FAQ ACCORDION
+    // ================================================================
+    function toggleFaq(el) {
+        const parent = el.closest('.faq-item');
+        const answer = parent.querySelector('.faq-answer');
+        const isOpen = answer.classList.contains('open');
+
+        // Close all others
+        document.querySelectorAll('.faq-answer').forEach(a => {
+            if (a !== answer) {
+                a.classList.remove('open');
+                a.closest('.faq-item').querySelector('.faq-question').classList.remove('open');
+            }
+        });
+
+        if (isOpen) {
+            answer.classList.remove('open');
+            el.classList.remove('open');
+        } else {
+            answer.classList.add('open');
+            el.classList.add('open');
+        }
+    }
+
+    // ================================================================
+    // 7. CUSTOM CURSOR (Desktop only)
+    // ================================================================
+    (function customCursor() {
+        const cursor = document.getElementById('custom-cursor');
+        if (!cursor) return;
+        if (window.innerWidth < 1024) return;
+
+        let isHovering = false;
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            // Check if hovering over interactive elements
+            const target = e.target;
+            const isInteractive = target.closest('a, button, .faq-question, .tilt-3d, .gallery-grid-item, .glass-card');
+            if (isInteractive && !isHovering) {
+                cursor.classList.add('hover');
+                isHovering = true;
+            } else if (!isInteractive && isHovering) {
+                cursor.classList.remove('hover');
+                isHovering = false;
+            }
+        });
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+        });
+    })();
+
+    // ================================================================
+    // 8. SCROLL INDICATOR HIDE
+    // ================================================================
+    (function scrollIndicator() {
+        const indicator = document.querySelector('.scroll-indicator');
+        if (!indicator) return;
+        let hidden = false;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100 && !hidden) {
+                indicator.style.opacity = '0';
+                indicator.style.transition = 'opacity 0.5s ease';
+                hidden = true;
+            } else if (window.scrollY <= 100 && hidden) {
+                indicator.style.opacity = '1';
+                hidden = false;
+            }
+        }, { passive: true });
+    })();
+
+    // ================================================================
+    // 9. FALLBACK: If Three.js fails, show a message
+    // ================================================================
+    console.log('🐝 Bee Smart Learning Garden loaded successfully!');
+    console.log('🌸 Bunga tumbuh, lebah terbang, belajar jadi lebih fun!');
+</script>
+</body>
+</html>

@@ -1,0 +1,885 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Ahmad Wildan Asy Syifa · CV 3D Ultra-Premium</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            950: '#022c22',
+                            900: '#064e3b',
+                            800: '#065f46',
+                        },
+                        gold: {
+                            light: '#f2d57a',
+                            DEFAULT: '#d4a847',
+                            dark: '#b8942c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* === GLOBAL === */
+        * {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #022c22;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Gold gradient text */
+        .text-gold-grad {
+            background: linear-gradient(135deg, #f2d57a, #d4a847, #b8942c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gold button */
+        .btn-gold {
+            background: linear-gradient(145deg, #f2d57a, #d4a847);
+            color: #022c22;
+            transition: all 0.3s ease;
+        }
+        .btn-gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(212, 168, 71, 0.4);
+        }
+        .pulse-glow {
+            animation: pulseGlow 2.8s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 168, 71, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 0 18px rgba(212, 168, 71, 0);
+            }
+        }
+
+        /* Card premium */
+        .card-premium {
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(212, 168, 71, 0.12);
+            transform-style: preserve-3d;
+            perspective: 800px;
+            will-change: transform;
+        }
+        .card-premium:hover {
+            box-shadow: 0 0 30px rgba(212, 168, 71, 0.2);
+            border-color: rgba(212, 168, 71, 0.4);
+        }
+
+        /* 3D Tilt inner wrapper */
+        .tilt-inner {
+            transition: transform 0.15s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* PAI pulse border */
+        .pulse-border-gold {
+            animation: borderPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes borderPulse {
+            0%,
+            100% {
+                border-color: rgba(212, 168, 71, 0.25);
+                box-shadow: 0 0 0 0 rgba(212, 168, 71, 0.15);
+            }
+            50% {
+                border-color: #d4a847;
+                box-shadow: 0 0 25px 6px rgba(212, 168, 71, 0.25);
+            }
+        }
+
+        /* Progress bar */
+        .progress-track {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 999px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #d4a847, #f2d57a);
+            border-radius: 999px;
+            height: 100%;
+            transition: width 1.4s ease;
+        }
+
+        /* Timeline */
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: #d4a847;
+            border-radius: 50%;
+            border: 3px solid #022c22;
+            box-shadow: 0 0 0 3px #d4a847, 0 0 20px rgba(212, 168, 71, 0.3);
+            flex-shrink: 0;
+        }
+        .timeline-line {
+            width: 2px;
+            background: linear-gradient(180deg, #d4a847, rgba(212, 168, 71, 0.1));
+            flex-shrink: 0;
+        }
+
+        /* Mobile drawer */
+        #mobile-drawer {
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-drawer.open {
+            transform: translateX(0);
+        }
+        #drawer-overlay {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #drawer-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Particle background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Typing cursor */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: #d4a847;
+            margin-left: 4px;
+            animation: blink 0.7s step-end infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* 3D cube ornament */
+        .cube-3d {
+            transform-style: preserve-3d;
+            animation: floatCube 6s ease-in-out infinite;
+        }
+        @keyframes floatCube {
+            0%,
+            100% {
+                transform: rotateX(-15deg) rotateY(0deg) translateY(0);
+            }
+            50% {
+                transform: rotateX(-15deg) rotateY(180deg) translateY(-10px);
+            }
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #022c22;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4a847;
+            border-radius: 99px;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 640px) {
+            .text-hero {
+                font-size: 2.25rem;
+                line-height: 1.2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- PARTICLE BACKGROUND                                           -->
+    <!-- ============================================================ -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ============================================================ -->
+    <!-- A. CYBER STICKY NAVBAR + MOBILE DRAWER                        -->
+    <!-- ============================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl"><i class="fas fa-crown text-gold-DEFAULT"></i></span>
+                    <span class="text-sm md:text-base font-bold tracking-tight text-white">
+                        Wildan <span class="text-gold-grad">Asy Syifa</span>
+                    </span>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-white/70">
+                    <a href="#hero" class="hover:text-gold-DEFAULT transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-DEFAULT after:transition-all after:duration-300 hover:after:w-full">Beranda</a>
+                    <a href="#tentang" class="hover:text-gold-DEFAULT transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-DEFAULT after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+                    <a href="#prestasi" class="hover:text-gold-DEFAULT transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-DEFAULT after:transition-all after:duration-300 hover:after:w-full">Prestasi</a>
+                    <a href="#kemampuan" class="hover:text-gold-DEFAULT transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-DEFAULT after:transition-all after:duration-300 hover:after:w-full">Kemampuan</a>
+                    <a href="#kontak" class="hover:text-gold-DEFAULT transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-DEFAULT after:transition-all after:duration-300 hover:after:w-full">Kontak</a>
+                </nav>
+
+                <!-- Mobile: hamburger -->
+                <button id="hamburger-btn" class="md:hidden text-2xl text-white/80 focus:outline-none" aria-label="Buka menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer (tirai samping) -->
+    <div id="drawer-overlay" class="fixed inset-0 z-40 bg-black/60"></div>
+    <div id="mobile-drawer" class="fixed top-0 right-0 z-50 w-72 h-full glass border-l border-white/10 p-6 flex flex-col gap-5">
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+            <span class="text-sm font-bold text-white">Menu</span>
+            <button id="close-drawer" class="text-2xl text-white/60 hover:text-white transition"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="flex flex-col gap-4 text-sm font-medium text-white/70 mt-2">
+            <a href="#hero" class="hover:text-gold-DEFAULT transition py-1.5 border-b border-white/5">Beranda</a>
+            <a href="#tentang" class="hover:text-gold-DEFAULT transition py-1.5 border-b border-white/5">Tentang</a>
+            <a href="#prestasi" class="hover:text-gold-DEFAULT transition py-1.5 border-b border-white/5">Prestasi</a>
+            <a href="#kemampuan" class="hover:text-gold-DEFAULT transition py-1.5 border-b border-white/5">Kemampuan</a>
+            <a href="#kontak" class="hover:text-gold-DEFAULT transition py-1.5">Kontak</a>
+        </nav>
+        <div class="mt-auto pt-4 border-t border-white/10 text-xs text-white/30">
+            <i class="fas fa-crown text-gold-DEFAULT mr-1"></i> Wildan Asy Syifa · 2026
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- B. HERO SECTION dengan TYPING EFFECT & 3D ORNAMEN            -->
+    <!-- ============================================================ -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-20 pb-16 md:pt-28 md:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden" style="z-index:1;">
+        <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+            <!-- kiri -->
+            <div data-aos="fade-right" data-aos-delay="200">
+                <span class="inline-block bg-gold-DEFAULT/10 text-gold-light text-xs font-semibold px-4 py-1.5 rounded-full border border-gold-DEFAULT/30 mb-5">
+                    <i class="fas fa-star mr-1.5"></i> Santri · Polyglot · Tech Enthusiast
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white">
+                    Bridging Islamic Knowledge, <br />
+                    <span class="text-gold-grad">Languages</span> &amp; <span class="text-gold-grad">Modern Tech</span>
+                </h1>
+
+                <!-- TYPING EFFECT -->
+                <div class="mt-4 text-base sm:text-lg text-white/60 max-w-lg">
+                    <span id="typing-text" class="font-semibold text-gold-light"></span>
+                    <span class="typing-cursor"></span>
+                </div>
+
+                <p class="mt-5 text-base sm:text-lg text-white/50 max-w-lg leading-relaxed">
+                    Saya <span class="text-gold-light font-semibold">Ahmad Wildan Asy Syifa</span>, mahasiswa Sastra Arab di Tunisia, santri berprestasi dengan IPK 4.00, penguasaan 5+ bahasa asing, dan Front-End Web Developer.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <a href="#kontak" class="btn-gold font-bold px-8 py-3.5 rounded-full shadow-lg pulse-glow hover:shadow-gold-DEFAULT/40 transition-all inline-flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-lg"></i> Hubungi WhatsApp
+                    </a>
+                    <a href="#prestasi" class="glass text-white/80 px-8 py-3.5 rounded-full hover:bg-white/5 transition inline-flex items-center gap-2">
+                        <i class="fas fa-trophy text-gold-DEFAULT"></i> Eksplorasi
+                    </a>
+                </div>
+                <div class="flex flex-wrap gap-5 mt-7 text-sm text-white/40">
+                    <span><i class="fas fa-check-circle text-gold-DEFAULT mr-1.5"></i> IPK 4.00</span>
+                    <span><i class="fas fa-check-circle text-gold-DEFAULT mr-1.5"></i> 5+ Bahasa</span>
+                    <span><i class="fas fa-check-circle text-gold-DEFAULT mr-1.5"></i> TOEFL 587</span>
+                </div>
+            </div>
+
+            <!-- kanan: 3D cube ornament -->
+            <div class="flex justify-center" data-aos="fade-left" data-aos-delay="300">
+                <div class="relative w-full max-w-sm aspect-square flex items-center justify-center">
+                    <!-- 3D Cube dibuat dari Tailwind + CSS -->
+                    <div class="cube-3d relative w-56 h-56 md:w-64 md:h-64">
+                        <!-- Sisi depan -->
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-900/60 via-emerald-800/30 to-gold-DEFAULT/20 border border-gold-DEFAULT/30 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-gold-DEFAULT/10 transform rotateY(0deg) translateZ(28px)">
+                            <div class="text-center">
+                                <span class="text-6xl md:text-7xl block"><i class="fas fa-user-graduate text-gold-DEFAULT drop-shadow-[0_0_30px_rgba(212,168,71,0.3)]"></i></span>
+                                <span class="block text-xl font-bold text-white mt-2">Wildan</span>
+                                <span class="block text-sm text-gold-light">Santri · Coder</span>
+                            </div>
+                        </div>
+                        <!-- Sisi belakang -->
+                        <div class="absolute inset-0 rounded-2xl bg-emerald-900/40 border border-gold-DEFAULT/20 backdrop-blur-sm flex items-center justify-center transform rotateY(180deg) translateZ(28px)">
+                            <div class="text-center">
+                                <span class="text-5xl md:text-6xl block"><i class="fas fa-code text-gold-DEFAULT"></i></span>
+                                <span class="block text-lg font-bold text-white mt-2">Front-End</span>
+                                <span class="block text-sm text-gold-light">Developer</span>
+                            </div>
+                        </div>
+                        <!-- Sisi kanan -->
+                        <div class="absolute inset-0 rounded-2xl bg-emerald-900/40 border border-gold-DEFAULT/20 backdrop-blur-sm flex items-center justify-center transform rotateY(90deg) translateZ(28px)">
+                            <div class="text-center">
+                                <span class="text-5xl md:text-6xl block"><i class="fas fa-language text-gold-DEFAULT"></i></span>
+                                <span class="block text-lg font-bold text-white mt-2">Polyglot</span>
+                                <span class="block text-sm text-gold-light">5+ Bahasa</span>
+                            </div>
+                        </div>
+                        <!-- Sisi kiri -->
+                        <div class="absolute inset-0 rounded-2xl bg-emerald-900/40 border border-gold-DEFAULT/20 backdrop-blur-sm flex items-center justify-center transform rotateY(-90deg) translateZ(28px)">
+                            <div class="text-center">
+                                <span class="text-5xl md:text-6xl block"><i class="fas fa-graduation-cap text-gold-DEFAULT"></i></span>
+                                <span class="block text-lg font-bold text-white mt-2">IPK 4.00</span>
+                                <span class="block text-sm text-gold-light">Summa Cum Laude</span>
+                            </div>
+                        </div>
+                        <!-- Sisi atas -->
+                        <div class="absolute inset-0 rounded-2xl bg-emerald-900/40 border border-gold-DEFAULT/20 backdrop-blur-sm flex items-center justify-center transform rotateX(90deg) translateZ(28px)">
+                            <div class="text-center">
+                                <span class="text-5xl md:text-6xl block"><i class="fas fa-trophy text-gold-DEFAULT"></i></span>
+                                <span class="block text-lg font-bold text-white mt-2">Prestasi</span>
+                                <span class="block text-sm text-gold-light">Nasional</span>
+                            </div>
+                        </div>
+                        <!-- Sisi bawah -->
+                        <div class="absolute inset-0 rounded-2xl bg-emerald-900/40 border border-gold-DEFAULT/20 backdrop-blur-sm flex items-center justify-center transform rotateX(-90deg) translateZ(28px)">
+                            <div class="text-center">
+                                <span class="text-5xl md:text-6xl block"><i class="fas fa-mosque text-gold-DEFAULT"></i></span>
+                                <span class="block text-lg font-bold text-white mt-2">Santri</span>
+                                <span class="block text-sm text-gold-light">Berprestasi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- floating glow -->
+                    <div class="absolute -inset-10 bg-gold-DEFAULT/5 rounded-full blur-3xl -z-10"></div>
+                </div>
+            </div>
+        </div>
+        <!-- background glow -->
+        <div class="absolute -top-80 -right-80 w-[600px] h-[600px] bg-gold-DEFAULT/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div class="absolute -bottom-80 -left-80 w-[600px] h-[600px] bg-emerald-800/20 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- C. ULTIMATE HIGHLIGHT STATS                                   -->
+    <!-- ============================================================ -->
+    <section class="py-12 border-y border-white/5 bg-emerald-950/30 relative" style="z-index:1;">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div data-aos="fade-up" data-aos-delay="100">
+                <p class="text-3xl md:text-4xl font-bold text-gold-grad">4.00</p>
+                <p class="text-white/50 text-xs uppercase tracking-widest mt-1">IPK · Summa Cum Laude</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <p class="text-3xl md:text-4xl font-bold text-gold-grad">#1</p>
+                <p class="text-white/50 text-xs uppercase tracking-widest mt-1">Rangking 1 Abadi</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <p class="text-3xl md:text-4xl font-bold text-gold-grad">587</p>
+                <p class="text-white/50 text-xs uppercase tracking-widest mt-1">TOEFL Score</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <p class="text-3xl md:text-4xl font-bold text-gold-grad">5+</p>
+                <p class="text-white/50 text-xs uppercase tracking-widest mt-1">Polyglot · Bahasa</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- D. TENTANG + TIMELINE AKADEMIK                               -->
+    <!-- ============================================================ -->
+    <section id="tentang" class="py-20 md:py-24 px-4 sm:px-6 lg:px-8 relative" style="z-index:1;">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+                Tentang <span class="text-gold-grad">Saya</span>
+            </h2>
+            <p class="text-center text-white/40 max-w-2xl mx-auto mb-14" data-aos="fade-down" data-aos-delay="100">
+                Perjalanan akademik dan spiritual yang membentuk karakter global
+            </p>
+            <div class="grid md:grid-cols-2 gap-10 items-start">
+                <!-- biografi singkat -->
+                <div data-aos="fade-right" data-aos-delay="150">
+                    <div class="glass-card rounded-2xl p-6 shadow-xl">
+                        <p class="text-white/70 leading-relaxed text-sm md:text-base">
+                            Saya <span class="text-gold-light font-semibold">Ahmad Wildan Asy Syifa</span>, santri berprestasi yang menempuh pendidikan di jalur beasiswa Kementerian Agama di Tunisia, sekaligus mahasiswa Diploma Syariah dengan IPK sempurna 4.00. Selama 6 tahun di MA Al-Irsyad PIAT 7, saya selalu meraih peringkat 1 dengan rata-rata 95+.
+                        </p>
+                        <p class="text-white/70 leading-relaxed text-sm md:text-base mt-3">
+                            Saya memiliki <span class="text-gold-light font-semibold">kemampuan multilingual</span> yang luas: Arab, Mandarin (bersertifikat Peking University), Korea, Jepang, dan Inggris. Juga aktif sebagai <span class="text-gold-light font-semibold">Front-End Web Developer</span> alumni Rumah IT Indonesia.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="bg-gold-DEFAULT/10 text-gold-light text-xs px-3 py-1 rounded-full border border-gold-DEFAULT/20">Sastra Arab</span>
+                            <span class="bg-gold-DEFAULT/10 text-gold-light text-xs px-3 py-1 rounded-full border border-gold-DEFAULT/20">Diploma Syariah</span>
+                            <span class="bg-gold-DEFAULT/10 text-gold-light text-xs px-3 py-1 rounded-full border border-gold-DEFAULT/20">Front-End Dev</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline vertikal -->
+                <div data-aos="fade-left" data-aos-delay="250">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-road text-gold-DEFAULT"></i> Jalur Pendidikan
+                    </h3>
+                    <div class="space-y-5">
+                        <!-- 1 -->
+                        <div class="flex gap-4" data-aos="fade-right" data-aos-delay="150">
+                            <div class="flex flex-col items-center">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line h-12"></div>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <span class="text-[10px] text-gold-light font-semibold uppercase tracking-widest">2024 - Sekarang</span>
+                                <h4 class="text-sm font-bold text-white">Sousse University, Tunisia</h4>
+                                <p class="text-white/40 text-xs">Sastra Arab · Beasiswa Kemenag</p>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div class="flex gap-4" data-aos="fade-right" data-aos-delay="200">
+                            <div class="flex flex-col items-center">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line h-12"></div>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <span class="text-[10px] text-gold-light font-semibold uppercase tracking-widest">2023 - Sekarang</span>
+                                <h4 class="text-sm font-bold text-white">Markaz Ulum · Diploma Syariah</h4>
+                                <p class="text-white/40 text-xs">IPK 4.00 · Summa Cum Laude</p>
+                            </div>
+                        </div>
+                        <!-- 3 -->
+                        <div class="flex gap-4" data-aos="fade-right" data-aos-delay="250">
+                            <div class="flex flex-col items-center">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-line h-12"></div>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <span class="text-[10px] text-gold-light font-semibold uppercase tracking-widest">2023 - Sekarang</span>
+                                <h4 class="text-sm font-bold text-white">Zad Academy</h4>
+                                <p class="text-white/40 text-xs">Kajian Keislaman & Bahasa</p>
+                            </div>
+                        </div>
+                        <!-- 4 -->
+                        <div class="flex gap-4" data-aos="fade-right" data-aos-delay="300">
+                            <div class="flex flex-col items-center">
+                                <div class="timeline-dot"></div>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <span class="text-[10px] text-gold-light font-semibold uppercase tracking-widest">2015 - 2021</span>
+                                <h4 class="text-sm font-bold text-white">MA Al-Irsyad PIAT 7</h4>
+                                <p class="text-white/40 text-xs">Ranking 1 · Rata-rata 95 · Tertinggi 97.10</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- E. PRESTASI & SERTIFIKASI GRID (dengan 3D Tilt)              -->
+    <!-- ============================================================ -->
+    <section id="prestasi" class="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-emerald-950/30 relative" style="z-index:1;">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+                Prestasi &amp; <span class="text-gold-grad">Sertifikasi</span>
+            </h2>
+            <p class="text-center text-white/40 max-w-2xl mx-auto mb-14" data-aos="fade-down" data-aos-delay="100">
+                Penghargaan dan sertifikat yang menjadi bukti dedikasi dan kompetensi
+            </p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- 1: PAI National (pulse border) -->
+                <div class="glass-card rounded-2xl p-6 text-center card-premium pulse-border-gold tilt-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tilt-inner">
+                        <div class="relative inline-block">
+                            <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-DEFAULT opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-gold-DEFAULT"></span>
+                            </span>
+                            <div class="text-4xl text-gold-DEFAULT mb-3"><i class="fas fa-star"></i></div>
+                        </div>
+                        <h3 class="text-white font-bold text-sm">Kompetisi PAI Nasional</h3>
+                        <p class="text-white/40 text-xs mt-1">Active Finalist · Sedang Berlangsung</p>
+                        <p class="text-gold-light text-[10px] font-semibold mt-2 animate-pulse">🔥 Kompetisi Terbaru</p>
+                    </div>
+                </div>
+
+                <!-- 2: OBA -->
+                <div class="glass-card rounded-2xl p-6 text-center card-premium tilt-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tilt-inner">
+                        <div class="text-4xl text-gold-DEFAULT mb-3"><i class="fas fa-trophy"></i></div>
+                        <h3 class="text-white font-bold text-sm">Juara 2 OBA</h3>
+                        <p class="text-white/40 text-xs mt-1">Olimpiade Bahasa Arab · Batu</p>
+                        <p class="text-gold-light text-[10px] font-semibold mt-2">Peringkat 5 Provinsi</p>
+                    </div>
+                </div>
+
+                <!-- 3: KSN IPA -->
+                <div class="glass-card rounded-2xl p-6 text-center card-premium tilt-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tilt-inner">
+                        <div class="text-4xl text-gold-DEFAULT mb-3"><i class="fas fa-flask"></i></div>
+                        <h3 class="text-white font-bold text-sm">Juara Harapan 2 KSN</h3>
+                        <p class="text-white/40 text-xs mt-1">Kompetisi Sains Nasional · IPA</p>
+                        <p class="text-gold-light text-[10px] font-semibold mt-2">Tingkat MTs</p>
+                    </div>
+                </div>
+
+                <!-- 4: Hamzah C1 -->
+                <div class="glass-card rounded-2xl p-6 text-center card-premium tilt-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="tilt-inner">
+                        <div class="text-4xl text-gold-DEFAULT mb-3"><i class="fas fa-certificate"></i></div>
+                        <h3 class="text-white font-bold text-sm">Hamzah C1</h3>
+                        <p class="text-white/40 text-xs mt-1">Sertifikat Bahasa Arab · Mahir</p>
+                        <p class="text-gold-light text-[10px] font-semibold mt-2">Kompetensi Tertinggi</p>
+                    </div>
+                </div>
+
+                <!-- 5: Mandarin Peking -->
+                <div class="glass-card rounded-2xl p-6 text-center card-premium tilt-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="tilt-inner">
+                        <div class="text-4xl text-gold-DEFAULT mb-3"><i class="fas fa-university"></i></div>
+                        <h3 class="text-white font-bold text-sm">Mandarin · Peking Univ</h3>
+                        <p class="text-white/40 text-xs mt-1">Sertifikasi Bahasa Mandarin</p>
+                        <p class="text-gold-light text-[10px] font-semibold mt-2">Peking University</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- F. POLYGLOT & TECH SKILLS MATRIX                             -->
+    <!-- ============================================================ -->
+    <section id="kemampuan" class="py-20 md:py-24 px-4 sm:px-6 lg:px-8 relative" style="z-index:1;">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-3" data-aos="fade-down">
+                Kemampuan <span class="text-gold-grad">Saya</span>
+            </h2>
+            <p class="text-center text-white/40 max-w-2xl mx-auto mb-14" data-aos="fade-down" data-aos-delay="100">
+                Penguasaan bahasa dan keterampilan teknologi
+            </p>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Lingual Skills -->
+                <div data-aos="fade-right" data-aos-delay="150">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-language text-gold-DEFAULT"></i> Lingual Skills
+                    </h3>
+                    <div class="space-y-4">
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Arab</span><span class="text-gold-light text-xs">Advanced (C1)</span></div><div class="progress-track"><div class="progress-fill" style="width:92%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Mandarin</span><span class="text-gold-light text-xs">Intermediate+</span></div><div class="progress-track"><div class="progress-fill" style="width:70%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Korea</span><span class="text-gold-light text-xs">Intermediate</span></div><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Jepang</span><span class="text-gold-light text-xs">Basic+</span></div><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Inggris</span><span class="text-gold-light text-xs">Advanced (TOEFL 587)</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+                    </div>
+                </div>
+
+                <!-- Tech Skills -->
+                <div data-aos="fade-left" data-aos-delay="250">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-code text-gold-DEFAULT"></i> Tech Skills
+                    </h3>
+                    <div class="space-y-4">
+                        <div><div class="flex justify-between text-sm text-white/60"><span>HTML5</span><span class="text-gold-light text-xs">Expert</span></div><div class="progress-track"><div class="progress-fill" style="width:90%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>CSS3</span><span class="text-gold-light text-xs">Expert</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>JavaScript</span><span class="text-gold-light text-xs">Intermediate+</span></div><div class="progress-track"><div class="progress-fill" style="width:70%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Tailwind CSS</span><span class="text-gold-light text-xs">Proficient</span></div><div class="progress-track"><div class="progress-fill" style="width:80%"></div></div></div>
+                        <div><div class="flex justify-between text-sm text-white/60"><span>Front-End Dev</span><span class="text-gold-light text-xs">Alumni Rumah IT</span></div><div class="progress-track"><div class="progress-fill" style="width:75%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- G. INTERACTIVE WA FORMULIR                                   -->
+    <!-- ============================================================ -->
+    <section id="kontak" class="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-emerald-950/30 relative" style="z-index:1;">
+        <div class="max-w-3xl mx-auto">
+            <div class="glass rounded-3xl p-6 md:p-10 shadow-2xl" data-aos="flip-up" data-aos-duration="900">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-2">Hubungi <span class="text-gold-grad">Saya</span></h2>
+                <p class="text-center text-white/40 mb-8">Isi form di bawah, saya akan merespon via WhatsApp</p>
+                <form id="kontak-form" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-medium text-white/50 mb-1.5 uppercase tracking-wider">Nama Lengkap</label>
+                        <input type="text" id="nama" placeholder="Nama Anda" required
+                        class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 focus:ring-2 focus:ring-gold-DEFAULT focus:border-transparent transition outline-none" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-white/50 mb-1.5 uppercase tracking-wider">Keperluan</label>
+                        <select id="keperluan" required
+                        class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white focus:ring-2 focus:ring-gold-DEFAULT focus:border-transparent transition outline-none">
+                        <option value="" class="text-black">-- Pilih --</option>
+                        <option value="Project Web" class="text-black">Penawaran Project Web</option>
+                        <option value="Kerja Sama" class="text-black">Kerja Sama / Kolaborasi</option>
+                        <option value="Silaturahmi" class="text-black">Silaturahmi / Konsultasi</option>
+                        <option value="Lainnya" class="text-black">Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-white/50 mb-1.5 uppercase tracking-wider">Isi Pesan</label>
+                    <textarea id="pesan" rows="4" placeholder="Tulis pesan Anda di sini..."
+                    class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 focus:ring-2 focus:ring-gold-DEFAULT focus:border-transparent transition outline-none"></textarea>
+                </div>
+                <button type="submit" id="btn-kirim-wa"
+                class="w-full btn-gold font-bold py-3.5 rounded-xl shadow-lg hover:shadow-gold-DEFAULT/30 transition-all text-lg flex items-center justify-center gap-3">
+                <i class="fab fa-whatsapp text-xl"></i> Kirim via WhatsApp
+            </button>
+            <p class="text-[10px] text-white/20 text-center mt-2">Data Anda aman dan langsung terhubung ke WhatsApp saya</p>
+        </form>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<footer class="border-t border-white/5 py-8 bg-emerald-950/50 relative" style="z-index:1;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+        <div class="flex items-center gap-2">
+            <span class="text-xl text-gold-DEFAULT"><i class="fas fa-crown"></i></span>
+            <span class="font-semibold text-white/80">Ahmad Wildan Asy Syifa</span>
+            <span class="text-white/20 text-xs hidden sm:inline">· 2026</span>
+        </div>
+        <div class="flex gap-6 text-white/30">
+            <a href="#" class="hover:text-gold-DEFAULT transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gold-DEFAULT transition"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="hover:text-gold-DEFAULT transition"><i class="fab fa-github"></i></a>
+            <a href="#" class="hover:text-gold-DEFAULT transition"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="text-white/20 text-[10px]">Dibangun dengan <i class="fas fa-heart text-gold-DEFAULT/40"></i> untuk berdakwah di era digital</p>
+    </div>
+</footer>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS: AOS + NAVBAR + TYPING + 3D TILT + PARTICLES + FORM  -->
+<!-- ============================================================ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+</script>
+<script>
+    // ======= AOS init =======
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true
+    });
+
+    // ======= MOBILE DRAWER =======
+    const hamburger = document.getElementById('hamburger-btn');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    const closeDrawer = document.getElementById('close-drawer');
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawerFn() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openDrawer);
+    closeDrawer.addEventListener('click', closeDrawerFn);
+    overlay.addEventListener('click', closeDrawerFn);
+    drawer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeDrawerFn);
+    });
+
+    // ======= TYPING EFFECT =======
+    const typingTexts = [
+        'Polyglot: Arabic 🇸🇦',
+        'Polyglot: Mandarin 🇨🇳',
+        'Polyglot: English 🇬🇧',
+        'Polyglot: Korean 🇰🇷',
+        'Polyglot: Japanese 🇯🇵',
+        'Front-End Developer 💻',
+        'Santri Berprestasi 🕌'
+    ];
+    let typingIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typing-text');
+
+    function typeEffect() {
+        const currentText = typingTexts[typingIndex];
+        if (isDeleting) {
+            typingElement.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingElement.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let speed = isDeleting ? 50 : 80;
+
+        if (!isDeleting && charIndex === currentText.length) {
+            speed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            typingIndex = (typingIndex + 1) % typingTexts.length;
+            speed = 400;
+        }
+        setTimeout(typeEffect, speed);
+    }
+    typeEffect();
+
+    // ======= 3D TILT EFFECT =======
+    document.querySelectorAll('.tilt-card').forEach(card => {
+        const inner = card.querySelector('.tilt-inner');
+        if (!inner) return;
+
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            const rotateX = y * -12;
+            const rotateY = x * 12;
+            inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        card.addEventListener('mouseleave', function() {
+            inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+    });
+
+    // ======= PARTICLE BACKGROUND =======
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w, h;
+
+    function resizeCanvas() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * w;
+            this.y = Math.random() * h;
+            this.size = Math.random() * 2.5 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.opacity = Math.random() * 0.5 + 0.1;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > w) this.speedX *= -1;
+            if (this.y < 0 || this.y > h) this.speedY *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(212, 168, 71, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 80; i++) {
+        particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        // draw lines between nearby particles
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(212, 168, 71, ${0.06 * (1 - dist / 150)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // ======= FORM WA =======
+    const form = document.getElementById('kontak-form');
+    const namaInput = document.getElementById('nama');
+    const keperluanSelect = document.getElementById('keperluan');
+    const pesanInput = document.getElementById('pesan');
+
+    const NOMOR_WA = '6281259730289';
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nama = namaInput.value.trim();
+        const keperluan = keperluanSelect.value;
+        const pesan = pesanInput.value.trim();
+
+        if (nama === '' || keperluan === '') {
+            alert('⚠️ Nama dan Keperluan wajib diisi!');
+            return;
+        }
+
+        let text = `Halo Ahmad Wildan Asy Syifa! Saya ${nama} ingin menghubungi Anda.%0A`;
+        text += `Keperluan: ${keperluan}%0A`;
+        if (pesan !== '') {
+            text += `Pesan: ${pesan}%0A`;
+        }
+        text += `%0A( dikirim dari Portofolio Digital 3D Anda )`;
+
+        const url = `https://wa.me/${NOMOR_WA}?text=${text}`;
+        window.open(url, '_blank');
+    });
+</script>
+</body>
+</html>
+```

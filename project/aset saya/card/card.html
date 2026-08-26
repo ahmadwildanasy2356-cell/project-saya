@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Tech & Style - Premium Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stlye card.css">
+</head>
+<body>
+
+  <header id="main-header">
+    <div class="header-content">
+      <div class="profile-mini">
+        <img src="assets/profile.jpg" alt="Ahmad Wildan" class="profile-img">
+        <span class="profile-name">Wildan Asy Syifa</span>
+      </div>
+    </div>
+
+    <nav class="navbar">
+      <a href="#products">Produk Utama</a>
+      <a href="#keunggulan">Promo Toko</a>
+      <a href="#artikel-section">Artikel Terbaru</a>
+      <a href="#contact">Kontak</a>
+      <button type="button" class="btn-submit">Belanja Sekarang</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="products" class="section-card">
+      <h2>Produk & Promo Utama</h2>
+      
+      <div class="slider-container">
+        <div class="slider-track">
+          
+          <div class="project-item">
+            <span class="badge-promo">Best Seller</span>
+            <h3>MacBook Pro M3 Elite</h3>
+            <div class="content-wrapper">
+              <div class="project-img">
+                <img src="assets/laptop.png" alt="Laptop Premium">
+              </div>
+              <div class="project-teks">
+                <h4>Spesifikasi Premium</h4>
+                <ul>
+                  <li>Chip M3 Apple Next-Gen</li>
+                  <li>Layar Liquid Retina XDR 14"</li>
+                  <li>Unified Memory 18GB Super Cepat</li>
+                  <li>Daya Tahan Baterai hingga 22 Jam</li>
+                </ul>
+                <p style="font-weight: bold;">Harga: Rp28.500.000</p>
+                <button type="button" class="btn-submit">Beli Sekarang</button>
+              </div>
+            </div> 
+          </div>
+
+          <div class="project-item">
+            <span class="badge-promo-alt">Promo Diskon 15%</span>
+            <h3>Asus ROG Zephyrus G14</h3>
+            <div class="content-wrapper">
+              <div class="project-img">
+                <img src="assets/laptop.png" alt="Laptop Gaming">
+              </div>
+              <div class="project-teks">
+                <h4>Gaming & Kreativitas</h4>
+                <ul>
+                  <li>AMD Ryzen 9 & RTX 4060</li>
+                  <li>Layar OLED 120Hz Akurasi Tinggi</li>
+                  <li>Desain Tipis & Ringan Ringkas</li>
+                  <li>Sistem Pendingin Liquid Metal</li>
+                </ul>
+                <p style="font-weight: bold;"><span style="text-decoration: line-through; font-size: 0.95rem; color: #94a3b8;">Rp24.000.000</span> Rp20.400.000</p>
+                <button type="button" class="btn-submit">Klaim Promo</button>
+              </div>
+            </div> 
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="keunggulan" class="section-card">
+      <h2>Mengapa Memilih Kami?</h2>
+      <div class="glass-card">
+        <h3>Layanan Transparan & Tepercaya</h3>
+        <ul>
+          <li><strong>Konsep Unik "One-Stop Solution":</strong> Memadukan teknologi mutakhir dengan estetika gaya hidup modern.</li>
+          <li><strong>Kurasi Ketat:</strong> Setiap produk laptop dan aksesoris dijamin 100% original dan lolos uji kualitas.</li>
+          <li><strong>Garansi Resmi Ekstra:</strong> Tambahan perlindungan 6 bulan toko di luar garansi distributor resmi.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="artikel-section" class="section-card">
+      <h2>Artikel & Edukasi Teknologi</h2>
+      <div class="artikel-grid">
+        
+        <div class="artikel-card">
+          <div class="artikel-img-box">
+            <img src="assets/artikel.jpg" alt="Review Laptop">
+          </div>
+          <div class="artikel-body">
+            <span class="artikel-tag">Tech Review</span>
+            <h3>Panduan Memilih Laptop Produktivitas di Tahun 2026</h3>
+            <p>Jangan salah pilih spesifikasi. Simak tips memilih prosesor, RAM, dan kapasitas storage yang ideal untuk kebutuhan kerja remote maupun kuliah.</p>
+            <a href="#" class="artikel-link">Baca Selengkapnya &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="section-card">
+      <h2>Hubungi Kami</h2>
+      <form action="#" method="post" class="contact-form">
+        <div class="form-group">
+          <label for="name">Nama Lengkap</label>
+          <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>                
+        </div>
+        <div class="form-group">
+          <label for="email">Alamat Email</label>
+          <input type="email" id="email" name="email" placeholder="nama@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Pesan atau Pertanyaan</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Kirim Pesan</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ahmad Wildan Asy Syifa. Pertemuan 09 - All Rights Reserved.</p> 
+  </footer>
+    
+</body>
+</html>

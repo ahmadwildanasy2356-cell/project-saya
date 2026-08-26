@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>AeroFreight Prime Logistics – Industrial Brutalism</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            hazard: '#F59E0B',
+            slate: {
+              800: '#1E293B',
+              900: '#0F172A',
+            },
+            neutral: {
+              950: '#09090B',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"Fira Code"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
+
+  <!-- Custom CSS Industrial Brutalism -->
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0F172A;
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav-brutal {
+      background: #1E293B;
+      border-bottom: 3px solid #000000;
+      box-shadow: 0 4px 0 #000000;
+    }
+
+    .nav-link {
+      position: relative;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.1s ease;
+      padding: 0.5rem 0;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #F59E0B;
+      transition: width 0.1s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-link:hover {
+      color: #F59E0B;
+    }
+
+    .btn-brutal {
+      background: #F59E0B;
+      color: #0F172A;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 2px solid #000000;
+      box-shadow: 4px 4px 0 #000000;
+      transition: all 0.1s ease;
+    }
+    .btn-brutal:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000000;
+    }
+
+    /* ===== HERO ===== */
+    .hero-video {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .hero-overlay-grid {
+      background-image:
+        linear-gradient(rgba(15, 23, 42, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.7) 1px, transparent 1px);
+      background-size: 60px 60px;
+      background-position: center center;
+    }
+
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marqueeScroll 25s linear infinite;
+    }
+
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-container {
+      overflow: hidden;
+      border-top: 2px solid #F59E0B;
+      border-bottom: 2px solid #F59E0B;
+      background: #0F172A;
+    }
+
+    /* ===== STATISTICS ODOMETER ===== */
+    .odometer-number {
+      font-family: 'Fira Code', monospace;
+      font-weight: 900;
+      font-size: 3.5rem;
+      color: #F59E0B;
+      text-shadow: 2px 2px 0 #000000;
+      letter-spacing: -0.02em;
+    }
+
+    /* ===== KINETIC CARDS (Pop-out Shift) ===== */
+    .kinetic-card {
+      background: #1E293B;
+      border: 3px solid #000000;
+      box-shadow: 6px 6px 0 #000000;
+      transition: all 0.08s linear;
+      will-change: transform, box-shadow;
+    }
+    .kinetic-card:hover {
+      transform: translate(-8px, -8px);
+      box-shadow: 14px 14px 0 #000000;
+    }
+    .kinetic-card .icon-wrapper {
+      transition: color 0.1s ease;
+    }
+    .kinetic-card:hover .icon-wrapper {
+      color: #F59E0B;
+    }
+
+    /* ===== ROUTE FILTER (Hard Snap) ===== */
+    .route-item {
+      transition: clip-path 0.15s ease, opacity 0.15s ease;
+      will-change: clip-path, opacity;
+      clip-path: inset(0 0 0 0);
+    }
+    .route-item.hidden {
+      clip-path: inset(0 0 100% 0);
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .filter-btn {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 2px solid #000000;
+      background: #1E293B;
+      color: #E2E8F0;
+      transition: all 0.08s ease;
+      box-shadow: 3px 3px 0 #000000;
+    }
+    .filter-btn.active {
+      background: #F59E0B;
+      color: #0F172A;
+      box-shadow: 3px 3px 0 #000000;
+    }
+    .filter-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 #000000;
+    }
+
+    /* ===== CONTACT FORM ===== */
+    .hard-border {
+      border: 3px solid #000000;
+    }
+    .hard-input {
+      background: #1E293B;
+      border: 3px solid #000000;
+      color: #E2E8F0;
+      font-weight: 600;
+      transition: background 0.08s ease;
+    }
+    .hard-input:focus {
+      background: #F59E0B;
+      color: #0F172A;
+      outline: none;
+    }
+    .hard-input::placeholder {
+      color: #94A3B8;
+      font-weight: 400;
+    }
+
+    .btn-submit {
+      background: #F59E0B;
+      color: #0F172A;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 3px solid #000000;
+      box-shadow: 4px 4px 0 #000000;
+      transition: all 0.08s ease;
+    }
+    .btn-submit:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000000;
+    }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #000000;
+      cursor: not-allowed;
+    }
+
+    /* ===== TOAST ===== */
+    .toast-brutal {
+      background: #1E293B;
+      border: 3px solid #000000;
+      box-shadow: 8px 8px 0 #000000;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .toast-brutal.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer-brutal {
+      border-top: 3px solid #000000;
+      background: #0F172A;
+    }
+    .social-icon {
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+    .social-icon:hover {
+      color: #F59E0B;
+      transform: scale(1.2);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .odometer-number {
+        font-size: 2.5rem;
+      }
+      .marquee-track {
+        animation-duration: 18s;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="nav-brutal fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3 flex items-center justify-between">
+    <div class="text-2xl md:text-3xl font-black tracking-tight text-hazard uppercase">
+      Aero<span class="text-white">Freight</span>
+    </div>
+
+    <div class="hidden md:flex items-center gap-6 text-sm font-bold uppercase tracking-wider text-slate-300">
+      <a href="#hero" class="nav-link">Beranda</a>
+      <a href="#stats" class="nav-link">Statistik</a>
+      <a href="#services" class="nav-link">Layanan</a>
+      <a href="#routes" class="nav-link">Rute</a>
+      <a href="#contact" class="nav-link">Kontak</a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-4">
+      <a href="#contact" class="btn-brutal px-5 py-2 text-sm">Cek Resi</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburgerBtn" class="md:hidden flex flex-col gap-1.5 p-1 focus:outline-none">
+      <span class="block w-7 h-1 bg-white"></span>
+      <span class="block w-7 h-1 bg-white"></span>
+      <span class="block w-7 h-1 bg-white"></span>
+    </button>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden fixed top-[68px] left-0 w-full bg-slate-800 border-b-3 border-black transform -translate-y-full transition-transform duration-200 ease-in-out">
+      <div class="flex flex-col items-center gap-4 py-6 text-sm font-bold uppercase tracking-wider text-slate-300">
+        <a href="#hero" class="mobile-link hover:text-hazard transition-colors">Beranda</a>
+        <a href="#stats" class="mobile-link hover:text-hazard transition-colors">Statistik</a>
+        <a href="#services" class="mobile-link hover:text-hazard transition-colors">Layanan</a>
+        <a href="#routes" class="mobile-link hover:text-hazard transition-colors">Rute</a>
+        <a href="#contact" class="mobile-link hover:text-hazard transition-colors">Kontak</a>
+        <a href="#contact" class="btn-brutal px-6 py-2 text-sm">Cek Resi</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="hero" class="relative h-screen overflow-hidden flex items-center justify-center">
+    <!-- Video Background -->
+    <video class="hero-video absolute top-0 left-0 w-full h-full object-cover z-0"
+           autoplay muted loop playsinline
+           poster="https://images.unsplash.com/photo-1542296332-2e4473faf563?w=1400&q=80">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+      <!-- Ganti URL video dengan cargo aircraft / container ship -->
+    </video>
+
+    <!-- Overlay Grid + Gradient -->
+    <div class="absolute inset-0 z-10 hero-overlay-grid bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/90"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-20 text-center px-4 max-w-5xl mx-auto">
+      <h1 class="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight leading-none">
+        <span class="text-white">Global</span><br />
+        <span class="text-hazard">Logistics</span>
+      </h1>
+      <p class="mt-4 text-lg md:text-xl font-bold uppercase tracking-widest text-slate-300">
+        Air Charter · Maritime Intermodal · Cold-Chain Express
+      </p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#services" class="btn-brutal px-8 py-3 text-base">Jelajahi Layanan</a>
+        <a href="#contact" class="btn-brutal px-8 py-3 text-base bg-slate-700 text-white hover:bg-slate-600">Hubungi Kami</a>
+      </div>
+    </div>
+
+    <!-- Running Marquee (di bagian bawah hero) -->
+    <div class="marquee-container absolute bottom-0 left-0 w-full z-20 py-2">
+      <div class="marquee-track text-hazard font-mono font-bold text-sm uppercase tracking-widest">
+        <span class="mx-8">✈ Jakarta – Tokyo – Los Angeles – London – Sydney – Shanghai – Dubai – Frankfurt – Singapore – New York ✈</span>
+        <span class="mx-8">✈ Jakarta – Tokyo – Los Angeles – London – Sydney – Shanghai – Dubai – Frankfurt – Singapore – New York ✈</span>
+        <span class="mx-8">✈ Jakarta – Tokyo – Los Angeles – London – Sydney – Shanghai – Dubai – Frankfurt – Singapore – New York ✈</span>
+        <span class="mx-8">✈ Jakarta – Tokyo – Los Angeles – London – Sydney – Shanghai – Dubai – Frankfurt – Singapore – New York ✈</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STATISTICS (Odometer) ==================== -->
+  <section id="stats" class="py-16 bg-slate-900 border-y-3 border-black">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <div class="odometer-number" data-target="950">0</div>
+        <p class="text-sm font-bold uppercase tracking-widest text-slate-300 mt-1">K+ Ton Kargo</p>
+      </div>
+      <div>
+        <div class="odometer-number" data-target="142">0</div>
+        <p class="text-sm font-bold uppercase tracking-widest text-slate-300 mt-1">Destinasi Negara</p>
+      </div>
+      <div>
+        <div class="odometer-number" data-target="24">0</div>
+        <p class="text-sm font-bold uppercase tracking-widest text-slate-300 mt-1">/7 Operasional Global</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES (Kinetic Cards) ==================== -->
+  <section id="services" class="py-20 bg-slate-800">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tight text-center mb-12">
+        <span class="text-white">Layanan</span> <span class="text-hazard">Utama</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Card 1: Air Charter -->
+        <div class="kinetic-card p-6 text-center">
+          <div class="icon-wrapper text-5xl mb-3 text-slate-300 transition-colors">
+            <i data-lucide="plane"></i>
+          </div>
+          <h3 class="text-xl font-black uppercase tracking-tight text-white">Global Air Charter</h3>
+          <p class="text-sm text-slate-300 mt-2">Penerbangan kargo eksklusif dengan jadwal fleksibel dan kapasitas besar.</p>
+        </div>
+        <!-- Card 2: Maritime Intermodal -->
+        <div class="kinetic-card p-6 text-center">
+          <div class="icon-wrapper text-5xl mb-3 text-slate-300 transition-colors">
+            <i data-lucide="ship"></i>
+          </div>
+          <h3 class="text-xl font-black uppercase tracking-tight text-white">Maritime Intermodal</h3>
+          <p class="text-sm text-slate-300 mt-2">Pengiriman laut terintegrasi dengan rantai pasok multi-moda.</p>
+        </div>
+        <!-- Card 3: Cold-Chain Express -->
+        <div class="kinetic-card p-6 text-center">
+          <div class="icon-wrapper text-5xl mb-3 text-slate-300 transition-colors">
+            <i data-lucide="snowflake"></i>
+          </div>
+          <h3 class="text-xl font-black uppercase tracking-tight text-white">Cold-Chain Express</h3>
+          <p class="text-sm text-slate-300 mt-2">Solusi rantai dingin presisi untuk produk sensitif suhu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ROUTE MATRIX PORTFOLIO ==================== -->
+  <section id="routes" class="py-20 bg-slate-900">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tight text-center mb-8">
+        <span class="text-white">Rute</span> <span class="text-hazard">Manifes</span>
+      </h2>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button class="filter-btn active px-6 py-2 text-sm" data-filter="all">Semua</button>
+        <button class="filter-btn px-6 py-2 text-sm" data-filter="asia">Asia-Pasifik</button>
+        <button class="filter-btn px-6 py-2 text-sm" data-filter="america">Amerika</button>
+        <button class="filter-btn px-6 py-2 text-sm" data-filter="europe">Eropa</button>
+      </div>
+
+      <!-- Grid -->
+      <div id="routeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+        <!-- Items akan diisi JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT (Hard-Edged Form) ==================== -->
+  <section id="contact" class="py-20 bg-slate-800">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tight text-center mb-10">
+        <span class="text-white">Waybill</span> <span class="text-hazard">Quote</span>
+      </h2>
+      <form id="contactForm" class="space-y-6">
+        <input type="text" id="nameInput" placeholder="Nama Perusahaan" required
+               class="hard-input w-full px-5 py-4 text-base" />
+        <input type="email" id="emailInput" placeholder="Alamat Email" required
+               class="hard-input w-full px-5 py-4 text-base" />
+        <select id="serviceSelect" required
+                class="hard-input w-full px-5 py-4 text-base appearance-none">
+          <option value="" disabled selected>Pilih Layanan</option>
+          <option value="air">Global Air Charter</option>
+          <option value="maritime">Maritime Intermodal</option>
+          <option value="cold">Cold-Chain Express</option>
+        </select>
+        <textarea id="messageInput" rows="5" placeholder="Deskripsi kargo &amp; kebutuhan..." required
+                  class="hard-input w-full px-5 py-4 text-base resize-y"></textarea>
+        <button id="submitBtn" type="submit"
+                class="btn-submit w-full py-4 text-lg flex items-center justify-center gap-3">
+          <span id="btnText">Kirim Permintaan</span>
+          <i id="btnSpinner" data-lucide="loader-circle" class="animate-spin hidden w-5 h-5"></i>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer-brutal py-12">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h4 class="text-hazard font-black text-xl uppercase tracking-tight">AeroFreight</h4>
+        <p class="text-sm text-slate-300 mt-2">&copy; 2026 AeroFreight Prime Logistics.<br />All rights reserved.</p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider">Regulasi</h4>
+        <ul class="space-y-1 text-sm text-slate-300 mt-2">
+          <li>IATA Dangerous Goods</li>
+          <li>ICS Maritime Security</li>
+          <li>GDPR Compliance</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider">Terhubung</h4>
+        <div class="flex gap-4 mt-2">
+          <a href="#" class="social-icon text-slate-300 text-2xl"><i data-lucide="linkedin"></i></a>
+          <a href="#" class="social-icon text-slate-300 text-2xl"><i data-lucide="twitter"></i></a>
+          <a href="#" class="social-icon text-slate-300 text-2xl"><i data-lucide="youtube"></i></a>
+          <a href="#" class="social-icon text-slate-300 text-2xl"><i data-lucide="facebook"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="toast-brutal fixed bottom-6 right-6 z-[999] px-6 py-4 max-w-sm">
+    <span id="toastMessage" class="text-white font-bold">Permintaan terkirim!</span>
+  </div>
+
+  <!-- ==================== SEMUA JAVASCRIPT LANGSUNG DI SINI ==================== -->
+  <script>
+    /**
+     * ============================================================
+     *  AeroFreight Prime Logistics – Semua logika terintegrasi
+     *  Menggunakan optional chaining (?.) dan dibungkus DOMContentLoaded.
+     * ============================================================
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // =============================================================
+      //  1. NAVIGATION – STATE MACHINE + HAMBURGER
+      // =============================================================
+      const hamburgerBtn = document.querySelector('#hamburgerBtn');
+      const mobileNav = document.querySelector('#mobileNav');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      let navOpen = false;
+
+      function toggleNav() {
+        navOpen = !navOpen;
+        if (mobileNav) {
+          mobileNav.classList.toggle('-translate-y-full', !navOpen);
+          mobileNav.classList.toggle('translate-y-0', navOpen);
+        }
+        if (hamburgerBtn) {
+          const bars = hamburgerBtn.querySelectorAll('span');
+          if (bars.length === 3) {
+            if (navOpen) {
+              bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+              bars[1].style.opacity = '0';
+              bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+              bars[0].style.transform = 'none';
+              bars[1].style.opacity = '1';
+              bars[2].style.transform = 'none';
+            }
+          }
+        }
+      }
+
+      hamburgerBtn?.addEventListener('click', toggleNav);
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (navOpen) toggleNav();
+        });
+      });
+
+      window.addEventListener('orientationchange', function() {
+        if (navOpen) toggleNav();
+      });
+
+      // =============================================================
+      //  2. ODOMETER STATISTICS – INTERSECTION OBSERVER (sekali jalan)
+      // =============================================================
+      const odometers = document.querySelectorAll('.odometer-number');
+      let odometerAnimated = false;
+
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !odometerAnimated) {
+            odometerAnimated = true;
+            odometers.forEach(el => {
+              const target = parseInt(el.getAttribute('data-target'), 10);
+              if (isNaN(target)) return;
+              let current = 0;
+              const increment = Math.ceil(target / 40);
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                  el.textContent = target + (el.getAttribute('data-target') === '950' ? 'K+' : '');
+                  clearInterval(timer);
+                } else {
+                  el.textContent = current;
+                }
+              }, 25);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      odometers.forEach(el => statsObserver.observe(el));
+
+      // =============================================================
+      //  3. KINETIC CARDS – efek icon color change
+      // =============================================================
+      document.querySelectorAll('.kinetic-card').forEach(card => {
+        const icon = card.querySelector('.icon-wrapper');
+        if (icon) {
+          card.addEventListener('mouseenter', () => {
+            icon.style.color = '#F59E0B';
+          });
+          card.addEventListener('mouseleave', () => {
+            icon.style.color = '#CBD5E1';
+          });
+        }
+      });
+
+      // =============================================================
+      //  4. ROUTE FILTER – DATA-ATTRIBUTE MATRIX
+      // =============================================================
+      const routeData = [
+        { title: 'Jakarta – Tokyo (Kargo Elektronik)', region: 'asia', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80' },
+        { title: 'Los Angeles – New York (Logistik Retail)', region: 'america', img: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=400&q=80' },
+        { title: 'London – Frankfurt (Rantai Dingin)', region: 'europe', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80' },
+        { title: 'Shanghai – Sydney (Maritim Bulk)', region: 'asia', img: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&q=80' },
+        { title: 'Chicago – Toronto (Kargo Darurat)', region: 'america', img: 'https://images.unsplash.com/photo-1494522358652-f30e61a60313?w=400&q=80' },
+        { title: 'Paris – Dubai (Ekspor Mewah)', region: 'europe', img: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=400&q=80' },
+      ];
+
+      const grid = document.querySelector('#routeGrid');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      function renderRoutes(filter = 'all') {
+        if (!grid) return;
+        const filtered = filter === 'all' ? routeData : routeData.filter(item => item.region === filter);
+        const currentItems = grid.querySelectorAll('.route-item');
+        currentItems.forEach(item => {
+          item.classList.add('hidden');
+        });
+
+        setTimeout(() => {
+          grid.innerHTML = '';
+          filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'route-item relative bg-slate-800 border-3 border-black rounded-none overflow-hidden aspect-[4/3]';
+            div.innerHTML = `
+              <img src="${item.img}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover" />
+              <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-900/90 to-transparent">
+                <p class="text-white font-bold text-sm uppercase tracking-wide">${item.title}</p>
+              </div>
+            `;
+            grid.appendChild(div);
+          });
+          grid.querySelectorAll('.route-item').forEach(el => {
+            el.classList.remove('hidden');
+            el.style.clipPath = 'inset(0 0 100% 0)';
+            el.style.opacity = '0';
+            requestAnimationFrame(() => {
+              el.style.transition = 'clip-path 0.15s ease, opacity 0.15s ease';
+              el.style.clipPath = 'inset(0 0 0 0)';
+              el.style.opacity = '1';
+            });
+          });
+        }, 150);
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderRoutes(this.getAttribute('data-filter'));
+        });
+      });
+
+      // Inisialisasi pertama
+      renderRoutes('all');
+
+      // =============================================================
+      //  5. CONTACT FORM – VALIDASI, LOADING, TOAST
+      // =============================================================
+      const form = document.querySelector('#contactForm');
+      const emailInput = document.querySelector('#emailInput');
+      const serviceSelect = document.querySelector('#serviceSelect');
+      const submitBtn = document.querySelector('#submitBtn');
+      const btnText = document.querySelector('#btnText');
+      const btnSpinner = document.querySelector('#btnSpinner');
+      const toast = document.querySelector('#toast');
+      const toastMsg = document.querySelector('#toastMessage');
+
+      function showToast(message, isSuccess = true) {
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = message;
+        toast.style.borderColor = isSuccess ? '#F59E0B' : '#EF4444';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      form?.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = emailInput?.value?.trim() || '';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showToast('❌ Email tidak valid!', false);
+          return;
+        }
+
+        if (!serviceSelect?.value) {
+          showToast('❌ Pilih layanan kargo!', false);
+          return;
+        }
+
+        if (submitBtn && btnText && btnSpinner) {
+          submitBtn.disabled = true;
+          btnText.textContent = 'MENGALOKASIKAN ARMADA...';
+          btnSpinner.classList.remove('hidden');
+        }
+
+        setTimeout(() => {
+          if (submitBtn && btnText && btnSpinner) {
+            submitBtn.disabled = false;
+            btnText.textContent = 'Kirim Permintaan';
+            btnSpinner.classList.add('hidden');
+          }
+          showToast('✅ Penawaran dikirim!', true);
+          form?.reset();
+        }, 2000);
+      });
+
+      // =============================================================
+      //  6. VIDEO FALLBACK – Jika video gagal, gunakan poster
+      // =============================================================
+      const heroVideo = document.querySelector('.hero-video');
+      heroVideo?.addEventListener('error', function() {
+        console.warn('Video hero gagal dimuat – menggunakan poster fallback.');
+      });
+
+      // =============================================================
+      //  7. LUCIDE ICONS – inisialisasi
+      // =============================================================
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      console.log('✅ AeroFreight Prime Logistics – siap dan stabil.');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+/* ==========================================================================
+   1. RESET & DASAR HALAMAN
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #334155;
+  background-image: url('asset/Gemini_Generated_Image_k47lgsk47lgsk47l.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. HEADER & NAVIGASI (Premium Translucent)
+   ========================================================================== */
+#main-header {  
+  background: linear-gradient(135deg, #f97316, #eab308, #14b8a6);    
+  padding: 15px 40px;         
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;       
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.profile-img {
+  height: 50px;       
+  width: auto;        
+  object-fit: contain; 
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));            
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;  
+  flex-wrap: wrap;     
+}
+
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;         
+  padding: 6px 4px;              
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Efek garis bawah animasi saat menu di-hover */
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffd700;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar a:hover {
+  color: #ffd700;                
+}
+
+/* ==========================================================================
+   3. STRUKTUR UTAMA & KARTU KONTEN
+   ========================================================================== */
+main {
+  max-width: 1100px;              
+  margin: 40px auto;             
+  padding: 0 20px;              
+}
+
+.section-card {
+  background-color: transparent;     
+  padding: 20px 0 40px 0;
+  margin-bottom: 20px;         
+}
+
+.section-card h2 {
+  color: #0f172a;                
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-card h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #1e3c72;
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+#keunggulan ul {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  padding-left: 40px;
+}
+
+#keunggulan li {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  color: #334155;
+}
+
+/* ==========================================================================
+   4. SLIDER PRODUK UTAMA (Bergerak Otomatis)
+   ========================================================================== */
+.slider-container {
+  width: 100%;
+  overflow: hidden; 
+  padding: 20px 0;
+}
+
+.slider-track {
+  display: flex;
+  gap: 30px;
+  width: max-content; 
+  animation: slideAnimation 15s infinite alternate ease-in-out; 
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
+.project-item {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08); 
+  border: 1px solid #f1f5f9;
+  padding: 35px;
+  width: 650px; 
+  flex-shrink: 0;         
+  transition: transform 0.3s ease;
+}
+
+.project-item:hover {
+  transform: translateY(-4px);
+}
+
+.project-item h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center; 
+  gap: 35px;              
+}
+
+.project-img {
+  flex-shrink: 0;          
+}
+
+.project-img img {
+  max-width: 180px;        
+  width: 100%;
+  height: auto;
+  border-radius: 14px;      
+  display: block;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.project-item:hover .project-img img {
+  transform: scale(1.05) rotate(-2px);
+}
+
+.project-teks {
+  flex-grow: 1;           
+}
+
+.project-teks h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.project-teks ul {
+  margin-bottom: 20px;
+  padding-left: 20px;              
+}
+
+.project-teks li {
+  margin-bottom: 6px;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.project-teks p {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 15px;
+}
+
+/* --- KEYFRAMES SLIDER --- */
+@keyframes slideAnimation {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(0); }
+  45% { transform: translateX(-680px); } /* Menggeser ke produk kedua */
+  75% { transform: translateX(-680px); }
+  90% { transform: translateX(-1360px); } /* Menggeser ke produk ketiga */
+  100% { transform: translateX(-1360px); }
+}
+
+/* ==========================================================================
+   5. TABEL PRODUK LAINNYA
+   ========================================================================== */
+.produk-table {
+  width: 100%;                                   
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 15px;     
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.produk-table th, .produk-table td {
+  padding: 16px 24px;
+  text-align: left;
+}
+
+.produk-table th {
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;     
+}
+
+.produk-table td {
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.produk-table tr:last-child td {
+  border-bottom: none;
+}
+
+td ul {
+  list-style-position: inside; 
+  padding-left: 0;
+}
+
+td li {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+/* ==========================================================================
+   6. FORMULIR KONTAK
+   ========================================================================== */
+.contact-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.form-group {
+  margin-bottom: 24px;           
+}
+
+.form-group label {
+  display: block;               
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;                  
+  border: 1px solid #cbd5e1;
+  background-color: #f8fafc;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #0f172a;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: #14b8a6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+}
+
+/* ==========================================================================
+   7. TOMBOL & EFEK
+   ========================================================================== */
+.btn-submit {
+  background-color: #1e3c72;     
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;                  
+  cursor: pointer;              
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(30, 60, 114, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-submit:hover {
+  background-color: #f97316; 
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+  transform: translateY(-2px);   
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   8. FOOTER & RESPONSIVE LAYOUT
+   ========================================================================== */
+footer {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #f97316, #eab308, #14b8a6);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  #main-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .slider-track {
+    animation: none; 
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 15px;
+  }
+  
+  .project-item {
+    width: 85vw; 
+    padding: 20px;
+  }
+  
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .project-img img {
+    max-width: 100%;
+  }
+  
+  .project-teks ul {
+    text-align: left;
+    display: inline-block;
+  }
+  
+  .contact-form {
+    padding: 25px;
+  }
+}

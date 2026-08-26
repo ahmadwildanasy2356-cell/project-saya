@@ -1,0 +1,821 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Bimbel Bee Smart · Lotus 3D</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* === GLOBAL === */
+        * { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f7f5;
+            overflow-x: hidden;
+        }
+
+        /* === Three.js Canvas === */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === GLASS NAVBAR === */
+        .glass-nav {
+            background: rgba(76, 29, 149, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* === BUTTON PULSE === */
+        .btn-pulse {
+            animation: pulseBtn 2.4s ease-in-out infinite;
+        }
+        @keyframes pulseBtn {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(76, 29, 149, 0.4); }
+            50% { box-shadow: 0 0 0 16px rgba(76, 29, 149, 0); }
+        }
+
+        /* === 3D TILT CARD === */
+        .tilt-3d {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+        .tilt-3d-inner {
+            transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .tilt-3d:hover .tilt-3d-inner {
+            transition: transform 0.08s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* === MODAL LIGHTBOX === */
+        #lightbox-modal {
+            transition: opacity 0.3s ease;
+        }
+        #lightbox-modal .modal-content {
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.8);
+        }
+        #lightbox-modal.show .modal-content { transform: scale(1); }
+        #lightbox-modal.hidden { opacity: 0; pointer-events: none; }
+        #lightbox-modal.show { opacity: 1; pointer-events: all; }
+
+        /* === MOBILE MENU === */
+        #mobile-menu {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 600px;
+            opacity: 1;
+            padding-top: 14px;
+            padding-bottom: 18px;
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #f4f7f5; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 99px; }
+
+        /* === RESPONSIVE HERO === */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2rem; line-height: 1.2; }
+        }
+
+        /* === GALLERY ITEMS === */
+        .gallery-grid-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-grid-item:hover { transform: scale(1.02); box-shadow: 0 12px 30px -8px rgba(76, 29, 149, 0.15); }
+        .gallery-grid-item .img-wrapper {
+            width: 100%;
+            padding-top: 75%;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-grid-item .img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* === GRADIENT TEXT === */
+        .gradient-text {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed, #6d9581);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg { background: linear-gradient(135deg, #4c1d95, #7c3aed, #6d9581); }
+        .gradient-bg-soft { background: linear-gradient(135deg, #ede9fe, #e0ebe4); }
+
+        /* === Content z-index === */
+        .content-layer { position: relative; z-index: 1; }
+
+        /* === ROSE SCROLL === */
+        .rose-scroll {
+            opacity: 0;
+            transform: scale(0.5) rotate(-10deg);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .rose-scroll.visible { opacity: 1; transform: scale(1) rotate(0deg); }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- THREE.JS 3D LOTUS CANVAS                                      -->
+    <!-- ============================================================ -->
+    <div id="three-canvas"></div>
+
+    <!-- ============================================================ -->
+    <!-- A. STICKY NAVBAR                                              -->
+    <!-- ============================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl text-violet-300"><i class="fas fa-bug"></i></span>
+                    <div class="leading-tight">
+                        <span class="block text-sm md:text-base font-bold text-white">Bimbel Bee Smart</span>
+                        <span class="block text-[10px] md:text-xs text-violet-200/70 font-medium">Belajar · Fun · Happy</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-white/80">
+                    <a href="#hero" class="hover:text-violet-200 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-300 after:transition-all after:duration-300 hover:after:w-full">Beranda</a>
+                    <a href="#tentang" class="hover:text-violet-200 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-300 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+                    <a href="#paket" class="hover:text-violet-200 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-300 after:transition-all after:duration-300 hover:after:w-full">Paket</a>
+                    <a href="#operasional" class="hover:text-violet-200 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-300 after:transition-all after:duration-300 hover:after:w-full">Jam Kerja</a>
+                    <a href="#galeri" class="hover:text-violet-200 transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-300 after:transition-all after:duration-300 hover:after:w-full">Galeri</a>
+                    <a href="#daftar" class="bg-white/20 hover:bg-white/30 text-white px-5 py-2 rounded-full text-sm font-semibold transition backdrop-blur-sm border border-white/10">Daftar</a>
+                </nav>
+                <button id="hamburger-btn" class="md:hidden text-2xl text-white focus:outline-none" aria-label="Buka menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="md:hidden flex flex-col gap-3 text-sm font-medium text-white/80 border-t border-white/10">
+                <a href="#hero" class="hover:text-violet-200 transition py-1.5 px-2 rounded-lg hover:bg-white/10">Beranda</a>
+                <a href="#tentang" class="hover:text-violet-200 transition py-1.5 px-2 rounded-lg hover:bg-white/10">Tentang</a>
+                <a href="#paket" class="hover:text-violet-200 transition py-1.5 px-2 rounded-lg hover:bg-white/10">Paket</a>
+                <a href="#operasional" class="hover:text-violet-200 transition py-1.5 px-2 rounded-lg hover:bg-white/10">Jam Kerja</a>
+                <a href="#galeri" class="hover:text-violet-200 transition py-1.5 px-2 rounded-lg hover:bg-white/10">Galeri</a>
+                <a href="#daftar" class="bg-white/20 text-white text-center py-2.5 px-4 rounded-full font-semibold hover:bg-white/30 transition border border-white/10">Daftar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- B. HERO SECTION                                               -->
+    <!-- ============================================================ -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-20 pb-12 md:pt-28 md:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden content-layer">
+        <div class="absolute inset-0 bg-gradient-to-br from-violet-50/40 via-white/60 to-sage-50/40 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-10 items-center relative z-10">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <span class="inline-block bg-gradient-to-r from-violet-600 to-sage-500 text-white text-xs font-semibold px-4 py-1.5 rounded-full border border-white/20 mb-4">
+                    <i class="fas fa-smile mr-1.5"></i> #BelajarFunHappy
+                </span>
+                <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+                    <span class="text-violet-900">Belajar Jadi</span> <br />
+                    <span class="gradient-text">Fun dan Happy</span> <br />
+                    <span class="text-sage-600">Bersama Bimbel Bee Smart</span>
+                </h1>
+                <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-lg leading-relaxed">
+                    <span class="font-semibold text-violet-700">Guru datang ke rumah!</span> Cikgu BuAs siap mengajar dengan metode Fun Learning penuh kasih sayang.
+                </p>
+                <div class="mt-7 flex flex-wrap gap-4">
+                    <a href="#daftar" class="inline-flex items-center gap-2 gradient-bg text-white font-bold px-8 py-3.5 rounded-full shadow-lg btn-pulse transition-all duration-300 hover:scale-105 shadow-violet-300/30">
+                        <i class="fab fa-whatsapp"></i> Daftar Via WhatsApp
+                    </a>
+                    <a href="#paket" class="inline-flex items-center gap-2 bg-white border border-violet-200/60 text-slate-700 px-7 py-3.5 rounded-full hover:bg-violet-50 transition shadow-sm">
+                        <i class="fas fa-tag text-violet-600"></i> Lihat Paket
+                    </a>
+                </div>
+                <div class="flex flex-wrap gap-5 mt-6 text-sm text-slate-500">
+                    <span><i class="fas fa-check-circle text-violet-600 mr-1.5"></i> Guru Datang ke Rumah</span>
+                    <span><i class="fas fa-check-circle text-violet-600 mr-1.5"></i> Fun Learning</span>
+                    <span><i class="fas fa-check-circle text-violet-600 mr-1.5"></i> Sabar & Berpengalaman</span>
+                </div>
+            </div>
+            <div class="flex justify-center" data-aos="fade-left" data-aos-duration="1000">
+                <div class="relative w-full max-w-sm">
+                    <div class="relative bg-gradient-to-br from-violet-100/80 via-white to-sage-100/80 rounded-3xl p-8 shadow-2xl shadow-violet-200/30 border border-violet-200/40 backdrop-blur-sm overflow-hidden">
+                        <div class="absolute -top-6 -right-6 text-5xl text-violet-300/40"><i class="fas fa-crown"></i></div>
+                        <div class="absolute -bottom-4 -left-4 text-4xl text-sage-300/40"><i class="fas fa-star"></i></div>
+                        <div class="text-center relative z-10">
+                            <span class="text-7xl sm:text-8xl block mb-2"><i class="fas fa-bug text-violet-500 drop-shadow-lg"></i></span>
+                            <span class="block text-2xl font-bold text-violet-900">Cikgu BuAs</span>
+                            <span class="block text-sm text-slate-500">Pendidik Ramah Anak</span>
+                            <div class="flex justify-center gap-4 mt-3 text-3xl text-violet-400/60">
+                                <i class="fas fa-book"></i>
+                                <i class="fas fa-pencil-alt"></i>
+                                <i class="fas fa-smile"></i>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-slate-600 bg-white/60 rounded-2xl p-3 border border-violet-100/60">
+                                <span><i class="fas fa-check-circle text-violet-600 mr-1"></i> TK/PAUD</span>
+                                <span><i class="fas fa-check-circle text-violet-600 mr-1"></i> SD Kelas 1-6</span>
+                                <span><i class="fas fa-check-circle text-violet-600 mr-1"></i> Membaca & Jarimatika</span>
+                                <span><i class="fas fa-check-circle text-violet-600 mr-1"></i> Semua Mapel</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -inset-6 bg-violet-200/10 rounded-full blur-3xl -z-10"></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-sage-50/40 to-transparent -z-10"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- C. ADVANTAGES GRID                                            -->
+    <!-- ============================================================ -->
+    <section id="tentang" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative content-layer">
+        <div class="absolute inset-0 gradient-bg-soft opacity-60 pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <span class="inline-block gradient-bg text-white text-xs font-semibold px-4 py-1 rounded-full border border-white/20 mb-2">
+                    <i class="fas fa-star mr-1"></i> Kenapa Kami?
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-violet-900">Keunggulan <span class="gradient-text">Bee Smart</span></h2>
+                <p class="text-slate-500 text-sm mt-1 max-w-md mx-auto">Belajar jadi lebih mudah dan menyenangkan</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tilt-3d-inner bg-white/80 rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition border border-violet-200/30 hover:border-violet-400/60">
+                        <div class="w-20 h-20 mx-auto rounded-full gradient-bg flex items-center justify-center text-3xl text-white mb-4 shadow-lg"><i class="fas fa-home"></i></div>
+                        <h3 class="text-lg font-bold text-violet-900">Guru Datang ke Rumah</h3>
+                        <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">Orang tua tidak perlu repot mengantar-jemput. Kami datang ke rumah Anda dengan penuh semangat!</p>
+                    </div>
+                </div>
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tilt-3d-inner bg-white/80 rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition border border-violet-200/30 hover:border-violet-400/60">
+                        <div class="w-20 h-20 mx-auto rounded-full gradient-bg flex items-center justify-center text-3xl text-white mb-4 shadow-lg"><i class="fas fa-heart"></i></div>
+                        <h3 class="text-lg font-bold text-violet-900">Sabar &amp; Berpengalaman</h3>
+                        <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">Pendekatan personal yang lembut, sabar, dan disesuaikan dengan karakter setiap anak.</p>
+                    </div>
+                </div>
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tilt-3d-inner bg-white/80 rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition border border-violet-200/30 hover:border-violet-400/60">
+                        <div class="w-20 h-20 mx-auto rounded-full gradient-bg flex items-center justify-center text-3xl text-white mb-4 shadow-lg"><i class="fas fa-gamepad"></i></div>
+                        <h3 class="text-lg font-bold text-violet-900">Metode Fun Learning</h3>
+                        <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">Belajar sambil bermain dengan aktivitas kreatif agar anak tidak bosan dan lebih mudah paham.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- D. INFORMASI OPERASIONAL                                      -->
+    <!-- ============================================================ -->
+    <section id="operasional" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white relative content-layer">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <span class="inline-block gradient-bg text-white text-xs font-semibold px-4 py-1 rounded-full border border-white/20 mb-2">
+                    <i class="fas fa-info-circle mr-1"></i> Info Operasional
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-violet-900">Jam &amp; <span class="gradient-text">Pembayaran</span></h2>
+                <p class="text-slate-500 text-sm mt-1 max-w-md mx-auto">Semua diatur secara fleksibel dan kekeluargaan</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-violet-50/80 to-sage-50/80 rounded-2xl p-6 border border-violet-200/30 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-xl text-white shadow-md"><i class="fas fa-wallet"></i></div>
+                        <h3 class="text-lg font-bold text-violet-900">Biaya &amp; Pembayaran</h3>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed">Mengenai biaya investasi dan sistem pembayaran, sangat terbuka untuk dikomunikasikan secara kekeluargaan. 💛</p>
+                </div>
+                <div class="bg-gradient-to-br from-violet-50/80 to-sage-50/80 rounded-2xl p-6 border border-violet-200/30 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-xl text-white shadow-md"><i class="fas fa-clock"></i></div>
+                        <h3 class="text-lg font-bold text-violet-900">Waktu Belajar</h3>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed">Jadwal bimbingan belajar bersifat fleksibel dan menyesuaikan dengan waktu luang anak. 🗓️</p>
+                </div>
+                <div class="bg-gradient-to-br from-violet-50/80 to-sage-50/80 rounded-2xl p-6 border border-violet-200/30 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-xl text-white shadow-md"><i class="fas fa-headset"></i></div>
+                        <h3 class="text-lg font-bold text-violet-900">Jam Chat</h3>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed">Senin – Sabtu, <span class="font-semibold text-violet-700">10.00 – 15.00 WIB</span><br />Konsultasi &amp; pendaftaran via WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- E. PAKET BELAJAR                                              -->
+    <!-- ============================================================ -->
+    <section id="paket" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative content-layer">
+        <div class="absolute inset-0 gradient-bg-soft opacity-40 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <span class="inline-block gradient-bg text-white text-xs font-semibold px-4 py-1 rounded-full border border-white/20 mb-2">
+                    <i class="fas fa-tags mr-1"></i> Pilihan Paket
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-violet-900">Paket <span class="gradient-text">Belajar</span></h2>
+                <p class="text-slate-500 text-sm mt-1 max-w-md mx-auto">Pilih paket yang sesuai dengan kebutuhan si kecil</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tilt-3d-inner bg-white rounded-2xl p-6 md:p-8 shadow-md hover:shadow-xl border-2 border-violet-200/50 hover:border-violet-400 transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="gradient-bg text-white text-[10px] font-bold px-3 py-1 rounded-full">⭐ Fokus Maksimal</span>
+                            <span class="text-2xl text-violet-500"><i class="fas fa-user"></i></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-violet-900">Privat Individual</h3>
+                        <p class="text-sm text-slate-500 mt-1">1 Anak · Fokus 100%</p>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Perhatian penuh dari Cikgu BuAs</li>
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Materi Membaca &amp; Jarimatika (TK) / Semua Mapel (SD Kelas 1-6)</li>
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Fleksibel &amp; personal</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-violet-100/50">
+                            <a href="#daftar" class="block text-center gradient-bg text-white font-semibold py-2.5 rounded-xl transition-all hover:shadow-lg hover:scale-105">Pilih Paket</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tilt-3d-inner bg-white rounded-2xl p-6 md:p-8 shadow-md hover:shadow-xl border-2 border-violet-200/50 hover:border-violet-400 transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="gradient-bg text-white text-[10px] font-bold px-3 py-1 rounded-full">👫 Belajar Bersama</span>
+                            <span class="text-2xl text-violet-500"><i class="fas fa-users"></i></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-violet-900">Semi-Individual</h3>
+                        <p class="text-sm text-slate-500 mt-1">2 Anak · Lebih Seru</p>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Belajar bersama teman dekat</li>
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Materi Membaca &amp; Jarimatika (TK) / Semua Mapel (SD Kelas 1-6)</li>
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Tetap mendapat perhatian personal</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-violet-100/50">
+                            <a href="#daftar" class="block text-center gradient-bg text-white font-semibold py-2.5 rounded-xl transition-all hover:shadow-lg hover:scale-105">Pilih Paket</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tilt-3d-inner bg-white rounded-2xl p-6 md:p-8 shadow-md hover:shadow-xl border-2 border-violet-200/50 hover:border-violet-400 transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="gradient-bg text-white text-[10px] font-bold px-3 py-1 rounded-full">📚 Kelompok Kecil</span>
+                            <span class="text-2xl text-violet-500"><i class="fas fa-users"></i></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-violet-900">Klasikal Sederhana</h3>
+                        <p class="text-sm text-slate-500 mt-1">Max 5 Anak · Kondusif</p>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Belajar berkelompok interaktif</li>
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Materi Membaca &amp; Jarimatika (TK) / Semua Mapel (SD Kelas 1-6)</li>
+                            <li><i class="fas fa-check-circle text-violet-600 mr-2"></i> Biaya lebih ekonomis</li>
+                        </ul>
+                        <div class="mt-5 pt-4 border-t border-violet-100/50">
+                            <a href="#daftar" class="block text-center gradient-bg text-white font-semibold py-2.5 rounded-xl transition-all hover:shadow-lg hover:scale-105">Pilih Paket</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- F. GALERI CERIA                                               -->
+    <!-- ============================================================ -->
+    <section id="galeri" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white relative content-layer">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <span class="inline-block gradient-bg text-white text-xs font-semibold px-4 py-1 rounded-full border border-white/20 mb-2">
+                    <i class="fas fa-images mr-1"></i> Aktivitas Ceria
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-violet-900">Galeri <span class="gradient-text">Belajar</span></h2>
+                <p class="text-slate-500 text-sm mt-1 max-w-md mx-auto">Klik foto untuk melihat lebih dekat</p>
+            </div>
+            <div class="rose-scroll" id="rose-gallery">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="gallery-grid-item rounded-2xl overflow-hidden shadow-md border border-violet-200/30" onclick="openLightbox('https://picsum.photos/id/1/600/400', 'Belajar membaca dengan gembira')">
+                        <div class="img-wrapper"><img src="https://picsum.photos/id/1/600/400" alt="Belajar membaca" loading="lazy" /></div>
+                        <div class="p-2 text-center text-xs text-slate-600 bg-white/80">Membaca Ceria</div>
+                    </div>
+                    <div class="gallery-grid-item rounded-2xl overflow-hidden shadow-md border border-violet-200/30" onclick="openLightbox('https://picsum.photos/id/20/600/400', 'Bermain sambil belajar hitung')">
+                        <div class="img-wrapper"><img src="https://picsum.photos/id/20/600/400" alt="Bermain sambil belajar" loading="lazy" /></div>
+                        <div class="p-2 text-center text-xs text-slate-600 bg-white/80">Belajar Hitung</div>
+                    </div>
+                    <div class="gallery-grid-item rounded-2xl overflow-hidden shadow-md border border-violet-200/30" onclick="openLightbox('https://picsum.photos/id/30/600/400', 'Kegiatan belajar kelompok')">
+                        <div class="img-wrapper"><img src="https://picsum.photos/id/30/600/400" alt="Belajar kelompok" loading="lazy" /></div>
+                        <div class="p-2 text-center text-xs text-slate-600 bg-white/80">Belajar Kelompok</div>
+                    </div>
+                    <div class="gallery-grid-item rounded-2xl overflow-hidden shadow-md border border-violet-200/30" onclick="openLightbox('https://picsum.photos/id/40/600/400', 'Kreativitas dan seni anak')">
+                        <div class="img-wrapper"><img src="https://picsum.photos/id/40/600/400" alt="Kreativitas anak" loading="lazy" /></div>
+                        <div class="p-2 text-center text-xs text-slate-600 bg-white/80">Kreatif &amp; Seni</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-4"><i class="fas fa-hand-pointer text-violet-500 mr-1"></i> Klik gambar untuk melihat lebih besar</p>
+        </div>
+        <div id="lightbox-modal" class="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden transition-opacity duration-300">
+            <div class="modal-content relative max-w-3xl w-full mx-4 bg-white rounded-2xl overflow-hidden shadow-2xl">
+                <button onclick="closeLightbox()" class="absolute top-3 right-4 z-10 text-3xl text-white/80 hover:text-white transition bg-black/30 hover:bg-black/50 rounded-full w-10 h-10 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img id="lightbox-img" src="" alt="Foto kegiatan" class="w-full h-auto max-h-[70vh] object-contain bg-slate-100" />
+                <div id="lightbox-caption" class="p-4 text-center text-slate-700 font-medium bg-white border-t border-violet-100/50">Deskripsi foto</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- G. FORMULIR PENDAFTARAN                                       -->
+    <!-- ============================================================ -->
+    <section id="daftar" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative content-layer">
+        <div class="absolute inset-0 gradient-bg-soft opacity-50 pointer-events-none"></div>
+        <div class="max-w-3xl mx-auto relative z-10">
+            <div class="bg-white/90 rounded-3xl p-6 md:p-10 shadow-xl border border-violet-200/40" data-aos="flip-up" data-aos-duration="900">
+                <div class="text-center mb-7">
+                    <span class="text-5xl block mb-3"><i class="fas fa-bug text-violet-500"></i></span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-violet-900">Daftar <span class="gradient-text">Sekarang</span></h2>
+                    <p class="text-slate-500 text-sm mt-1">Isi data di bawah, kami akan segera menghubungi via WhatsApp</p>
+                </div>
+                <form id="daftar-form" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5"><i class="fas fa-user text-violet-500 mr-1"></i> Nama Orang Tua</label>
+                        <input type="text" id="nama-ortu" placeholder="Contoh: Bunda Ani" required class="w-full rounded-xl border border-violet-200/60 bg-white/80 px-4 py-3 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition outline-none" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5"><i class="fas fa-child text-violet-500 mr-1"></i> Nama Anak</label>
+                        <input type="text" id="nama-anak" placeholder="Contoh: Ahmad Zaki" required class="w-full rounded-xl border border-violet-200/60 bg-white/80 px-4 py-3 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition outline-none" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5"><i class="fas fa-calendar-alt text-violet-500 mr-1"></i> Usia / Kelas Anak</label>
+                        <input type="text" id="usia-kelas" placeholder="Contoh: 5 tahun / TK B, atau Kelas 2 SD" required class="w-full rounded-xl border border-violet-200/60 bg-white/80 px-4 py-3 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition outline-none" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5"><i class="fas fa-tag text-violet-500 mr-1"></i> Pilihan Paket</label>
+                        <select id="paket-pilihan" required class="w-full rounded-xl border border-violet-200/60 bg-white/80 px-4 py-3 text-slate-800 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition outline-none">
+                            <option value="" class="text-slate-400">-- Pilih Paket --</option>
+                            <option value="Privat Individual (1 Anak)">Privat Individual (1 Anak) - Fokus Maksimal</option>
+                            <option value="Semi-Individual (2 Anak)">Semi-Individual (2 Anak) - Belajar Bersama</option>
+                            <option value="Klasikal (Max 5 Anak)">Klasikal (Max 5 Anak) - Kelompok Kecil</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="btn-daftar-wa" class="w-full gradient-bg hover:from-violet-800 hover:via-violet-700 hover:to-sage-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-violet-300/40 transition-all duration-300 text-lg flex items-center justify-center gap-3 hover:scale-[1.02]">
+                        <i class="fab fa-whatsapp text-xl"></i> Kirim Pendaftaran via WhatsApp
+                    </button>
+                    <div class="mt-3 text-xs text-slate-400 text-center bg-violet-50/50 rounded-xl p-3 border border-violet-100/30">
+                        <i class="fas fa-clock text-violet-500 mr-1"></i> Jam Chat: Senin-Sabtu 10.00-15.00 WIB
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER                                                        -->
+    <!-- ============================================================ -->
+    <footer class="gradient-bg text-white/80 border-t border-white/10 py-6 relative content-layer">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-3 text-sm">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl text-white/80"><i class="fas fa-bug"></i></span>
+                <span class="font-semibold text-white">Bimbel Bee Smart</span>
+                <span class="text-white/50 text-xs hidden sm:inline">· Belajar Fun Happy</span>
+            </div>
+            <div class="flex gap-5 text-white/60">
+                <a href="#" class="hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/6282231287181" target="_blank" class="hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="text-white/40 text-[10px]">Dengan <i class="fas fa-heart text-white/60"></i> untuk pendidikan anak</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- SCRIPTS                                                       -->
+    <!-- ============================================================ -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // ======= AOS INIT =======
+        AOS.init({ duration: 900, once: false, mirror: false });
+
+        // ======= GSAP + SCROLLTRIGGER =======
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ======= THREE.JS 3D LOTUS =======
+        (function initThreeJS() {
+            const container = document.getElementById('three-canvas');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            scene.background = null;
+
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 8);
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // --- LIGHTS ---
+            const ambient = new THREE.AmbientLight(0x404060, 0.6);
+            scene.add(ambient);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(5, 10, 7);
+            scene.add(dirLight);
+            const backLight = new THREE.DirectionalLight(0x7c3aed, 0.6);
+            backLight.position.set(-5, 0, -5);
+            scene.add(backLight);
+
+            // --- LOTUS PETALS ---
+            const lotusGroup = new THREE.Group();
+            scene.add(lotusGroup);
+
+            const petalCount = 24;
+            const petals = [];
+            const colors = [0x7c3aed, 0x8b5cf6, 0xa78bfa, 0xc4b5fd, 0xddd6fe, 0x6d9581];
+
+            function createPetal(color, scale, angle, tilt) {
+                const shape = new THREE.Shape();
+                const w = 0.6 * scale;
+                const h = 1.8 * scale;
+                shape.moveTo(0, 0);
+                shape.bezierCurveTo(w * 0.4, h * 0.3, w * 0.8, h * 0.6, 0, h);
+                shape.bezierCurveTo(-w * 0.8, h * 0.6, -w * 0.4, h * 0.3, 0, 0);
+
+                const geometry = new THREE.ShapeGeometry(shape);
+                const material = new THREE.MeshPhysicalMaterial({
+                    color: color,
+                    metalness: 0.1,
+                    roughness: 0.3,
+                    transparent: true,
+                    opacity: 0.75 + Math.random() * 0.2,
+                    side: THREE.DoubleSide,
+                    flatShading: false,
+                });
+                const petal = new THREE.Mesh(geometry, material);
+                petal.rotation.x = tilt * 0.4;
+                petal.rotation.y = angle;
+                petal.rotation.z = Math.PI / 2 * 0.3;
+                petal.position.y = -0.2 * scale;
+                return petal;
+            }
+
+            // Outer petals
+            for (let i = 0; i < petalCount; i++) {
+                const angle = (i / petalCount) * Math.PI * 2;
+                const color = colors[i % colors.length];
+                const scale = 0.9 + Math.random() * 0.3;
+                const tilt = 0.3 + Math.random() * 0.3;
+                const petal = createPetal(color, scale, angle, tilt);
+                petal.position.x = Math.sin(angle) * 0.8;
+                petal.position.z = Math.cos(angle) * 0.8;
+                petal.position.y = -0.1;
+                lotusGroup.add(petal);
+                petals.push(petal);
+            }
+
+            // Inner petals (smaller, more upright)
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2 + 0.15;
+                const color = colors[(i + 3) % colors.length];
+                const scale = 0.5 + Math.random() * 0.3;
+                const tilt = 0.1 + Math.random() * 0.2;
+                const petal = createPetal(color, scale, angle, tilt);
+                petal.position.x = Math.sin(angle) * 0.4;
+                petal.position.z = Math.cos(angle) * 0.4;
+                petal.position.y = 0.1;
+                lotusGroup.add(petal);
+                petals.push(petal);
+            }
+
+            // Center glow
+            const centerGeo = new THREE.SphereGeometry(0.4, 16, 16);
+            const centerMat = new THREE.MeshPhysicalMaterial({
+                color: 0xfcd34d,
+                emissive: 0xfcd34d,
+                emissiveIntensity: 0.3,
+                metalness: 0.1,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.8,
+            });
+            const center = new THREE.Mesh(centerGeo, centerMat);
+            center.position.y = 0.2;
+            lotusGroup.add(center);
+
+            // Small particles around lotus
+            const particleCount = 80;
+            const particleGeo = new THREE.BufferGeometry();
+            const particlePos = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount * 3; i++) {
+                particlePos[i] = (Math.random() - 0.5) * 8;
+            }
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+            const particleMat = new THREE.PointsMaterial({
+                color: 0x7c3aed,
+                size: 0.05,
+                transparent: true,
+                opacity: 0.5,
+            });
+            const particles = new THREE.Points(particleGeo, particleMat);
+            scene.add(particles);
+
+            // --- MOUSE TRACKING ---
+            let mouseX = 0,
+                mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // --- SCROLL EFFECT ---
+            let scrollY = 0;
+            window.addEventListener('scroll', () => {
+                scrollY = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            });
+
+            // --- ANIMATION LOOP ---
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const time = Date.now() * 0.001;
+
+                // Rotate lotus slowly
+                lotusGroup.rotation.y = time * 0.1 + mouseX * 0.5;
+                lotusGroup.rotation.x = Math.sin(time * 0.15) * 0.1 + mouseY * 0.2;
+                lotusGroup.rotation.z = Math.sin(time * 0.08) * 0.05;
+
+                // Bobbing motion
+                lotusGroup.position.y = Math.sin(time * 0.5) * 0.15;
+
+                // Petal subtle animation
+                petals.forEach((p, idx) => {
+                    p.rotation.z += Math.sin(time * 0.5 + idx) * 0.0005;
+                });
+
+                // Rotate particles
+                particles.rotation.y += 0.0005;
+                particles.rotation.x += 0.0003;
+
+                // Scroll effect - scale and opacity
+                const scale = 1 + scrollY * 0.1;
+                lotusGroup.scale.set(scale, scale, scale);
+
+                // Camera follow mouse with depth
+                camera.position.x += (mouseX * 1.0 - camera.position.x) * 0.02;
+                camera.position.y += (mouseY * 0.6 - camera.position.y) * 0.02;
+                camera.lookAt(0, 0, 0);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // --- RESIZE ---
+            window.addEventListener('resize', () => {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+            });
+        })();
+
+        // ======= MOBILE NAVBAR =======
+        const hamburger = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let menuOpen = false;
+        hamburger.addEventListener('click', function() {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open');
+            this.querySelector('i').className = menuOpen ? 'fas fa-times' : 'fas fa-bars';
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                menuOpen = false;
+                hamburger.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+
+        // ======= 3D TILT =======
+        document.querySelectorAll('.tilt-3d').forEach(card => {
+            const inner = card.querySelector('.tilt-3d-inner');
+            if (!inner) return;
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                inner.style.transform = 'rotateX(' + (y * -12) + 'deg) rotateY(' + (x * 12) + 'deg)';
+            });
+            card.addEventListener('mouseleave', () => { inner.style.transform = 'rotateX(0deg) rotateY(0deg)'; });
+        });
+
+        // ======= LIGHTBOX =======
+        const modal = document.getElementById('lightbox-modal');
+        const modalImg = document.getElementById('lightbox-img');
+        const modalCaption = document.getElementById('lightbox-caption');
+
+        function openLightbox(src, cap) {
+            modalImg.src = src;
+            modalCaption.textContent = cap || 'Foto kegiatan';
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('show'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            modal.classList.remove('show');
+            setTimeout(() => { modal.classList.add('hidden');
+                document.body.style.overflow = ''; }, 300);
+        }
+        modal.addEventListener('click', e => { if (e.target === modal) closeLightbox(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+        // ======= ROSE SCROLL =======
+        document.querySelectorAll('section').forEach(section => {
+            const rose = document.createElement('div');
+            rose.className = 'rose-scroll';
+            rose.style.cssText = `
+                        position: absolute; font-size: ${2 + Math.random() * 3}rem;
+                        color: #7c3aed; opacity: 0.15; pointer-events: none;
+                        z-index: 0; left: ${10 + Math.random() * 80}%; top: ${10 + Math.random() * 80}%;
+                    `;
+            rose.textContent = '🌹';
+            section.style.position = 'relative';
+            section.appendChild(rose);
+            gsap.fromTo(rose, { opacity: 0, scale: 0.3, rotation: -30, y: 50 }, {
+                opacity: 0.15,
+                scale: 1,
+                rotation: 0,
+                y: 0,
+                duration: 1.2,
+                ease: 'back.out(1.7)',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 85%',
+                    end: 'top 40%',
+                    toggleActions: 'play none none reverse',
+                    scrub: false,
+                }
+            });
+        });
+
+        // ======= WHATSAPP FORM =======
+        const form = document.getElementById('daftar-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const ortu = document.getElementById('nama-ortu').value.trim();
+            const anak = document.getElementById('nama-anak').value.trim();
+            const usia = document.getElementById('usia-kelas').value.trim();
+            const paket = document.getElementById('paket-pilihan').value;
+            if (!ortu || !anak || !usia || !paket) {
+                alert('⚠️ Mohon lengkapi semua data pendaftaran!');
+                return;
+            }
+            const wa = '6282231287181';
+            let text = 'Halo Cikgu BuAs!%0A%0A';
+            text += 'Saya ingin mendaftarkan anak saya untuk les privat di Bimbel Bee Smart.%0A';
+            text += 'Berikut data pendaftarannya:%0A';
+            text += '================================%0A';
+            text += '👤 Nama Orang Tua: ' + ortu + '%0A';
+            text += '🧒 Nama Anak: ' + anak + '%0A';
+            text += '📚 Usia / Kelas: ' + usia + '%0A';
+            text += '📖 Paket Pilihan: ' + paket + '%0A';
+            text += '================================%0A%0A';
+            text += 'Saya memahami jam operasional chat (Senin-Sabtu, 10.00-15.00 WIB).%0A';
+            text += 'Mohon informasi selanjutnya, terima kasih. 🙏';
+            window.open('https://wa.me/' + wa + '?text=' + text, '_blank');
+        });
+    </script>
+</body>
+</html>
+```

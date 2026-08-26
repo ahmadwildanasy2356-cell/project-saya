@@ -1,0 +1,1368 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Ahmad Wildan · Academic Portfolio</title>
+    <meta name="description" content="Personal portfolio of Ahmad Wildan, an Arabic Literature student with a strong academic background, multilingual interests, and technology foundation." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Playfair+Display:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 900: '#0a0e1a', 800: '#111827', 700: '#1a2332', 600: '#283548' },
+                        gold: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
+                        ivory: '#f3f0e8',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* === GLOBAL === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0a0e1a;
+            color: #f0ecf7;
+            overflow-x: hidden;
+        }
+
+        /* === THREE.JS CANVAS === */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === GLASS NAVBAR === */
+        .glass-nav {
+            background: rgba(10, 14, 26, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+        .glass-nav.scrolled {
+            background: rgba(10, 14, 26, 0.92);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === BUTTONS === */
+        .btn-primary {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0a0e1a;
+            font-weight: 700;
+            padding: 0.7rem 2rem;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(245, 158, 11, 0.25);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 40px rgba(245, 158, 11, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #f0ecf7;
+            font-weight: 600;
+            padding: 0.7rem 2rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-outline:hover {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* === PAGES === */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+        .page.active {
+            display: block;
+            animation: pageFadeIn 0.6s ease forwards;
+        }
+        @keyframes pageFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === MOBILE MENU === */
+        #mobile-menu {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 600px;
+            opacity: 1;
+            padding-top: 14px;
+            padding-bottom: 18px;
+        }
+
+        /* === GLASS CARD === */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0a0e1a; }
+        ::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 99px; }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; line-height: 1.2; }
+        }
+
+        /* === SECTION DIVIDER === */
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            margin: 0.5rem auto 1.5rem;
+        }
+
+        /* === LOADING OVERLAY === */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #0a0e1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+        #loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #loading-overlay .loader-icon {
+            font-size: 4rem;
+            animation: loaderPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+        #loading-overlay .loader-text {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        #loading-overlay .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 99px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        #loading-overlay .loader-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            border-radius: 99px;
+            transition: width 0.3s ease;
+        }
+
+        /* === CONTENT LAYER === */
+        .content-layer { position: relative; z-index: 1; }
+
+        /* === SCROLL INDICATOR === */
+        .scroll-indicator {
+            animation: bounceDown 2.5s ease-in-out infinite;
+        }
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); opacity: 0.4; }
+            50% { transform: translateY(12px); opacity: 0.8; }
+        }
+
+        /* === 3D TILT === */
+        .tilt-3d { perspective: 800px; transform-style: preserve-3d; }
+        .tilt-3d-inner {
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* === FLOATING WHATSAPP === */
+        .wa-float {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            background: #25D366;
+            color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.25);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+        .wa-float:hover { transform: scale(1.08); box-shadow: 0 12px 50px rgba(37, 211, 102, 0.4); }
+        @media (max-width: 768px) {
+            .wa-float { width: 48px; height: 48px; font-size: 1.3rem; bottom: 1rem; right: 1rem; }
+        }
+
+        /* === CERTIFICATE MODAL === */
+        #cert-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        #cert-modal.show { opacity: 1; pointer-events: all; }
+        #cert-modal .modal-content {
+            max-width: 700px;
+            width: 90%;
+            background: rgba(20, 25, 45, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #cert-modal.show .modal-content { transform: scale(1) translateY(0); }
+        #cert-modal .close-btn {
+            float: right;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+        }
+        #cert-modal .close-btn:hover { color: #fff; }
+
+        /* === TIMELINE === */
+        .timeline-line {
+            width: 2px;
+            background: linear-gradient(180deg, #fbbf24, rgba(251, 191, 36, 0.05));
+            flex-shrink: 0;
+        }
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fbbf24;
+            border: 2px solid #0a0e1a;
+            box-shadow: 0 0 0 3px #fbbf24, 0 0 30px rgba(251, 191, 36, 0.15);
+            flex-shrink: 0;
+        }
+
+        /* === LANGUAGE CARD === */
+        .lang-card {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .lang-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 20px 50px rgba(251, 191, 36, 0.08);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        /* === COUNTER === */
+        .counter-number {
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* === PAGE TRANSITION OVERLAY === */
+        #page-transition {
+            position: fixed;
+            inset: 0;
+            z-index: 9997;
+            background: #0a0e1a;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        #page-transition.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- LOADING OVERLAY                                               -->
+    <!-- ============================================================ -->
+    <div id="loading-overlay">
+        <div class="loader-icon">🎓</div>
+        <div class="loader-text">LOADING</div>
+        <div class="loader-bar">
+            <div class="loader-bar-inner" id="loader-bar-inner"></div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE TRANSITION OVERLAY                                       -->
+    <!-- ============================================================ -->
+    <div id="page-transition"></div>
+
+    <!-- ============================================================ -->
+    <!-- THREE.JS CANVAS                                               -->
+    <!-- ============================================================ -->
+    <div id="three-canvas"></div>
+
+    <!-- ============================================================ -->
+    <!-- WHATSAPP FLOATING                                             -->
+    <!-- ============================================================ -->
+    <a href="https://wa.me/6281259730289?text=Halo%20Ahmad%2C%20saya%20ingin%20menghubungi%20Anda%20mengenai%20portfolio%20dan%20kesempatan%20akademik%2Fproyek."
+    target="_blank" class="wa-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ============================================================ -->
+<!-- NAVBAR                                                        -->
+<!-- ============================================================ -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-nav" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 md:h-20">
+            <a href="#page-home" class="flex items-center gap-2.5 group" data-page="home">
+                <span class="text-xl text-gold-400 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-graduation-cap"></i>
+                </span>
+                <span class="text-sm md:text-base font-bold text-white tracking-tight">Ahmad Wildan</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-white/60">
+                <a href="#page-home" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="home">Home</a>
+                <a href="#page-about" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="about">About</a>
+                <a href="#page-education" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="education">Education</a>
+                <a href="#page-achievements" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="achievements">Achievements</a>
+                <a href="#page-languages" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="languages">Languages</a>
+                <a href="#page-skills" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="skills">Skills</a>
+                <a href="#page-certificates" class="nav-link hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gold-400 after:transition-all after:duration-300 hover:after:w-full" data-page="certificates">Certificates</a>
+                <a href="#page-contact" class="btn-primary text-sm py-2 px-5" data-page="contact">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
+            </nav>
+            <button id="hamburger-btn" class="md:hidden text-2xl text-white/60 focus:outline-none" aria-label="Buka menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden flex flex-col gap-3 text-sm font-medium text-white/60 border-t border-white/5">
+            <a href="#page-home" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="home">Home</a>
+            <a href="#page-about" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="about">About</a>
+            <a href="#page-education" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="education">Education</a>
+            <a href="#page-achievements" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="achievements">Achievements</a>
+            <a href="#page-languages" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="languages">Languages</a>
+            <a href="#page-skills" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="skills">Skills</a>
+            <a href="#page-certificates" class="nav-link hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5" data-page="certificates">Certificates</a>
+            <a href="#page-contact" class="btn-primary text-center justify-center py-2.5 px-4 rounded-full" data-page="contact">Contact</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- PAGE: HOME                                                    -->
+<!-- ============================================================ -->
+<section id="page-home" class="page active">
+    <div class="min-h-screen flex items-center pt-12 pb-20 md:pt-20 md:pb-28 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-navy-900/50 via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto w-full relative z-10">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight">
+                    <span class="text-white">Ahmad</span>
+                    <span class="text-gold-400">Wildan</span>
+                </h1>
+                <p class="text-xl sm:text-2xl text-white/60 mt-3 font-light tracking-wide">
+                    Academic Achiever · Arabic Literature · Islamic Studies · Languages · Technology
+                </p>
+                <p class="mt-5 text-base sm:text-lg text-white/40 max-w-xl leading-relaxed">
+                    A dedicated learner with a strong academic foundation, a passion for languages and Islamic studies, and a growing interest in technology.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <a href="#page-education" class="btn-primary" data-page="education">
+                        <i class="fas fa-arrow-right"></i> Explore My Journey
+                    </a>
+                    <a href="#page-achievements" class="btn-outline" data-page="achievements">
+                        <i class="fas fa-trophy"></i> View Achievements
+                    </a>
+                </div>
+                <div class="mt-10 text-white/20 scroll-indicator hidden md:block">
+                    <i class="fas fa-chevron-down text-xl"></i>
+                    <span class="text-xs block mt-1 tracking-widest">SCROLL TO EXPLORE</span>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 max-w-3xl">
+                <div class="glass-card p-3 md:p-4 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <span class="text-xl md:text-2xl block text-gold-400">🏆</span>
+                    <span class="text-[10px] md:text-xs text-white/50 block mt-1">Academic Achiever</span>
+                </div>
+                <div class="glass-card p-3 md:p-4 text-center" data-aos="fade-up" data-aos-delay="250">
+                    <span class="text-xl md:text-2xl block text-gold-400">🌐</span>
+                    <span class="text-[10px] md:text-xs text-white/50 block mt-1">5+ Languages</span>
+                </div>
+                <div class="glass-card p-3 md:p-4 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <span class="text-xl md:text-2xl block text-gold-400">📚</span>
+                    <span class="text-[10px] md:text-xs text-white/50 block mt-1">Islamic Studies</span>
+                </div>
+                <div class="glass-card p-3 md:p-4 text-center" data-aos="fade-up" data-aos-delay="350">
+                    <span class="text-xl md:text-2xl block text-gold-400">💻</span>
+                    <span class="text-[10px] md:text-xs text-white/50 block mt-1">Web Basics</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: ABOUT                                                   -->
+<!-- ============================================================ -->
+<section id="page-about" class="page">
+    <div class="min-h-screen py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-14" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">About <span class="text-gold-400">Me</span></h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div data-aos="fade-right">
+                    <div class="glass-card p-6 md:p-8">
+                        <p class="text-white/70 leading-relaxed text-base">
+                            Saya adalah lulusan MA Al Irsyad PIAT 7 dengan ketertarikan pada pendidikan, bahasa, ilmu syariah, sastra Arab, dan teknologi.
+                        </p>
+                        <p class="text-white/70 leading-relaxed text-base mt-4">
+                            Saya memiliki perjalanan akademik yang cukup konsisten dan aktif mengikuti berbagai kompetisi serta mengembangkan kemampuan bahasa dan teknologi.
+                        </p>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <div class="space-y-4">
+                        <div class="glass-card p-5 flex items-center gap-4 hover:border-gold-400/20 transition-all">
+                            <span class="text-3xl text-gold-400"><i class="fas fa-bolt"></i></span>
+                            <div>
+                                <h3 class="text-white font-bold text-sm">CONSISTENCY</h3>
+                                <p class="text-white/40 text-xs">Consistency builds excellence.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-5 flex items-center gap-4 hover:border-gold-400/20 transition-all">
+                            <span class="text-3xl text-gold-400"><i class="fas fa-compass"></i></span>
+                            <div>
+                                <h3 class="text-white font-bold text-sm">CURIOSITY</h3>
+                                <p class="text-white/40 text-xs">Curiosity expands knowledge.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-5 flex items-center gap-4 hover:border-gold-400/20 transition-all">
+                            <span class="text-3xl text-gold-400"><i class="fas fa-seedling"></i></span>
+                            <div>
+                                <h3 class="text-white font-bold text-sm">GROWTH</h3>
+                                <p class="text-white/40 text-xs">Every skill begins with learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: EDUCATION                                               -->
+<!-- ============================================================ -->
+<section id="page-education" class="page">
+    <div class="min-h-screen py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="text-center mb-14" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Education <span class="text-gold-400">Journey</span></h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- MTs -->
+                <div class="flex gap-4" data-aos="fade-right">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line h-12"></div>
+                    </div>
+                    <div class="glass-card p-4 flex-1">
+                        <span class="text-xs text-gold-400 font-semibold">MTs</span>
+                        <h4 class="text-white font-bold text-sm">KSN IPA</h4>
+                        <p class="text-white/40 text-xs">Juara Harapan 2</p>
+                    </div>
+                </div>
+
+                <!-- MA -->
+                <div class="flex gap-4" data-aos="fade-right" data-aos-delay="100">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line h-12"></div>
+                    </div>
+                    <div class="glass-card p-4 flex-1">
+                        <span class="text-xs text-gold-400 font-semibold">MA Al Irsyad PIAT 7</span>
+                        <h4 class="text-white font-bold text-sm">Peringkat 1 · Kelas 7–12</h4>
+                        <p class="text-white/40 text-xs">Rata-rata 95 · Tertinggi 97,10</p>
+                    </div>
+                </div>
+
+                <!-- Markaz Ulum -->
+                <div class="flex gap-4" data-aos="fade-right" data-aos-delay="200">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line h-12"></div>
+                    </div>
+                    <div class="glass-card p-4 flex-1">
+                        <span class="text-xs text-gold-400 font-semibold">Markaz Ulum</span>
+                        <h4 class="text-white font-bold text-sm">Diploma Syariah</h4>
+                        <p class="text-white/40 text-xs">IPK 4.00 · Summa Cum Laude · UTS 97.76</p>
+                    </div>
+                </div>
+
+                <!-- ZAD Academy -->
+                <div class="flex gap-4" data-aos="fade-right" data-aos-delay="300">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line h-12"></div>
+                    </div>
+                    <div class="glass-card p-4 flex-1">
+                        <span class="text-xs text-gold-400 font-semibold">ZAD Academy</span>
+                        <h4 class="text-white font-bold text-sm">Currently Studying</h4>
+                        <p class="text-white/40 text-xs">Kajian Keislaman &amp; Bahasa</p>
+                    </div>
+                </div>
+
+                <!-- Sousse University -->
+                <div class="flex gap-4" data-aos="fade-right" data-aos-delay="400">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line h-12"></div>
+                    </div>
+                    <div class="glass-card p-4 flex-1">
+                        <span class="text-xs text-gold-400 font-semibold">Sousse University</span>
+                        <h4 class="text-white font-bold text-sm">Accepted</h4>
+                        <p class="text-white/40 text-xs">Arabic Literature / Sastra Arab</p>
+                    </div>
+                </div>
+
+                <!-- Study in Saudi -->
+                <div class="flex gap-4" data-aos="fade-right" data-aos-delay="500">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="glass-card p-4 flex-1">
+                        <span class="text-xs text-gold-400 font-semibold">Study in Saudi</span>
+                        <h4 class="text-white font-bold text-sm">Application / Document Process</h4>
+                        <p class="text-white/40 text-xs">Currently in progress</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Numbers -->
+            <div class="grid md:grid-cols-3 gap-4 mt-12">
+                <div class="glass-card p-5 text-center" data-aos="fade-up">
+                    <span class="text-4xl font-bold text-gold-400">4.00</span>
+                    <p class="text-white/40 text-xs mt-1">IPK · Markaz Ulum</p>
+                </div>
+                <div class="glass-card p-5 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <span class="text-4xl font-bold text-gold-400">97.76</span>
+                    <p class="text-white/40 text-xs mt-1">UTS Terbaru · Markaz Ulum</p>
+                </div>
+                <div class="glass-card p-5 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <span class="text-4xl font-bold text-gold-400">97.10</span>
+                    <p class="text-white/40 text-xs mt-1">Tertinggi · Kelas 12 Semester 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: ACHIEVEMENTS                                            -->
+<!-- ============================================================ -->
+<section id="page-achievements" class="page">
+    <div class="min-h-screen py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-14" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Achievements</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- KSN -->
+                <div class="tilt-3d" data-aos="fade-up">
+                    <div class="tilt-3d-inner glass-card p-8 text-center hover:border-gold-400/20 transition-all">
+                        <span class="text-6xl block text-gold-400 mb-4">🧪</span>
+                        <h3 class="text-xl font-bold text-white">KSN IPA</h3>
+                        <p class="text-3xl font-bold text-gold-400 mt-2">Juara Harapan 2</p>
+                        <p class="text-white/40 text-sm mt-2">Kompetisi Sains Nasional</p>
+                    </div>
+                </div>
+
+                <!-- OBA Batu -->
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tilt-3d-inner glass-card p-8 text-center hover:border-gold-400/20 transition-all">
+                        <span class="text-6xl block text-gold-400 mb-4">🏆</span>
+                        <h3 class="text-xl font-bold text-white">OBA — Batu</h3>
+                        <p class="text-3xl font-bold text-gold-400 mt-2">Juara 2</p>
+                        <p class="text-white/40 text-sm mt-2">Olimpiade Bahasa Arab</p>
+                    </div>
+                </div>
+
+                <!-- OBA Provinsi -->
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tilt-3d-inner glass-card p-8 text-center hover:border-gold-400/20 transition-all">
+                        <span class="text-6xl block text-gold-400 mb-4">🏅</span>
+                        <h3 class="text-xl font-bold text-white">OBA — Provinsi</h3>
+                        <p class="text-3xl font-bold text-gold-400 mt-2">Peringkat 5</p>
+                        <p class="text-white/40 text-sm mt-2">Olimpiade Bahasa Arab</p>
+                    </div>
+                </div>
+
+                <!-- Academic Excellence -->
+                <div class="tilt-3d" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tilt-3d-inner glass-card p-8 text-center hover:border-gold-400/20 transition-all">
+                        <span class="text-6xl block text-gold-400 mb-4">📊</span>
+                        <h3 class="text-xl font-bold text-white">Academic Excellence</h3>
+                        <p class="text-white/70 text-sm mt-2">Peringkat 1 dari kelas 7–12</p>
+                        <p class="text-gold-400 text-sm font-semibold mt-1">Rata-rata sekitar 95</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highlight Number -->
+            <div class="mt-12 text-center" data-aos="zoom-in">
+                <div class="glass-card p-8 max-w-md mx-auto">
+                    <p class="text-white/50 text-sm">Highest Recorded Average</p>
+                    <p class="text-7xl font-bold text-gold-400 mt-2">97.10</p>
+                    <p class="text-white/40 text-xs mt-1">Kelas 12 Semester 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: LANGUAGES                                               -->
+<!-- ============================================================ -->
+<section id="page-languages" class="page">
+    <div class="min-h-screen py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-14" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Languages</h2>
+                <div class="section-divider"></div>
+                <p class="text-white/40 text-sm max-w-2xl mx-auto">A constellation of languages — each one a gateway to knowledge.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Arabic -->
+                <div class="lang-card glass-card p-6 text-center hover:border-gold-400/20" data-aos="fade-up">
+                    <span class="text-5xl block text-gold-400 mb-2">ال</span>
+                    <h3 class="text-xl font-bold text-white">Arabic</h3>
+                    <p class="text-2xl font-bold text-gold-400 mt-1">Hamzah C1</p>
+                    <p class="text-white/40 text-xs">Sertifikasi Bahasa Arab</p>
+                </div>
+
+                <!-- English -->
+                <div class="lang-card glass-card p-6 text-center hover:border-gold-400/20" data-aos="fade-up" data-aos-delay="100">
+                    <span class="text-5xl block text-gold-400 mb-2"><i class="fas fa-language"></i></span>
+                    <h3 class="text-xl font-bold text-white">English</h3>
+                    <p class="text-2xl font-bold text-gold-400 mt-1">TOEFL 587</p>
+                    <p class="text-white/40 text-xs">Sertifikasi Bahasa Inggris</p>
+                </div>
+
+                <!-- Mandarin -->
+                <div class="lang-card glass-card p-6 text-center hover:border-gold-400/20" data-aos="fade-up" data-aos-delay="200">
+                    <span class="text-5xl block text-gold-400 mb-2">中</span>
+                    <h3 class="text-xl font-bold text-white">Mandarin</h3>
+                    <p class="text-gold-400 font-semibold mt-1">Basic</p>
+                    <p class="text-white/40 text-xs">Peking University</p>
+                    <span class="inline-block mt-2 bg-white/5 text-white/30 text-[10px] px-2 py-0.5 rounded-full border border-white/5">Certified</span>
+                </div>
+
+                <!-- Korean -->
+                <div class="lang-card glass-card p-6 text-center hover:border-gold-400/20" data-aos="fade-up" data-aos-delay="300">
+                    <span class="text-5xl block text-gold-400 mb-2">한</span>
+                    <h3 class="text-xl font-bold text-white">Korean</h3>
+                    <p class="text-gold-400 font-semibold mt-1">Basic</p>
+                    <p class="text-white/40 text-xs">Hangul</p>
+                </div>
+
+                <!-- Japanese -->
+                <div class="lang-card glass-card p-6 text-center hover:border-gold-400/20" data-aos="fade-up" data-aos-delay="400">
+                    <span class="text-5xl block text-gold-400 mb-2">あ</span>
+                    <h3 class="text-xl font-bold text-white">Japanese</h3>
+                    <p class="text-gold-400 font-semibold mt-1">Basic</p>
+                    <p class="text-white/40 text-xs">Hiragana · Katakana</p>
+                </div>
+
+                <!-- Other -->
+                <div class="lang-card glass-card p-6 text-center hover:border-gold-400/20" data-aos="fade-up" data-aos-delay="500">
+                    <span class="text-5xl block text-gold-400 mb-2"><i class="fas fa-certificate"></i></span>
+                    <h3 class="text-xl font-bold text-white">Other Certificates</h3>
+                    <p class="text-white/40 text-xs mt-1">Various language certificates</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: SKILLS                                                  -->
+<!-- ============================================================ -->
+<section id="page-skills" class="page">
+    <div class="min-h-screen py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-14" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Skills &amp; <span class="text-gold-400">Learning</span></h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Left: Categories -->
+                <div class="space-y-4" data-aos="fade-right">
+                    <div class="glass-card p-5">
+                        <h4 class="text-white font-bold text-sm flex items-center gap-2"><span class="text-gold-400">📚</span> Academic</h4>
+                        <p class="text-white/40 text-xs mt-1">Academic Excellence</p>
+                    </div>
+                    <div class="glass-card p-5">
+                        <h4 class="text-white font-bold text-sm flex items-center gap-2"><span class="text-gold-400">🕌</span> Islamic Studies</h4>
+                        <p class="text-white/40 text-xs mt-1">Diploma Syariah</p>
+                    </div>
+                    <div class="glass-card p-5">
+                        <h4 class="text-white font-bold text-sm flex items-center gap-2"><span class="text-gold-400">🌐</span> Languages</h4>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <span class="text-white/40 text-xs">Arabic C1</span>
+                            <span class="text-white/40 text-xs">English TOEFL 587</span>
+                            <span class="text-white/40 text-xs">Basic Mandarin</span>
+                            <span class="text-white/40 text-xs">Basic Korean</span>
+                            <span class="text-white/40 text-xs">Basic Japanese</span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5">
+                        <h4 class="text-white font-bold text-sm flex items-center gap-2"><span class="text-gold-400">💻</span> Technology</h4>
+                        <p class="text-white/40 text-xs mt-1">HTML · CSS · JavaScript</p>
+                        <p class="text-white/30 text-[10px] mt-1">Basic Foundation — Rumah IT Indonesia</p>
+                    </div>
+                </div>
+
+                <!-- Right: Code Lab -->
+                <div data-aos="fade-left">
+                    <div class="glass-card p-6 overflow-hidden">
+                        <div class="flex items-center gap-2 border-b border-white/5 pb-3 mb-3">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                            <span class="text-xs text-white/20 ml-2">learning.html</span>
+                        </div>
+                        <div class="font-mono text-xs space-y-1">
+                            <div class="text-white/60">&lt;!DOCTYPE html&gt;</div>
+                            <div class="text-white/60">&lt;html&gt;</div>
+                            <div class="text-white/60">&lt;head&gt;</div>
+                            <div class="text-white/60">    &lt;title&gt;Learning Journey&lt;/title&gt;</div>
+                            <div class="text-white/60">&lt;/head&gt;</div>
+                            <div class="text-white/60">&lt;body&gt;</div>
+                            <div class="text-gold-400">    &lt;h1&gt;Hello World!&lt;/h1&gt;</div>
+                            <div class="text-white/60">&lt;/body&gt;</div>
+                            <div class="text-white/60">&lt;/html&gt;</div>
+                            <div class="text-white/40 mt-2">/* CSS */</div>
+                            <div class="text-gold-400">h1 { color: #fbbf24; }</div>
+                            <div class="text-white/40 mt-2">// JavaScript</div>
+                            <div class="text-gold-400">console.log("Learning &amp; growing");</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: CERTIFICATES                                            -->
+<!-- ============================================================ -->
+<section id="page-certificates" class="page">
+    <div class="min-h-screen py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-14" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Certificates &amp; <span class="text-gold-400">Credentials</span></h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- TOEFL -->
+                <div class="glass-card p-6 text-center hover:border-gold-400/20 transition-all cursor-pointer" data-aos="fade-up" onclick="openCertModal('TOEFL 587', 'English Language Proficiency')">
+                    <span class="text-5xl block text-gold-400 mb-3"><i class="fas fa-certificate"></i></span>
+                    <h3 class="text-white font-bold text-sm">TOEFL</h3>
+                    <p class="text-gold-400 font-semibold text-lg">587</p>
+                    <p class="text-white/30 text-xs">English</p>
+                </div>
+
+                <!-- Hamzah C1 -->
+                <div class="glass-card p-6 text-center hover:border-gold-400/20 transition-all cursor-pointer" data-aos="fade-up" data-aos-delay="100" onclick="openCertModal('Hamzah C1', 'Arabic Language Competency')">
+                    <span class="text-5xl block text-gold-400 mb-3"><i class="fas fa-certificate"></i></span>
+                    <h3 class="text-white font-bold text-sm">Hamzah C1</h3>
+                    <p class="text-gold-400 font-semibold text-lg">C1</p>
+                    <p class="text-white/30 text-xs">Arabic</p>
+                </div>
+
+                <!-- Peking University -->
+                <div class="glass-card p-6 text-center hover:border-gold-400/20 transition-all cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="openCertModal('Mandarin Certificate', 'Peking University')">
+                    <span class="text-5xl block text-gold-400 mb-3"><i class="fas fa-university"></i></span>
+                    <h3 class="text-white font-bold text-sm">Peking University</h3>
+                    <p class="text-gold-400 font-semibold text-lg">Mandarin</p>
+                    <p class="text-white/30 text-xs">Basic Level</p>
+                </div>
+
+                <!-- Other -->
+                <div class="glass-card p-6 text-center hover:border-gold-400/20 transition-all cursor-pointer" data-aos="fade-up" data-aos-delay="300" onclick="openCertModal('Additional Language Certificates', 'Various Languages')">
+                    <span class="text-5xl block text-gold-400 mb-3"><i class="fas fa-certificate"></i></span>
+                    <h3 class="text-white font-bold text-sm">Other Languages</h3>
+                    <p class="text-gold-400 font-semibold text-lg">📜</p>
+                    <p class="text-white/30 text-xs">Various certifications</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE: CONTACT                                                 -->
+<!-- ============================================================ -->
+<section id="page-contact" class="page">
+    <div class="min-h-screen flex items-center py-16 md:py-24 px-4 sm:px-6 lg:px-8 content-layer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-3xl mx-auto w-full relative z-10">
+            <div class="text-center mb-12" data-aos="fade-down">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Let's <span class="text-gold-400">Connect</span></h2>
+                <div class="section-divider"></div>
+                <p class="text-white/40 text-sm max-w-2xl mx-auto">
+                    Have an academic opportunity, collaboration idea, or project in mind? Feel free to reach out.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 md:p-12 text-center" data-aos="flip-up">
+                <div class="flex flex-col items-center gap-6">
+                    <span class="text-6xl block text-gold-400"><i class="fab fa-whatsapp"></i></span>
+                    <div>
+                        <p class="text-white/50 text-sm">Reach me on WhatsApp</p>
+                        <p class="text-2xl font-bold text-white">0812-5973-0289</p>
+                    </div>
+                    <a href="https://wa.me/6281259730289?text=Halo%20Ahmad%2C%20saya%20ingin%20menghubungi%20Anda%20mengenai%20portfolio%20dan%20kesempatan%20akademik%2Fproyek."
+                    target="_blank" class="btn-primary text-lg px-10 py-4">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+                <p class="text-white/20 text-xs">Response within 24 hours</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CERTIFICATE MODAL                                             -->
+<!-- ============================================================ -->
+<div id="cert-modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeCertModal()"><i class="fas fa-times"></i></button>
+        <div class="text-center py-4">
+            <span class="text-5xl block text-gold-400 mb-4"><i class="fas fa-certificate"></i></span>
+            <h3 class="text-2xl font-bold text-white" id="cert-modal-title">Certificate</h3>
+            <p class="text-white/40 mt-2" id="cert-modal-desc">Details</p>
+            <div class="mt-6 flex justify-center gap-3">
+                <span class="bg-gold-400/10 text-gold-400 text-xs px-4 py-2 rounded-full border border-gold-400/20">Verified</span>
+                <span class="bg-white/5 text-white/30 text-xs px-4 py-2 rounded-full border border-white/5">Credential</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<footer class="border-t border-white/5 py-8 bg-navy-900/50 content-layer" style="position:relative; z-index:1;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+        <div class="flex items-center gap-2">
+            <span class="text-xl text-gold-400"><i class="fas fa-graduation-cap"></i></span>
+            <span class="font-semibold text-white/80">Ahmad Wildan</span>
+            <span class="text-white/20 text-xs hidden sm:inline">· Academic Portfolio</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 text-white/20 text-xs">
+            <a href="#page-home" class="nav-link hover:text-gold-400 transition" data-page="home">Home</a>
+            <a href="#page-about" class="nav-link hover:text-gold-400 transition" data-page="about">About</a>
+            <a href="#page-education" class="nav-link hover:text-gold-400 transition" data-page="education">Education</a>
+            <a href="#page-achievements" class="nav-link hover:text-gold-400 transition" data-page="achievements">Achievements</a>
+            <a href="#page-languages" class="nav-link hover:text-gold-400 transition" data-page="languages">Languages</a>
+            <a href="#page-skills" class="nav-link hover:text-gold-400 transition" data-page="skills">Skills</a>
+            <a href="#page-certificates" class="nav-link hover:text-gold-400 transition" data-page="certificates">Certificates</a>
+            <a href="#page-contact" class="nav-link hover:text-gold-400 transition" data-page="contact">Contact</a>
+        </div>
+        <div class="text-white/20 text-xs">
+            <i class="fab fa-whatsapp text-gold-400 mr-1"></i> 0812-5973-0289
+        </div>
+    </div>
+    <div class="mt-4 pt-4 border-t border-white/5 text-center text-white/10 text-[10px]">
+        © 2026 Ahmad Wildan. All rights reserved.
+    </div>
+</footer>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS                                                       -->
+<!-- ============================================================ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    // ================================================================
+    // 1. AOS INIT
+    // ================================================================
+    AOS.init({
+        duration: 800,
+        once: false,
+        mirror: false,
+        easing: 'ease-out-cubic',
+    });
+
+    // ================================================================
+    // 2. LOADING SCREEN
+    // ================================================================
+    (function loading() {
+        const bar = document.getElementById('loader-bar-inner');
+        const overlay = document.getElementById('loading-overlay');
+        let progress = 0;
+        const messages = ['preparing portfolio...', 'loading 3D scenes...', 'almost ready...', 'welcome! 🎓'];
+
+        function update() {
+            progress += 1 + Math.random() * 2;
+            if (progress > 100) progress = 100;
+            bar.style.width = progress + '%';
+            if (progress < 100) {
+                setTimeout(update, 50 + Math.random() * 70);
+            } else {
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    initThreeJS();
+                    initRouter();
+                }, 400);
+            }
+        }
+        update();
+    })();
+
+    // ================================================================
+    // 3. THREE.JS — MULTI-SCENE 3D ENGINE
+    // ================================================================
+    let threeReady = false;
+    let scene3D, camera, renderer, sceneObjects = {};
+
+    function initThreeJS() {
+        if (threeReady) return;
+        threeReady = true;
+
+        const container = document.getElementById('three-canvas');
+        if (!container) return;
+
+        scene3D = new THREE.Scene();
+        scene3D.background = null;
+        scene3D.fog = new THREE.FogExp2(0x0a0e1a, 0.012);
+
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 60);
+        camera.position.set(0, 0.6, 5);
+        camera.lookAt(0, 0.2, 0);
+
+        renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+            powerPreference: "high-performance",
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
+
+        // Lights
+        scene3D.add(new THREE.AmbientLight(0x404080, 0.5));
+        const hemi = new THREE.HemisphereLight(0xffeedd, 0x223344, 0.8);
+        scene3D.add(hemi);
+        const sun = new THREE.DirectionalLight(0xffeedd, 1.2);
+        sun.position.set(5, 8, 4);
+        sun.castShadow = true;
+        sun.shadow.mapSize.width = 1024;
+        sun.shadow.mapSize.height = 1024;
+        const d = 5;
+        sun.shadow.camera.left = -d;
+        sun.shadow.camera.right = d;
+        sun.shadow.camera.top = d;
+        sun.shadow.camera.bottom = -d;
+        sun.shadow.camera.near = 2;
+        sun.shadow.camera.far = 15;
+        scene3D.add(sun);
+        const fill = new THREE.DirectionalLight(0x8888ff, 0.2);
+        fill.position.set(-4, 2, -3);
+        scene3D.add(fill);
+
+        // Ground
+        const ground = new THREE.Mesh(
+            new THREE.CircleGeometry(4, 48),
+            new THREE.MeshStandardMaterial({ color: 0x141c2a, roughness: 0.9, metalness: 0, transparent: true,
+                opacity: 0.4, side: THREE.DoubleSide })
+        );
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.3;
+        ground.receiveShadow = true;
+        scene3D.add(ground);
+
+        // Floating objects: Books
+        const bookColors = [0xd4af37, 0x8b5cf6, 0x6d9581, 0xfbbf24, 0x4c1d95];
+        const books = [];
+        for (let i = 0; i < 10; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const r = 0.5 + Math.random() * 1.8;
+            const group = new THREE.Group();
+            const color = bookColors[i % bookColors.length];
+            const cover = new THREE.Mesh(
+                new THREE.BoxGeometry(0.28, 0.04, 0.2),
+                new THREE.MeshStandardMaterial({ color, roughness: 0.5, metalness: 0.05 })
+            );
+            cover.position.y = 0.02;
+            group.add(cover);
+            const pages = new THREE.Mesh(
+                new THREE.BoxGeometry(0.26, 0.02, 0.18),
+                new THREE.MeshStandardMaterial({ color: 0xf0ecf7, roughness: 0.8 })
+            );
+            pages.position.y = 0;
+            group.add(pages);
+            const spine = new THREE.Mesh(
+                new THREE.BoxGeometry(0.04, 0.06, 0.2),
+                new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.3, metalness: 0.1 })
+            );
+            spine.position.x = -0.14;
+            group.add(spine);
+            group.position.set(Math.sin(angle) * r, 0.1 + Math.random() * 0.3, Math.cos(angle) * r);
+            group.rotation.y = Math.random() * Math.PI * 2;
+            group.scale.set(0.6 + Math.random() * 0.5, 0.6 + Math.random() * 0.5, 0.6 + Math.random() * 0.5);
+            scene3D.add(group);
+            books.push(group);
+        }
+        sceneObjects.books = books;
+
+        // Particles
+        const pCount = 150;
+        const pGeo = new THREE.BufferGeometry();
+        const pPos = new Float32Array(pCount * 3);
+        for (let i = 0; i < pCount * 3; i++) {
+            pPos[i] = (Math.random() - 0.5) * 14;
+            if (i % 3 === 1) pPos[i] = -0.5 + Math.random() * 3;
+        }
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        const pMat = new THREE.PointsMaterial({
+            color: 0xfbbf24,
+            size: 0.025,
+            transparent: true,
+            opacity: 0.3,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            sizeAttenuation: true,
+        });
+        const particles = new THREE.Points(pGeo, pMat);
+        scene3D.add(particles);
+        sceneObjects.particles = particles;
+
+        // Mouse tracking
+        let mouseX = 0,
+            mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const t = e.touches[0];
+                mouseX = (t.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(t.clientY / window.innerHeight) * 2 + 1;
+            }
+        }, { passive: true });
+
+        let time = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.008;
+
+            // Camera follow mouse
+            const tx = mouseX * 0.8;
+            const ty = 0.6 + mouseY * 0.3;
+            camera.position.x += (tx - camera.position.x) * 0.02;
+            camera.position.y += (ty - camera.position.y) * 0.02;
+            camera.lookAt(0, 0.2, 0);
+
+            // Books float
+            books.forEach((b, i) => {
+                b.position.y += Math.sin(time * 0.4 + i * 0.7) * 0.0003;
+                b.rotation.y += 0.002;
+                b.rotation.x = Math.sin(time * 0.3 + i * 0.5) * 0.02;
+            });
+
+            // Particles rotate
+            particles.rotation.y += 0.0004;
+
+            renderer.render(scene3D, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+    }
+
+    // ================================================================
+    // 4. ROUTER — MULTI-PAGE NAVIGATION
+    // ================================================================
+    function initRouter() {
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const transition = document.getElementById('page-transition');
+        let currentPage = 'home';
+
+        function navigateTo(pageId) {
+            if (pageId === currentPage) return;
+            const target = document.getElementById('page-' + pageId);
+            if (!target) return;
+
+            // Show transition
+            transition.classList.add('active');
+
+            setTimeout(() => {
+                // Hide all pages
+                pages.forEach(p => p.classList.remove('active'));
+                // Show target
+                target.classList.add('active');
+                // Update URL hash
+                history.pushState(null, '', '#page-' + pageId);
+                // Update nav active state
+                navLinks.forEach(link => {
+                    link.classList.toggle('text-white', link.dataset.page === pageId);
+                    link.classList.toggle('text-white/60', link.dataset.page !== pageId);
+                });
+                currentPage = pageId;
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Hide transition
+                setTimeout(() => {
+                    transition.classList.remove('active');
+                    // Re-init AOS for new page
+                    AOS.refresh();
+                }, 400);
+            }, 500);
+        }
+
+        // Nav link clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.dataset.page;
+                if (page) navigateTo(page);
+                // Close mobile menu
+                document.getElementById('mobile-menu')?.classList.remove('open');
+                document.getElementById('hamburger-btn')?.querySelector('i')?.classList.replace('fa-times', 'fa-bars');
+            });
+        });
+
+        // Logo click
+        document.querySelector('[data-page="home"]')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('home');
+        });
+
+        // Hash change
+        window.addEventListener('hashchange', () => {
+            const hash = location.hash.replace('#page-', '');
+            if (hash) navigateTo(hash);
+        });
+
+        // Initial load from hash
+        const initialHash = location.hash.replace('#page-', '');
+        if (initialHash && document.getElementById('page-' + initialHash)) {
+            setTimeout(() => navigateTo(initialHash), 100);
+        }
+    }
+
+    // ================================================================
+    // 5. CERTIFICATE MODAL
+    // ================================================================
+    function openCertModal(title, desc) {
+        const modal = document.getElementById('cert-modal');
+        document.getElementById('cert-modal-title').textContent = title;
+        document.getElementById('cert-modal-desc').textContent = desc || 'Verified Credential';
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCertModal() {
+        const modal = document.getElementById('cert-modal');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('cert-modal')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeCertModal();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCertModal(); });
+
+    // ================================================================
+    // 6. MOBILE MENU
+    // ================================================================
+    (function() {
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        let open = false;
+        if (!btn || !menu) return;
+        btn.addEventListener('click', () => {
+            open = !open;
+            menu.classList.toggle('open');
+            btn.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
+        });
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('open');
+                open = false;
+                btn.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+    })();
+
+    // ================================================================
+    // 7. NAVBAR SCROLL EFFECT
+    // ================================================================
+    (function() {
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        }, { passive: true });
+    })();
+
+    // ================================================================
+    // 8. GSAP SCROLL ANIMATIONS (additional)
+    // ================================================================
+    (function() {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Timeline items
+        document.querySelectorAll('.timeline-dot').forEach((dot, i) => {
+            gsap.fromTo(dot, { scale: 0.5, opacity: 0 },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.6,
+                    delay: i * 0.08,
+                    scrollTrigger: {
+                        trigger: dot.closest('.flex'),
+                        start: 'top 90%',
+                        toggleActions: 'play none none reverse',
+                    }
+                }
+            );
+        });
+
+        // Language cards
+        document.querySelectorAll('.lang-card').forEach((card, i) => {
+            gsap.fromTo(card, { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    delay: i * 0.06,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 92%',
+                        toggleActions: 'play none none reverse',
+                    }
+                }
+            );
+        });
+    })();
+
+    console.log('🎓 Ahmad Wildan — Multi-Page Academic Portfolio');
+    console.log('📚 Learning Across Languages, Knowledge & Technology.');
+    console.log('📱 WhatsApp: 081259730289');
+</script>
+</body>
+</html>
+```

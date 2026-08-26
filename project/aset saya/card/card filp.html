@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Flip Card CSS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffeba7;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .section {
+      position: relative;
+      width: 100%;
+      z-index: 1;
+      display: block;
+      padding: 40px 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* === TOGGLE SWITCH (CHECKBOX HACK) === */
+    [type="checkbox"]:checked,
+    [type="checkbox"]:not(:checked) {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .checkbox:checked + label,
+    .checkbox:not(:checked) + label {
+      position: relative;
+      display: inline-block;
+      text-align: center;
+      width: 200px;
+      height: 36px;
+      border-radius: 4px;
+      padding: 0;
+      margin: 0 auto 30px auto;
+      cursor: pointer;
+      background-color: #102770;
+      text-transform: uppercase;
+    }
+
+    .checkbox:checked + label:before,
+    .checkbox:not(:checked) + label:before {
+      position: absolute;
+      display: block;
+      width: 96px;
+      height: 30px;
+      border-radius: 2px;
+      background-color: #ffeba7;
+      content: '';
+      z-index: 1;
+      top: 3px;
+      left: 3px;
+      transition: all 0.5s ease;
+    }
+
+    .checkbox:checked + label:before {
+      top: 3px;
+      left: 101px;
+    }
+
+    .checkbox:checked + label span,
+    .checkbox:not(:checked) + label span {
+      position: relative;
+      border-radius: 2px;
+      transition: all 0.5s ease;
+      font-weight: 700;
+      font-size: 11px;
+      line-height: 36px;
+      letter-spacing: 1px;
+      display: inline-block;
+      width: 90px;
+      text-align: center;
+      height: 36px;
+      z-index: 2;
+    }
+
+    .checkbox:not(:checked) + label span:first-child {
+      color: #102770;
+    }
+    .checkbox:not(:checked) + label span:last-child {
+      color: #c4c3ca;
+    }
+    .checkbox:checked + label span:first-child {
+      color: #c4c3ca;
+    }
+    .checkbox:checked + label span:last-child {
+      color: #102770;
+    }
+
+    /* === 3D FLIP CONTAINER === */
+    .card-3d-wrap {
+      position: relative;
+      width: 300px;
+      max-width: 100%;
+      height: 420px;
+      margin: 0 auto;
+      perspective: 1000px;
+      margin-top: 50px;
+    }
+
+    .card-3d-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-style: preserve-3d;
+      transition: all 0.8s ease-out;
+    }
+
+    .card-front, .card-back {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      position: absolute;
+      border-radius: 6px;
+      left: 0;
+      top: 0;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      box-shadow: 0 15px 35px rgba(16, 39, 112, 0.1);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Rotasi saat checkbox di-check */
+    .checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
+      transform: rotateY(180deg);
+    }
+
+    /* === DEKORASI 3D ILUSTRASI KELUAR KARTU === */
+    .img-3d {
+      position: absolute;
+      top: -60px;
+      width: 110%;
+      height: auto;
+      pointer-events: none;
+      transform: translate3d(0, 0, 50px) scale(1.05);
+      transition: all 0.5s ease;
+    }
+
+    /* === PRICING & CONTENT === */
+    .pricing-wrap h4 {
+      font-weight: 700;
+      font-size: 22px;
+      color: #102770;
+      margin-bottom: 10px;
+      transform: translate3d(0, 0, 30px);
+    }
+
+    .pricing-wrap h2 {
+      font-weight: 800;
+      font-size: 26px;
+      color: #102770;
+      margin-bottom: 5px;
+      transform: translate3d(0, 0, 40px);
+    }
+
+    .pricing-wrap h2 span {
+      font-size: 14px;
+      font-weight: 500;
+      color: #777;
+    }
+
+    .pricing-wrap p {
+      position: relative;
+      width: 100%;
+      display: block;
+      text-align: center;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      color: #102770;
+      transform: translate3d(0, 0, 30px);
+      margin-bottom: 15px;
+    }
+
+    .location {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transform: translate3d(0, 0, 25px);
+    }
+
+    .btn {
+      border-radius: 4px;
+      height: 36px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 20px;
+      color: #fff;
+      background-color: #102770;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(16, 39, 112, 0.2);
+      transform: translate3d(0, 0, 35px);
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #ffeba7;
+      color: #102770;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <div class="container">
+      
+      <!-- Checkbox Toggle -->
+      <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+      <label for="reg-log">
+        <span>Kayaking</span>
+        <span>Camping</span>
+      </label>
+
+      <!-- Card Container -->
+      <div class="card-3d-wrap">
+        <div class="card-3d-wrapper">
+          
+          <!-- FRONT SIDE (KAYAKING) -->
+          <div class="card-front">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png" class="img-3d" alt="Kayaking 3D" />
+            <div class="pricing-wrap">
+              <h4>Kayaking</h4>
+              <h2>$35 / <span>4hrs</span></h2>
+              <p>per person</p>
+              <div class="location">📍 Tara, Serbia</div>
+              <button class="btn">Choose Date</button>
+            </div>
+          </div>
+
+          <!-- BACK SIDE (CAMPING) -->
+          <div class="card-back">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" class="img-3d" alt="Camping 3D" />
+            <div class="pricing-wrap">
+              <h4>Camping</h4>
+              <h2>$29 / <span>8hrs</span></h2>
+              <p>per person</p>
+              <div class="location">📍 Tara, Serbia</div>
+              <button class="btn">Choose Date</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahmad Wildan Asy Syifa · Portfolio</title>
+  
+  <!-- Google Fonts: Elegant Serif + Clean Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & CUSTOM PROPERTIES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d5a5;
+      --gold-glow: #f5e7c8;
+      --teal: #1a4d5e;
+      --teal-deep: #0f3b4a;
+      --beige: #f5f0e6;
+      --cream: #faf8f5;
+      --dark: #1e2a36;
+      --text: #2c3e50;
+      --text-light: #5a6b7a;
+      --border-soft: #e0d6c5;
+      --shadow-soft: 0 12px 40px rgba(26, 77, 94, 0.08);
+      --shadow-gold: 0 8px 32px rgba(201, 168, 76, 0.25);
+      --radius: 16px;
+      --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--beige);
+      color: var(--text);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(201, 168, 76, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(26, 77, 94, 0.04) 0%, transparent 40%);
+      min-height: 100vh;
+    }
+
+    /* Subtle geometric background overlay (Islamic-inspired mesh) */
+    .bg-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201, 168, 76, 0.05) 40px, rgba(201, 168, 76, 0.05) 41px),
+        repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(26, 77, 94, 0.04) 40px, rgba(26, 77, 94, 0.04) 41px);
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      line-height: 1.08;
+      color: var(--teal-deep);
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--teal-deep);
+      margin-bottom: 0.5rem;
+    }
+
+    h2 .gold {
+      color: var(--gold);
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text-light);
+      letter-spacing: 0.02em;
+      border-bottom: 2px solid var(--gold-light);
+      display: inline-block;
+      padding-bottom: 6px;
+      margin-bottom: 2.5rem;
+    }
+
+    .gold-text {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .teal-text {
+      color: var(--teal);
+    }
+
+    /* ===== SECTION SPACING ===== */
+    section {
+      padding: 80px 0 60px;
+      position: relative;
+    }
+
+    section:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-soft), transparent);
+    }
+
+    /* ===== 1. HERO ===== */
+    .hero {
+      padding: 60px 0 40px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-name {
+      font-size: clamp(3.2rem, 8vw, 5.6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 0.25rem;
+      color: var(--teal-deep);
+    }
+
+    .hero-name .gold {
+      color: var(--gold);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .hero-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 1.4vw, 1.4rem);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 6px 24px;
+      border-radius: 40px;
+      border: 1px solid var(--border-soft);
+      margin: 8px 0 32px;
+    }
+
+    .hero-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+      background: var(--cream);
+      padding: 28px 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    .stat-card {
+      text-align: center;
+    }
+
+    .stat-card .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal-deep);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .stat-card .number .gold {
+      color: var(--gold);
+    }
+
+    .stat-card .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* ===== 2. TIMELINE ===== */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      border-left: 3px solid var(--gold);
+      margin-top: 24px;
+    }
+
+    .timeline-item {
+      margin-bottom: 40px;
+      padding-left: 24px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: var(--transition);
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -38px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      background: var(--cream);
+      border: 3px solid var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px var(--beige);
+    }
+
+    .timeline-item .year {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .timeline-item h3 {
+      font-size: 1.3rem;
+      color: var(--teal-deep);
+      margin: 4px 0 6px;
+    }
+
+    .timeline-item p {
+      color: var(--text-light);
+      max-width: 600px;
+    }
+
+    .timeline-item .badge {
+      display: inline-block;
+      background: var(--gold-glow);
+      color: var(--teal-deep);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--gold-light);
+      margin-top: 6px;
+    }
+
+    /* ===== 3. DASHBOARD ===== */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 780px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    .skill-block h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--teal-deep);
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+      border-bottom: 2px solid var(--gold-light);
+      padding-bottom: 10px;
+    }
+
+    .lang-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .lang-flag {
+      font-size: 1.8rem;
+      width: 40px;
+      text-align: center;
+    }
+
+    .lang-info {
+      flex: 1;
+    }
+
+    .lang-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .lang-name span:last-child {
+      color: var(--text-light);
+      font-weight: 400;
+      font-size: 0.85rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border-soft);
+      border-radius: 10px;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold));
+      border-radius: 10px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .progress-fill.animated {
+      /* width set inline via JS */;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .tech-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .tech-card {
+      background: var(--cream);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      padding: 20px 12px;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .tech-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .tech-card .icon {
+      font-size: 2.4rem;
+      font-weight: 300;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .tech-card .name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--teal-deep);
+    }
+
+    .tech-card .sub {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+
+    /* ===== 4. BADGES ===== */
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .badge-item {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 24px 12px 16px;
+      text-align: center;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .badge-item.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .badge-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .badge-icon {
+      font-size: 3.2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .badge-item h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal-deep);
+      line-height: 1.3;
+    }
+
+    .badge-item p {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      margin-top: 2px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== 5. ROADMAP ===== */
+    .roadmap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px 10px;
+      margin-top: 30px;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .roadmap::before {
+      content: '';
+      position: absolute;
+      top: 48px;
+      left: 10%;
+      width: 80%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-light));
+      opacity: 0.4;
+    }
+
+    @media (max-width: 700px) {
+      .roadmap::before {
+        display: none;
+      }
+      .roadmap {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+      }
+    }
+
+    .roadmap-step {
+      flex: 1 1 160px;
+      text-align: center;
+      padding: 20px 12px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .roadmap-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .roadmap-step .step-icon {
+      font-size: 2.4rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .roadmap-step .step-status {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      background: var(--gold-glow);
+      padding: 2px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 8px;
+      border: 1px solid var(--gold-light);
+    }
+
+    .roadmap-step h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--teal-deep);
+    }
+
+    .roadmap-step p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .roadmap-step.accepted {
+      border-color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    .roadmap-step.pending {
+      border-style: dashed;
+      border-color: var(--text-light);
+      opacity: 0.8;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border-soft);
+      margin-top: 20px;
+    }
+
+    .footer .gold {
+      color: var(--gold);
+    }
+
+    /* ===== RESPONSIVE TWEAKS ===== */
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 20px;
+      }
+      .hero-summary {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 20px 16px;
+      }
+      .stat-card .number {
+        font-size: 1.6rem;
+      }
+      .timeline {
+        padding-left: 20px;
+      }
+      .timeline-item {
+        padding-left: 16px;
+      }
+      .timeline-item::before {
+        left: -26px;
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: var(--transition);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      margin-bottom: 12px;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+    .mt-1 { margin-top: 8px; }
+    .mt-2 { margin-top: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<main class="container">
+
+  <!-- ==================== 1. HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="fade-up visible">
+        <h1 class="hero-name">
+          Ahmad Wildan <br><span class="gold">Asy Syifa</span>
+        </h1>
+        <div class="hero-title">
+          Summa Cum Laude Diploma Syariah Candidate · Multilingual Tech Enthusiast
+        </div>
+        <p style="max-width: 600px; margin: 16px auto 0; color: var(--text-light); font-size: 1.05rem;">
+          MA Al Irsyad Piat 7 · Rank #1 (MTs to MA · 6 consecutive years) · 95 academic average · 97.10 peak score
+        </p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="hero-summary fade-up visible">
+        <div class="stat-card">
+          <span class="number">4.00</span>
+          <span class="label">GPA · Summa Cum Laude</span>
+        </div>
+        <div class="stat-card">
+          <span class="number">#<span class="gold">1</span></span>
+          <span class="label">Rank · MTs to MA (6 yrs)</span>
+        </div>
+        <div class="stat-card">
+          <span class="number">95</span>
+          <span class="label">Academic Average</span>
+        </div>
+        <div class="stat-card">
+          <span class="number"><span class="gold">97.10</span></span>
+          <span class="label">Highest Semester Score</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2. TIMELINE & AWARDS ==================== -->
+  <section id="timeline">
+    <div class="section-header fade-up">
+      <span class="section-subtitle">Prestige & Recognition</span>
+      <h2>Academic Timeline & <span class="gold">Awards</span></h2>
+    </div>
+
+    <div class="timeline">
+      <!-- Item 1 -->
+      <div class="timeline-item" data-delay="100">
+        <span class="year">🏅 National</span>
+        <h3>KSN Science Competition</h3>
+        <p>Runner-up 2 (National level) · IPA subject · MTs representation.</p>
+        <span class="badge">Competition Award</span>
+      </div>
+      <!-- Item 2 -->
+      <div class="timeline-item" data-delay="250">
+        <span class="year">🌍 Provincial</span>
+        <h3>OBA Arabic Olympiad</h3>
+        <p>2nd Place · Kota Batu · Top 5 Provincial level.</p>
+        <span class="badge">Olympiad Medal</span>
+      </div>
+      <!-- Item 3 -->
+      <div class="timeline-item" data-delay="400">
+        <span class="year">📜 Academic</span>
+        <h3>Diploma Syariah · Markaz Ulum</h3>
+        <p>IPK 4.00 (Summa Cum Laude) with latest UTS score 97.76.</p>
+        <span class="badge">Current Program</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3. SKILLS DASHBOARD ==================== -->
+  <section id="skills">
+    <div class="section-header fade-up">
+      <span class="section-subtitle">Multilingual & Technical</span>
+      <h2>Language & Tech <span class="gold">Dashboard</span></h2>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- LEFT: LANGUAGES -->
+      <div class="skill-block fade-up">
+        <h3>🌐 Languages & Proficiency</h3>
+
+        <div class="lang-item">
+          <span class="lang-flag">🇬🇧</span>
+          <div class="lang-info">
+            <div class="lang-name"><span>English</span> <span>TOEFL 607 · C1</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="95"></div></div>
+          </div>
+        </div>
+
+        <div class="lang-item">
+          <span class="lang-flag">🇨🇳</span>
+          <div class="lang-info">
+            <div class="lang-name"><span>Mandarin</span> <span>Peking University · Basic</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="60"></div></div>
+          </div>
+        </div>
+
+        <div class="lang-item">
+          <span class="lang-flag">🇰🇷</span>
+          <div class="lang-info">
+            <div class="lang-name"><span>Korean</span> <span>Conversational · Basic</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="40"></div></div>
+          </div>
+        </div>
+
+        <div class="lang-item">
+          <span class="lang-flag">🇯🇵</span>
+          <div class="lang-info">
+            <div class="lang-name"><span>Japanese</span> <span>Grammar · Basic</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="35"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: TECH -->
+      <div class="skill-block fade-up">
+        <h3>⚙️ Web Development Basics</h3>
+        <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:18px;">Trained at Rumah IT Indonesia</p>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <span class="icon">🟧</span>
+            <div class="name">HTML</div>
+            <div class="sub">Structuring</div>
+          </div>
+          <div class="tech-card">
+            <span class="icon">🟦</span>
+            <div class="name">CSS</div>
+            <div class="sub">Styling</div>
+          </div>
+          <div class="tech-card">
+            <span class="icon">🟨</span>
+            <div class="name">JavaScript</div>
+            <div class="sub">Interactivity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4. CERTIFICATION BADGES ==================== -->
+  <section id="badges">
+    <div class="section-header fade-up">
+      <span class="section-subtitle">Verified Credentials</span>
+      <h2>Certification <span class="gold">Badges Gallery</span></h2>
+    </div>
+
+    <div class="badges-grid">
+      <div class="badge-item"><span class="badge-icon">🎓</span><h4>Peking University</h4><p>Mandarin Certification</p></div>
+      <div class="badge-item"><span class="badge-icon">📘</span><h4>TOEFL 607</h4><p>English Proficiency</p></div>
+      <div class="badge-item"><span class="badge-icon">🏅</span><h4>Hamzah C1</h4><p>English Advanced</p></div>
+      <div class="badge-item"><span class="badge-icon">🔬</span><h4>KSN Science</h4><p>Runner-up 2 National</p></div>
+      <div class="badge-item"><span class="badge-icon">🌍</span><h4>OBA Olympiad</h4><p>Provincial Top 5</p></div>
+      <div class="badge-item"><span class="badge-icon">💻</span><h4>Rumah IT</h4><p>Web Dev Basics</p></div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. EDUCATION ROADMAP ==================== -->
+  <section id="roadmap">
+    <div class="section-header fade-up">
+      <span class="section-subtitle">Ongoing & Future</span>
+      <h2>Education <span class="gold">Roadmap</span></h2>
+    </div>
+
+    <div class="roadmap">
+      <div class="roadmap-step">
+        <span class="step-icon">📖</span>
+        <span class="step-status">Current</span>
+        <h4>Markaz Ulum</h4>
+        <p>Diploma Syariah · GPA 4.00</p>
+        <small style="color:var(--text-light);">+ Zad Academy (Tech)</small>
+      </div>
+
+      <div class="roadmap-step accepted">
+        <span class="step-icon">✅</span>
+        <span class="step-status">Accepted</span>
+        <h4>Sousse University</h4>
+        <p>Sastra Arab · Tunisia</p>
+        <small style="color:var(--gold);">Admission secured</small>
+      </div>
+
+      <div class="roadmap-step pending">
+        <span class="step-icon">⏳</span>
+        <span class="step-status">Pending</span>
+        <h4>Saudi Arabia University</h4>
+        <p>Advanced Studies</p>
+        <small style="color:var(--text-light);">Application in progress</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>© 2026 <span class="gold">Ahmad Wildan Asy Syifa</span> · Built with precision & clarity.</p>
+  </footer>
+
+</main>
+
+<script>
+  (function() {
+    'use strict';
+
+    // =============================================
+    // 1. ANIMATE PROGRESS BARS ON SCROLL
+    // =============================================
+    const progressFills = document.querySelectorAll('.progress-fill');
+    
+    const animateBars = () => {
+      progressFills.forEach(bar => {
+        const rect = bar.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight - 60 && rect.bottom > 0;
+        
+        if (isVisible && !bar.classList.contains('animated')) {
+          const width = bar.getAttribute('data-width') || '0';
+          bar.style.width = width + '%';
+          bar.classList.add('animated');
+        }
+      });
+    };
+
+    // =============================================
+    // 2. INTERSECTION OBSERVER FOR FADE-UPS / TIMELINE / BADGES
+    // =============================================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          
+          // Add visible class
+          if (el.classList.contains('fade-up')) {
+            el.classList.add('visible');
+          }
+          
+          if (el.classList.contains('timeline-item')) {
+            el.classList.add('visible');
+          }
+          
+          if (el.classList.contains('badge-item')) {
+            el.classList.add('visible');
+          }
+          
+          if (el.classList.contains('roadmap-step')) {
+            el.classList.add('visible');
+          }
+          
+          // If it's a progress bar, trigger it
+          if (el.classList.contains('progress-fill')) {
+            const width = el.getAttribute('data-width') || '0';
+            el.style.width = width + '%';
+            el.classList.add('animated');
+          }
+
+          // Optionally unobserve after reveal for performance
+          // observer.unobserve(el); // uncomment if you want to stop observing after reveal
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -20px 0px'
+    });
+
+    // Observe all relevant elements
+    document.querySelectorAll('.fade-up, .timeline-item, .badge-item, .roadmap-step, .progress-fill').forEach(el => {
+      observer.observe(el);
+    });
+
+    // =============================================
+    // 3. INITIAL LOAD TRIGGER FOR VISIBLE ELEMENTS
+    // =============================================
+    setTimeout(() => {
+      // Trigger any items already visible on load
+      animateBars();
+      
+      // Manually check fade-ups that might already be visible
+      document.querySelectorAll('.fade-up, .timeline-item, .badge-item, .roadmap-step').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 40) {
+          if (el.classList.contains('fade-up')) el.classList.add('visible');
+          if (el.classList.contains('timeline-item')) el.classList.add('visible');
+          if (el.classList.contains('badge-item')) el.classList.add('visible');
+          if (el.classList.contains('roadmap-step')) el.classList.add('visible');
+        }
+      });
+    }, 200);
+
+    // =============================================
+    // 4. SCROLL LISTENER FOR BARS (just in case)
+    // =============================================
+    window.addEventListener('scroll', animateBars, { passive: true });
+
+  })();
+</script>
+
+</body>
+</html>

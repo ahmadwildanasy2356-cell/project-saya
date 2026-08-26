@@ -1,0 +1,591 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Bakery Berkah Pondok · Roti & Kue Premium Halal</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Konfigurasi Tailwind: tema hangat cokelat emas & putih -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'warm-gold': '#B8860B',
+            'warm-gold-light': '#D4A02B',
+            'warm-cream': '#FFF9F0',
+            'warm-brown': '#7B4B2A',
+            'warm-dark': '#3E2A1B',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* custom tambahan */
+    body {
+      background: #FFFCF8;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .bg-glass {
+      background: rgba(255, 252, 248, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .btn-gold {
+      background: linear-gradient(145deg, #D4A02B, #B8860B);
+      transition: all 0.25s ease;
+    }
+    .btn-gold:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 20px rgba(184, 134, 11, 0.4);
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -10px rgba(184, 134, 11, 0.25);
+      border-color: #D4A02B;
+    }
+    .pulse-slow {
+      animation: pulseGold 2.5s infinite;
+    }
+    @keyframes pulseGold {
+      0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(184, 134, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
+    }
+    .badge-best {
+      background: #B8860B;
+      color: white;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    /* keranjang slide */
+    .cart-overlay {
+      transition: opacity 0.3s ease;
+    }
+    .cart-panel {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(100%);
+    }
+    .cart-panel.open {
+      transform: translateX(0);
+    }
+    /* hilangkan scrollbar pada modal */
+    .no-scroll {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="sticky top-0 z-50 bg-glass border-b border-warm-gold/20 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-3 md:py-4">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <span class="text-3xl"><i class="fas fa-crown text-warm-gold"></i></span>
+          <span class="text-2xl font-bold tracking-tight text-warm-dark">
+            Bakery<span class="text-warm-gold">Berkah</span>
+          </span>
+          <span class="hidden sm:inline-block ml-1 text-xs font-semibold bg-warm-gold/10 text-warm-brown px-2 py-0.5 rounded-full border border-warm-gold/20">Halal</span>
+        </div>
+
+        <!-- Desktop menu + keranjang -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="#produk" class="hover:text-warm-gold transition">Produk</a>
+          <a href="#keunggulan" class="hover:text-warm-gold transition">Keunggulan</a>
+          <a href="#testimoni" class="hover:text-warm-gold transition">Testimoni</a>
+          <a href="#kontak" class="hover:text-warm-gold transition">Kontak</a>
+          <button id="cart-icon-desktop" class="relative text-warm-dark hover:text-warm-gold transition text-xl">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-count-desktop" class="absolute -top-2 -right-3 bg-warm-gold text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+          <a href="#pesan" class="btn-gold text-white px-5 py-2 rounded-full shadow-md hover:shadow-lg transition text-sm">Pesan Sekarang</a>
+        </nav>
+
+        <!-- Mobile: hamburger + keranjang -->
+        <div class="flex items-center gap-3 md:hidden">
+          <button id="cart-icon-mobile" class="relative text-warm-dark text-xl">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-count-mobile" class="absolute -top-2 -right-3 bg-warm-gold text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+          <button id="menu-toggle" class="text-2xl text-warm-dark focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu dropdown -->
+      <div id="mobile-menu" class="md:hidden hidden pb-4 flex flex-col gap-3 border-t border-warm-gold/10 pt-3 text-sm">
+        <a href="#produk" class="hover:text-warm-gold transition px-2 py-1">Produk</a>
+        <a href="#keunggulan" class="hover:text-warm-gold transition px-2 py-1">Keunggulan</a>
+        <a href="#testimoni" class="hover:text-warm-gold transition px-2 py-1">Testimoni</a>
+        <a href="#kontak" class="hover:text-warm-gold transition px-2 py-1">Kontak</a>
+        <a href="#pesan" class="btn-gold text-white text-center px-5 py-2.5 rounded-full shadow-md">Pesan Sekarang</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section id="hero" class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 px-4 sm:px-6 lg:px-8 bg-warm-cream" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <div data-aos="fade-right" data-aos-delay="200">
+        <span class="inline-block bg-warm-gold/10 text-warm-gold text-xs font-semibold px-4 py-1.5 rounded-full border border-warm-gold/20 mb-4">
+          <i class="fas fa-star mr-1"></i> Premium Halal
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-warm-dark">
+          Roti & Kue <br><span class="text-warm-gold">Berkah</span> Cita Rasa
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-gray-600 max-w-lg">
+          Setiap gigitan penuh kehangatan. Dipanggang dengan bahan pilihan, 100% halal, dan kemasan elegan. Sempurna untuk momen istimewa.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#produk" class="btn-gold text-white px-8 py-3.5 rounded-full shadow-lg pulse-slow hover:shadow-warm-gold/30 transition-all inline-flex items-center gap-2">
+            <i class="fas fa-shopping-bag"></i> Lihat Menu
+          </a>
+          <a href="#kontak" class="bg-white border border-warm-gold/30 text-warm-dark px-8 py-3.5 rounded-full hover:bg-warm-gold/5 transition shadow-sm inline-flex items-center gap-2">
+            <i class="fas fa-chevron-circle-right text-warm-gold"></i> Hubungi Kami
+          </a>
+        </div>
+        <div class="flex flex-wrap gap-6 mt-8 text-sm text-gray-500">
+          <span><i class="fas fa-check-circle text-warm-gold mr-1"></i> 100% Halal</span>
+          <span><i class="fas fa-check-circle text-warm-gold mr-1"></i> Bahan Premium</span>
+          <span><i class="fas fa-check-circle text-warm-gold mr-1"></i> Fresh Every Day</span>
+        </div>
+      </div>
+      <div class="flex justify-center" data-aos="fade-left" data-aos-delay="300">
+        <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-warm-gold/15 to-warm-cream shadow-2xl flex items-center justify-center border-4 border-white/60">
+          <span class="text-7xl sm:text-8xl lg:text-9xl"><i class="fas fa-bread-slice text-warm-gold drop-shadow-lg"></i></span>
+          <div class="absolute -bottom-2 -right-2 bg-white rounded-full p-2 shadow-lg border border-warm-gold/20">
+            <span class="text-warm-gold text-xl"><i class="fas fa-star"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-r from-transparent via-warm-gold/5 to-transparent"></div>
+  </section>
+
+  <!-- ========== KEUNGGULAN ========== -->
+  <section id="keunggulan" class="py-14 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-warm-dark mb-2" data-aos="fade-down">Keunggulan <span class="text-warm-gold">Kami</span></h2>
+      <p class="text-center text-gray-500 max-w-xl mx-auto mb-12" data-aos="fade-down" data-aos-delay="100">Rasakan perbedaan dari setiap produk yang kami sajikan</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-warm-cream rounded-3xl p-6 text-center shadow-md border border-warm-gold/10 card-hover" data-aos="fade-up" data-aos-delay="150">
+          <div class="text-5xl text-warm-gold mb-4"><i class="fas fa-seedling"></i></div>
+          <h3 class="text-xl font-bold text-warm-dark">Bahan Premium Halal</h3>
+          <p class="text-gray-600 mt-2 text-sm">Tepung pilihan, mentega asli, dan cokelat Belgia. Semua bersertifikat halal.</p>
+        </div>
+        <div class="bg-warm-cream rounded-3xl p-6 text-center shadow-md border border-warm-gold/10 card-hover" data-aos="fade-up" data-aos-delay="250">
+          <div class="text-5xl text-warm-gold mb-4"><i class="fas fa-hand-holding-heart"></i></div>
+          <h3 class="text-xl font-bold text-warm-dark">Rasa Homemade</h3>
+          <p class="text-gray-600 mt-2 text-sm">Dipanggang setiap pagi dengan resep turun-temurun, rasa yang mengingatkan pada rumah.</p>
+        </div>
+        <div class="bg-warm-cream rounded-3xl p-6 text-center shadow-md border border-warm-gold/10 card-hover" data-aos="fade-up" data-aos-delay="350">
+          <div class="text-5xl text-warm-gold mb-4"><i class="fas fa-gift"></i></div>
+          <h3 class="text-xl font-bold text-warm-dark">Kemasan Elegan</h3>
+          <p class="text-gray-600 mt-2 text-sm">Dikemas dengan cantik, cocok untuk hadiah, arisan, atau acara spesial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRODUK / MENU ========== -->
+  <section id="produk" class="py-14 bg-warm-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-warm-dark mb-2" data-aos="fade-down">Menu <span class="text-warm-gold">Pilihan</span></h2>
+      <p class="text-center text-gray-500 max-w-xl mx-auto mb-10" data-aos="fade-down" data-aos-delay="100">Kue & roti premium untuk setiap momen berharga</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <!-- Produk 1 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover border border-warm-gold/10 flex flex-col relative" data-aos="fade-up" data-aos-delay="100">
+          <span class="badge-best"><i class="fas fa-crown mr-1"></i> Best Seller</span>
+          <div class="h-48 bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-6xl text-warm-gold">
+            <i class="fas fa-cake"></i>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-warm-dark">Blackforest Premium</h3>
+            <p class="text-gray-500 text-sm mt-1">Kue cokelat lembut dengan cherry & whipped cream</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-lg font-semibold text-warm-gold">Rp 185.000</span>
+              <button onclick="addToCart('Blackforest Premium', 185000)" class="bg-warm-gold/10 text-warm-gold px-4 py-1.5 rounded-full text-sm font-medium hover:bg-warm-gold hover:text-white transition border border-warm-gold/20">
+                <i class="fas fa-plus mr-1"></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Produk 2 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover border border-warm-gold/10 flex flex-col" data-aos="fade-up" data-aos-delay="200">
+          <div class="h-48 bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center text-6xl text-warm-gold">
+            <i class="fas fa-bread"></i>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-warm-dark">Sourdough Artisan</h3>
+            <p class="text-gray-500 text-sm mt-1">Roti sourdough dengan kulit renyah & rasa asam khas</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-lg font-semibold text-warm-gold">Rp 65.000</span>
+              <button onclick="addToCart('Sourdough Artisan', 65000)" class="bg-warm-gold/10 text-warm-gold px-4 py-1.5 rounded-full text-sm font-medium hover:bg-warm-gold hover:text-white transition border border-warm-gold/20">
+                <i class="fas fa-plus mr-1"></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Produk 3 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover border border-warm-gold/10 flex flex-col" data-aos="fade-up" data-aos-delay="300">
+          <div class="h-48 bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-6xl text-warm-gold">
+            <i class="fas fa-cupcake"></i>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-warm-dark">Cupcake Red Velvet</h3>
+            <p class="text-gray-500 text-sm mt-1">Cupcake lembut dengan cream cheese frosting</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-lg font-semibold text-warm-gold">Rp 45.000</span>
+              <button onclick="addToCart('Cupcake Red Velvet', 45000)" class="bg-warm-gold/10 text-warm-gold px-4 py-1.5 rounded-full text-sm font-medium hover:bg-warm-gold hover:text-white transition border border-warm-gold/20">
+                <i class="fas fa-plus mr-1"></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Produk 4 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover border border-warm-gold/10 flex flex-col" data-aos="fade-up" data-aos-delay="400">
+          <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center text-6xl text-warm-gold">
+            <i class="fas fa-pie"></i>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-warm-dark">Pie Apel Homemade</h3>
+            <p class="text-gray-500 text-sm mt-1">Pie dengan isian apel segar dan rempah kayu manis</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-lg font-semibold text-warm-gold">Rp 90.000</span>
+              <button onclick="addToCart('Pie Apel Homemade', 90000)" class="bg-warm-gold/10 text-warm-gold px-4 py-1.5 rounded-full text-sm font-medium hover:bg-warm-gold hover:text-white transition border border-warm-gold/20">
+                <i class="fas fa-plus mr-1"></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Produk 5 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover border border-warm-gold/10 flex flex-col" data-aos="fade-up" data-aos-delay="500">
+          <div class="h-48 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-6xl text-warm-gold">
+            <i class="fas fa-cookie-bite"></i>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-warm-dark">Choco Chip Cookies</h3>
+            <p class="text-gray-500 text-sm mt-1">Kukis renyah dengan choco chip premium</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-lg font-semibold text-warm-gold">Rp 35.000</span>
+              <button onclick="addToCart('Choco Chip Cookies', 35000)" class="bg-warm-gold/10 text-warm-gold px-4 py-1.5 rounded-full text-sm font-medium hover:bg-warm-gold hover:text-white transition border border-warm-gold/20">
+                <i class="fas fa-plus mr-1"></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Produk 6 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover border border-warm-gold/10 flex flex-col" data-aos="fade-up" data-aos-delay="600">
+          <span class="badge-best"><i class="fas fa-crown mr-1"></i> Best Seller</span>
+          <div class="h-48 bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-6xl text-warm-gold">
+            <i class="fas fa-birthday-cake"></i>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-warm-dark">Kue Ultah Premium</h3>
+            <p class="text-gray-500 text-sm mt-1">Kue ulang tahun dengan dekorasi custom dan rasa pilihan</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-lg font-semibold text-warm-gold">Rp 250.000</span>
+              <button onclick="addToCart('Kue Ultah Premium', 250000)" class="bg-warm-gold/10 text-warm-gold px-4 py-1.5 rounded-full text-sm font-medium hover:bg-warm-gold hover:text-white transition border border-warm-gold/20">
+                <i class="fas fa-plus mr-1"></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <button onclick="openCart()" class="bg-warm-dark text-white px-8 py-3 rounded-full hover:bg-warm-brown transition shadow-md inline-flex items-center gap-2">
+          <i class="fas fa-shopping-bag"></i> Lihat Keranjang (<span id="cart-total-items">0</span>)
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TESTIMONI ========== -->
+  <section id="testimoni" class="py-14 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-warm-dark mb-2" data-aos="fade-down">Apa Kata <span class="text-warm-gold">Pelanggan</span></h2>
+      <p class="text-center text-gray-500 max-w-xl mx-auto mb-10" data-aos="fade-down" data-aos-delay="100">Ulasan dari mereka yang sudah merasakan kelezatan produk kami</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-warm-cream rounded-2xl p-6 shadow-md border border-warm-gold/10" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center gap-1 text-warm-gold mb-2">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="text-gray-700 italic">"Blackforest-nya luar biasa! Lembut dan tidak terlalu manis. Pengiriman cepat dan kemasan cantik. Pasti pesan lagi."</p>
+          <div class="mt-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-full bg-warm-gold/20 flex items-center justify-center text-warm-gold"><i class="fas fa-user"></i></span>
+            <span class="font-medium text-warm-dark">Dewi</span>
+          </div>
+        </div>
+        <div class="bg-warm-cream rounded-2xl p-6 shadow-md border border-warm-gold/10" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center gap-1 text-warm-gold mb-2">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="text-gray-700 italic">"Sourdough-nya renyah dan aroma khas. Saya suka sekali! Roti ini jadi favorit keluarga. Recommended!"</p>
+          <div class="mt-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-full bg-warm-gold/20 flex items-center justify-center text-warm-gold"><i class="fas fa-user"></i></span>
+            <span class="font-medium text-warm-dark">Rizki</span>
+          </div>
+        </div>
+        <div class="bg-warm-cream rounded-2xl p-6 shadow-md border border-warm-gold/10" data-aos="fade-up" data-aos-delay="300">
+          <div class="flex items-center gap-1 text-warm-gold mb-2">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="text-gray-700 italic">"Cupcake red velvetnya enak banget, frostingnya creamy. Cocok untuk oleh-oleh. Pasti repeat order!"</p>
+          <div class="mt-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-full bg-warm-gold/20 flex items-center justify-center text-warm-gold"><i class="fas fa-user"></i></span>
+            <span class="font-medium text-warm-dark">Sari</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FORM KONTAK ========== -->
+  <section id="kontak" class="py-14 bg-warm-cream">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-3xl p-6 md:p-10 shadow-gold-soft border border-warm-gold/15" data-aos="flip-up" data-aos-duration="800">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-warm-dark mb-2">Hubungi <span class="text-warm-gold">Kami</span></h2>
+        <p class="text-center text-gray-500 max-w-xl mx-auto mb-8">Isi form di bawah, kami akan segera merespon via WhatsApp</p>
+        <form id="kontak-form" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-warm-dark mb-1">Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="Nama Anda" required class="w-full rounded-xl border border-warm-gold/20 px-4 py-3 bg-white/80 focus:ring-2 focus:ring-warm-gold focus:border-transparent transition">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-warm-dark mb-1">Jenis Produk</label>
+            <input type="text" id="produk" placeholder="Contoh: Blackforest Premium" required class="w-full rounded-xl border border-warm-gold/20 px-4 py-3 bg-white/80 focus:ring-2 focus:ring-warm-gold focus:border-transparent transition">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-warm-dark mb-1">Pesan Tambahan</label>
+            <textarea id="pesan-tambahan" rows="3" placeholder="Tambahkan catatan (ukuran, rasa, dll.)" class="w-full rounded-xl border border-warm-gold/20 px-4 py-3 bg-white/80 focus:ring-2 focus:ring-warm-gold focus:border-transparent transition"></textarea>
+          </div>
+          <button type="submit" id="btn-kirim" class="w-full btn-gold text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-xl transition text-lg flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
+          </button>
+          <p class="text-xs text-gray-400 text-center mt-2">Dengan mengirim, Anda akan terhubung ke WhatsApp kami</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-warm-dark text-white/90 py-8 border-t-4 border-warm-gold">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl"><i class="fas fa-crown text-warm-gold"></i></span>
+        <span class="font-semibold text-lg">Bakery Berkah Pondok</span>
+        <span class="text-xs bg-warm-gold/20 px-2 py-0.5 rounded-full text-warm-gold-light">Halal Premium</span>
+      </div>
+      <div class="flex gap-6 text-xl">
+        <a href="#" class="hover:text-warm-gold transition"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-warm-gold transition"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="hover:text-warm-gold transition"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/6281259730289" target="_blank" class="hover:text-warm-gold transition"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <p class="text-sm text-white/60">&copy; 2026 Bakery Berkah. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ========== SIDEBAR KERANJANG (OFF-CANVAS) ========== -->
+  <div id="cart-overlay" class="fixed inset-0 z-50 bg-black/30 opacity-0 invisible transition-opacity duration-300" onclick="closeCart()"></div>
+  <div id="cart-panel" class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+    <div class="flex justify-between items-center p-4 border-b border-warm-gold/20">
+      <h3 class="text-xl font-bold text-warm-dark">Keranjang Belanja</h3>
+      <button onclick="closeCart()" class="text-2xl text-warm-dark hover:text-warm-gold transition"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="cart-items" class="p-4 space-y-3">
+      <!-- item akan di-render JS -->
+      <p class="text-gray-400 text-center py-8">Belum ada produk dalam keranjang</p>
+    </div>
+    <div id="cart-footer" class="border-t border-warm-gold/20 p-4 hidden">
+      <div class="flex justify-between font-bold text-warm-dark text-lg mb-3">
+        <span>Total:</span>
+        <span id="cart-total-price">Rp 0</span>
+      </div>
+      <button onclick="checkoutWA()" class="w-full btn-gold text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition text-lg flex items-center justify-center gap-2">
+        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Inisialisasi AOS
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true
+    });
+
+    // ========== KERANJANG ==========
+    let cart = JSON.parse(localStorage.getItem('bakeryCart')) || [];
+
+    function saveCart() {
+      localStorage.setItem('bakeryCart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-count-desktop').textContent = count;
+      document.getElementById('cart-count-mobile').textContent = count;
+      document.getElementById('cart-total-items').textContent = count;
+
+      // render item
+      const container = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada produk dalam keranjang</p>';
+        document.getElementById('cart-footer').classList.add('hidden');
+        return;
+      }
+      let html = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price * item.qty;
+        html += `
+          <div class="flex items-center justify-between border-b border-warm-gold/10 pb-2">
+            <div>
+              <p class="font-medium text-warm-dark">${item.name}</p>
+              <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()} x ${item.qty}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="changeQty(${index}, -1)" class="text-warm-gold hover:text-warm-dark transition"><i class="fas fa-minus-circle"></i></button>
+              <span class="w-6 text-center">${item.qty}</span>
+              <button onclick="changeQty(${index}, 1)" class="text-warm-gold hover:text-warm-dark transition"><i class="fas fa-plus-circle"></i></button>
+              <button onclick="removeItem(${index})" class="text-red-400 hover:text-red-600 transition ml-2"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+      document.getElementById('cart-total-price').textContent = 'Rp ' + total.toLocaleString();
+      document.getElementById('cart-footer').classList.remove('hidden');
+    }
+
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      saveCart();
+      // feedback
+      const btn = event.target.closest('button');
+      const original = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Ditambahkan';
+      setTimeout(() => btn.innerHTML = original, 1200);
+    }
+
+    function changeQty(index, delta) {
+      const item = cart[index];
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      saveCart();
+    }
+
+    function openCart() {
+      document.getElementById('cart-overlay').classList.remove('opacity-0', 'invisible');
+      document.getElementById('cart-panel').classList.add('open');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeCart() {
+      document.getElementById('cart-overlay').classList.add('opacity-0', 'invisible');
+      document.getElementById('cart-panel').classList.remove('open');
+      document.body.classList.remove('no-scroll');
+    }
+
+    // event untuk overlay
+    document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+    // tombol buka keranjang
+    document.getElementById('cart-icon-desktop').addEventListener('click', openCart);
+    document.getElementById('cart-icon-mobile').addEventListener('click', openCart);
+
+    // ========== CHECKOUT WA ==========
+    function checkoutWA() {
+      if (cart.length === 0) {
+        alert('Keranjang kosong! Silakan tambahkan produk terlebih dahulu.');
+        return;
+      }
+      const phone = '6281259730289';
+      let message = 'Halo Bakery Berkah Pondok!%0A%0ASaya ingin memesan:%0A';
+      let total = 0;
+      cart.forEach(item => {
+        message += `- ${item.name} x ${item.qty} = Rp ${(item.price * item.qty).toLocaleString()}%0A`;
+        total += item.price * item.qty;
+      });
+      message += `%0ATotal: Rp ${total.toLocaleString()}%0A%0ATerima kasih.`;
+      const url = `https://wa.me/${phone}?text=${message}`;
+      window.open(url, '_blank');
+      // kosongkan keranjang setelah checkout?
+      // Biarkan user memutuskan, kita tidak hapus agar bisa diulang.
+    }
+
+    // ========== MOBILE MENU ==========
+    const toggleBtn = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    toggleBtn.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+      const icon = this.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        toggleBtn.querySelector('i').className = 'fas fa-bars';
+      });
+    });
+
+    // ========== FORM KONTAK ==========
+    const form = document.getElementById('kontak-form');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nama = document.getElementById('nama').value.trim();
+      const produk = document.getElementById('produk').value.trim();
+      const pesan = document.getElementById('pesan-tambahan').value.trim();
+      if (!nama || !produk) {
+        alert('Nama dan Jenis Produk wajib diisi!');
+        return;
+      }
+      const phone = '6281259730289';
+      let text = `Halo Bakery Berkah Pondok!%0ANama: ${nama}%0AProduk: ${produk}`;
+      if (pesan) text += `%0ACatatan: ${pesan}`;
+      text += `%0A%0A( dikirim dari website )`;
+      window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+    });
+
+    // inisialisasi tampilan keranjang
+    updateCartUI();
+  </script>
+</body>
+</html>
+```

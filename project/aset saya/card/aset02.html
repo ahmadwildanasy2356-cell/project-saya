@@ -1,0 +1,1481 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>BIMBEL BEE SMART · The Magical Learning Garden</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        violet: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065' },
+                        sage: { 50: '#f3f7f4', 100: '#e0ebe4', 200: '#c2d6cb', 300: '#a3c1b2', 400: '#85ab99', 500: '#6d9581', 600: '#567a67', 700: '#3f5f4d', 800: '#2a4534', 900: '#1a2e22' },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* === GLOBAL === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0a0815;
+            overflow-x: hidden;
+            color: #f0ecf7;
+        }
+
+        /* === THREE.JS CANVAS === */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === GLASS NAVBAR === */
+        .glass-nav {
+            background: rgba(10, 8, 21, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+        .glass-nav.scrolled {
+            background: rgba(10, 8, 21, 0.92);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === BUTTONS === */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.3);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 40px rgba(124, 58, 237, 0.5);
+        }
+
+        .btn-wa {
+            background: #25D366;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.3);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-wa:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        /* === MOBILE MENU === */
+        #mobile-menu {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 600px;
+            opacity: 1;
+            padding-top: 14px;
+            padding-bottom: 18px;
+        }
+
+        /* === GLASS CARD === */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0815;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c3aed;
+            border-radius: 99px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+        }
+
+        /* === FAQ ACCORDION === */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 0.5rem 0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #e8e0f0;
+            padding: 0.75rem 0;
+            transition: color 0.3s ease;
+            gap: 1rem;
+        }
+        .faq-question:hover {
+            color: #a78bfa;
+        }
+        .faq-question .icon {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+            color: #7c3aed;
+        }
+        .faq-question.open .icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, padding 0.4s ease;
+            opacity: 0;
+            padding: 0 0.5rem;
+            color: #a89ab8;
+        }
+        .faq-answer.open {
+            max-height: 300px;
+            opacity: 1;
+            padding: 0.75rem 0.5rem 0.25rem;
+        }
+
+        /* === FLOATING WHATSAPP === */
+        .wa-float {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            background: #25D366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.35);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            animation: waFloat 3s ease-in-out infinite;
+        }
+        @keyframes waFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        .wa-float:hover {
+            transform: scale(1.1) translateY(-4px);
+            box-shadow: 0 12px 50px rgba(37, 211, 102, 0.5);
+            animation-play-state: paused;
+        }
+        .wa-float .label {
+            display: none;
+            position: absolute;
+            right: 70px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .wa-float:hover .label {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .wa-float {
+                width: 52px;
+                height: 52px;
+                font-size: 1.4rem;
+                bottom: 1rem;
+                right: 1rem;
+            }
+            .wa-float .label {
+                display: none !important;
+            }
+        }
+
+        /* === SECTION DIVIDER === */
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #7c3aed, #6d9581);
+            margin: 0.5rem auto 1.5rem;
+        }
+
+        /* === SCROLL INDICATOR === */
+        .scroll-indicator {
+            animation: bounceDown 2.5s ease-in-out infinite;
+        }
+        @keyframes bounceDown {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(12px);
+                opacity: 0.8;
+            }
+        }
+
+        /* === LOADING OVERLAY === */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #0a0815;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+        #loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #loading-overlay .loader-flower {
+            font-size: 4.5rem;
+            animation: loaderGrow 2s ease forwards;
+            filter: drop-shadow(0 0 40px rgba(124, 58, 237, 0.2));
+        }
+        @keyframes loaderGrow {
+            0% {
+                transform: scale(0.1) rotate(-30deg);
+                opacity: 0.2;
+            }
+            60% {
+                transform: scale(0.7) rotate(5deg);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        #loading-overlay .loader-text {
+            margin-top: 1.5rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #a78bfa, #7c3aed, #6d9581);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+        #loading-overlay .loader-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 99px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        #loading-overlay .loader-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa, #6d9581);
+            border-radius: 99px;
+            transition: width 0.3s ease;
+        }
+        #loading-overlay .loader-sub {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 0.5rem;
+            letter-spacing: 2px;
+        }
+        .btn-skip {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+        .btn-skip:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* === CONTENT LAYER === */
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- LOADING OVERLAY                                               -->
+    <!-- ============================================================ -->
+    <div id="loading-overlay">
+        <div class="loader-flower">🌱</div>
+        <div class="loader-text">BEE SMART</div>
+        <div class="loader-bar">
+            <div class="loader-bar-inner" id="loader-bar-inner"></div>
+        </div>
+        <div class="loader-sub" id="loader-status">menumbuhkan taman...</div>
+        <button class="btn-skip" id="skip-intro">Lewati Intro</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- THREE.JS CANVAS                                               -->
+    <!-- ============================================================ -->
+    <div id="three-canvas"></div>
+
+    <!-- ============================================================ -->
+    <!-- FLOATING WHATSAPP                                            -->
+    <!-- ============================================================ -->
+    <a href="https://wa.me/6282231287181?text=Halo%20Cikgu%20Bu%20As%2C%20saya%20ingin%20mendapatkan%20informasi%20tentang%20Bimbel%20Bee%20Smart."
+    target="_blank" class="wa-float" aria-label="Chat WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="label">Chat dengan Bee Smart</span>
+</a>
+
+<!-- ============================================================ -->
+<!-- NAVBAR                                                        -->
+<!-- ============================================================ -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-nav" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 md:h-20">
+            <a href="#hero" class="flex items-center gap-2.5 group">
+                <span class="text-2xl text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-bug"></i>
+                </span>
+                <div class="leading-tight">
+                    <span class="block text-sm md:text-base font-bold text-white">Bee Smart</span>
+                    <span class="block text-[10px] md:text-xs text-white/40 font-medium">Belajar · Fun · Happy</span>
+                </div>
+            </a>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-white/60">
+                <a href="#hero" class="hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-400 after:transition-all after:duration-300 hover:after:w-full">Beranda</a>
+                <a href="#tentang" class="hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-400 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+                <a href="#program" class="hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-400 after:transition-all after:duration-300 hover:after:w-full">Program</a>
+                <a href="#kelas" class="hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-400 after:transition-all after:duration-300 hover:after:w-full">Kelas</a>
+                <a href="#faq" class="hover:text-white transition-all duration-300 relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-violet-400 after:transition-all after:duration-300 hover:after:w-full">FAQ</a>
+                <a href="#kontak" class="btn-primary text-sm py-2 px-5">
+                    <i class="fas fa-pencil-alt"></i> Daftar
+                </a>
+            </nav>
+            <button id="hamburger-btn" class="md:hidden text-2xl text-white/60 focus:outline-none" aria-label="Buka menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden flex flex-col gap-3 text-sm font-medium text-white/60 border-t border-white/5">
+            <a href="#hero" class="hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5">Beranda</a>
+            <a href="#tentang" class="hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5">Tentang</a>
+            <a href="#program" class="hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5">Program</a>
+            <a href="#kelas" class="hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5">Kelas</a>
+            <a href="#faq" class="hover:text-white transition py-1.5 px-2 rounded-lg hover:bg-white/5">FAQ</a>
+            <a href="#kontak" class="btn-primary text-center justify-center py-2.5 px-4 rounded-full">Daftar Sekarang</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- HERO SECTION                                                  -->
+<!-- ============================================================ -->
+<section id="hero" class="relative min-h-screen flex items-center pt-20 pb-12 md:pt-28 md:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden content-layer">
+    <div class="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-transparent pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-10 items-center relative z-10">
+        <div data-aos="fade-right" data-aos-duration="1200" data-aos-delay="300">
+            <div class="inline-block bg-violet-500/10 text-violet-300 text-xs font-semibold px-4 py-1.5 rounded-full border border-violet-500/20 mb-4 animate-pulse">
+                <i class="fas fa-bug mr-1.5"></i> BIMBEL ANAK
+            </div>
+            <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+                <span class="text-white">Belajar Jadi</span><br />
+                <span class="bg-gradient-to-r from-violet-400 via-violet-300 to-sage-300 bg-clip-text text-transparent">Lebih Fun &amp; Happy!</span>
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-white/50 max-w-lg leading-relaxed">
+                Belajar bersama <span class="text-violet-300 font-semibold">Cikgu Bu As</span> dengan suasana belajar yang nyaman, menyenangkan, dan sesuai kebutuhan siswa.
+            </p>
+            <div class="mt-7 flex flex-wrap gap-4">
+                <a href="#kontak" class="btn-primary">
+                    <i class="fab fa-whatsapp"></i> Daftar Sekarang
+                </a>
+                <a href="#program" class="text-white/50 hover:text-white transition px-6 py-3 rounded-full border border-white/10 hover:border-white/30 inline-flex items-center gap-2">
+                    Jelajahi <i class="fas fa-arrow-down ml-1"></i>
+                </a>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-6 text-sm text-white/30">
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> TK</span>
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> SD</span>
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> Privat</span>
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> Kelompok Kecil</span>
+            </div>
+        </div>
+
+        <div class="flex justify-center md:justify-end" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+            <div class="relative w-full max-w-sm aspect-square rounded-3xl bg-gradient-to-br from-violet-500/5 via-transparent to-sage-500/5 border border-white/5 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-violet-500/5 overflow-hidden">
+                <div class="text-center">
+                    <span class="text-7xl sm:text-8xl block mb-3">🐝</span>
+                    <span class="block text-xl font-bold text-white">Bee Smart</span>
+                    <span class="block text-sm text-white/40">Belajar Fun &amp; Happy</span>
+                    <div class="flex justify-center gap-4 mt-3 text-2xl text-white/20">
+                        <i class="fas fa-book"></i>
+                        <i class="fas fa-pencil-alt"></i>
+                        <i class="fas fa-smile"></i>
+                    </div>
+                </div>
+                <div class="absolute -inset-8 bg-violet-500/5 rounded-full blur-3xl -z-10"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/20 scroll-indicator hidden md:block">
+        <i class="fas fa-chevron-down text-xl"></i>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TENTANG SECTION                                               -->
+<!-- ============================================================ -->
+<section id="tentang" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative content-layer">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/10 to-transparent pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="800">
+            <span class="inline-block bg-violet-500/10 text-violet-300 text-xs font-semibold px-4 py-1 rounded-full border border-violet-500/20 mb-2">
+                <i class="fas fa-seedling mr-1"></i> Tentang Kami
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                Kenalan dengan <span class="text-violet-300">Bee Smart</span>
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-white/40 text-sm max-w-2xl mx-auto">
+                Teman belajar yang membuat proses belajar menjadi lebih menyenangkan.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div data-aos="fade-right" data-aos-delay="100">
+                <div class="glass-card p-6 md:p-8">
+                    <p class="text-white/70 leading-relaxed text-base">
+                        <span class="font-bold text-violet-300">Bimbel Bee Smart</span> hadir untuk memberikan pengalaman belajar yang nyaman dan menyenangkan bagi anak, dengan pilihan pembelajaran privat maupun kelompok kecil.
+                    </p>
+                    <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-white/5 rounded-xl p-3 border border-white/5">
+                            <span class="text-2xl block text-violet-400"><i class="fas fa-book-open"></i></span>
+                            <span class="text-xs font-semibold text-white/60">Belajar</span>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-3 border border-white/5">
+                            <span class="text-2xl block text-violet-400"><i class="fas fa-seedling"></i></span>
+                            <span class="text-xs font-semibold text-white/60">Bertumbuh</span>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-3 border border-white/5">
+                            <span class="text-2xl block text-violet-400"><i class="fas fa-star"></i></span>
+                            <span class="text-xs font-semibold text-white/60">Berkembang</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-aos="fade-left" data-aos-delay="200">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-br from-violet-500/10 to-sage-500/5 rounded-2xl p-5 text-center border border-white/5 shadow-sm">
+                        <span class="text-3xl block text-violet-400 mb-2"><i class="fas fa-user-graduate"></i></span>
+                        <span class="text-sm font-semibold text-white">Cikgu Bu As</span>
+                        <span class="text-xs text-white/40 block">Pendidik Berpengalaman</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-violet-500/10 to-sage-500/5 rounded-2xl p-5 text-center border border-white/5 shadow-sm">
+                        <span class="text-3xl block text-violet-400 mb-2"><i class="fas fa-home"></i></span>
+                        <span class="text-sm font-semibold text-white">Guru ke Rumah</span>
+                        <span class="text-xs text-white/40 block">Belajar Praktis</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-violet-500/10 to-sage-500/5 rounded-2xl p-5 text-center border border-white/5 shadow-sm">
+                        <span class="text-3xl block text-violet-400 mb-2"><i class="fas fa-smile"></i></span>
+                        <span class="text-sm font-semibold text-white">Fun Learning</span>
+                        <span class="text-xs text-white/40 block">Metode Menyenangkan</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-violet-500/10 to-sage-500/5 rounded-2xl p-5 text-center border border-white/5 shadow-sm">
+                        <span class="text-3xl block text-violet-400 mb-2"><i class="fas fa-calendar-alt"></i></span>
+                        <span class="text-sm font-semibold text-white">Jadwal Fleksibel</span>
+                        <span class="text-xs text-white/40 block">Menyesuaikan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PROGRAM SECTION                                               -->
+<!-- ============================================================ -->
+<section id="program" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative content-layer">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/5 to-transparent pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="800">
+            <span class="inline-block bg-violet-500/10 text-violet-300 text-xs font-semibold px-4 py-1 rounded-full border border-violet-500/20 mb-2">
+                <i class="fas fa-graduation-cap mr-1"></i> Program Belajar
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                Program <span class="text-violet-300">Belajar</span>
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-white/40 text-sm max-w-2xl mx-auto">
+                Pilihan pembelajaran untuk kebutuhan anak.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="glass-card p-6 md:p-8 hover:border-violet-500/20 transition-all duration-500 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-start gap-4">
+                    <span class="text-4xl text-violet-400 group-hover:scale-110 transition-transform duration-300"><i class="fas fa-book"></i></span>
+                    <div>
+                        <span class="inline-block bg-violet-500/10 text-violet-300 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">KELAS TK</span>
+                        <h3 class="text-xl font-bold text-white">🧸 Kelas TK</h3>
+                        <ul class="mt-3 space-y-2 text-sm text-white/60">
+                            <li><i class="fas fa-check-circle text-violet-400 mr-2"></i> 📖 Membaca</li>
+                            <li><i class="fas fa-check-circle text-violet-400 mr-2"></i> 🔢 Jarimatika</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 hover:border-violet-500/20 transition-all duration-500 group" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-start gap-4">
+                    <span class="text-4xl text-sage-400 group-hover:scale-110 transition-transform duration-300"><i class="fas fa-school"></i></span>
+                    <div>
+                        <span class="inline-block bg-sage-500/10 text-sage-300 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">KELAS SD</span>
+                        <h3 class="text-xl font-bold text-white">🎒 Kelas SD</h3>
+                        <ul class="mt-3 space-y-2 text-sm text-white/60">
+                            <li><i class="fas fa-check-circle text-sage-400 mr-2"></i> 📚 Semua Mata Pelajaran</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- KELAS SECTION                                                 -->
+<!-- ============================================================ -->
+<section id="kelas" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative content-layer">
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="800">
+            <span class="inline-block bg-violet-500/10 text-violet-300 text-xs font-semibold px-4 py-1 rounded-full border border-violet-500/20 mb-2">
+                <i class="fas fa-users mr-1"></i> Pilihan Kelas
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                Pilihan <span class="text-violet-300">Kelas</span>
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-white/40 text-sm max-w-2xl mx-auto">
+                Pilih mode belajar yang paling sesuai dengan kebutuhan anak.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="glass-card p-6 text-center hover:border-violet-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/10" data-aos="fade-up" data-aos-delay="100">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-user"></i></span>
+                <span class="inline-block bg-violet-500/10 text-violet-300 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">PRIVAT</span>
+                <h3 class="text-xl font-bold text-white">1 Orang</h3>
+                <p class="text-sm text-white/40 mt-2">Fokus penuh dari Cikgu Bu As</p>
+            </div>
+
+            <div class="glass-card p-6 text-center hover:border-violet-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/10" data-aos="fade-up" data-aos-delay="200">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-users"></i></span>
+                <span class="inline-block bg-violet-500/10 text-violet-300 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">BELAJAR BERDUA</span>
+                <h3 class="text-xl font-bold text-white">2 Orang</h3>
+                <p class="text-sm text-white/40 mt-2">Belajar bersama teman dekat</p>
+            </div>
+
+            <div class="glass-card p-6 text-center hover:border-violet-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/10" data-aos="fade-up" data-aos-delay="300">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-people-arrows"></i></span>
+                <span class="inline-block bg-violet-500/10 text-violet-300 text-[10px] font-bold px-3 py-0.5 rounded-full mb-2">KLASIKAL</span>
+                <h3 class="text-xl font-bold text-white">Max 5 Orang</h3>
+                <p class="text-sm text-white/40 mt-2">Kelompok kecil yang kondusif</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- HOME VISIT - GURU DATANG KE RUMAH                             -->
+<!-- ============================================================ -->
+<section id="homevisit" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative content-layer">
+    <div class="absolute inset-0 bg-gradient-to-b from-violet-950/10 via-transparent to-transparent pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+        <div class="glass-card p-8 md:p-12 text-center border-violet-500/10" data-aos="flip-up" data-aos-duration="1200">
+            <span class="text-6xl block mb-4">🏠</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-white">
+                Guru Datang Langsung ke Rumah
+            </h2>
+            <div class="section-divider"></div>
+            <p class="text-white/50 max-w-lg mx-auto leading-relaxed">
+                Belajar dengan lebih praktis dan nyaman di rumah. Orang tua tidak perlu repot mengantar-jemput.
+            </p>
+            <div class="mt-6 flex justify-center gap-6 text-sm text-white/30">
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> Praktis</span>
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> Nyaman</span>
+                <span><i class="fas fa-check-circle text-violet-400 mr-1.5"></i> Fleksibel</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FAQ SECTION                                                   -->
+<!-- ============================================================ -->
+<section id="faq" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative content-layer">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/5 to-transparent pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto relative z-10">
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="800">
+            <span class="inline-block bg-violet-500/10 text-violet-300 text-xs font-semibold px-4 py-1 rounded-full border border-violet-500/20 mb-2">
+                <i class="fas fa-question-circle mr-1"></i> FAQ
+            </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                Pertanyaan <span class="text-violet-300">Umum</span>
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="glass-card p-6 md:p-8">
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah guru datang ke rumah?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Ya, guru datang langsung ke rumah untuk memberikan pembelajaran yang lebih praktis dan nyaman.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah tersedia kelas privat?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Tersedia kelas privat untuk 1 orang dengan fokus penuh pada perkembangan anak.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah bisa belajar berdua?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Bisa! Tersedia pilihan belajar berdua agar anak lebih bersemangat bersama teman dekat.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Berapa maksimal siswa dalam kelas klasikal?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Maksimal 5 orang dalam satu kelas agar tetap kondusif dan interaktif.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apa program kelas TK?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Program TK meliputi Membaca dan Jarimatika (metode berhitung cepat menggunakan jari).</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apa program kelas SD?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Program SD mencakup semua mata pelajaran dan bimbingan PR sekolah.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="350">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Apakah jadwal bisa menyesuaikan?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Jadwal sangat fleksibel dan dapat menyesuaikan dengan waktu luang anak.</div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Bagaimana pembayaran?</span>
+                    <span class="icon"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer">Pembayaran dapat dikomunikasikan secara kekeluargaan dan fleksibel.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCHEDULE & PAYMENT                                            -->
+<!-- ============================================================ -->
+<section id="schedule" class="py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative content-layer">
+    <div class="max-w-5xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="glass-card p-6 md:p-8 text-center" data-aos="fade-right" data-aos-delay="100">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-calendar-alt"></i></span>
+                <h3 class="text-xl font-bold text-white">Jadwal</h3>
+                <div class="section-divider"></div>
+                <p class="text-white/50 leading-relaxed">Menyesuaikan kesepakatan dan ketersediaan.</p>
+                <div class="mt-4 text-sm text-white/30">
+                    <i class="fas fa-clock text-violet-400 mr-1.5"></i> Senin – Sabtu, 10.00 – 15.00
+                </div>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 text-center" data-aos="fade-left" data-aos-delay="200">
+                <span class="text-5xl block text-violet-400 mb-3"><i class="fas fa-wallet"></i></span>
+                <h3 class="text-xl font-bold text-white">Pembayaran</h3>
+                <div class="section-divider"></div>
+                <p class="text-white/50 leading-relaxed">Bisa dikomunikasikan secara kekeluargaan. 💛</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FINAL GARDEN CTA                                              -->
+<!-- ============================================================ -->
+<section id="kontak" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden content-layer">
+    <div class="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-transparent pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto relative z-10">
+        <div class="text-center" data-aos="zoom-in" data-aos-duration="1400">
+            <span class="text-7xl block mb-4">🌷</span>
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                Yuk, Mulai Belajar <br />
+                <span class="text-violet-300">Bersama Bee Smart!</span>
+            </h2>
+            <p class="mt-3 text-white/40 max-w-md mx-auto">
+                Belajar Fun, Happy, dan menyenangkan bersama Cikgu Bu As.
+            </p>
+
+            <div class="mt-8 flex flex-col items-center gap-4">
+                <a href="https://wa.me/6282231287181?text=Halo%20Cikgu%20Bu%20As%2C%20saya%20ingin%20mendapatkan%20informasi%20tentang%20Bimbel%20Bee%20Smart."
+                target="_blank" class="btn-wa text-lg px-10 py-4" id="cta-wa">
+                <i class="fab fa-whatsapp"></i> 💬 Chat via WhatsApp
+            </a>
+            <span class="text-sm text-white/30">0822-3128-7181</span>
+            <span class="text-xs text-white/20 bg-white/5 px-4 py-1.5 rounded-full border border-white/5">
+                <i class="fas fa-clock text-violet-400 mr-1"></i> Senin–Sabtu, 10.00–15.00
+            </span>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<footer class="bg-black/40 border-t border-white/5 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl text-violet-400"><i class="fas fa-bug"></i></span>
+                <span class="font-bold text-white">Bee Smart</span>
+                <span class="text-white/20 text-xs hidden sm:inline">· Belajar Fun &amp; Happy</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-5 text-white/30">
+                <a href="#hero" class="hover:text-white transition">Beranda</a>
+                <a href="#tentang" class="hover:text-white transition">Tentang</a>
+                <a href="#program" class="hover:text-white transition">Program</a>
+                <a href="#kelas" class="hover:text-white transition">Kelas</a>
+                <a href="#faq" class="hover:text-white transition">FAQ</a>
+                <a href="#kontak" class="hover:text-white transition">Kontak</a>
+            </div>
+            <div class="text-xs text-white/20">
+                <i class="fas fa-phone-alt mr-1"></i> 0822-3128-7181
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-white/5 text-center text-xs text-white/10">
+            © 2026 Bimbel Bee Smart. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS                                                       -->
+<!-- ============================================================ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+    // ================================================================
+    // 1. AOS INIT
+    // ================================================================
+    AOS.init({
+        duration: 800,
+        once: false,
+        mirror: false,
+        easing: 'ease-out-cubic',
+    });
+
+    // ================================================================
+    // 2. LOADING SCREEN
+    // ================================================================
+    (function loading() {
+        const bar = document.getElementById('loader-bar-inner');
+        const status = document.getElementById('loader-status');
+        const overlay = document.getElementById('loading-overlay');
+        const skip = document.getElementById('skip-intro');
+        let progress = 0;
+        let skipped = false;
+
+        const messages = ['menumbuhkan akar...', 'batang mulai tumbuh...', 'kelopak membuka...', 'bunga mekar! 🌸'];
+
+        function update() {
+            if (skipped) return;
+            progress += 1 + Math.random() * 2.5;
+            if (progress > 100) progress = 100;
+            bar.style.width = progress + '%';
+            const idx = Math.min(Math.floor(progress / 30), messages.length - 1);
+            status.textContent = messages[idx];
+
+            if (progress < 100) {
+                setTimeout(update, 60 + Math.random() * 100);
+            } else {
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    initThreeJS();
+                }, 500);
+            }
+        }
+
+        skip.addEventListener('click', function() {
+            skipped = true;
+            bar.style.width = '100%';
+            status.textContent = 'siap belajar! 🐝';
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                initThreeJS();
+            }, 400);
+        });
+
+        update();
+    })();
+
+    // ================================================================
+    // 3. THREE.JS — THE MAGICAL GARDEN
+    // ================================================================
+    let threeReady = false;
+
+    function initThreeJS() {
+        if (threeReady) return;
+        threeReady = true;
+
+        const container = document.getElementById('three-canvas');
+        if (!container) return;
+
+        // --- SCENE ---
+        const scene = new THREE.Scene();
+        scene.background = null;
+        scene.fog = new THREE.FogExp2(0x0a0815, 0.012);
+
+        // --- CAMERA ---
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 60);
+        camera.position.set(0, 0.8, 6);
+        camera.lookAt(0, 0.2, 0);
+
+        // --- RENDERER ---
+        const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+            powerPreference: "high-performance",
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
+
+        // --- LIGHTS ---
+        scene.add(new THREE.AmbientLight(0x404080, 0.6));
+        const hemi = new THREE.HemisphereLight(0xffeedd, 0x223344, 0.9);
+        scene.add(hemi);
+
+        const sun = new THREE.DirectionalLight(0xffeedd, 1.4);
+        sun.position.set(6, 10, 5);
+        sun.castShadow = true;
+        sun.shadow.mapSize.width = 1024;
+        sun.shadow.mapSize.height = 1024;
+        sun.shadow.camera.near = 2;
+        sun.shadow.camera.far = 15;
+        const d = 6;
+        sun.shadow.camera.left = -d;
+        sun.shadow.camera.right = d;
+        sun.shadow.camera.top = d;
+        sun.shadow.camera.bottom = -d;
+        scene.add(sun);
+
+        const fill = new THREE.DirectionalLight(0x8888ff, 0.3);
+        fill.position.set(-5, 3, -4);
+        scene.add(fill);
+
+        // --- GROUND ---
+        const ground = new THREE.Mesh(
+            new THREE.CircleGeometry(4.5, 48),
+            new THREE.MeshStandardMaterial({ color: 0x1a1528, roughness: 0.9, metalness: 0, transparent: true,
+                opacity: 0.5, side: THREE.DoubleSide })
+        );
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.4;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // --- FLOWERS ---
+        const flowerColors = [0x7c3aed, 0x8b5cf6, 0xa78bfa, 0xc4b5fd, 0x6d9581, 0x85ab99, 0xfcd34d, 0xec4899];
+        const flowers = [];
+
+        function createFlower(color, x, z, scale, phase) {
+            const group = new THREE.Group();
+
+            // Stem
+            const stemPoints = [];
+            for (let i = 0; i <= 8; i++) {
+                const t = i / 8;
+                const y = -0.3 + t * 0.7;
+                const sway = Math.sin(t * 2 + phase) * 0.06;
+                stemPoints.push(new THREE.Vector3(sway, y, Math.cos(t * 1.5 + phase) * 0.04));
+            }
+            const stemCurve = new THREE.CatmullRomCurve3(stemPoints);
+            const stemGeo = new THREE.TubeGeometry(stemCurve, 8, 0.025, 4, false);
+            const stemMat = new THREE.MeshStandardMaterial({ color: 0x4a6a4a, roughness: 0.8 });
+            const stem = new THREE.Mesh(stemGeo, stemMat);
+            group.add(stem);
+
+            // Leaves
+            for (let i = 0; i < 2; i++) {
+                const leaf = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.06, 4, 4),
+                    new THREE.MeshStandardMaterial({ color: 0x5a7a5a, roughness: 0.9 })
+                );
+                leaf.scale.set(0.8 + Math.random() * 0.6, 0.12, 0.3 + Math.random() * 0.2);
+                leaf.position.set(0.05 + i * 0.04, 0.2 + i * 0.2 + Math.random() * 0.1, 0.01);
+                leaf.rotation.z = (i === 0 ? 0.6 : -0.6) + (Math.random() - 0.5) * 0.3;
+                group.add(leaf);
+            }
+
+            // Petals
+            const petalCount = 5 + Math.floor(Math.random() * 4);
+            const petalMat = new THREE.MeshPhysicalMaterial({
+                color: color,
+                roughness: 0.25,
+                metalness: 0,
+                transparent: true,
+                opacity: 0.8 + Math.random() * 0.15,
+                side: THREE.DoubleSide,
+                clearcoat: 0.05,
+            });
+            const petalGroup = new THREE.Group();
+            for (let i = 0; i < petalCount; i++) {
+                const angle = (i / petalCount) * Math.PI * 2 + Math.random() * 0.08;
+                const p = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.1 + Math.random() * 0.04, 5, 5),
+                    petalMat
+                );
+                const r = 0.16 + Math.random() * 0.04;
+                p.scale.set(0.8 + Math.random() * 0.5, 0.15 + Math.random() * 0.12, 0.25 + Math.random() * 0.15);
+                p.position.set(Math.sin(angle) * r, 0.02, Math.cos(angle) * r);
+                p.rotation.x = -0.2 + Math.random() * 0.5;
+                p.rotation.y = angle;
+                p.rotation.z = 0.1 + Math.random() * 0.3;
+                petalGroup.add(p);
+            }
+            petalGroup.position.y = 0.55;
+            group.add(petalGroup);
+
+            // Center
+            const center = new THREE.Mesh(
+                new THREE.SphereGeometry(0.05 + Math.random() * 0.02, 6, 6),
+                new THREE.MeshPhysicalMaterial({ color: 0xfcd34d, emissive: 0xfcd34d, emissiveIntensity: 0.1,
+                    roughness: 0.2 })
+            );
+            center.position.y = 0.58;
+            group.add(center);
+
+            group.position.set(x, 0, z);
+            group.scale.set(scale, scale, scale);
+
+            const data = {
+                group,
+                petalGroup,
+                center,
+                phase: phase || Math.random() * Math.PI * 2,
+                windSpeed: 0.2 + Math.random() * 0.4,
+                windAmt: 0.004 + Math.random() * 0.008,
+            };
+            scene.add(group);
+            return data;
+        }
+
+        for (let i = 0; i < 24; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 0.5 + Math.random() * 2.8;
+            const x = Math.sin(angle) * radius;
+            const z = Math.cos(angle) * radius;
+            const color = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+            const scale = 0.5 + Math.random() * 0.9;
+            const phase = Math.random() * Math.PI * 2;
+            flowers.push(createFlower(color, x, z, scale, phase));
+        }
+
+        // --- BEE ---
+        const beeGroup = new THREE.Group();
+        const bodyMat = new THREE.MeshPhysicalMaterial({ color: 0xfbbf24, roughness: 0.3, metalness: 0.05,
+            clearcoat: 0.2 });
+        const body = new THREE.Mesh(new THREE.SphereGeometry(0.2, 8, 8), bodyMat);
+        body.scale.set(1.2, 0.8, 0.9);
+        beeGroup.add(body);
+
+        for (let i = 0; i < 3; i++) {
+            const stripe = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.15, 0.15, 0.04, 8),
+                new THREE.MeshPhysicalMaterial({ color: 0x1a0f2a, roughness: 0.6 })
+            );
+            stripe.position.x = -0.08 + i * 0.08;
+            stripe.rotation.z = Math.PI / 2;
+            stripe.scale.set(1, 1, 0.8);
+            beeGroup.add(stripe);
+        }
+
+        const head = new THREE.Mesh(
+            new THREE.SphereGeometry(0.11, 8, 8),
+            new THREE.MeshPhysicalMaterial({ color: 0x1a0f2a, roughness: 0.5 })
+        );
+        head.position.x = 0.22;
+        head.scale.set(1, 0.9, 0.9);
+        beeGroup.add(head);
+
+        const eyeMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.1 });
+        [
+            [0.27, 0.05, 0.08],
+            [0.27, -0.05, 0.08]
+        ].forEach(pos => {
+            const eye = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 6), eyeMat);
+            eye.position.set(pos[0], pos[1], pos[2]);
+            beeGroup.add(eye);
+            const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.015, 6, 6),
+                new THREE.MeshPhysicalMaterial({ color: 0x000000 }));
+            pupil.position.set(pos[0] + 0.02, pos[1], pos[2] + 0.035);
+            beeGroup.add(pupil);
+        });
+
+        const wingMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.25,
+            roughness: 0.1,
+            metalness: 0,
+            side: THREE.DoubleSide,
+            clearcoat: 0.3,
+        });
+        const wings = [];
+        for (let side = -1; side <= 1; side += 2) {
+            const wing = new THREE.Mesh(new THREE.PlaneGeometry(0.35, 0.18), wingMat);
+            wing.position.set(0, 0.14, side * 0.18);
+            wing.rotation.x = 0.3;
+            wing.rotation.z = side * 0.6;
+            beeGroup.add(wing);
+            wings.push(wing);
+        }
+        beeGroup.wings = wings;
+
+        beeGroup.scale.set(0.9, 0.9, 0.9);
+        beeGroup.position.set(-1.5, 0.8, 1.2);
+        scene.add(beeGroup);
+
+        // --- BUTTERFLIES ---
+        const butterflyColors = [0xa78bfa, 0x7c3aed, 0xec4899, 0xfcd34d];
+        const butterflies = [];
+
+        function createButterfly(color, x, y, z) {
+            const group = new THREE.Group();
+            const bodyB = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.015, 0.015, 0.06, 4),
+                new THREE.MeshPhysicalMaterial({ color: 0x1a0f2a, roughness: 0.6 })
+            );
+            bodyB.rotation.z = Math.PI / 2;
+            group.add(bodyB);
+
+            const wingMatB = new THREE.MeshPhysicalMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.5,
+                roughness: 0.3,
+                metalness: 0,
+                side: THREE.DoubleSide,
+            });
+            for (let side = -1; side <= 1; side += 2) {
+                const wing = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 0.08), wingMatB);
+                wing.position.set(0, 0, side * 0.06);
+                wing.rotation.x = 0.2;
+                wing.rotation.z = side * 0.8;
+                group.add(wing);
+            }
+            group.position.set(x, y, z);
+            group.scale.set(0.6 + Math.random() * 0.5, 0.6 + Math.random() * 0.5, 0.6 + Math.random() * 0.5);
+            scene.add(group);
+            return {
+                group,
+                phase: Math.random() * Math.PI * 2,
+                speed: 0.2 + Math.random() * 0.3,
+                radius: 0.3 + Math.random() * 0.6,
+                centerX: x,
+                centerY: y,
+                centerZ: z,
+                flapSpeed: 8 + Math.random() * 4,
+            };
+        }
+
+        for (let i = 0; i < 4; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const r = 0.8 + Math.random() * 1.5;
+            const b = createButterfly(
+                butterflyColors[i % butterflyColors.length],
+                Math.sin(angle) * r,
+                0.3 + Math.random() * 0.8,
+                Math.cos(angle) * r
+            );
+            butterflies.push(b);
+        }
+
+        // --- FLOATING LETTERS (sprites) ---
+        function createLetter(char, color, x, y, z) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 128, 128);
+            ctx.shadowColor = 'rgba(124,58,237,0.2)';
+            ctx.shadowBlur = 20;
+            ctx.fillStyle = color;
+            ctx.font = 'bold 80px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(char, 64, 70);
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.needsUpdate = true;
+            const mat = new THREE.SpriteMaterial({
+                map: tex,
+                transparent: true,
+                opacity: 0.25,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+            });
+            const sprite = new THREE.Sprite(mat);
+            sprite.position.set(x, y, z);
+            sprite.scale.set(0.6, 0.6, 1);
+            scene.add(sprite);
+            return sprite;
+        }
+
+        const letters = [
+            ['A', '#7c3aed', -2.2, 1.6, -1.8],
+            ['B', '#6d9581', -0.5, 2.0, -2.5],
+            ['C', '#a78bfa', 1.4, 1.4, -1.6],
+            ['1', '#fcd34d', -1.2, 2.4, -2.2],
+            ['2', '#85ab99', 0.8, 2.2, -1.2],
+            ['3', '#8b5cf6', -1.8, 1.8, 0.4],
+        ];
+        letters.forEach(([ch, col, x, y, z]) => createLetter(ch, col, x, y, z));
+
+        // --- PARTICLES (petal-like) ---
+        const pCount = 60;
+        const pGeo = new THREE.BufferGeometry();
+        const pPos = new Float32Array(pCount * 3);
+        const pSizes = new Float32Array(pCount);
+        const pSpeeds = [];
+        const pDrifts = [];
+        for (let i = 0; i < pCount; i++) {
+            const radius = 1 + Math.random() * 3.5;
+            const angle = Math.random() * Math.PI * 2;
+            pPos[i * 3] = Math.sin(angle) * radius;
+            pPos[i * 3 + 1] = -0.5 + Math.random() * 3.5;
+            pPos[i * 3 + 2] = Math.cos(angle) * radius;
+            pSizes[i] = 0.02 + Math.random() * 0.04;
+            pSpeeds.push(0.005 + Math.random() * 0.015);
+            pDrifts.push((Math.random() - 0.5) * 0.02);
+        }
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        pGeo.setAttribute('size', new THREE.BufferAttribute(pSizes, 1));
+        const pMat = new THREE.PointsMaterial({
+            color: 0xc4b5fd,
+            size: 0.035,
+            transparent: true,
+            opacity: 0.3,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            sizeAttenuation: true,
+        });
+        const particles = new THREE.Points(pGeo, pMat);
+        scene.add(particles);
+
+        // --- MOUSE ---
+        let mouseX = 0,
+            mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const t = e.touches[0];
+                mouseX = (t.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(t.clientY / window.innerHeight) * 2 + 1;
+            }
+        }, { passive: true });
+
+        // --- SCROLL ---
+        let scroll = 0;
+        window.addEventListener('scroll', () => {
+            const max = document.body.scrollHeight - window.innerHeight;
+            scroll = max > 0 ? window.scrollY / max : 0;
+        }, { passive: true });
+
+        // --- ANIMATION LOOP ---
+        let time = 0,
+            beePhase = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.008;
+
+            // Camera follow mouse + scroll
+            const tx = mouseX * 1.2 + Math.sin(scroll * 0.5) * 0.3;
+            const ty = 0.8 + mouseY * 0.5 + scroll * 0.3;
+            camera.position.x += (tx - camera.position.x) * 0.025;
+            camera.position.y += (ty - camera.position.y) * 0.025;
+            const dist = 6 - scroll * 0.6;
+            const dir = camera.position.clone().normalize();
+            camera.position.copy(dir.multiplyScalar(dist));
+            camera.lookAt(0, 0.2 + scroll * 0.3, 0);
+
+            // Flowers
+            flowers.forEach((f) => {
+                const w = Math.sin(time * f.windSpeed + f.phase) * f.windAmt;
+                const w2 = Math.cos(time * f.windSpeed * 0.6 + f.phase * 1.2) * f.windAmt * 0.6;
+                f.group.rotation.z = w;
+                f.group.rotation.x = w2;
+                const pulse = 1 + Math.sin(time * 0.6 + f.phase) * 0.015;
+                f.petalGroup.scale.set(pulse, pulse, pulse);
+                f.center.material.emissiveIntensity = 0.08 + Math.sin(time * 0.8 + f.phase) * 0.04;
+            });
+
+            // Bee
+            beePhase += 0.007;
+            const bx = Math.sin(beePhase) * 1.8 + scroll * 0.5;
+            const bz = Math.cos(beePhase * 0.7) * 1.4 - scroll * 1.2;
+            const by = 0.5 + Math.sin(beePhase * 1.2) * 0.3 + scroll * 0.5;
+            beeGroup.position.x += (bx - beeGroup.position.x) * 0.03;
+            beeGroup.position.z += (bz - beeGroup.position.z) * 0.03;
+            beeGroup.position.y += (by - beeGroup.position.y) * 0.03;
+            const dx = Math.sin(beePhase) * 1.8 - Math.sin(beePhase - 0.01) * 1.8;
+            const dz = Math.cos(beePhase * 0.7) * 1.4 - Math.cos((beePhase - 0.01) * 0.7) * 1.4;
+            beeGroup.rotation.y = Math.atan2(dx, dz) + Math.PI / 2;
+            if (beeGroup.wings) {
+                const wa = Math.sin(time * 14) * 0.5;
+                beeGroup.wings.forEach((wing, i) => {
+                    wing.rotation.x = wa + (i === 0 ? 0.15 : -0.15);
+                });
+            }
+
+            // Butterflies
+            butterflies.forEach((b) => {
+                b.phase += 0.01 * b.speed;
+                b.group.position.x = b.centerX + Math.sin(b.phase) * b.radius;
+                b.group.position.z = b.centerZ + Math.cos(b.phase * 0.7) * b.radius * 0.8;
+                b.group.position.y = b.centerY + Math.sin(b.phase * 1.3) * 0.3;
+                b.group.children.forEach(child => {
+                    if (child.isMesh && child.geometry.type === 'PlaneGeometry') {
+                        child.rotation.x = Math.sin(time * b.flapSpeed + b.phase) * 0.3;
+                    }
+                });
+                b.group.rotation.y = Math.atan2(
+                    Math.sin(b.phase) * b.radius - Math.sin(b.phase - 0.01) * b.radius,
+                    Math.cos(b.phase * 0.7) * b.radius * 0.8 - Math.cos((b.phase - 0.01) * 0.7) * b.radius * 0.8
+                );
+            });
+
+            // Particles drift
+            const pos = particles.geometry.attributes.position.array;
+            for (let i = 0; i < pCount; i++) {
+                pos[i * 3 + 1] -= pSpeeds[i];
+                pos[i * 3] += Math.sin(time + i) * pDrifts[i];
+                pos[i * 3 + 2] += Math.cos(time * 0.7 + i * 0.3) * pDrifts[i] * 0.7;
+                if (pos[i * 3 + 1] < -1.5) {
+                    const radius = 1 + Math.random() * 3.5;
+                    const angle = Math.random() * Math.PI * 2;
+                    pos[i * 3] = Math.sin(angle) * radius;
+                    pos[i * 3 + 1] = 2.5 + Math.random() * 1.5;
+                    pos[i * 3 + 2] = Math.cos(angle) * radius;
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- RESIZE ---
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+    }
+
+    // ================================================================
+    // 4. NAVBAR SCROLL
+    // ================================================================
+    (function() {
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        }, { passive: true });
+    })();
+
+    // ================================================================
+    // 5. MOBILE MENU
+    // ================================================================
+    (function() {
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        let open = false;
+        btn.addEventListener('click', () => {
+            open = !open;
+            menu.classList.toggle('open');
+            btn.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
+        });
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('open');
+                open = false;
+                btn.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+    })();
+
+    // ================================================================
+    // 6. FAQ TOGGLE
+    // ================================================================
+    function toggleFaq(el) {
+        const parent = el.closest('.faq-item');
+        const answer = parent.querySelector('.faq-answer');
+        const isOpen = answer.classList.contains('open');
+        document.querySelectorAll('.faq-answer').forEach(a => {
+            if (a !== answer) {
+                a.classList.remove('open');
+                a.closest('.faq-item').querySelector('.faq-question').classList.remove('open');
+            }
+        });
+        if (isOpen) {
+            answer.classList.remove('open');
+            el.classList.remove('open');
+        } else {
+            answer.classList.add('open');
+            el.classList.add('open');
+        }
+    }
+
+    // ================================================================
+    // 7. CTA PETAL BURST
+    // ================================================================
+    (function() {
+        const cta = document.getElementById('cta-wa');
+        if (!cta) return;
+        cta.addEventListener('click', function(e) {
+            for (let i = 0; i < 12; i++) {
+                const petal = document.createElement('span');
+                petal.textContent = '🌸';
+                petal.style.cssText = `
+                            position: fixed; font-size: ${1 + Math.random() * 2}rem;
+                            pointer-events: none; z-index: 9999;
+                            left: ${e.clientX}px; top: ${e.clientY}px;
+                            transform: translate(-50%, -50%);
+                            opacity: 1;
+                            transition: all ${0.6 + Math.random() * 0.8}s cubic-bezier(0.34, 1.56, 0.64, 1);
+                        `;
+                document.body.appendChild(petal);
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 60 + Math.random() * 160;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist - 80;
+                requestAnimationFrame(() => {
+                    petal.style.transform = `translate(${dx}px, ${dy}px) rotate(${Math.random() * 720}deg) scale(0.2)`;
+                    petal.style.opacity = '0';
+                });
+                setTimeout(() => petal.remove(), 1500);
+            }
+        });
+    })();
+
+    console.log('🐝 Bee Smart Learning Garden — 3D Interactive');
+    console.log('🌸 Bunga tumbuh, lebah terbang, belajar jadi lebih fun!');
+</script>
+
+</body>
+</html>
+```

@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus Mobile Indonesia · Command Center</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #0F172A;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .nav-tab {
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            padding: 12px 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #64748b;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .nav-tab:hover {
+            color: #0F172A;
+            background: #f1f5f9;
+        }
+        .nav-tab.active {
+            color: #2563EB;
+            border-bottom-color: #2563EB;
+            background: transparent;
+        }
+        .workspace-panel {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+        .workspace-panel.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.4;
+                transform: translateY(4px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .product-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+            border: 1px solid #f1f5f9;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .product-card:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #f8fafc;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .spec-pill {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #334155;
+            letter-spacing: 0.01em;
+            margin: 2px 3px 2px 0;
+        }
+        .cart-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border: 1px solid #eef2f6;
+            transition: background 0.1s ease;
+        }
+        .cart-item:hover {
+            background: #f1f5f9;
+        }
+        .btn-primary {
+            background: #2563EB;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: scale(0.98);
+        }
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+        .btn-success {
+            background: #16A34A;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-success:hover {
+            background: #15803d;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #334155;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            border: 1.5px solid #d1d9e6;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-outline:hover {
+            border-color: #94a3b8;
+            background: #f1f5f9;
+        }
+        .badge-emerald {
+            background: #dcfce7;
+            color: #166534;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .badge-amber {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .badge-slate {
+            background: #e2e8f0;
+            color: #1e293b;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .kpi-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 18px 22px;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal-box {
+            background: #FFFFFF;
+            border-radius: 28px;
+            max-width: 500px;
+            width: 100%;
+            padding: 32px 28px 28px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+            animation: modalPop 0.2s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes modalPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.94) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .receipt-box {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 20px 22px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            line-height: 1.7;
+            border: 1px solid #e2e8f0;
+            max-height: 340px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .filter-btn {
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1.5px solid #d1d9e6;
+            background: transparent;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .filter-btn:hover {
+            border-color: #94a3b8;
+            background: #f1f5f9;
+        }
+        .filter-btn.active {
+            background: #2563EB;
+            color: #fff;
+            border-color: #2563EB;
+        }
+        .filter-btn.active:hover {
+            background: #1d4ed8;
+        }
+        .chart-wrapper {
+            position: relative;
+            max-height: 260px;
+            height: 260px;
+            width: 100%;
+        }
+        .chart-wrapper canvas {
+            max-height: 260px !important;
+            height: 260px !important;
+            width: 100% !important;
+        }
+        .fixed-panel {
+            height: 100%;
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .sticky-cart {
+            position: sticky;
+            top: 0;
+            align-self: flex-start;
+        }
+        .search-input {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 8px 18px 8px 42px;
+            font-size: 0.85rem;
+            width: 100%;
+            background: #FFFFFF url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%2394a3b8" stroke-width="2.5"%3E%3Ccircle cx="11" cy="11" r="8"/%3E%3Cpath d="m21 21-4.3-4.3"/%3E%3C/svg%3E') no-repeat 16px center;
+            background-size: 16px;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            outline: none;
+        }
+        .search-input:focus {
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+        .select-styled {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            background: #FFFFFF;
+            outline: none;
+            transition: border-color 0.15s ease;
+            width: 100%;
+        }
+        .select-styled:focus {
+            border-color: #2563EB;
+        }
+        .footer-legal {
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+            padding: 18px 24px;
+            font-size: 0.7rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-top: auto;
+        }
+        .grid-product {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        @media (max-width: 640px) {
+            .grid-product {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 12px;
+            }
+            .modal-box {
+                padding: 20px 16px;
+                margin: 10px;
+            }
+            .nav-tab {
+                padding: 10px 14px;
+                font-size: 0.75rem;
+            }
+            .product-card img {
+                height: 140px;
+            }
+        }
+        .color-swatch {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            margin: 2px 4px 2px 0;
+        }
+        .color-swatch.selected {
+            border-color: #2563EB;
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2563EB;
+        }
+        .color-swatch:hover {
+            transform: scale(1.05);
+        }
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 40px;
+            border: 1.5px solid #d1d9e6;
+            background: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #0F172A;
+        }
+        .qty-btn:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+        .qty-btn:active {
+            transform: scale(0.92);
+        }
+        .qty-val {
+            min-width: 32px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .empty-state {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 30px 10px;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F172A;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.20);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .badge-float {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #2563EB;
+            color: #fff;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            min-width: 20px;
+            text-align: center;
+            border: 2px solid #fff;
+        }
+        .relative-nav {
+            position: relative;
+        }
+        .btn-icon {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 40px;
+            transition: background 0.1s ease;
+            font-size: 0.9rem;
+        }
+        .btn-icon:hover {
+            background: #f1f5f9;
+            color: #0F172A;
+        }
+        .truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .chart-wrapper canvas {
+            max-height: 260px !important;
+            height: 260px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== MODAL ADD TO CART ===== -->
+    <div id="addModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-[#0F172A]"><i class="fas fa-cart-plus text-[#2563EB] mr-2"></i> Tambah ke Keranjang</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-xl leading-none">&times;</button>
+            </div>
+            <div id="modalProductInfo" class="mb-4">
+                <p class="font-semibold text-[#0F172A]" id="modalProductName">—</p>
+                <p class="text-sm text-slate-500" id="modalProductPrice">—</p>
+            </div>
+            <div class="mb-4">
+                <label class="text-sm font-medium text-slate-700 block mb-1">Pilih Warna</label>
+                <div id="modalColorOptions" class="flex flex-wrap gap-1"></div>
+            </div>
+            <div class="mb-5">
+                <label class="text-sm font-medium text-slate-700 block mb-1">Opsi Ekspedisi</label>
+                <select id="modalShipping" class="select-styled">
+                    <option value="J&T Express">J&T Express</option>
+                    <option value="JNE">JNE</option>
+                    <option value="SiCepat">SiCepat</option>
+                    <option value="GrabExpress">GrabExpress</option>
+                </select>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="confirmAddToCart()" class="btn-primary flex-1 justify-center"><i class="fas fa-check"></i> Tambahkan</button>
+                <button onclick="closeModal()" class="btn-outline">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL INVOICE ===== -->
+    <div id="invoiceModal" class="modal-overlay">
+        <div class="modal-box max-w-2xl">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-bold text-[#0F172A]"><i class="fas fa-receipt text-[#16A34A] mr-2"></i> Technical Commercial Invoice</h3>
+                <button onclick="closeInvoice()" class="text-slate-400 hover:text-slate-700 text-xl leading-none">&times;</button>
+            </div>
+            <div id="invoiceContent" class="receipt-box"></div>
+            <div class="mt-4 flex gap-3">
+                <button onclick="closeInvoice()" class="btn-primary flex-1 justify-center"><i class="fas fa-check"></i> Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== APP SHELL ===== -->
+    <div class="flex flex-col min-h-screen">
+
+        <!-- HEADER / NAV -->
+        <header class="bg-white border-b border-slate-200/70 px-4 md:px-8 py-2 flex flex-wrap items-center justify-between gap-2 sticky top-0 z-50 shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-bold text-[#0F172A] tracking-tight">Nexus<span class="text-[#2563EB]">Mobile</span></span>
+                    <span class="text-[0.6rem] font-semibold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">ID</span>
+                </div>
+                <span class="hidden md:inline text-xs text-slate-400 font-medium border-l border-slate-200 pl-3">Enterprise Command Center</span>
+            </div>
+            <div class="flex items-center gap-1 overflow-x-auto pb-1">
+                <div class="nav-tab active" data-workspace="storefront" onclick="switchWorkspace('storefront')">
+                    <i class="fas fa-store mr-1.5"></i> Storefront
+                </div>
+                <div class="nav-tab" data-workspace="analytics" onclick="switchWorkspace('analytics')">
+                    <i class="fas fa-chart-pie mr-1.5"></i> Analytics
+                </div>
+                <div class="nav-tab" data-workspace="vault" onclick="switchWorkspace('vault')">
+                    <i class="fas fa-database mr-1.5"></i> Data Vault
+                </div>
+                <div class="relative-nav ml-2">
+                    <button onclick="toggleCartSidebar()" class="btn-primary !py-1.5 !px-4 text-sm relative">
+                        <i class="fas fa-shopping-cart"></i> Cart
+                        <span id="cartBadge" class="badge-float">0</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 px-4 md:px-8 py-5 max-w-[1600px] mx-auto w-full">
+
+            <!-- ===== WORKSPACE 1: STOREFRONT ===== -->
+            <div id="workspace-storefront" class="workspace-panel active">
+                <div class="flex flex-col lg:flex-row gap-6">
+
+                    <!-- LEFT: Product Grid -->
+                    <div class="flex-1 min-w-0">
+                        <!-- Filters -->
+                        <div class="flex flex-wrap items-center gap-3 mb-5">
+                            <div class="flex flex-wrap gap-1.5">
+                                <button class="filter-btn active" data-cat="All" onclick="setCategory('All')">Semua</button>
+                                <button class="filter-btn" data-cat="Flagship Series" onclick="setCategory('Flagship Series')">Flagship</button>
+                                <button class="filter-btn" data-cat="Mid-Range Series" onclick="setCategory('Mid-Range Series')">Mid-Range</button>
+                                <button class="filter-btn" data-cat="Entry-Level Series" onclick="setCategory('Entry-Level Series')">Entry-Level</button>
+                            </div>
+                            <div class="flex-1 min-w-[160px]">
+                                <input type="text" id="searchInput" class="search-input" placeholder="Cari smartphone..." oninput="setSearch(this.value)" />
+                            </div>
+                        </div>
+                        <!-- Grid -->
+                        <div id="productGrid" class="grid-product"></div>
+                        <div id="emptyGrid" class="empty-state hidden">Tidak ada produk ditemukan.</div>
+                    </div>
+
+                    <!-- RIGHT: Cart Panel (sticky) -->
+                    <div class="lg:w-[340px] flex-shrink-0">
+                        <div class="sticky-cart bg-white rounded-2xl border border-slate-200/70 p-4 shadow-sm">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-[#0F172A] text-sm"><i class="fas fa-shopping-bag text-[#2563EB] mr-1.5"></i> Keranjang Belanja</h4>
+                                <button onclick="clearCart()" class="text-xs text-slate-400 hover:text-red-500 transition" title="Kosongkan"> <i class="fas fa-trash-alt"></i> </button>
+                            </div>
+                            <div id="cartItems" class="fixed-panel max-h-[460px] overflow-y-auto pr-1"></div>
+                            <div id="cartEmpty" class="empty-state py-6 text-sm">Keranjang kosong</div>
+                            <div id="cartFooter" class="hidden mt-3 pt-3 border-t border-slate-200">
+                                <div class="flex justify-between text-sm font-medium">
+                                    <span>Subtotal</span>
+                                    <span id="cartSubtotal">Rp0</span>
+                                </div>
+                                <div class="flex justify-between text-sm text-slate-500">
+                                    <span>PPN 11%</span>
+                                    <span id="cartTax">Rp0</span>
+                                </div>
+                                <div class="flex justify-between text-base font-bold mt-1 pt-1 border-t border-slate-200">
+                                    <span>Total</span>
+                                    <span id="cartTotal">Rp0</span>
+                                </div>
+                                <button onclick="hitungCheckout()" class="btn-success w-full justify-center mt-3 text-sm"><i class="fas fa-credit-card"></i> Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== WORKSPACE 2: ANALYTICS ===== -->
+            <div id="workspace-analytics" class="workspace-panel">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                    <div class="kpi-card">
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Penjualan</p>
+                        <p class="text-2xl font-bold text-[#0F172A]" id="kpiSales">Rp0</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Perangkat Terjual</p>
+                        <p class="text-2xl font-bold text-[#0F172A]" id="kpiUnits">0</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Rata-rata Nilai Order (AOV)</p>
+                        <p class="text-2xl font-bold text-[#0F172A]" id="kpiAov">Rp0</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl border border-slate-200/70 p-5 shadow-sm">
+                        <h4 class="text-sm font-semibold text-[#0F172A] mb-3"><i class="fas fa-chart-pie text-[#2563EB] mr-1.5"></i> Distribusi Nilai Inventaris</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="doughnutChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200/70 p-5 shadow-sm">
+                        <h4 class="text-sm font-semibold text-[#0F172A] mb-3"><i class="fas fa-chart-line text-[#16A34A] mr-1.5"></i> Tren Transaksi (Simulasi)</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-slate-400 text-right">Data diperbarui secara real-time berdasarkan aktivitas keranjang.</div>
+            </div>
+
+            <!-- ===== WORKSPACE 3: DATA VAULT ===== -->
+            <div id="workspace-vault" class="workspace-panel">
+                <div class="bg-white rounded-2xl border border-slate-200/70 p-6 shadow-sm max-w-3xl">
+                    <h3 class="text-lg font-bold text-[#0F172A] mb-2"><i class="fas fa-shield-alt text-[#2563EB] mr-2"></i> Enterprise Data Vault & Legal Compliance</h3>
+                    <p class="text-sm text-slate-500 mb-5">Kelola cadangan data, ekspor log, dan pastikan kepatuhan terhadap regulasi.</p>
+
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <button onclick="exportData()" class="btn-primary"><i class="fas fa-download"></i> Export Store Logs (.json)</button>
+                        <button onclick="document.getElementById('importFileInput').click()" class="btn-outline"><i class="fas fa-upload"></i> Import Data Backup (.json)</button>
+                        <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="importData(event)" />
+                    </div>
+
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 text-sm text-slate-600 space-y-1.5">
+                        <p><span class="font-semibold text-[#0F172A]">PT. Teknologi Gadget Indonesia</span> — NEXUS MOBILE INDONESIA</p>
+                        <p><i class="fas fa-building text-slate-400 w-5"></i> AHU: AHU-0123456 · NIB: 9123456789012</p>
+                        <p><i class="fas fa-gavel text-slate-400 w-5"></i> Kebijakan Anti-Penipuan: Wajib Unboxing Video 1x24h &amp; Garansi IMEI Kemenperin</p>
+                        <p><i class="fas fa-check-circle text-emerald-500 w-5"></i> Semua produk bergaransi resmi distributor resmi Indonesia.</p>
+                        <p class="text-xs text-slate-400 mt-2">© 2026 Nexus Mobile Indonesia · Enterprise Command Center v2.0</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER LEGAL (always visible) -->
+        <div class="footer-legal">
+            <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-2">
+                <span>© 2026 <strong>PT. Teknologi Gadget Indonesia</strong> — Nexus Mobile Indonesia</span>
+                <span class="flex items-center gap-4">
+                    <span><i class="fas fa-certificate text-[#2563EB]"></i> AHU-0123456</span>
+                    <span><i class="fas fa-fingerprint text-[#2563EB]"></i> NIB 9123456789012</span>
+                    <span><i class="fas fa-shield-virus text-[#16A34A]"></i> 1x24h Unboxing · IMEI Guarantee</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  1. DATA LAYER — 30 SMARTPHONE PRODUCTS
+        // ============================================================
+        // Mapping merek ke gambar Unsplash (gambar HP nyata)
+        const brandImageMap = {
+            'iPhone': 'https://images.unsplash.com/photo-1592750475331-5d8f2a3a3e8d?w=400&h=400&fit=crop&q=80',
+            'Samsung': 'https://images.unsplash.com/photo-1610792514753-58c1bb6ba2b0?w=400&h=400&fit=crop&q=80',
+            'Xiaomi': 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400&h=400&fit=crop&q=80',
+            'Google': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'OnePlus': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Vivo': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Oppo': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Realme': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Asus': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Sony': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Infinix': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Tecno': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'iQOO': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Poco': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Nothing': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Motorola': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'ZTE': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+            'Itel': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80',
+        };
+
+        // Fungsi untuk mendapatkan gambar berdasarkan merek (kata pertama dari nama)
+        function getImageForProduct(product) {
+            const brand = product.nama.split(' ')[0];
+            if (brandImageMap[brand]) {
+                return brandImageMap[brand];
+            }
+            // fallback ke picsum dengan seed
+            return `https://picsum.photos/seed/${product.id}/400/400`;
+        }
+
+        const products = [{
+            id: 1,
+            nama: "iPhone 17 Pro Max (Garansi Resmi iBox)",
+            harga: 24500000,
+            kategori: "Flagship Series",
+            spesifikasi: "Apple A19 Pro, RAM 12GB, ROM 256GB, 6.9\" ProMotion OLED 120Hz, 48MP, 4800mAh, 45W",
+            warna: ["Titanium Grey", "Deep Aurora"],
+        }, {
+            id: 2,
+            nama: "Samsung Galaxy S26 Ultra 5G (Garansi Resmi SEIN)",
+            harga: 22900000,
+            kategori: "Flagship Series",
+            spesifikasi: "Snapdragon 8 Gen 5, RAM 16GB, ROM 512GB, 6.8\" Dynamic AMOLED 2X, 200MP, 5550mAh, 65W, S-Pen",
+            warna: ["Phantom Black", "Cream Gold"],
+        }, {
+            id: 3,
+            nama: "Asus ROG Phone 9 Ultimate (Gaming Edition)",
+            harga: 19500000,
+            kategori: "Flagship Series",
+            spesifikasi: "Snapdragon 8 Gen 5, RAM 24GB, ROM 1TB, 6.78\" AMOLED 165Hz, 6000mAh, 85W, AeroActive Cooler",
+            warna: ["Storm White", "Matte Black"],
+        }, {
+            id: 4,
+            nama: "Xiaomi 16 Ultra (Leica Camera Co-engineered)",
+            harga: 17500000,
+            kategori: "Flagship Series",
+            spesifikasi: "Snapdragon 8 Gen 5, RAM 16GB, ROM 512GB, 6.73\" WQHD+ AMOLED, Sensor 1-inci Leica, 5300mAh, Wireless 80W",
+            warna: ["Olive Green", "Ceramic White"],
+        }, {
+            id: 5,
+            nama: "Vivo X110 Pro+ (Zeiss Optics)",
+            harga: 16800000,
+            kategori: "Flagship Series",
+            spesifikasi: "Dimensity 9500+, RAM 16GB, ROM 512GB, 6.78\" AMOLED 2K, Zeiss OIS, 5100mAh, 120W",
+            warna: ["Satin Black", "Sunset Orange"],
+        }, {
+            id: 6,
+            nama: "Oppo Find X8 Pro",
+            harga: 15900000,
+            kategori: "Flagship Series",
+            spesifikasi: "Dimensity 9500, RAM 16GB, ROM 256GB, 6.82\" LTPO AMOLED, Hasselblad, 5000mAh, 100W",
+            warna: ["Cosmic Silver", "Pearl White"],
+        }, {
+            id: 7,
+            nama: "Google Pixel 10 Pro XL (Garansi Internasional - Pajak Bea Cukai)",
+            harga: 18200000,
+            kategori: "Flagship Series",
+            spesifikasi: "Google Tensor G5, RAM 16GB, ROM 256GB, 6.8\" OLED 120Hz, Pure Pixel AI, 5050mAh, 45W",
+            warna: ["Obsidian", "Porcelain"],
+        }, {
+            id: 8,
+            nama: "Realme GT 6 Pro 5G",
+            harga: 13500000,
+            kategori: "Flagship Series",
+            spesifikasi: "Snapdragon 8 Gen 5, RAM 16GB, ROM 512GB, 6.74\" AMOLED 144Hz, Sony LYT-900, 5400mAh, 150W",
+            warna: ["Fluid Silver", "Dark Purple"],
+        }, {
+            id: 9,
+            nama: "OnePlus 13 5G (Garansi Internasional)",
+            harga: 14200000,
+            kategori: "Flagship Series",
+            spesifikasi: "Snapdragon 8 Gen 5, RAM 16GB, ROM 256GB, 6.82\" 2K Fluid AMOLED, Hasselblad, 5400mAh, 100W",
+            warna: ["Emerald Green", "Silky Black"],
+        }, {
+            id: 10,
+            nama: "Sony Xperia 1 VII (Pro Creator Edition)",
+            harga: 21000000,
+            kategori: "Flagship Series",
+            spesifikasi: "Snapdragon 8 Gen 5, RAM 12GB, ROM 512GB, 6.5\" 4K OLED 21:9, Triple CineAlta, 5000mAh, 33W",
+            warna: ["Black", "Khaki Green"],
+        }, {
+            id: 11,
+            nama: "Samsung Galaxy A57 5G",
+            harga: 6499000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Exynos 1580, RAM 8GB, ROM 256GB, 6.5\" Super AMOLED 120Hz, 50MP OIS, 5000mAh, 25W, IP67",
+            warna: ["Awesome Lime", "Awesome Violet"],
+        }, {
+            id: 12,
+            nama: "Xiaomi Redmi Note 15 Pro+ 5G",
+            harga: 5899000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 8300 Ultra, RAM 12GB, ROM 512GB, 6.67\" CrystalRes AMOLED, 200MP OIS, 5000mAh, 120W",
+            warna: ["Aurora Purple", "Midnight Black"],
+        }, {
+            id: 13,
+            nama: "Vivo V40 Pro 5G",
+            harga: 7999000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 9200+, RAM 12GB, ROM 512GB, 6.78\" AMOLED Curved, 50MP Zeiss, Aura Light, 5500mAh, 80W",
+            warna: ["Stellar Silver", "Nebula Purple"],
+        }, {
+            id: 14,
+            nama: "Oppo Reno 13 Pro 5G",
+            harga: 8499000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 8400, RAM 12GB, ROM 512GB, 6.7\" OLED Curved 120Hz, Telephoto Portrait, 5000mAh, 80W",
+            warna: ["Space Grey", "Pearl Pink"],
+        }, {
+            id: 15,
+            nama: "Infinix GT 30 Pro (Gaming Mid-range)",
+            harga: 4599000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 8200 Ultimate, RAM 12GB, ROM 256GB, 6.67\" AMOLED 144Hz, 5000mAh, 45W, Bypass Charge",
+            warna: ["Cyber Mecha Silver"],
+        }, {
+            id: 16,
+            nama: "iQOO Z10 Pro 5G",
+            harga: 5299000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Snapdragon 7+ Gen 4, RAM 12GB, ROM 256GB, 6.78\" AMOLED 144Hz, Sony Sensor, 6000mAh, 80W",
+            warna: ["Breeze Blue", "Armor Black"],
+        }, {
+            id: 17,
+            nama: "Realme 14 Pro+ 5G",
+            harga: 6999000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Snapdragon 7s Gen 3, RAM 12GB, ROM 512GB, 6.7\" Curved OLED, Periscope Telephoto 3x, 5200mAh, 67W",
+            warna: ["Submarine Blue", "Navigator Beige"],
+        }, {
+            id: 18,
+            nama: "Poco X7 Pro 5G",
+            harga: 4899000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 8300 Ultra, RAM 12GB, ROM 256GB, 6.67\" Flow AMOLED 120Hz, 64MP OIS, 5000mAh, 67W",
+            warna: ["Poco Yellow", "Spectre Black"],
+        }, {
+            id: 19,
+            nama: "Nothing Phone (2a) Plus",
+            harga: 7200000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 7350 Pro, RAM 12GB, ROM 256GB, 6.7\" Flexible AMOLED, Glyph Interface LED, 5000mAh, 50W",
+            warna: ["Grey", "Milk White"],
+        }, {
+            id: 20,
+            nama: "Motorola Edge 50 Neo",
+            harga: 5500000,
+            kategori: "Mid-Range Series",
+            spesifikasi: "Dimensity 7300, RAM 8GB, ROM 256GB, 6.4\" pOLED LTPO 120Hz, Sony LYTIA, 4310mAh, 68W",
+            warna: ["Pantone Nautical Blue", "Latte"],
+        }, {
+            id: 21,
+            nama: "Xiaomi Redmi 14C",
+            harga: 1499000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Helio G81 Ultra, RAM 6GB, ROM 128GB, 6.88\" HD+ 120Hz, 5160mAh, 18W",
+            warna: ["Midnight Black", "Sage Green"],
+        }, {
+            id: 22,
+            nama: "Infinix Hot 50i",
+            harga: 1399000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Helio G81, RAM 4GB, ROM 128GB, 6.7\" IPS LCD 120Hz, 48MP, 5000mAh, 18W",
+            warna: ["Sleek Black", "Titanium Grey"],
+        }, {
+            id: 23,
+            nama: "Tecno Spark 30c",
+            harga: 1299000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Helio G81, RAM 4GB, ROM 128GB, 6.67\" LCD 120Hz, 50MP, 5000mAh, 18W",
+            warna: ["Orbit Black", "Magic Skin Green"],
+        }, {
+            id: 24,
+            nama: "Samsung Galaxy A06",
+            harga: 1699000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Helio G85, RAM 4GB, ROM 128GB, 6.7\" PLS LCD, 50MP, 5000mAh, 25W",
+            warna: ["Light Blue", "Black"],
+        }, {
+            id: 25,
+            nama: "Realme Note 60",
+            harga: 1399000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Unisoc T612, RAM 4GB, ROM 64GB, 6.74\" LCD 90Hz, ArmorShell, 5000mAh, 10W",
+            warna: ["Voyage Blue", "Marble Black"],
+        }, {
+            id: 26,
+            nama: "Vivo Y18s",
+            harga: 1899000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Helio G85, RAM 6GB, ROM 128GB, 6.56\" LCD 90Hz, 50MP, 5000mAh, 15W",
+            warna: ["Wave Aqua", "Mocha Brown"],
+        }, {
+            id: 27,
+            nama: "Oppo A3x",
+            harga: 1999000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Snapdragon 6s 4G Gen 1, RAM 4GB, ROM 128GB, 6.67\" LCD 90Hz, Mil-Grade, 5100mAh, 45W",
+            warna: ["Nebula Red", "Ocean Blue"],
+        }, {
+            id: 28,
+            nama: "Infinix Smart 9",
+            harga: 1149000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Helio G81, RAM 3GB, ROM 64GB, 6.6\" LCD 120Hz, 5000mAh, 10W",
+            warna: ["Metallic Black", "Neo Mint"],
+        }, {
+            id: 29,
+            nama: "Itel P60 Play",
+            harga: 1099000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Unisoc T606, RAM 4GB, ROM 128GB, 6.6\" HD+ 90Hz, 5000mAh, 18W",
+            warna: ["Cyber Blue", "Dynamic Black"],
+        }, {
+            id: 30,
+            nama: "ZTE Blade A55",
+            harga: 1149000,
+            kategori: "Entry-Level Series",
+            spesifikasi: "Unisoc SC9863A, RAM 4GB, ROM 64GB, 6.6\" HD+, 5000mAh, 10W",
+            warna: ["Starry Black", "Sunset Orange"],
+        }];
+
+        // ============================================================
+        //  2. STATE
+        // ============================================================
+        const state = {
+            currentWorkspace: 'storefront',
+            category: 'All',
+            searchQuery: '',
+            cart: [], // { id, color, shipping, quantity }
+            selectedProductId: null,
+            selectedColor: null,
+            chartsInitialized: false,
+        };
+
+        // ============================================================
+        //  3. UTILITY FUNCTIONS
+        // ============================================================
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+            }).format(angka).replace(/\s/g, '');
+        }
+
+        function getProduct(id) {
+            return products.find(p => p.id === id);
+        }
+
+        function cartTotalItems() {
+            return state.cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        function cartSubtotal() {
+            return state.cart.reduce((sum, item) => {
+                const p = getProduct(item.id);
+                return sum + (p ? p.harga * item.quantity : 0);
+            }, 0);
+        }
+
+        function cartTax() {
+            return Math.round(cartSubtotal() * 0.11);
+        }
+
+        function cartGrandTotal() {
+            return cartSubtotal() + cartTax();
+        }
+
+        // ============================================================
+        //  4. RENDER FUNCTIONS (targeted DOM updates)
+        // ============================================================
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const empty = document.getElementById('emptyGrid');
+            if (!grid || !empty) return;
+
+            let filtered = products;
+            if (state.category !== 'All') {
+                filtered = filtered.filter(p => p.kategori === state.category);
+            }
+            if (state.searchQuery.trim()) {
+                const q = state.searchQuery.trim().toLowerCase();
+                filtered = filtered.filter(p => p.nama.toLowerCase().includes(q));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            let html = '';
+            for (const p of filtered) {
+                const specParts = p.spesifikasi.split(',').map(s => s.trim());
+                const specPills = specParts.slice(0, 4).map(s => `<span class="spec-pill">${s}</span>`).join('');
+                const colorSwatches = p.warna.map(c =>
+                    `<span class="color-swatch" style="background:${c.toLowerCase().includes('black')?'#1e293b':c.toLowerCase().includes('grey')?'#64748b':c.toLowerCase().includes('silver')?'#cbd5e1':c.toLowerCase().includes('gold')?'#fbbf24':c.toLowerCase().includes('green')?'#22c55e':c.toLowerCase().includes('purple')?'#a855f7':c.toLowerCase().includes('blue')?'#3b82f6':c.toLowerCase().includes('orange')?'#f97316':c.toLowerCase().includes('pink')?'#ec4899':c.toLowerCase().includes('white')?'#f8fafc':'#94a3b8'}" title="${c}"></span>`
+                ).join('');
+                const imageUrl = getImageForProduct(p);
+
+                html += `
+                    <div class="product-card">
+                        <img src="${imageUrl}" alt="${p.nama}" loading="lazy" onerror="this.src='https://picsum.photos/seed/${p.id}/400/400'" />
+                        <div class="p-4 flex flex-col flex-1">
+                            <div class="flex items-start justify-between gap-2">
+                                <h5 class="font-semibold text-sm text-[#0F172A] leading-snug truncate-2 flex-1">${p.nama}</h5>
+                                <span class="badge-${p.kategori === 'Flagship Series' ? 'emerald' : p.kategori === 'Mid-Range Series' ? 'amber' : 'slate'} flex-shrink-0 text-[0.55rem]">${p.kategori.split(' ')[0]}</span>
+                            </div>
+                            <div class="mt-1.5 flex flex-wrap gap-0.5">${specPills}</div>
+                            <div class="mt-1.5 flex flex-wrap items-center gap-0.5">
+                                <span class="text-xs text-slate-400 mr-0.5">Warna:</span> ${colorSwatches}
+                            </div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <span class="text-base font-bold text-[#0F172A]">${formatRupiah(p.harga)}</span>
+                                <button onclick="openAddModal(${p.id})" class="btn-primary text-xs !py-1.5 !px-3"><i class="fas fa-cart-plus"></i> Beli</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            grid.innerHTML = html;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const empty = document.getElementById('cartEmpty');
+            const footer = document.getElementById('cartFooter');
+            const badge = document.getElementById('cartBadge');
+            if (!container || !empty || !footer || !badge) return;
+
+            const totalItems = cartTotalItems();
+            badge.textContent = totalItems;
+
+            if (totalItems === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                footer.classList.add('hidden');
+                document.getElementById('cartSubtotal').textContent = 'Rp0';
+                document.getElementById('cartTax').textContent = 'Rp0';
+                document.getElementById('cartTotal').textContent = 'Rp0';
+                updateKPIs();
+                return;
+            }
+            empty.classList.add('hidden');
+            footer.classList.remove('hidden');
+
+            let html = '';
+            for (const item of state.cart) {
+                const p = getProduct(item.id);
+                if (!p) continue;
+                const total = p.harga * item.quantity;
+                html += `
+                    <div class="cart-item">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-semibold text-sm text-[#0F172A] truncate">${p.nama}</p>
+                                <div class="flex flex-wrap items-center gap-1 text-xs text-slate-500 mt-0.5">
+                                    <span><i class="fas fa-palette mr-0.5"></i>${item.color}</span>
+                                    <span class="mx-0.5">·</span>
+                                    <span><i class="fas fa-truck mr-0.5"></i>${item.shipping}</span>
+                                </div>
+                            </div>
+                            <button onclick="removeCartItem(${item.id})" class="text-slate-300 hover:text-red-500 text-sm ml-2 flex-shrink-0"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <div class="flex items-center gap-1">
+                                <button onclick="updateQty(${item.id}, -1)" class="qty-btn text-sm">−</button>
+                                <span class="qty-val">${item.quantity}</span>
+                                <button onclick="updateQty(${item.id}, 1)" class="qty-btn text-sm">+</button>
+                            </div>
+                            <span class="font-semibold text-sm text-[#0F172A]">${formatRupiah(total)}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+
+            document.getElementById('cartSubtotal').textContent = formatRupiah(cartSubtotal());
+            document.getElementById('cartTax').textContent = formatRupiah(cartTax());
+            document.getElementById('cartTotal').textContent = formatRupiah(cartGrandTotal());
+
+            updateKPIs();
+        }
+
+        function updateKPIs() {
+            const sales = cartGrandTotal();
+            const units = cartTotalItems();
+            const aov = units > 0 ? Math.round(sales / units) : 0;
+            const elSales = document.getElementById('kpiSales');
+            const elUnits = document.getElementById('kpiUnits');
+            const elAov = document.getElementById('kpiAov');
+            if (elSales) elSales.textContent = formatRupiah(sales);
+            if (elUnits) elUnits.textContent = units;
+            if (elAov) elAov.textContent = formatRupiah(aov);
+        }
+
+        // ============================================================
+        //  5. CART OPERATIONS
+        // ============================================================
+
+        function openAddModal(productId) {
+            const p = getProduct(productId);
+            if (!p) return;
+            state.selectedProductId = productId;
+            state.selectedColor = p.warna[0] || '';
+
+            document.getElementById('modalProductName').textContent = p.nama;
+            document.getElementById('modalProductPrice').textContent = formatRupiah(p.harga);
+
+            const colorContainer = document.getElementById('modalColorOptions');
+            colorContainer.innerHTML = '';
+            for (const c of p.warna) {
+                const bg = c.toLowerCase().includes('black') ? '#1e293b' :
+                    c.toLowerCase().includes('grey') ? '#64748b' :
+                    c.toLowerCase().includes('silver') ? '#cbd5e1' :
+                    c.toLowerCase().includes('gold') ? '#fbbf24' :
+                    c.toLowerCase().includes('green') ? '#22c55e' :
+                    c.toLowerCase().includes('purple') ? '#a855f7' :
+                    c.toLowerCase().includes('blue') ? '#3b82f6' :
+                    c.toLowerCase().includes('orange') ? '#f97316' :
+                    c.toLowerCase().includes('pink') ? '#ec4899' :
+                    c.toLowerCase().includes('white') ? '#f8fafc' : '#94a3b8';
+                const sel = c === state.selectedColor ? 'selected' : '';
+                const span = document.createElement('span');
+                span.className = `color-swatch ${sel}`;
+                span.style.background = bg;
+                span.title = c;
+                span.dataset.color = c;
+                span.onclick = function() {
+                    document.querySelectorAll('#modalColorOptions .color-swatch').forEach(el => el.classList.remove('selected'));
+                    this.classList.add('selected');
+                    state.selectedColor = this.dataset.color;
+                };
+                colorContainer.appendChild(span);
+            }
+
+            document.getElementById('addModal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('open');
+            state.selectedProductId = null;
+            state.selectedColor = null;
+        }
+
+        function confirmAddToCart() {
+            const id = state.selectedProductId;
+            if (!id) {
+                showToast('Pilih produk terlebih dahulu.');
+                return;
+            }
+            const color = state.selectedColor;
+            const shipping = document.getElementById('modalShipping').value;
+            if (!color) {
+                showToast('Pilih warna terlebih dahulu.');
+                return;
+            }
+
+            const existing = state.cart.find(item => item.id === id && item.color === color && item.shipping === shipping);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                state.cart.push({ id, color, shipping, quantity: 1 });
+            }
+
+            closeModal();
+            renderCart();
+            renderProducts();
+            showToast(`✅ ${getProduct(id).nama} ditambahkan ke keranjang.`);
+        }
+
+        function updateQty(id, delta) {
+            const item = state.cart.find(i => i.id === id);
+            if (!item) return;
+            const newQty = item.quantity + delta;
+            if (newQty <= 0) {
+                removeCartItem(id);
+                return;
+            }
+            item.quantity = newQty;
+            renderCart();
+            renderProducts();
+        }
+
+        function removeCartItem(id) {
+            state.cart = state.cart.filter(i => i.id !== id);
+            renderCart();
+            renderProducts();
+        }
+
+        function clearCart() {
+            if (state.cart.length === 0) return;
+            if (confirm('Kosongkan seluruh keranjang?')) {
+                state.cart = [];
+                renderCart();
+                renderProducts();
+                showToast('🧹 Keranjang dikosongkan.');
+            }
+        }
+
+        function toggleCartSidebar() {
+            const panel = document.querySelector('.sticky-cart');
+            if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ============================================================
+        //  6. CHECKOUT & INVOICE
+        // ============================================================
+
+        function hitungCheckout() {
+            if (state.cart.length === 0) {
+                showToast('Keranjang kosong, tidak dapat checkout.');
+                return;
+            }
+            const subtotal = cartSubtotal();
+            const tax = cartTax();
+            const total = cartGrandTotal();
+
+            let lines = [];
+            lines.push('╔══════════════════════════════════════════╗');
+            lines.push('║     NEXUS MOBILE INDONESIA             ║');
+            lines.push('║     TECHNICAL COMMERCIAL INVOICE       ║');
+            lines.push('╠══════════════════════════════════════════╣');
+            lines.push(`║  Tanggal : ${new Date().toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'})}  ${new Date().toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'})}  ║`);
+            lines.push('╠──────────────────────────────────────────╣');
+
+            for (const item of state.cart) {
+                const p = getProduct(item.id);
+                if (!p) continue;
+                const name = p.nama.length > 28 ? p.nama.slice(0, 26) + '…' : p.nama;
+                const qty = item.quantity;
+                const totalItem = p.harga * qty;
+                const line = `${qty}x ${name}  ${formatRupiah(totalItem)}`;
+                const pad = 40 - line.length;
+                const left = Math.max(0, pad);
+                lines.push(`║  ${line}${' '.repeat(left)}║`);
+                const shipInfo = `${item.color} · ${item.shipping}`;
+                const padShip = 40 - 4 - shipInfo.length;
+                lines.push(`║    ${shipInfo}${' '.repeat(Math.max(0, padShip))}║`);
+            }
+
+            lines.push('╠──────────────────────────────────────────╣');
+            lines.push(`║  Subtotal       ${' '.repeat(11)}${formatRupiah(subtotal).padStart(16)} ║`);
+            lines.push(`║  PPN 11%        ${' '.repeat(11)}${formatRupiah(tax).padStart(16)} ║`);
+            lines.push('╠──────────────────────────────────────────╣');
+            lines.push(`║  TOTAL          ${' '.repeat(11)}${formatRupiah(total).padStart(16)} ║`);
+            lines.push('╠══════════════════════════════════════════╣');
+            lines.push('║  Terima kasih telah berbelanja!        ║');
+            lines.push('║  Garansi Resmi · IMEI Terdaftar        ║');
+            lines.push('╚══════════════════════════════════════════╝');
+
+            document.getElementById('invoiceContent').textContent = lines.join('\n');
+            document.getElementById('invoiceModal').classList.add('open');
+            window._checkoutPending = true;
+        }
+
+        function closeInvoice() {
+            document.getElementById('invoiceModal').classList.remove('open');
+            if (window._checkoutPending) {
+                state.cart = [];
+                renderCart();
+                renderProducts();
+                window._checkoutPending = false;
+                showToast('🧾 Checkout berhasil! Keranjang telah dikosongkan.');
+            }
+        }
+
+        // ============================================================
+        //  7. FILTERS & SEARCH
+        // ============================================================
+
+        function setCategory(cat) {
+            state.category = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.cat === cat);
+            });
+            renderProducts();
+        }
+
+        function setSearch(val) {
+            state.searchQuery = val;
+            renderProducts();
+        }
+
+        // ============================================================
+        //  8. WORKSPACE SWITCHING
+        // ============================================================
+
+        function switchWorkspace(name) {
+            state.currentWorkspace = name;
+            document.querySelectorAll('.workspace-panel').forEach(el => el.classList.remove('active'));
+            const panel = document.getElementById(`workspace-${name}`);
+            if (panel) panel.classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(el => {
+                el.classList.toggle('active', el.dataset.workspace === name);
+            });
+
+            if (name === 'analytics') {
+                requestAnimationFrame(() => {
+                    initCharts();
+                });
+            }
+        }
+
+        // ============================================================
+        //  9. CHARTS (Chart.js) — perbaikan duplikasi
+        // ============================================================
+
+        let doughnutChartInstance = null;
+        let lineChartInstance = null;
+
+        function initCharts() {
+            if (state.chartsInitialized) return;
+
+            const doughnutCtx = document.getElementById('doughnutChart');
+            const lineCtx = document.getElementById('lineChart');
+            if (!doughnutCtx || !lineCtx) return;
+
+            if (doughnutChartInstance) {
+                doughnutChartInstance.destroy();
+                doughnutChartInstance = null;
+            }
+            if (lineChartInstance) {
+                lineChartInstance.destroy();
+                lineChartInstance = null;
+            }
+
+            try {
+                const cats = ['Flagship Series', 'Mid-Range Series', 'Entry-Level Series'];
+                const values = cats.map(cat => {
+                    return products.filter(p => p.kategori === cat).reduce((sum, p) => sum + p.harga, 0);
+                });
+
+                doughnutChartInstance = new Chart(doughnutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: cats,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: ['#2563EB', '#16A34A', '#D97706'],
+                            borderWidth: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } }
+                        },
+                        cutout: '65%',
+                    }
+                });
+
+                const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+                const data = [12, 19, 15, 22, 28, 34, 18];
+                lineChartInstance = new Chart(lineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: days,
+                        datasets: [{
+                            label: 'Transaksi',
+                            data: data,
+                            borderColor: '#2563EB',
+                            backgroundColor: 'rgba(37,99,235,0.05)',
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: '#2563EB',
+                            pointRadius: 4,
+                            borderWidth: 2.5,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+
+                state.chartsInitialized = true;
+            } catch (e) {
+                console.warn('Chart initialization error:', e);
+            }
+        }
+
+        // ============================================================
+        //  10. DATA VAULT — EXPORT / IMPORT
+        // ============================================================
+
+        function exportData() {
+            const payload = {
+                exportedAt: new Date().toISOString(),
+                cart: state.cart,
+                products: products,
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `nexus_store_logs_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('📦 Data berhasil diekspor.');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.cart && Array.isArray(data.cart)) {
+                        state.cart = data.cart.filter(item => {
+                            const p = getProduct(item.id);
+                            return p && item.color && item.shipping && typeof item.quantity === 'number' && item
+                                .quantity > 0;
+                        });
+                        renderCart();
+                        renderProducts();
+                        showToast('✅ Data berhasil diimpor!');
+                    } else {
+                        showToast('❌ Format file tidak valid.');
+                    }
+                } catch (err) {
+                    showToast('❌ Gagal membaca file: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ============================================================
+        //  11. TOAST
+        // ============================================================
+
+        let toastTimeout = null;
+
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            if (!el) return;
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                el.classList.remove('show');
+            }, 3000);
+        }
+
+        // ============================================================
+        //  12. INIT
+        // ============================================================
+
+        function init() {
+            renderProducts();
+            renderCart();
+            document.querySelector('.filter-btn[data-cat="All"]')?.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Expose functions globally
+        window.switchWorkspace = switchWorkspace;
+        window.setCategory = setCategory;
+        window.setSearch = setSearch;
+        window.openAddModal = openAddModal;
+        window.closeModal = closeModal;
+        window.confirmAddToCart = confirmAddToCart;
+        window.updateQty = updateQty;
+        window.removeCartItem = removeCartItem;
+        window.clearCart = clearCart;
+        window.hitungCheckout = hitungCheckout;
+        window.closeInvoice = closeInvoice;
+        window.exportData = exportData;
+        window.importData = importData;
+        window.toggleCartSidebar = toggleCartSidebar;
+        window.formatRupiah = formatRupiah;
+        window.showToast = showToast;
+    </script>
+
+</body>
+</html>

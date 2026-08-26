@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>Bara &amp; Arang Bistro – Modern Indonesian Grill</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: '#F59E0B',
+            orange: {
+              600: '#EA580C',
+            },
+            stone: {
+              900: '#1C1917',
+              950: '#0C0A09',
+            },
+            yellow: {
+              200: '#FDE68A',
+            },
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
+
+  <!-- Custom CSS -->
+  <style>
+    /* ===== GLASSMORPHISM NAV ===== */
+    .glass-nav {
+      background: rgba(12, 10, 9, 0.6);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    /* ===== STAGGER FADE-IN ===== */
+    .stagger-fade {
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+    .stagger-fade:nth-child(1) { animation-delay: 0.1s; }
+    .stagger-fade:nth-child(2) { animation-delay: 0.3s; }
+    .stagger-fade:nth-child(3) { animation-delay: 0.5s; }
+    .stagger-fade:nth-child(4) { animation-delay: 0.7s; }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(25px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ===== HERO VIDEO ===== */
+    .hero-video {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    /* ===== 3D CARD + GLOW EMBER WAVE ===== */
+    .menu-card {
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-card::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, transparent, #EA580C, #F59E0B, #EA580C, transparent);
+      opacity: 0.3;
+      transition: opacity 0.3s ease, height 0.3s ease;
+      border-radius: 0 0 12px 12px;
+    }
+    .menu-card:hover::after {
+      opacity: 1;
+      height: 10px;
+    }
+    .menu-card:hover {
+      box-shadow: 0 20px 50px rgba(234, 88, 12, 0.2), 0 0 40px rgba(245, 158, 11, 0.08);
+    }
+
+    /* ===== CONTACT INPUT GLOW ===== */
+    .contact-input {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+      color: #FDE68A;
+      font-size: 1rem;
+      padding: 0.75rem 0.5rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      outline: none;
+    }
+    .contact-input:focus {
+      border-bottom-color: #EA580C;
+      box-shadow: 0 4px 20px rgba(234, 88, 12, 0.15);
+    }
+    .contact-input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+      font-weight: 300;
+    }
+    .contact-input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px #1C1917 inset;
+      -webkit-text-fill-color: #FDE68A;
+    }
+
+    /* ===== TOAST KAYU ===== */
+    .toast-wood {
+      background: #2A1F1A;
+      border: 1px solid #EA580C;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(245, 158, 11, 0.1);
+      transform: translateY(80px) scale(0.95);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    }
+    .toast-wood.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    /* ===== PORTFOLIO FILTER ===== */
+    .gallery-item {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      will-change: transform, opacity;
+    }
+    .gallery-item.hidden {
+      opacity: 0;
+      transform: scale(0.92) translateY(15px);
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .filter-btn {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      color: #A8A29E;
+    }
+    .filter-btn:hover {
+      border-color: #F59E0B;
+      color: #FDE68A;
+    }
+    .filter-btn.active {
+      background: #EA580C;
+      border-color: #EA580C;
+      color: #0C0A09;
+      font-weight: 700;
+    }
+
+    /* ===== SOCIAL BOUNCE ===== */
+    .social-icon {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s;
+    }
+    .social-icon:hover {
+      transform: translateY(-6px) scale(1.15);
+      color: #F59E0B;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #0C0A09;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #EA580C;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #F59E0B;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .menu-card::after {
+        height: 4px;
+      }
+      .menu-card:hover::after {
+        height: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="glass-nav fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3 flex items-center justify-between">
+    <div class="text-2xl md:text-3xl font-serif font-bold tracking-wide">
+      <span class="text-yellow-200">Bara</span>
+      <span class="text-stone-400">&amp;</span>
+      <span class="text-yellow-200">Arang</span>
+      <span class="text-xs font-sans font-light text-stone-400 ml-1">Bistro</span>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-300">
+      <a href="#hero" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Beranda</a>
+      <a href="#stats" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Pencapaian</a>
+      <a href="#menu" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Menu</a>
+      <a href="#gallery" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Galeri</a>
+      <a href="#contact" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Reservasi</a>
+    </div>
+
+    <!-- CTA Desktop -->
+    <a href="#contact" class="hidden md:inline-block px-5 py-2 bg-orange-600 text-stone-950 font-bold rounded-full hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20 text-sm">
+      Pesan Meja
+    </a>
+
+    <!-- Hamburger -->
+    <button id="hamburgerBtn" class="md:hidden flex flex-col gap-1.5 p-1 focus:outline-none" aria-label="Toggle menu">
+      <span class="block w-7 h-0.5 bg-yellow-200 transition-all duration-300"></span>
+      <span class="block w-7 h-0.5 bg-yellow-200 transition-all duration-300"></span>
+      <span class="block w-7 h-0.5 bg-yellow-200 transition-all duration-300"></span>
+    </button>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobileNav" class="md:hidden fixed top-[68px] left-0 w-full bg-stone-950/95 backdrop-blur-xl border-b border-orange-600/30 transform -translate-y-full transition-transform duration-300 ease-in-out">
+      <div class="flex flex-col items-center gap-6 py-8 text-base font-medium text-stone-300">
+        <a href="#hero" class="mobile-link hover:text-yellow-200 transition-colors">Beranda</a>
+        <a href="#stats" class="mobile-link hover:text-yellow-200 transition-colors">Pencapaian</a>
+        <a href="#menu" class="mobile-link hover:text-yellow-200 transition-colors">Menu</a>
+        <a href="#gallery" class="mobile-link hover:text-yellow-200 transition-colors">Galeri</a>
+        <a href="#contact" class="mobile-link hover:text-yellow-200 transition-colors">Reservasi</a>
+        <a href="#contact" class="px-6 py-2 bg-orange-600 text-stone-950 font-bold rounded-full hover:bg-orange-500 transition-colors">Pesan Meja</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="hero" class="relative h-screen overflow-hidden flex items-center justify-center">
+    <!-- Video Background (Embers Cinematic Loop) -->
+    <video class="hero-video absolute top-0 left-0 w-full h-full object-cover z-0"
+           autoplay muted loop playsinline
+           poster="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1400&q=80">
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+      <!-- Ganti URL video dengan percikan api arang atau kepulan asap -->
+    </video>
+
+    <!-- Gradient Overlay (WCAG AAA) -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-b from-stone-950/60 via-stone-900/40 to-stone-900"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-bold leading-tight">
+        <span class="stagger-fade text-yellow-200">Bara</span><br />
+        <span class="stagger-fade text-orange-600">&amp; Arang</span>
+      </h1>
+      <p class="stagger-fade mt-4 text-lg md:text-xl text-stone-300 font-light tracking-wider">
+        Modern Indonesian Grill · Sate Maranggi Wagyu · Iga Bakar Madu Hutan · Ayam Taliwang Asap
+      </p>
+      <div class="stagger-fade mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#menu" class="px-8 py-3 bg-orange-600 text-stone-950 font-bold rounded-full hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/30">
+          Lihat Menu
+        </a>
+        <a href="#contact" class="px-8 py-3 border border-yellow-200 text-yellow-200 font-bold rounded-full hover:bg-yellow-200/10 transition-colors">
+          Pesan Meja
+        </a>
+      </div>
+      <p class="stagger-fade mt-6 text-sm text-stone-400 italic font-serif border-t border-yellow-200/20 pt-4 inline-block">
+        ✦ Hangatnya Api, Lezatnya Nusantara ✦
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== STATISTICS ==================== -->
+  <section id="stats" class="py-20 bg-stone-950 border-y border-orange-600/10">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <h2 class="stat-number text-4xl md:text-5xl font-serif font-bold text-yellow-200" data-target="100">0</h2>
+        <p class="text-sm font-semibold uppercase tracking-widest text-stone-400 mt-1">% Rempah Alami</p>
+      </div>
+      <div>
+        <h2 class="stat-number text-4xl md:text-5xl font-serif font-bold text-yellow-200" data-target="15">0</h2>
+        <p class="text-sm font-semibold uppercase tracking-widest text-stone-400 mt-1">K+ Klien Puas</p>
+      </div>
+      <div>
+        <h2 class="stat-number text-4xl md:text-5xl font-serif font-bold text-yellow-200" data-target="3">0</h2>
+        <p class="text-sm font-semibold uppercase tracking-widest text-stone-400 mt-1">Lokasi Outlet</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MENU (Ember Glow Cards) ==================== -->
+  <section id="menu" class="py-20 bg-stone-900/50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-center mb-12">
+        <span class="text-yellow-200">Menu</span> <span class="text-orange-600">Unggulan</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8 perspective-1000">
+        <!-- Card 1: Sate Maranggi Wagyu -->
+        <div class="menu-card bg-stone-900/70 backdrop-blur-sm border border-orange-600/20 rounded-2xl p-8 text-center cursor-default">
+          <div class="icon-wrapper text-5xl mb-4 text-yellow-200">
+            <i data-lucide="utensils-crossed"></i>
+          </div>
+          <h3 class="text-2xl font-serif text-yellow-200 mb-2">Sate Maranggi Wagyu</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            Sate wagyu premium dengan bumbu maranggi khas, dipanggang di atas arang kayu jati.
+          </p>
+          <div class="mt-4 text-orange-600 font-bold text-lg">Rp 185K</div>
+        </div>
+
+        <!-- Card 2: Iga Bakar Madu Hutan -->
+        <div class="menu-card bg-stone-900/70 backdrop-blur-sm border border-orange-600/20 rounded-2xl p-8 text-center cursor-default">
+          <div class="icon-wrapper text-5xl mb-4 text-yellow-200">
+            <i data-lucide="flame"></i>
+          </div>
+          <h3 class="text-2xl font-serif text-yellow-200 mb-2">Iga Bakar Madu Hutan</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            Iga sapi pilihan dengan glaze madu hutan asli, dipanggang perlahan hingga karamel.
+          </p>
+          <div class="mt-4 text-orange-600 font-bold text-lg">Rp 225K</div>
+        </div>
+
+        <!-- Card 3: Ayam Taliwang Asap -->
+        <div class="menu-card bg-stone-900/70 backdrop-blur-sm border border-orange-600/20 rounded-2xl p-8 text-center cursor-default">
+          <div class="icon-wrapper text-5xl mb-4 text-yellow-200">
+            <i data-lucide="drumstick"></i>
+          </div>
+          <h3 class="text-2xl font-serif text-yellow-200 mb-2">Ayam Taliwang Asap</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            Ayam kampung dengan bumbu taliwang pedas, diasap dengan kayu cengkeh dan arang.
+          </p>
+          <div class="mt-4 text-orange-600 font-bold text-lg">Rp 165K</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GALLERY ==================== -->
+  <section id="gallery" class="py-20 bg-stone-950">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-center mb-8">
+        <span class="text-yellow-200">Suasana</span> <span class="text-orange-600">Bistro</span>
+      </h2>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button class="filter-btn active px-6 py-2 rounded-full text-sm font-semibold" data-filter="all">Semua</button>
+        <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold" data-filter="dining">Dining</button>
+        <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold" data-filter="kitchen">Kitchen</button>
+        <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold" data-filter="event">Event</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+        <!-- Items akan diisi JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT / RESERVASI ==================== -->
+  <section id="contact" class="py-20 bg-stone-900/50">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-center mb-10">
+        <span class="text-yellow-200">Reservasi</span> <span class="text-orange-600">Meja</span>
+      </h2>
+      <form id="contactForm" class="space-y-8">
+        <div>
+          <input type="text" id="nameInput" placeholder="Nama Lengkap" required
+                 class="contact-input" />
+        </div>
+        <div>
+          <input type="email" id="emailInput" placeholder="Alamat Email" required
+                 class="contact-input" />
+        </div>
+        <div>
+          <input type="tel" id="phoneInput" placeholder="Nomor Telepon" required
+                 class="contact-input" />
+        </div>
+        <div>
+          <input type="number" id="guestInput" placeholder="Jumlah Tamu" required min="1" max="20"
+                 class="contact-input" />
+        </div>
+        <div>
+          <input type="date" id="dateInput" required
+                 class="contact-input text-stone-300" />
+        </div>
+        <div>
+          <textarea id="messageInput" rows="4" placeholder="Catatan khusus (alergi, permintaan khusus...)" 
+                    class="contact-input resize-y"></textarea>
+        </div>
+        <button id="submitBtn" type="submit"
+                class="w-full py-4 bg-orange-600 text-stone-950 font-bold text-lg rounded-full hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20 flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
+          <span id="btnText">Pesan Meja</span>
+          <i id="btnSpinner" data-lucide="loader-circle" class="animate-spin hidden w-5 h-5"></i>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-stone-950 border-t border-orange-600/10 py-12">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Jam Operasional -->
+      <div>
+        <h4 class="text-yellow-200 font-serif text-xl mb-3">Jam Operasional</h4>
+        <ul class="text-stone-400 text-sm space-y-1">
+          <li>Senin – Jumat: 11.00 – 22.00</li>
+          <li>Sabtu – Minggu: 10.00 – 23.00</li>
+          <li class="text-orange-600 text-xs font-bold mt-2">* Kitchen closes 1 hour before</li>
+        </ul>
+      </div>
+      <!-- Alamat -->
+      <div>
+        <h4 class="text-yellow-200 font-serif text-xl mb-3">Lokasi</h4>
+        <p class="text-stone-400 text-sm">
+          Jl. Kuliner Nusantara No. 45<br />
+          Jakarta Selatan 12190<br />
+          Indonesia
+        </p>
+        <p class="text-stone-500 text-xs mt-2">+62 21 1234 5678</p>
+      </div>
+      <!-- Sosial Media -->
+      <div>
+        <h4 class="text-yellow-200 font-serif text-xl mb-3">Ikuti Kami</h4>
+        <div class="flex gap-5">
+          <a href="#" aria-label="Instagram" class="social-icon text-stone-400 text-2xl"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="TikTok" class="social-icon text-stone-400 text-2xl"><i data-lucide="music"></i></a>
+          <a href="#" aria-label="YouTube" class="social-icon text-stone-400 text-2xl"><i data-lucide="youtube"></i></a>
+          <a href="#" aria-label="Facebook" class="social-icon text-stone-400 text-2xl"><i data-lucide="facebook"></i></a>
+        </div>
+        <p class="text-stone-500 text-xs mt-4">&copy; 2026 Bara &amp; Arang Bistro. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="toast-wood fixed bottom-6 right-6 z-[999] rounded-xl px-6 py-4 max-w-sm">
+    <span id="toastMessage" class="text-yellow-200 font-medium">Meja berhasil dipesan!</span>
+  </div>
+
+  <!-- ==================== SEMUA JAVASCRIPT LANGSUNG DI SINI ==================== -->
+  <script>
+    /**
+     * ============================================================
+     *  Bara & Arang Bistro – Semua logika terintegrasi
+     *  Menggunakan optional chaining (?.) dan dibungkus DOMContentLoaded.
+     * ============================================================
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // =============================================================
+      //  1. NAVIGATION – STATE MACHINE + HAMBURGER
+      // =============================================================
+      const hamburgerBtn = document.querySelector('#hamburgerBtn');
+      const mobileNav = document.querySelector('#mobileNav');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      let navOpen = false;
+
+      function toggleNav() {
+        navOpen = !navOpen;
+        if (mobileNav) {
+          mobileNav.classList.toggle('-translate-y-full', !navOpen);
+          mobileNav.classList.toggle('translate-y-0', navOpen);
+        }
+        if (hamburgerBtn) {
+          const bars = hamburgerBtn.querySelectorAll('span');
+          if (bars.length === 3) {
+            if (navOpen) {
+              bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+              bars[1].style.opacity = '0';
+              bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+              bars[0].style.transform = 'none';
+              bars[1].style.opacity = '1';
+              bars[2].style.transform = 'none';
+            }
+          }
+        }
+      }
+
+      hamburgerBtn?.addEventListener('click', toggleNav);
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (navOpen) toggleNav();
+        });
+      });
+
+      window.addEventListener('orientationchange', function() {
+        if (navOpen) toggleNav();
+      });
+
+      // =============================================================
+      //  2. STATISTICS – INTERSECTION OBSERVER (sekali jalan)
+      // =============================================================
+      const statNumbers = document.querySelectorAll('.stat-number');
+      let statsAnimated = false;
+
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !statsAnimated) {
+            statsAnimated = true;
+            statNumbers.forEach(el => {
+              const target = parseInt(el.getAttribute('data-target'), 10);
+              if (isNaN(target)) return;
+              let current = 0;
+              const increment = Math.ceil(target / 45);
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                  el.textContent = target + (el.getAttribute('data-target') === '15' ? 'K+' : '');
+                  clearInterval(timer);
+                } else {
+                  el.textContent = current;
+                }
+              }, 25);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      statNumbers.forEach(el => statsObserver.observe(el));
+
+      // =============================================================
+      //  3. MENU CARDS – 3D TILT + GLOW EMBER WAVE (via CSS)
+      //     Tambahan: icon color change
+      // =============================================================
+      const menuCards = document.querySelectorAll('.menu-card');
+
+      menuCards.forEach(card => {
+        const icon = card.querySelector('.icon-wrapper');
+        card.addEventListener('mousemove', function(e) {
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / 20;
+          const rotateY = (centerX - x) / 20;
+          this.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+          if (icon) {
+            icon.style.color = '#EA580C';
+          }
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+          if (icon) {
+            icon.style.color = '#FDE68A';
+          }
+        });
+      });
+
+      // =============================================================
+      //  4. GALLERY – DATA FILTER MATRIX
+      // =============================================================
+      const galleryData = [
+        { title: 'Ruang Makan Utama', category: 'dining', img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80' },
+        { title: 'Dapur Terbuka', category: 'kitchen', img: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400&q=80' },
+        { title: 'Acara Spesial', category: 'event', img: 'https://images.unsplash.com/photo-1530023367847-a683933f4172?w=400&q=80' },
+        { title: 'Area Lounge', category: 'dining', img: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=400&q=80' },
+        { title: 'Persiapan Hidangan', category: 'kitchen', img: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=400&q=80' },
+        { title: 'Private Dining', category: 'event', img: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80' },
+      ];
+
+      const grid = document.querySelector('#galleryGrid');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      function renderGallery(filter = 'all') {
+        if (!grid) return;
+        const filtered = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
+        const currentItems = grid.querySelectorAll('.gallery-item');
+        currentItems.forEach(item => {
+          item.classList.add('hidden');
+        });
+
+        setTimeout(() => {
+          grid.innerHTML = '';
+          filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item relative rounded-2xl overflow-hidden bg-stone-800 aspect-[4/3]';
+            div.innerHTML = `
+              <img src="${item.img}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-stone-950/90 to-transparent">
+                <p class="text-yellow-200 font-semibold text-sm">${item.title}</p>
+              </div>
+            `;
+            grid.appendChild(div);
+          });
+          grid.querySelectorAll('.gallery-item').forEach(el => {
+            el.classList.remove('hidden');
+            el.style.opacity = '0';
+            el.style.transform = 'scale(0.95)';
+            requestAnimationFrame(() => {
+              el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              el.style.opacity = '1';
+              el.style.transform = 'scale(1)';
+            });
+          });
+        }, 300);
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderGallery(this.getAttribute('data-filter'));
+        });
+      });
+
+      // Inisialisasi pertama
+      renderGallery('all');
+
+      // =============================================================
+      //  5. CONTACT FORM – VALIDASI, LOADING, TOAST
+      // =============================================================
+      const form = document.querySelector('#contactForm');
+      const emailInput = document.querySelector('#emailInput');
+      const phoneInput = document.querySelector('#phoneInput');
+      const guestInput = document.querySelector('#guestInput');
+      const dateInput = document.querySelector('#dateInput');
+      const submitBtn = document.querySelector('#submitBtn');
+      const btnText = document.querySelector('#btnText');
+      const btnSpinner = document.querySelector('#btnSpinner');
+      const toast = document.querySelector('#toast');
+      const toastMsg = document.querySelector('#toastMessage');
+
+      function showToast(message, isSuccess = true) {
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = message;
+        toast.style.borderColor = isSuccess ? '#EA580C' : '#EF4444';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      form?.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = emailInput?.value?.trim() || '';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showToast('❌ Email tidak valid!', false);
+          return;
+        }
+
+        const phone = phoneInput?.value?.trim() || '';
+        if (phone.length < 8) {
+          showToast('❌ Nomor telepon terlalu pendek!', false);
+          return;
+        }
+
+        const guests = parseInt(guestInput?.value, 10);
+        if (isNaN(guests) || guests < 1 || guests > 20) {
+          showToast('❌ Jumlah tamu harus 1-20 orang!', false);
+          return;
+        }
+
+        if (!dateInput?.value) {
+          showToast('❌ Silakan pilih tanggal!', false);
+          return;
+        }
+
+        if (submitBtn && btnText && btnSpinner) {
+          submitBtn.disabled = true;
+          btnText.textContent = 'MENYIAPKAN MEJA ANDA...';
+          btnSpinner.classList.remove('hidden');
+        }
+
+        setTimeout(() => {
+          if (submitBtn && btnText && btnSpinner) {
+            submitBtn.disabled = false;
+            btnText.textContent = 'Pesan Meja';
+            btnSpinner.classList.add('hidden');
+          }
+          showToast('✅ Meja berhasil dipesan!', true);
+          form?.reset();
+        }, 2000);
+      });
+
+      // =============================================================
+      //  6. VIDEO FALLBACK – Jika video gagal, gunakan poster
+      // =============================================================
+      const heroVideo = document.querySelector('.hero-video');
+      heroVideo?.addEventListener('error', function() {
+        console.warn('Video hero gagal dimuat – menggunakan poster fallback.');
+      });
+
+      // =============================================================
+      //  7. LUCIDE ICONS – inisialisasi
+      // =============================================================
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      console.log('✅ Bara & Arang Bistro – siap menyajikan hidangan!');
+    });
+  </script>
+
+</body>
+</html>

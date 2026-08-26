@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>Bara &amp; Arang Bistro – Dynamic Canvas</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            orange: { 600: '#EA580C' },
+            stone: { 900: '#1C1917', 950: '#0C0A09' },
+            yellow: { 200: '#FDE68A' },
+          },
+          fontFamily: {
+            oswald: ['Oswald', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
+
+  <!-- Custom CSS -->
+  <style>
+    /* ===== GLASSMORPHISM NAV ===== */
+    .glass-nav {
+      background: rgba(12, 10, 9, 0.6);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.15);
+      transition: background 0.3s ease;
+    }
+
+    /* ===== HERO VIDEO ===== */
+    .hero-video {
+      will-change: transform;
+      transform: translateZ(0);
+      transition: opacity 0.6s ease-in-out;
+    }
+    .hero-video.fade {
+      opacity: 0;
+    }
+    .hero-video.active {
+      opacity: 1;
+    }
+
+    /* ===== DETAILS (kiri bawah) ===== */
+    .details {
+      z-index: 22;
+      position: absolute;
+      bottom: 10%;
+      left: 5%;
+      max-width: 480px;
+    }
+    .content-title-1 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 3.5rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .content-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: #D6D3D1;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .content-price {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: #FDE68A;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .content-hidden {
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+    }
+    .content-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== MENU CARDS (kanan bawah) ===== */
+    .menu-card {
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 2px solid transparent;
+      background: rgba(28, 25, 23, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .menu-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: #FDE68A;
+      box-shadow: 0 8px 30px rgba(234, 88, 12, 0.2);
+    }
+    .menu-card.active {
+      border-color: #EA580C;
+      background: rgba(234, 88, 12, 0.15);
+      box-shadow: 0 0 30px rgba(234, 88, 12, 0.15);
+    }
+    .menu-card img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(253, 230, 138, 0.2);
+    }
+    .menu-card .label {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #FDE68A;
+    }
+    .menu-card .sub-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      color: #A8A29E;
+    }
+
+    /* ===== STATISTICS ===== */
+    .stat-number {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 3.5rem;
+      color: #FDE68A;
+      line-height: 1;
+    }
+
+    /* ===== CONTACT GLOW ===== */
+    .glow-input {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+      color: #FDE68A;
+      padding: 0.75rem 0.5rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      outline: none;
+      font-size: 1rem;
+    }
+    .glow-input:focus {
+      border-bottom-color: #EA580C;
+      box-shadow: 0 4px 20px rgba(234, 88, 12, 0.15);
+    }
+    .glow-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: 300;
+    }
+
+    /* ===== TOAST ===== */
+    .toast-wood {
+      background: #2A1F1A;
+      border: 1px solid #EA580C;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      transform: translateY(80px) scale(0.95);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    }
+    .toast-wood.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    /* ===== GALLERY FILTER ===== */
+    .gallery-item {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      will-change: transform, opacity;
+    }
+    .gallery-item.hidden {
+      opacity: 0;
+      transform: scale(0.92) translateY(15px);
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+    .filter-btn {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      color: #A8A29E;
+    }
+    .filter-btn:hover {
+      border-color: #FDE68A;
+      color: #FDE68A;
+    }
+    .filter-btn.active {
+      background: #EA580C;
+      border-color: #EA580C;
+      color: #0C0A09;
+      font-weight: 700;
+    }
+
+    /* ===== SOCIAL BOUNCE ===== */
+    .social-icon {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s;
+    }
+    .social-icon:hover {
+      transform: translateY(-6px) scale(1.15);
+      color: #FDE68A;
+    }
+
+    /* ===== PHILOSOPHY GRID ===== */
+    .philosophy-card {
+      background: rgba(28, 25, 23, 0.4);
+      border: 1px solid rgba(234, 88, 12, 0.08);
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      transition: border-color 0.3s ease;
+    }
+    .philosophy-card:hover {
+      border-color: rgba(234, 88, 12, 0.3);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .details {
+        left: 5%;
+        bottom: 28%;
+        max-width: 90%;
+      }
+      .content-title-1 {
+        font-size: 2.5rem;
+      }
+      .content-price {
+        font-size: 1.4rem;
+      }
+      .stat-number {
+        font-size: 2.5rem;
+      }
+      .menu-card img {
+        width: 44px;
+        height: 44px;
+      }
+    }
+    @media (max-width: 480px) {
+      .details {
+        bottom: 32%;
+        left: 4%;
+      }
+      .content-title-1 {
+        font-size: 2rem;
+      }
+      .menu-card .label {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="glass-nav fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3 flex items-center justify-between">
+    <div class="text-2xl md:text-3xl font-serif font-bold tracking-wide">
+      <span class="text-yellow-200">Bara</span>
+      <span class="text-stone-400">&amp;</span>
+      <span class="text-yellow-200">Arang</span>
+      <span class="text-xs font-sans font-light text-stone-400 ml-1">Bistro</span>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-300">
+      <a href="#hero" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Beranda</a>
+      <a href="#stats" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Pencapaian</a>
+      <a href="#philosophy" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Filosofi</a>
+      <a href="#gallery" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Galeri</a>
+      <a href="#contact" class="hover:text-yellow-200 transition-colors relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-yellow-200 after:transition-all hover:after:w-full">Reservasi</a>
+    </div>
+
+    <!-- CTA Desktop -->
+    <a href="#contact" class="hidden md:inline-block px-5 py-2 bg-orange-600 text-stone-950 font-bold rounded-full hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20 text-sm">
+      Pesan Meja
+    </a>
+
+    <!-- Hamburger -->
+    <button id="hamburgerBtn" class="md:hidden flex flex-col gap-1.5 p-1 focus:outline-none" aria-label="Toggle menu">
+      <span class="block w-7 h-0.5 bg-yellow-200 transition-all duration-300"></span>
+      <span class="block w-7 h-0.5 bg-yellow-200 transition-all duration-300"></span>
+      <span class="block w-7 h-0.5 bg-yellow-200 transition-all duration-300"></span>
+    </button>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobileNav" class="md:hidden fixed top-[68px] left-0 w-full bg-stone-950/95 backdrop-blur-xl border-b border-orange-600/30 transform -translate-y-full transition-transform duration-300 ease-in-out">
+      <div class="flex flex-col items-center gap-6 py-8 text-base font-medium text-stone-300">
+        <a href="#hero" class="mobile-link hover:text-yellow-200 transition-colors">Beranda</a>
+        <a href="#stats" class="mobile-link hover:text-yellow-200 transition-colors">Pencapaian</a>
+        <a href="#philosophy" class="mobile-link hover:text-yellow-200 transition-colors">Filosofi</a>
+        <a href="#gallery" class="mobile-link hover:text-yellow-200 transition-colors">Galeri</a>
+        <a href="#contact" class="mobile-link hover:text-yellow-200 transition-colors">Reservasi</a>
+        <a href="#contact" class="px-6 py-2 bg-orange-600 text-stone-950 font-bold rounded-full hover:bg-orange-500 transition-colors">Pesan Meja</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO (DYNAMIC CANVAS) ==================== -->
+  <section id="hero" class="relative h-screen overflow-hidden">
+    <!-- Video Background (3 videos, hanya 1 aktif per waktu) -->
+    <video id="videoSatay" class="hero-video active absolute top-0 left-0 w-full h-full object-cover z-0" 
+           autoplay muted loop playsinline
+           poster="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1400&q=80">
+      <source src="https://cdn.pixabay.com/video/2020/11/11/55584-478717704_tiny.mp4" type="video/mp4" />
+    </video>
+    <video id="videoRibs" class="hero-video absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0" 
+           autoplay muted loop playsinline
+           poster="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&q=80">
+      <source src="https://cdn.pixabay.com/video/2020/11/11/55585-478722105_tiny.mp4" type="video/mp4" />
+    </video>
+    <video id="videoChicken" class="hero-video absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0" 
+           autoplay muted loop playsinline
+           poster="https://images.unsplash.com/photo-1562967914-608f82629710?w=1400&q=80">
+      <source src="https://cdn.pixabay.com/video/2021/01/10/62879-499706710_tiny.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Gradient Overlay (WCAG AAA) -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-b from-stone-950/50 via-stone-900/30 to-stone-900/80"></div>
+
+    <!-- DETAILS (kiri bawah) -->
+    <div class="details z-20">
+      <div id="heroTitle" class="content-title-1 text-yellow-200 content-visible">Sate Maranggi Wagyu</div>
+      <div id="heroSub" class="content-sub content-visible mt-1">Dipanggang di atas arang kayu jati pilihan</div>
+      <div id="heroPrice" class="content-price content-visible mt-2">Rp 185K</div>
+    </div>
+
+    <!-- MENU CARDS (kanan bawah) -->
+    <div class="absolute bottom-6 right-6 z-30 flex flex-col sm:flex-row gap-3 sm:gap-4 items-end">
+      <!-- Card 1: Sate -->
+      <div class="menu-card active flex items-center gap-3 px-4 py-3 rounded-xl" data-index="0">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=120&q=80" alt="Sate" loading="lazy" />
+        <div class="text-left">
+          <div class="label">Sate Maranggi</div>
+          <div class="sub-label">Wagyu Premium</div>
+        </div>
+      </div>
+      <!-- Card 2: Iga -->
+      <div class="menu-card flex items-center gap-3 px-4 py-3 rounded-xl" data-index="1">
+        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=120&q=80" alt="Iga" loading="lazy" />
+        <div class="text-left">
+          <div class="label">Iga Bakar</div>
+          <div class="sub-label">Madu Hutan</div>
+        </div>
+      </div>
+      <!-- Card 3: Ayam -->
+      <div class="menu-card flex items-center gap-3 px-4 py-3 rounded-xl" data-index="2">
+        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=120&q=80" alt="Ayam" loading="lazy" />
+        <div class="text-left">
+          <div class="label">Ayam Taliwang</div>
+          <div class="sub-label">Asap Pedas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STATISTICS ==================== -->
+  <section id="stats" class="py-20 bg-stone-950 border-y border-orange-600/10">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <div class="stat-number" data-target="100">0</div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-stone-400 mt-1">% Rempah Alami</p>
+      </div>
+      <div>
+        <div class="stat-number" data-target="15">0</div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-stone-400 mt-1">K+ Klien Puas</p>
+      </div>
+      <div>
+        <div class="stat-number" data-target="3">0</div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-stone-400 mt-1">Lokasi Outlet</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PHILOSOPHY GRID ==================== -->
+  <section id="philosophy" class="py-20 bg-stone-900/50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-center mb-12">
+        <span class="text-yellow-200">Filosofi</span> <span class="text-orange-600">Bara</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="philosophy-card text-center">
+          <div class="text-4xl mb-4 text-orange-600">🔥</div>
+          <h3 class="text-xl font-oswald font-bold text-yellow-200 uppercase">Arang Jati</h3>
+          <p class="text-stone-400 text-sm mt-2">Kayu jati pilihan menghasilkan bara stabil dan aroma khas yang meresap sempurna ke dalam daging.</p>
+        </div>
+        <div class="philosophy-card text-center">
+          <div class="text-4xl mb-4 text-orange-600">🌿</div>
+          <h3 class="text-xl font-oswald font-bold text-yellow-200 uppercase">Rempah Nusantara</h3>
+          <p class="text-stone-400 text-sm mt-2">Perpaduan rempah tradisional dari berbagai daerah menciptakan cita rasa autentik yang tak tertandingi.</p>
+        </div>
+        <div class="philosophy-card text-center">
+          <div class="text-4xl mb-4 text-orange-600">⏳</div>
+          <h3 class="text-xl font-oswald font-bold text-yellow-200 uppercase">Slow Fire</h3>
+          <p class="text-stone-400 text-sm mt-2">Proses pemanggangan lambat dengan suhu terkontrol memastikan kelembutan dan kelezatan maksimal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GALLERY ==================== -->
+  <section id="gallery" class="py-20 bg-stone-950">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-center mb-8">
+        <span class="text-yellow-200">Suasana</span> <span class="text-orange-600">Bistro</span>
+      </h2>
+
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button class="filter-btn active px-6 py-2 rounded-full text-sm font-semibold" data-filter="all">Semua</button>
+        <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold" data-filter="dining">Dining</button>
+        <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold" data-filter="kitchen">Kitchen</button>
+        <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold" data-filter="event">Event</button>
+      </div>
+
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+        <!-- JS akan isi -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT (dual-column) ==================== -->
+  <section id="contact" class="py-20 bg-stone-900/50">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-center mb-10">
+        <span class="text-yellow-200">Reservasi</span> <span class="text-orange-600">Meja</span>
+      </h2>
+      <form id="contactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <input type="text" id="nameInput" placeholder="Nama Lengkap" required
+                 class="glow-input" />
+        </div>
+        <div>
+          <input type="email" id="emailInput" placeholder="Alamat Email" required
+                 class="glow-input" />
+        </div>
+        <div>
+          <input type="tel" id="phoneInput" placeholder="Nomor Telepon" required
+                 class="glow-input" />
+        </div>
+        <div>
+          <input type="number" id="guestInput" placeholder="Jumlah Tamu" required min="1" max="20"
+                 class="glow-input" />
+        </div>
+        <div class="md:col-span-2">
+          <input type="date" id="dateInput" required
+                 class="glow-input text-stone-300" />
+        </div>
+        <div class="md:col-span-2">
+          <textarea id="messageInput" rows="3" placeholder="Catatan khusus (alergi, permintaan...)" 
+                    class="glow-input resize-y"></textarea>
+        </div>
+        <div class="md:col-span-2">
+          <button id="submitBtn" type="submit"
+                  class="w-full py-4 bg-orange-600 text-stone-950 font-bold text-lg rounded-full hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20 flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
+            <span id="btnText">Pesan Meja</span>
+            <i id="btnSpinner" data-lucide="loader-circle" class="animate-spin hidden w-5 h-5"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-stone-950 border-t border-orange-600/10 py-12">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h4 class="text-yellow-200 font-serif text-xl mb-3">Jam Operasional</h4>
+        <ul class="text-stone-400 text-sm space-y-1">
+          <li>Senin – Jumat: 11.00 – 22.00</li>
+          <li>Sabtu – Minggu: 10.00 – 23.00</li>
+          <li class="text-orange-600 text-xs font-bold mt-2">* Kitchen closes 1 hour before</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-yellow-200 font-serif text-xl mb-3">Lokasi</h4>
+        <p class="text-stone-400 text-sm">
+          Jl. Kuliner Nusantara No. 45<br />
+          Jakarta Selatan 12190<br />
+          Indonesia
+        </p>
+        <p class="text-stone-500 text-xs mt-2">+62 21 1234 5678</p>
+      </div>
+      <div>
+        <h4 class="text-yellow-200 font-serif text-xl mb-3">Ikuti Kami</h4>
+        <div class="flex gap-5">
+          <a href="#" aria-label="Instagram" class="social-icon text-stone-400 text-2xl"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="TikTok" class="social-icon text-stone-400 text-2xl"><i data-lucide="music"></i></a>
+          <a href="#" aria-label="YouTube" class="social-icon text-stone-400 text-2xl"><i data-lucide="youtube"></i></a>
+          <a href="#" aria-label="Facebook" class="social-icon text-stone-400 text-2xl"><i data-lucide="facebook"></i></a>
+        </div>
+        <p class="text-stone-500 text-xs mt-4">&copy; 2026 Bara &amp; Arang Bistro. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="toast-wood fixed bottom-6 right-6 z-[999] rounded-xl px-6 py-4 max-w-sm">
+    <span id="toastMessage" class="text-yellow-200 font-medium">Meja berhasil dipesan!</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    /**
+     * ============================================================
+     *  Bara & Arang Bistro – Dynamic Card Canvas Sync
+     *  Semua logika terintegrasi, menggunakan optional chaining (?.)
+     * ============================================================
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // =============================================================
+      //  1. NAVIGATION – STATE MACHINE
+      // =============================================================
+      const hamburgerBtn = document.querySelector('#hamburgerBtn');
+      const mobileNav = document.querySelector('#mobileNav');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+      let navOpen = false;
+
+      function toggleNav() {
+        navOpen = !navOpen;
+        if (mobileNav) {
+          mobileNav.classList.toggle('-translate-y-full', !navOpen);
+          mobileNav.classList.toggle('translate-y-0', navOpen);
+        }
+        if (hamburgerBtn) {
+          const bars = hamburgerBtn.querySelectorAll('span');
+          if (bars.length === 3) {
+            if (navOpen) {
+              bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+              bars[1].style.opacity = '0';
+              bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+              bars[0].style.transform = 'none';
+              bars[1].style.opacity = '1';
+              bars[2].style.transform = 'none';
+            }
+          }
+        }
+      }
+
+      hamburgerBtn?.addEventListener('click', toggleNav);
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (navOpen) toggleNav();
+        });
+      });
+      window.addEventListener('orientationchange', function() {
+        if (navOpen) toggleNav();
+      });
+
+      // =============================================================
+      //  2. DYNAMIC HERO – CARD CLICK SYNC
+      // =============================================================
+      const cards = document.querySelectorAll('.menu-card');
+      const videos = {
+        satay: document.querySelector('#videoSatay'),
+        ribs: document.querySelector('#videoRibs'),
+        chicken: document.querySelector('#videoChicken'),
+      };
+      const heroTitle = document.querySelector('#heroTitle');
+      const heroSub = document.querySelector('#heroSub');
+      const heroPrice = document.querySelector('#heroPrice');
+
+      const menuData = [
+        {
+          title: 'Sate Maranggi Wagyu',
+          sub: 'Dipanggang di atas arang kayu jati pilihan',
+          price: 'Rp 185K',
+          video: 'satay',
+        },
+        {
+          title: 'Iga Bakar Madu Hutan',
+          sub: 'Glaze madu hutan, panggang perlahan hingga karamel',
+          price: 'Rp 225K',
+          video: 'ribs',
+        },
+        {
+          title: 'Ayam Taliwang Asap',
+          sub: 'Lumuran cabai merah membara, asap kayu cengkeh',
+          price: 'Rp 165K',
+          video: 'chicken',
+        },
+      ];
+
+      let activeIndex = 0;
+
+      function switchHero(index) {
+        if (index === activeIndex) return;
+        const data = menuData[index];
+        if (!data) return;
+
+        // Update active card
+        cards.forEach((card, i) => {
+          card.classList.toggle('active', i === index);
+        });
+
+        // Fade out text
+        [heroTitle, heroSub, heroPrice].forEach(el => {
+          el?.classList.remove('content-visible');
+          el?.classList.add('content-hidden');
+        });
+
+        // Switch video with fade transition
+        const videoKeys = ['satay', 'ribs', 'chicken'];
+        videoKeys.forEach(key => {
+          const vid = videos[key];
+          if (vid) {
+            if (key === data.video) {
+              vid.classList.remove('opacity-0');
+              vid.classList.add('opacity-100');
+              vid.play().catch(() => {});
+            } else {
+              vid.classList.remove('opacity-100');
+              vid.classList.add('opacity-0');
+            }
+          }
+        });
+
+        // Update text after short delay
+        setTimeout(() => {
+          if (heroTitle) heroTitle.textContent = data.title;
+          if (heroSub) heroSub.textContent = data.sub;
+          if (heroPrice) heroPrice.textContent = data.price;
+
+          [heroTitle, heroSub, heroPrice].forEach(el => {
+            el?.classList.remove('content-hidden');
+            el?.classList.add('content-visible');
+          });
+        }, 300);
+
+        activeIndex = index;
+      }
+
+      cards.forEach((card, index) => {
+        card.addEventListener('click', function() {
+          switchHero(index);
+        });
+      });
+
+      // Set initial active state
+      switchHero(0);
+
+      // =============================================================
+      //  3. STATISTICS – INTERSECTION OBSERVER
+      // =============================================================
+      const statNumbers = document.querySelectorAll('.stat-number');
+      let statsAnimated = false;
+
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !statsAnimated) {
+            statsAnimated = true;
+            statNumbers.forEach(el => {
+              const target = parseInt(el.getAttribute('data-target'), 10);
+              if (isNaN(target)) return;
+              let current = 0;
+              const increment = Math.ceil(target / 45);
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                  el.textContent = target + (el.getAttribute('data-target') === '15' ? 'K+' : '');
+                  clearInterval(timer);
+                } else {
+                  el.textContent = current;
+                }
+              }, 25);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      statNumbers.forEach(el => statsObserver.observe(el));
+
+      // =============================================================
+      //  4. GALLERY – DATA FILTER
+      // =============================================================
+      const galleryData = [
+        { title: 'Ruang Makan Utama', category: 'dining', img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80' },
+        { title: 'Dapur Terbuka', category: 'kitchen', img: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400&q=80' },
+        { title: 'Acara Spesial', category: 'event', img: 'https://images.unsplash.com/photo-1530023367847-a683933f4172?w=400&q=80' },
+        { title: 'Area Lounge', category: 'dining', img: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=400&q=80' },
+        { title: 'Persiapan Hidangan', category: 'kitchen', img: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=400&q=80' },
+        { title: 'Private Dining', category: 'event', img: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80' },
+      ];
+
+      const grid = document.querySelector('#galleryGrid');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      function renderGallery(filter = 'all') {
+        if (!grid) return;
+        const filtered = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
+        const currentItems = grid.querySelectorAll('.gallery-item');
+        currentItems.forEach(item => {
+          item.classList.add('hidden');
+        });
+
+        setTimeout(() => {
+          grid.innerHTML = '';
+          filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item relative rounded-2xl overflow-hidden bg-stone-800 aspect-[4/3]';
+            div.innerHTML = `
+              <img src="${item.img}" alt="${item.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-stone-950/90 to-transparent">
+                <p class="text-yellow-200 font-semibold text-sm">${item.title}</p>
+              </div>
+            `;
+            grid.appendChild(div);
+          });
+          grid.querySelectorAll('.gallery-item').forEach(el => {
+            el.classList.remove('hidden');
+            el.style.opacity = '0';
+            el.style.transform = 'scale(0.95)';
+            requestAnimationFrame(() => {
+              el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              el.style.opacity = '1';
+              el.style.transform = 'scale(1)';
+            });
+          });
+        }, 300);
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderGallery(this.getAttribute('data-filter'));
+        });
+      });
+      renderGallery('all');
+
+      // =============================================================
+      //  5. CONTACT FORM – VALIDASI, LOADING, TOAST
+      // =============================================================
+      const form = document.querySelector('#contactForm');
+      const emailInput = document.querySelector('#emailInput');
+      const phoneInput = document.querySelector('#phoneInput');
+      const guestInput = document.querySelector('#guestInput');
+      const dateInput = document.querySelector('#dateInput');
+      const submitBtn = document.querySelector('#submitBtn');
+      const btnText = document.querySelector('#btnText');
+      const btnSpinner = document.querySelector('#btnSpinner');
+      const toast = document.querySelector('#toast');
+      const toastMsg = document.querySelector('#toastMessage');
+
+      function showToast(message, isSuccess = true) {
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = message;
+        toast.style.borderColor = isSuccess ? '#EA580C' : '#EF4444';
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      form?.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = emailInput?.value?.trim() || '';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast('❌ Email tidak valid!', false);
+          return;
+        }
+
+        const phone = phoneInput?.value?.trim() || '';
+        if (phone.length < 8) {
+          showToast('❌ Nomor telepon terlalu pendek!', false);
+          return;
+        }
+
+        const guests = parseInt(guestInput?.value, 10);
+        if (isNaN(guests) || guests < 1 || guests > 20) {
+          showToast('❌ Jumlah tamu harus 1-20 orang!', false);
+          return;
+        }
+
+        if (!dateInput?.value) {
+          showToast('❌ Silakan pilih tanggal!', false);
+          return;
+        }
+
+        if (submitBtn && btnText && btnSpinner) {
+          submitBtn.disabled = true;
+          btnText.textContent = 'MENYIAPKAN MEJA ANDA...';
+          btnSpinner.classList.remove('hidden');
+        }
+
+        setTimeout(() => {
+          if (submitBtn && btnText && btnSpinner) {
+            submitBtn.disabled = false;
+            btnText.textContent = 'Pesan Meja';
+            btnSpinner.classList.add('hidden');
+          }
+          showToast('✅ Meja berhasil dipesan!', true);
+          form?.reset();
+        }, 2000);
+      });
+
+      // =============================================================
+      //  6. VIDEO FALLBACK – jika video gagal, tetap pakai poster
+      // =============================================================
+      document.querySelectorAll('.hero-video').forEach(vid => {
+        vid?.addEventListener('error', function() {
+          console.warn('Video fallback aktif untuk:', this.id);
+        });
+      });
+
+      // =============================================================
+      //  7. LUCIDE ICONS
+      // =============================================================
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      console.log('✅ Bara & Arang Bistro – Dynamic Canvas siap!');
+    });
+  </script>
+
+</body>
+</html>

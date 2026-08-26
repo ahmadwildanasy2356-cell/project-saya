@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Reservasi Event Eksekutif</title>
+    <!-- Hubungkan ke Google Fonts untuk font profesional -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           SYSTEM DESIGN TOKENS (NEO-BRUTALIST & ENTERPRISE LIGHT)
+           ========================================================================== */
+        :root {
+            --bg-base: #f1f5f9;         
+            --bg-card: #ffffff;         
+            --border-thick: 2px solid #0f172a; 
+            --brand-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            --neon-pink: #ec4899;
+            --text-title: #0f172a;      
+            --text-body: #334155;       
+            --text-muted: #64748b;      
+            --shadow-flat: 6px 6px 0px #0f172a; 
+            --radius-box: 16px;
+            --radius-btn: 10px;
+        }
+
+        html, body {
+            margin: 0; padding: 0; min-height: 100vh;
+            background-color: var(--bg-base);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            color: var(--text-body);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            cursor: none; 
+        }
+
+        .kontainer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        /* 1. SISTEM KURSOR AUDIO-VISUAL PREMIUM */
+        #kursor-inti {
+            width: 6px; height: 6px; background-color: var(--text-title);
+            border-radius: 50%; position: fixed; transform: translate(-50%, -50%);
+            pointer-events: none; z-index: 9999; display: none;
+        }
+        #kursor-aura {
+            width: 36px; height: 36px; border: 2px solid #0f172a;
+            background: rgba(79, 70, 229, 0.04); border-radius: 50%; position: fixed;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 9998;
+            transition: transform 0.08s ease-out, width 0.2s, height 0.2s, background 0.2s; display: none;
+        }
+        @media (min-width: 768px) { #kursor-inti, #kursor-aura { display: block; } }
+
+        /* 2. MENU NAVIGASI TABS ASIMETRIS */
+        .nav-menu { display: flex; justify-content: center; gap: 16px; margin-bottom: 40px; }
+        .link-nav {
+            background: var(--bg-card); border: var(--border-thick); color: var(--text-title);
+            padding: 14px 28px; border-radius: var(--radius-btn); font-weight: 700; font-size: 14px;
+            transition: all 0.2s ease; cursor: none; box-shadow: 3px 3px 0px #0f172a;
+        }
+        .link-nav.nav-aktif, .link-nav:hover {
+            background: #0f172a; color: white; transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px var(--brand-gradient);
+        }
+
+        /* 3. EXECUTIVE HEADER BANNER */
+        .bagian-atas {
+            background: var(--bg-card); border: var(--border-thick);
+            padding: 40px 50px; border-radius: var(--radius-box); display: flex;
+            justify-content: space-between; align-items: center; margin-bottom: 40px;
+            box-shadow: var(--shadow-flat); position: relative;
+        }
+        .bagian-atas::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
+            background: var(--brand-gradient);
+        }
+        .judul-utama h1 { margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.03em; color: var(--text-title); }
+        .judul-utama p { margin: 8px 0 0 0; font-size: 14px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .total-atas { background: #f8fafc; border: var(--border-thick); padding: 12px 24px; border-radius: var(--radius-btn); text-align: center; }
+        .total-atas span { display: block; font-size: 36px; font-weight: 800; color: #4f46e5; margin-top: 2px; }
+
+        /* 4. MULTI-PAGE GRID SYSTEM */
+        .halaman-web { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s ease-out; }
+        .halaman-web.halaman-aktif { display: block; opacity: 1; transform: translateY(0); }
+        .konten-utama { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        @media (min-width: 1024px) { .konten-utama { grid-template-columns: 1fr 1.35fr; } }
+        
+        .kotak-putih {
+            background-color: var(--bg-card); padding: 45px; border-radius: var(--radius-box);
+            border: var(--border-thick); box-shadow: var(--shadow-flat); transition: all 0.3s ease;
+        }
+        .kotak-putih:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px #0f172a; }
+
+        .judul-seksi {
+            font-size: 20px; font-weight: 800; color: var(--text-title); margin-top: 0;
+            margin-bottom: 35px; border-bottom: 2px solid #0f172a; padding-bottom: 16px;
+            display: flex; justify-content: space-between; align-items: center; letter-spacing: -0.01em;
+        }
+
+        /* KUNCI PERBAIKAN: CSS ISIAN INPUT & TOMBOL YANG SEMPAT TERTINGGAL */
+        .grup-input { margin-bottom: 26px; }
+        .grup-input label { display: block; font-weight: 700; margin-bottom: 12px; font-size: 13px; color: var(--text-title); text-transform: uppercase; letter-spacing: 0.05em; }
+        .grup-input input, .grup-input select {
+            width: 100%; padding: 16px 20px; border: var(--border-thick); border-radius: var(--radius-btn);
+            box-sizing: border-box; font-size: 15px; color: var(--text-title); background-color: #ffffff;
+            transition: all 0.2s ease; font-family: inherit; font-weight: 500;
+        }
+        .grup-input input:focus, .grup-input select:focus {
+            outline: none; background-color: #ffffff; transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #4f46e5;
+        }
+        .grup-tombol { display: flex; gap: 16px; margin-top: 36px; }
+        .tombol { flex: 1; padding: 18px 28px; border: var(--border-thick); border-radius: var(--radius-btn); font-weight: 800; font-size: 14px; cursor: none; transition: all 0.2s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.05em; }
+        .tombol-daftar { background: #4f46e5; color: white; box-shadow: 4px 4px 0px #0f172a; }
+        .tombol-daftar:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #0f172a; filter: brightness(1.1); }
+        .tombol-reset { background-color: #ffffff; color: var(--text-title); box-shadow: 3px 3px 0px #0f172a; }
+        .tombol-reset:hover { background-color: #f8fafc; transform: translate(-1px, -1px); box-shadow: 4px 4px 0px #0f172a; }
+        
+        .tombol-hapus-semua { background-color: #fee2e2; color: var(--neon-pink); padding: 10px 20px; font-size: 11px; font-weight: 800; border: var(--border-thick); border-radius: 8px; cursor: none; transition: all 0.2s; text-transform: uppercase; }
+        .tombol-hapus { background-color: #ffffff; color: var(--text-muted); border: var(--border-thick); padding: 10px 18px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: none; transition: all 0.2s; }
+        .notif-sukses { background-color: #ecfdf5; color: #047857; border: var(--border-thick); padding: 18px 24px; border-radius: var(--radius-btn); margin-bottom: 30px; font-size: 14px; font-weight: 700; display: none; box-shadow: 4px 4px 0px #047857; }
+        .list-peserta { display: flex; flex-direction: column; gap: 20px; }
+        .pesan-kosong { color: var(--text-muted); text-align: center; font-style: italic; padding: 60px 0; border: 2px dashed #0f172a; border-radius: var(--radius-btn); background-color: #f8fafc; font-weight: 500; }
+        .kartu-peserta { display: flex; align-items: center; justify-content: space-between; padding: 24px; background-color: #ffffff; border: var(--border-thick); border-radius: var(--radius-btn); box-shadow: 4px 4px 0px #0f172a; animation: luncurNeo 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+        @keyframes luncurNeo { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .nomor-urut { background-color: #0f172a; color: white; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 800; font-size: 14px; margin-right: 22px; }
+        .info-peserta h3 { margin: 0 0 6px 0; font-size: 18px; font-weight: 800; color: var(--text-title); }
+        .info-peserta p { margin: 5px 0; font-size: 13px; color: var(--text-body); }
+        .kotak-statistik { background-color: #ffffff; border: var(--border-thick); padding: 30px; border-radius: var(--radius-box); margin-top: 40px; box-shadow: var(--shadow-flat); }
+        .judul-stat { font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 22px; text-transform: uppercase; letter-spacing: 0.08em; }
+        .grid-stat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        @media (min-width: 768px) { .grid-stat { grid-template-columns: repeat(4, 1fr); } }
+        .item-stat { background-color: #f8fafc; padding: 24px 14px; border-radius: var(--radius-btn); border: var(--border-thick); text-align: center; transition: all 0.2s; box-shadow: 3px 3px 0px #0f172a; }
+        .item-stat:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #4f46e5; border-color: #4f46e5; }
+        .item-stat .angka { font-size: 28px; font-weight: 800; color: var(--text-title); }
+        .item-stat .nama-stat { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-top: 8px; text-transform: uppercase; }
+    </style>
+</head>
+
+<body>
+
+    <!-- LAYER KURSOR PREMIUM -->
+    <div id="kursor-inti"></div>
+    <div id="kursor-aura"></div>
+
+    <div class="kontainer">
+
+        <!-- TAB NAVIGASI UTAMA -->
+        <nav class="nav-menu">
+            <button class="link-nav nav-aktif" onclick="pindahHalaman('hal-registrasi', this)">📝 Form Pendaftaran</button>
+            <button class="link-nav" onclick="pindahHalaman('hal-dashboard', this)">📊 Panel & Statistik</button>
+        </nav>
+
+        <!-- BANNER ATAS EXECUTIVE -->
+        <div class="bagian-atas">
+            <div class="judul-utama">
+                <h1>RESERVASI ACARA</h1>
+                <p>Sistem pencatatan dan manajemen peserta mandiri</p>
+            </div>
+            <div class="total-atas">
+                Total peserta
+                <span id="hitungAtas">0</span>
+            </div>
+        </div>
+
+        <!-- HALAMAN 1: FORM PENDAFTARAN -->
+        <div id="hal-registrasi" class="halaman-web halaman-aktif">
+            <div class="konten-utama">
+                <div class="kotak-putih">
+                    <div class="judul-seksi">FORM PENDAFTARAN</div>
+                    <div class="notif-sukses" id="notifSukses">✔️ Pendaftaran berhasil ditambahkan</div>
+
+                    <form id="formPendaftaran">
+                        <div class="grup-input">
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" id="nama" placeholder="Masukkan nama anda ....." required>
+                            <div class="info-karakter">Jumlah Karakter : <span id="hitungKarakter">0</span></div>
+                        </div>
+                        <div class="grup-input">
+                            <label for="email">Alamat Email</label>
+                            <input type="email" id="email" placeholder="Masukkan email anda ....." required>
+                        </div>
+                        <div class="grup-input">
+                            <label for="event">Pilih Event</label>
+                            <select id="event" required>
+                                <option value="">-- Pilih salah satu event --</option>
+                                <option value="JS Workshop">JavaScript Workshop</option>
+                                <option value="Web Dev">Web Development</option>
+                                <option value="AI Engineering">AI Engineering</option>
+                                <option value="UI/UX Design">UI/UX Design</option>
+                            </select>
+                        </div>
+                        <div class="grup-tombol">
+                            <button type="submit" class="tombol tombol-daftar">✅ Daftar Sekarang</button>
+                            <button type="reset" class="tombol tombol-reset" id="btnReset">🔄 Reset Sekarang</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="kotak-putih" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                    <h2 style="color: var(--text-title); font-size: 24px; font-weight: 800; margin-bottom: 15px; letter-spacing: -0.02em;">DAPATKAN AKSES WEBINAR PREMIUM</h2>
+                    <p style="color: var(--text-body); font-size: 14px; line-height: 1.7; margin: 0; font-weight: 500;">Silakan pilih salah satu kelas peningkatan skill industri teknologi di samping. Data Anda akan terekam secara instan ke dalam server lokal sistem dasbor kami.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- HALAMAN 2: DASHBOARD PESERTA -->
+        <div id="hal-dashboard" class="halaman-web">
+            <div class="kotak-putih" style="margin-bottom: 40px;">
+                <div class="judul-seksi">
+                    <span>📌 Daftar Peserta Terregistrasi</span>
+                    <button type="button" class="tombol-hapus-semua" id="btnHapusSemua">Hapus Semua Data</button>                    
+                </div>
+                <div class="list-peserta" id="tempatListPeserta">
+                    <div class="pesan-kosong" id="pesanKosong">Belum ada peserta yang mendaftar</div>
+                </div>
+            </div>
+
+            <!-- INFOGRAFIK DATA ANALYTICS -->
+            <div class="kotak-statistik">
+                <div class="judul-stat">📊 EVENT ANALYTICS MATRIX</div>
+                <div class="grid-stat">
+                    <div class="item-stat"><div class="angka" id="statJS">0</div><div class="nama-stat">JS Workshop</div></div>
+                    <div class="item-stat"><div class="angka" id="statWeb">0</div><div class="nama-stat">Web Dev</div></div>
+                    <div class="item-stat"><div class="angka" id="statAI">0</div><div class="nama-stat">AI Eng</div></div>
+                    <div class="item-stat"><div class="angka" id="statUI">0</div><div class="nama-stat">UI/UX</div></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Hubungan Langsung ke Sisi Logika Interaktif Offline -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+

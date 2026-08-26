@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayam Geprek Ngawi · National Scale Command Center & Interactive Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #F8FAFC;
+            color: #1E293B;
+        }
+        .receipt-font {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .chart-box {
+            height: 280px;
+            max-height: 280px;
+            position: relative;
+            width: 100%;
+        }
+        .modal-overlay {
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+        }
+        .sambal-radio:checked+label {
+            background-color: #EA580C;
+            color: white;
+            border-color: #EA580C;
+        }
+        .sambal-radio:checked+label i {
+            color: white;
+        }
+        .workspace-hidden {
+            display: none !important;
+        }
+        .active-tab {
+            background-color: #EA580C;
+            color: white;
+        }
+        .active-tab i {
+            color: white;
+        }
+        .product-card {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .badge-popular {
+            background: linear-gradient(135deg, #EAB308, #EA580C);
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+    <!-- HEADER -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-orange-600 to-yellow-500 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-fire text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 leading-tight">AYAM GEPREK NGAWI</h1>
+                    <p class="text-[11px] sm:text-xs font-medium text-slate-500 uppercase tracking-widest">National Scale Command Center & Interactive Menu</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-sm bg-slate-100 rounded-full px-4 py-2">
+                <i class="fa-solid fa-store text-orange-600"></i>
+                <span id="header-branch" class="font-semibold text-slate-700">Cabang Margomulyo (Pusat)</span>
+                <span class="text-slate-400">|</span>
+                <span class="text-slate-500"><i class="fa-regular fa-clock mr-1"></i><span id="header-date"></span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- TABS NAVIGATION -->
+    <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-[72px] sm:top-[80px] z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-2 overflow-x-auto no-scrollbar py-2">
+            <button data-workspace-target="workspace-pos" class="workspace-tab active-tab flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all whitespace-nowrap">
+                <i class="fa-solid fa-cash-register"></i> POS Kasir
+            </button>
+            <button data-workspace-target="workspace-dashboard" class="workspace-tab flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-all whitespace-nowrap">
+                <i class="fa-solid fa-chart-line"></i> Analytics Dashboard
+            </button>
+            <button data-workspace-target="workspace-franchise" class="workspace-tab flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-all whitespace-nowrap">
+                <i class="fa-solid fa-network-wired"></i> Franchise Manager
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <!-- WORKSPACE 1: POS KASIR -->
+        <section id="workspace-pos" class="workspace-section">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- LEFT COLUMN: PRODUCT GRID -->
+                <div class="lg:col-span-2 space-y-4">
+                    <!-- CATEGORY FILTER BUTTONS -->
+                    <div class="flex flex-wrap gap-2" id="category-filters">
+                        <button data-category="All" class="category-btn active-category bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm">Semua Menu</button>
+                        <button data-category="Ayam Geprek Series" class="category-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition">Ayam Geprek</button>
+                        <button data-category="Rice Bowl & Spesial" class="category-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition">Rice Bowl</button>
+                        <button data-category="Bakso Aci & Kuah" class="category-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition">Bakso Aci</button>
+                        <button data-category="Cemilan & Pendamping" class="category-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition">Cemilan</button>
+                        <button data-category="Minuman Big Jumbo" class="category-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition">Minuman</button>
+                    </div>
+
+                    <!-- PRODUCT GRID -->
+                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- RIGHT COLUMN: CART SIDEBAR -->
+                <aside class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 h-fit lg:sticky lg:top-[140px]">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-basket-shopping text-orange-600"></i> Keranjang Belanja
+                        </h2>
+                        <span id="cart-count" class="text-sm bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-semibold">0 item</span>
+                    </div>
+                    <div id="cart-items" class="divide-y divide-slate-100 max-h-[55vh] overflow-y-auto no-scrollbar pr-1"></div>
+                    <div id="cart-empty" class="py-8 text-center text-slate-400">
+                        <i class="fa-solid fa-cart-plus text-4xl mb-3"></i>
+                        <p class="text-sm font-medium">Belum ada pesanan.</p>
+                        <p class="text-xs">Tambahkan menu favoritmu!</p>
+                    </div>
+                    <div class="border-t border-slate-200 mt-4 pt-4 space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">Subtotal</span>
+                            <span id="cart-subtotal" class="font-bold">Rp0</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">PPN 10%</span>
+                            <span id="cart-ppn" class="font-bold">Rp0</span>
+                        </div>
+                        <div class="flex justify-between text-base font-extrabold border-t border-slate-200 pt-3">
+                            <span>Total</span>
+                            <span id="cart-total" class="text-orange-600">Rp0</span>
+                        </div>
+                        <button id="checkout-btn" class="w-full mt-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-receipt"></i> Checkout & Cetak Receipt
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- WORKSPACE 2: ANALYTICS DASHBOARD -->
+        <section id="workspace-dashboard" class="workspace-section workspace-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-slate-500 font-medium">Total Revenue</p>
+                        <i class="fa-solid fa-sack-dollar text-orange-600 text-xl"></i>
+                    </div>
+                    <p id="kpi-revenue" class="text-2xl font-extrabold mt-2">Rp0</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-slate-500 font-medium">Total Items Sold</p>
+                        <i class="fa-solid fa-cubes text-yellow-500 text-xl"></i>
+                    </div>
+                    <p id="kpi-items" class="text-2xl font-extrabold mt-2">0</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-slate-500 font-medium">Conversion Rate</p>
+                        <i class="fa-solid fa-percent text-emerald-600 text-xl"></i>
+                    </div>
+                    <p id="kpi-conversion" class="text-2xl font-extrabold mt-2">0%</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <h3 class="font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-pie text-orange-600"></i> Sales Distribution by Category</h3>
+                    <div class="chart-box"><canvas id="chart-doughnut"></canvas></div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <h3 class="font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-simple text-yellow-500"></i> Daily Sales Velocity</h3>
+                    <div class="chart-box"><canvas id="chart-line"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORKSPACE 3: FRANCHISE MANAGER -->
+        <section id="workspace-franchise" class="workspace-section workspace-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-network-wired text-orange-600"></i> Brand Franchise Manager</h2>
+                    <p class="text-slate-500 mb-5 text-sm">Kelola ekspansi outlet dan lindungi data transaksi dengan vault backup.</p>
+                    <label class="block text-sm font-semibold mb-2">Pilih Cabang Aktif</label>
+                    <select id="branch-select" class="w-full md:w-80 bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="Cabang Margomulyo (Pusat)">Cabang Margomulyo (Pusat)</option>
+                        <option value="Cabang Pare Kediri">Cabang Pare Kediri</option>
+                        <option value="Cabang Alun-Alun Ngawi">Cabang Alun-Alun Ngawi</option>
+                    </select>
+                    <div id="branch-info" class="mt-6 bg-slate-50 rounded-xl p-5 border border-slate-100">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-store text-2xl text-orange-600"></i>
+                            <div>
+                                <p class="font-bold" id="branch-name">Cabang Margomulyo (Pusat)</p>
+                                <p class="text-sm text-slate-500">Status: <span class="text-emerald-600 font-semibold">Aktif · Expanding</span></p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div><p class="text-xs text-slate-500">Transaksi Tercatat</p><p id="branch-trx-count" class="font-bold text-lg">0</p></div>
+                            <div><p class="text-xs text-slate-500">Lokasi Server</p><p class="font-bold text-sm">ID-JATIM-01</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col">
+                    <h3 class="font-bold mb-3 flex items-center gap-2"><i class="fa-solid fa-database text-yellow-500"></i> System Data Vault</h3>
+                    <p class="text-sm text-slate-500 mb-4">Amankan log transaksi Anda dari reset sistem dengan export/import .json.</p>
+                    <button id="export-btn" class="w-full mb-3 bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-export"></i> Export Transaction Logs (.json)
+                    </button>
+                    <button id="import-btn" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-import"></i> Import Backup State (.json)
+                    </button>
+                    <input type="file" id="import-file" class="hidden" accept="application/json">
+                    <p class="text-xs text-slate-400 mt-4 text-center"><i class="fa-solid fa-shield-halved mr-1"></i> Data tersimpan lokal di browser</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400">
+            Ayam Geprek Ngawi Command Center · Production-ready UI/UX · Premium Warm Light Theme
+        </div>
+    </footer>
+
+    <!-- MODAL: CUSTOM MODIFIER -->
+    <div id="modal-customizer" class="modal-overlay fixed inset-0 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
+            <button id="modal-close" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-orange-600"></i> Custom Modifier
+            </h3>
+            <p class="text-sm text-slate-500 mb-5">Sesuaikan pesanan <span id="modal-product-name" class="font-bold text-slate-700"></span></p>
+            <div class="mb-5">
+                <label class="text-sm font-semibold block mb-1">Level Pedas <span class="text-slate-400">(1 - 10)</span></label>
+                <input type="range" id="modal-level" min="1" max="10" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600">
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                    <span>Level 1</span>
+                    <span id="modal-level-value" class="font-bold text-orange-600 text-sm">5</span>
+                    <span>Level 10</span>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="text-sm font-semibold block mb-2">Tipe Sambal</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="radio" name="sambal" id="modal-sambal-bawang" value="Sambal Bawang" class="sambal-radio hidden" checked>
+                    <label for="modal-sambal-bawang" class="border-2 border-slate-200 rounded-xl p-3 text-center cursor-pointer hover:border-orange-300 transition">
+                        <i class="fa-solid fa-pepper-hot text-slate-400 mb-1"></i>
+                        <span class="block text-sm font-semibold">Sambal Bawang</span>
+                    </label>
+                    <input type="radio" name="sambal" id="modal-sambal-ijo" value="Sambal Ijo" class="sambal-radio hidden">
+                    <label for="modal-sambal-ijo" class="border-2 border-slate-200 rounded-xl p-3 text-center cursor-pointer hover:border-orange-300 transition">
+                        <i class="fa-solid fa-leaf text-slate-400 mb-1"></i>
+                        <span class="block text-sm font-semibold">Sambal Ijo</span>
+                    </label>
+                </div>
+            </div>
+            <button id="modal-confirm" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-check"></i> Tambahkan ke Keranjang
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: RECEIPT -->
+    <div id="receipt-modal" class="modal-overlay fixed inset-0 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative max-h-[90vh] overflow-y-auto">
+            <button id="receipt-close" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fa-solid fa-receipt text-orange-600"></i> Digital Thermal Receipt</h3>
+            <pre id="receipt-content" class="receipt-font text-xs bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800"></pre>
+            <button id="receipt-print" class="w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-print"></i> Print / Simpan
+            </button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ===================== FALLBACK IMAGE =====================
+            const FALLBACK_IMAGE_URL = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80';
+
+            // ===================== DATA LAYER: 30 MENU ITEMS =====================
+            const MENU = [
+                // A. Ayam Geprek Series (1-8)
+                { id: 1, nama: "Paket Combo Geprek Juara", harga: 22000, kategori: "Ayam Geprek Series", deskripsi: "Ayam geprek + nasi + es teh jumbo, komplit juara!", popular: true, image_url: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" },
+                { id: 2, nama: "Ayam Geprek Original Sambal Bawang", harga: 12000, kategori: "Ayam Geprek Series", deskripsi: "Geprek original dengan sambal bawang khas Ngawi.", popular: false, image_url: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=400&q=80" },
+                { id: 3, nama: "Ayam Geprek Sambal Ijo Padang", harga: 13000, kategori: "Ayam Geprek Series", deskripsi: "Sambal ijo padang yang segar dan pedas menggigit.", popular: false, image_url: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=400&q=80" },
+                { id: 4, nama: "Ayam Geprek Keju Mozzarella Meleleh", harga: 18000, kategori: "Ayam Geprek Series", deskripsi: "Keju mozzarella lumer di atas geprek panas.", popular: true, image_url: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=400&q=80" },
+                { id: 5, nama: "Ayam Geprek Saus Keju Lumer", harga: 15000, kategori: "Ayam Geprek Series", deskripsi: "Saus keju creamy melimpah, bikin nagih.", popular: false, image_url: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=400&q=80" },
+                { id: 6, nama: "Ayam Geprek Sambal Matah Bali", harga: 14000, kategori: "Ayam Geprek Series", deskripsi: "Sambal matah segar khas Bali dengan irisan serai.", popular: false, image_url: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=400&q=80" },
+                { id: 7, nama: "Ayam Geprek Sambal Korek Super Pedas", harga: 13000, kategori: "Ayam Geprek Series", deskripsi: "Sambal korek super pedas, bukan untuk penakut!", popular: false, image_url: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=400&q=80" },
+                { id: 8, nama: "Ayam Geprek Tanpa Tulang (Boneless)", harga: 15000, kategori: "Ayam Geprek Series", deskripsi: "Praktis tanpa tulang, tetap krispi dan juicy.", popular: false, image_url: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=400&q=80" },
+                // B. Rice Bowl & Spesial (9-14)
+                { id: 9, nama: "Nasi Ayam Asam Pedeh Ngawi", harga: 18000, kategori: "Rice Bowl & Spesial", deskripsi: "Nasi pulen dengan ayam kuah asam pedeh khas Ngawi.", popular: true, image_url: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=400&q=80" },
+                { id: 10, nama: "Rice Bowl Ayam Geprek Saus Mentai", harga: 20000, kategori: "Rice Bowl & Spesial", deskripsi: "Saus mentai creamy dengan topping tobiko.", popular: false, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" },
+                { id: 11, nama: "Rice Bowl Ayam Saus Blackpepper", harga: 19000, kategori: "Rice Bowl & Spesial", deskripsi: "Saus blackpepper pekat dengan irisan paprika.", popular: false, image_url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80" },
+                { id: 12, nama: "Nasi Goreng Ayam Geprek Krispi", harga: 17000, kategori: "Rice Bowl & Spesial", deskripsi: "Nasi goreng gurih dengan potongan ayam geprek krispi.", popular: false, image_url: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=400&q=80" },
+                { id: 13, nama: "Rice Bowl Ayam Geprek Sambal Embe", harga: 19000, kategori: "Rice Bowl & Spesial", deskripsi: "Sambal embe bawang goreng khas Bali.", popular: false, image_url: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=400&q=80" },
+                { id: 14, nama: "Paket Hemat Anak Kos (Ayam Suwir + Nasi)", harga: 12000, kategori: "Rice Bowl & Spesial", deskripsi: "Hemat, kenyang, tetap enak untuk anak kos.", popular: false, image_url: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=400&q=80" },
+                // C. Bakso Aci & Kuah (15-20)
+                { id: 15, nama: "Bakso Aci Kuah Mercon Daun Jeruk", harga: 15000, kategori: "Bakso Aci & Kuah", deskripsi: "Kuah mercon pedas dengan aroma daun jeruk segar.", popular: true, image_url: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" },
+                { id: 16, nama: "Bakso Aci Spesial Tetelan Sapi", harga: 19000, kategori: "Bakso Aci & Kuah", deskripsi: "Bakso aci dengan tetelan sapi empuk.", popular: false, image_url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80" },
+                { id: 17, nama: "Bakso Aci Tulang Rangu Kriuk", harga: 17000, kategori: "Bakso Aci & Kuah", deskripsi: "Tulang rangu kriuk dalam kuah gurih.", popular: false, image_url: "https://images.unsplash.com/photo-1604152135912-04a022e23696?auto=format&fit=crop&w=400&q=80" },
+                { id: 18, nama: "Seblak Geprek Ceker Mercon", harga: 16000, kategori: "Bakso Aci & Kuah", deskripsi: "Seblak kenyal dengan ceker mercon pedas.", popular: false, image_url: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80" },
+                { id: 19, nama: "Cuanki Lidah Kuah Pedas", harga: 12000, kategori: "Bakso Aci & Kuah", deskripsi: "Cuanki lidah dengan kuah pedas hangat.", popular: false, image_url: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&q=80" },
+                { id: 20, nama: "Mie Instan Geprek Kuah Kari Pedas", harga: 14000, kategori: "Bakso Aci & Kuah", deskripsi: "Mie instan dengan kuah kari pedas dan geprek.", popular: false, image_url: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=400&q=80" },
+                // D. Cemilan & Pendamping (21-25)
+                { id: 21, nama: "Jamur Krispi Geprek Garing", harga: 8000, kategori: "Cemilan & Pendamping", deskripsi: "Jamur krispi garing dengan bumbu geprek.", popular: false, image_url: "https://images.unsplash.com/photo-1576028243451-03a326fbea24?auto=format&fit=crop&w=400&q=80" },
+                { id: 22, nama: "Tahu Walik Krispi Sambal Kecap", harga: 9000, kategori: "Cemilan & Pendamping", deskripsi: "Tahu walik renyah dengan sambal kecap.", popular: false, image_url: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=400&q=80" },
+                { id: 23, nama: "Tempe Mendoan Hangat (Isi 4)", harga: 8000, kategori: "Cemilan & Pendamping", deskripsi: "Tempe mendoan hangat dengan bumbu ketumbar.", popular: false, image_url: "https://images.unsplash.com/photo-1603421676575-bdaaaf158ebf?auto=format&fit=crop&w=400&q=80" },
+                { id: 24, nama: "Kulit Ayam Krispi Gurih", harga: 10000, kategori: "Cemilan & Pendamping", deskripsi: "Kulit ayam krispi super gurih, favorit semua umur.", popular: true, image_url: "https://images.unsplash.com/photo-1608039755401-742074f0548d?auto=format&fit=crop&w=400&q=80" },
+                { id: 25, nama: "Kentang Goreng Bumbu Balado", harga: 11000, kategori: "Cemilan & Pendamping", deskripsi: "Kentang goreng dengan taburan bumbu balado.", popular: false, image_url: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80" },
+                // E. Minuman Big Jumbo (26-30)
+                { id: 26, nama: "Es Teh Manis Big Jumbo", harga: 5000, kategori: "Minuman Big Jumbo", deskripsi: "Es teh manis jumbo, segar sepanjang hari.", popular: true, image_url: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80" },
+                { id: 27, nama: "Es Teh Lemon (Lemon Tea) Jumbo", harga: 7000, kategori: "Minuman Big Jumbo", deskripsi: "Kombinasi teh dan lemon segar dalam gelas jumbo.", popular: false, image_url: "https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?auto=format&fit=crop&w=400&q=80" },
+                { id: 28, nama: "Es Jeruk Peras Alami", harga: 7000, kategori: "Minuman Big Jumbo", deskripsi: "Jeruk peras alami tanpa pengawet.", popular: false, image_url: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80" },
+                { id: 29, nama: "Es Milo Susu Cokelat Gajah", harga: 9000, kategori: "Minuman Big Jumbo", deskripsi: "Milo susu cokelat dengan es krim vanila.", popular: false, image_url: "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=400&q=80" },
+                { id: 30, nama: "Es Soda Gembira Riang", harga: 10000, kategori: "Minuman Big Jumbo", deskripsi: "Soda gembira dengan susu kental manis dan sirup merah.", popular: false, image_url: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=400&q=80" }
+            ];
+
+            // ===================== STATE MANAGEMENT =====================
+            let cart = [];
+            let currentBranch = "Cabang Margomulyo (Pusat)";
+            let transactions = JSON.parse(localStorage.getItem('agp_transactions') || '[]');
+            let pendingItem = null;
+            let charts = {};
+
+            // ===================== UTILITY FUNCTIONS =====================
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+            }
+
+            function hitungTotalBelanja() {
+                return cart.reduce((sum, item) => sum + (item.product.harga * item.qty), 0);
+            }
+
+            function hitungPPN() {
+                return hitungTotalBelanja() * 0.1;
+            }
+
+            function hitungTotalDenganPPN() {
+                return hitungTotalBelanja() + hitungPPN();
+            }
+
+            function getTodayString() {
+                return new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+            }
+
+            function getTimeString() {
+                return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            }
+
+            // ===================== DOM REFERENCES =====================
+            const productGrid = document.getElementById('product-grid');
+            const cartContainer = document.getElementById('cart-items');
+            const cartEmpty = document.getElementById('cart-empty');
+            const cartCount = document.getElementById('cart-count');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartPPN = document.getElementById('cart-ppn');
+            const cartTotal = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const modalCustomizer = document.getElementById('modal-customizer');
+            const modalClose = document.getElementById('modal-close');
+            const modalConfirm = document.getElementById('modal-confirm');
+            const modalProductName = document.getElementById('modal-product-name');
+            const modalLevel = document.getElementById('modal-level');
+            const modalLevelValue = document.getElementById('modal-level-value');
+            const receiptModal = document.getElementById('receipt-modal');
+            const receiptContent = document.getElementById('receipt-content');
+            const receiptClose = document.getElementById('receipt-close');
+            const receiptPrint = document.getElementById('receipt-print');
+            const branchSelect = document.getElementById('branch-select');
+            const branchInfo = document.getElementById('branch-info');
+            const branchName = document.getElementById('branch-name');
+            const branchTrxCount = document.getElementById('branch-trx-count');
+            const headerBranch = document.getElementById('header-branch');
+            const headerDate = document.getElementById('header-date');
+            const exportBtn = document.getElementById('export-btn');
+            const importBtn = document.getElementById('import-btn');
+            const importFile = document.getElementById('import-file');
+            const categoryFilters = document.getElementById('category-filters');
+            const workspaceTabs = document.querySelectorAll('.workspace-tab');
+            const workspaceSections = document.querySelectorAll('.workspace-section');
+
+            // ===================== IMAGE ERROR HANDLER =====================
+            function handleImageError(img) {
+                img.onerror = null;
+                img.src = FALLBACK_IMAGE_URL;
+            }
+
+            // ===================== RENDER PRODUCTS =====================
+            let activeCategory = 'All';
+
+            function renderProducts(category) {
+                activeCategory = category;
+                const filtered = category === 'All' ? MENU : MENU.filter(p => p.kategori === category);
+                productGrid.innerHTML = '';
+                filtered.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm';
+                    card.innerHTML = `
+                        <div class="relative h-36 overflow-hidden">
+                            <img src="${product.image_url}" alt="${product.nama}" loading="lazy" onerror="handleImageError(this)">
+                            ${product.popular ? '<span class="badge-popular absolute top-2 left-2 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide shadow"><i class="fa-solid fa-star mr-1"></i>Popular</span>' : ''}
+                            <div class="absolute bottom-2 right-2 bg-white/90 backdrop-blur text-[10px] font-bold px-2 py-1 rounded-full text-slate-700">${product.kategori}</div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-slate-800 text-base leading-snug">${product.nama}</h3>
+                            <p class="text-xs text-slate-500 mt-1">${product.deskripsi}</p>
+                            <div class="flex items-center justify-between mt-3">
+                                <span class="text-orange-600 font-extrabold text-lg">${formatRupiah(product.harga)}</span>
+                                <button data-add-id="${product.id}" class="add-to-cart-btn bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+                                    <i class="fa-solid fa-plus mr-1"></i> Tambah
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    productGrid.appendChild(card);
+                });
+                // Highlight active category button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    const btnCat = btn.dataset.category;
+                    if (btnCat === category) {
+                        btn.classList.add('bg-orange-600', 'text-white', 'border-transparent');
+                        btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+                    } else {
+                        btn.classList.remove('bg-orange-600', 'text-white', 'border-transparent');
+                        btn.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+                    }
+                });
+            }
+
+            // ===================== CART OPERATIONS =====================
+            function renderCartItem(item) {
+                cartEmpty.style.display = 'none';
+                const row = document.createElement('div');
+                row.dataset.uid = item.uid;
+                row.className = 'flex items-start gap-3 py-3 border-b border-slate-100';
+                row.innerHTML = `
+                    <img src="${item.product.image_url}" alt="${item.product.nama}" class="h-12 w-12 rounded-lg object-cover flex-shrink-0" onerror="handleImageError(this)">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-slate-800 truncate">${item.product.nama}</p>
+                        <p class="text-xs text-slate-500">${item.level ? 'Level ' + item.level + ' · ' + item.sambal : 'Tanpa modifier'}</p>
+                        <div class="flex items-center gap-2 mt-1.5">
+                            <button data-action="decrement" class="h-7 w-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition">
+                                <i class="fa-solid fa-minus text-xs"></i>
+                            </button>
+                            <span class="qty-text text-sm font-bold w-6 text-center">${item.qty}</span>
+                            <button data-action="increment" class="h-7 w-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p class="line-total text-sm font-bold text-slate-800">${formatRupiah(item.product.harga * item.qty)}</p>
+                        <button data-action="remove" class="text-red-400 hover:text-red-600 mt-1 text-xs"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                cartContainer.appendChild(row);
+            }
+
+            function updateCartItemUI(item) {
+                const row = cartContainer.querySelector(`[data-uid="${item.uid}"]`);
+                if (!row) return;
+                row.querySelector('.qty-text').textContent = item.qty;
+                row.querySelector('.line-total').textContent = formatRupiah(item.product.harga * item.qty);
+            }
+
+            function updateCartSummary() {
+                const subtotal = hitungTotalBelanja();
+                const ppn = hitungPPN();
+                const total = subtotal + ppn;
+                cartSubtotal.textContent = formatRupiah(subtotal);
+                cartPPN.textContent = formatRupiah(ppn);
+                cartTotal.textContent = formatRupiah(total);
+                cartCount.textContent = cart.length + ' item';
+                if (cart.length === 0) {
+                    cartEmpty.style.display = 'block';
+                } else {
+                    cartEmpty.style.display = 'none';
+                }
+            }
+
+            function addToCart(product, level, sambal) {
+                const existing = cart.find(item => item.product.id === product.id && item.level === level && item.sambal === sambal);
+                if (existing) {
+                    existing.qty++;
+                    updateCartItemUI(existing);
+                } else {
+                    const newItem = {
+                        uid: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                        product: product,
+                        qty: 1,
+                        level: level,
+                        sambal: sambal
+                    };
+                    cart.push(newItem);
+                    renderCartItem(newItem);
+                }
+                updateCartSummary();
+            }
+
+            function removeCartItem(uid) {
+                cart = cart.filter(item => item.uid !== uid);
+                const row = cartContainer.querySelector(`[data-uid="${uid}"]`);
+                if (row) row.remove();
+                updateCartSummary();
+            }
+
+            // ===================== MODAL HANDLING =====================
+            function showModal(modalEl) {
+                modalEl.classList.remove('hidden');
+                modalEl.classList.add('flex');
+            }
+
+            function hideModal(modalEl) {
+                modalEl.classList.add('hidden');
+                modalEl.classList.remove('flex');
+            }
+
+            function handleAddToCart(productId) {
+                const product = MENU.find(p => p.id === productId);
+                if (!product) return;
+                if (["Ayam Geprek Series", "Rice Bowl & Spesial", "Bakso Aci & Kuah"].includes(product.kategori)) {
+                    pendingItem = product;
+                    modalProductName.textContent = product.nama;
+                    modalLevel.value = 5;
+                    modalLevelValue.textContent = 5;
+                    document.getElementById('modal-sambal-bawang').checked = true;
+                    document.getElementById('modal-sambal-ijo').checked = false;
+                    showModal(modalCustomizer);
+                } else {
+                    addToCart(product, null, null);
+                }
+            }
+
+            // ===================== CHECKOUT & RECEIPT =====================
+            function generateReceipt() {
+                if (cart.length === 0) {
+                    alert('Keranjang masih kosong!');
+                    return;
+                }
+                const branch = currentBranch;
+                const date = getTodayString();
+                const time = getTimeString();
+                const subtotal = hitungTotalBelanja();
+                const ppn = hitungPPN();
+                const total = subtotal + ppn;
+                let lines = [];
+                lines.push('================================');
+                lines.push('    AYAM GEPREK NGAWI');
+                lines.push('  Command Center Receipt');
+                lines.push('================================');
+                lines.push(`Tanggal : ${date}`);
+                lines.push(`Jam     : ${time}`);
+                lines.push(`Cabang  : ${branch}`);
+                lines.push('--------------------------------');
+                lines.push('ITEM                  QTY   HARGA');
+                lines.push('--------------------------------');
+                cart.forEach(item => {
+                    let name = item.product.nama.substring(0, 22).padEnd(22);
+                    let qty = String(item.qty).padStart(3);
+                    let price = formatRupiah(item.product.harga);
+                    lines.push(`${name} ${qty} ${price}`);
+                    if (item.level) {
+                        lines.push(`   * Lv.${item.level} ${item.sambal}`);
+                    }
+                });
+                lines.push('--------------------------------');
+                lines.push(`Subtotal        : ${formatRupiah(subtotal)}`);
+                lines.push(`PPN 10%         : ${formatRupiah(ppn)}`);
+                lines.push(`TOTAL           : ${formatRupiah(total)}`);
+                lines.push('================================');
+                lines.push('  TERIMA KASIH · SELAMAT MENIKMATI');
+                lines.push('================================');
+                return lines.join('\n');
+            }
+
+            function checkout() {
+                if (cart.length === 0) {
+                    alert('Keranjang masih kosong!');
+                    return;
+                }
+                const receiptText = generateReceipt();
+                const transaction = {
+                    id: Date.now(),
+                    branch: currentBranch,
+                    date: new Date().toISOString(),
+                    items: cart.map(item => ({
+                        id: item.product.id,
+                        nama: item.product.nama,
+                        kategori: item.product.kategori,
+                        qty: item.qty,
+                        harga: item.product.harga,
+                        level: item.level,
+                        sambal: item.sambal
+                    })),
+                    subtotal: hitungTotalBelanja(),
+                    ppn: hitungPPN(),
+                    total: hitungTotalDenganPPN()
+                };
+                transactions.push(transaction);
+                localStorage.setItem('agp_transactions', JSON.stringify(transactions));
+                receiptContent.textContent = receiptText;
+                showModal(receiptModal);
+                cart = [];
+                cartContainer.innerHTML = '';
+                updateCartSummary();
+                updateDashboard();
+                updateBranchInfo();
+            }
+
+            // ===================== DASHBOARD CHARTS & KPIs =====================
+            function initCharts() {
+                const doughnutCtx = document.getElementById('chart-doughnut').getContext('2d');
+                const lineCtx = document.getElementById('chart-line').getContext('2d');
+                charts.doughnut = new Chart(doughnutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Ayam Geprek Series', 'Rice Bowl & Spesial', 'Bakso Aci & Kuah', 'Cemilan & Pendamping', 'Minuman Big Jumbo'],
+                        datasets: [{
+                            data: [0, 0, 0, 0, 0],
+                            backgroundColor: ['#EA580C', '#EAB308', '#F97316', '#FACC15', '#FB923C'],
+                            borderWidth: 2,
+                            borderColor: '#FFFFFF'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+                charts.line = new Chart(lineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['6 hari lalu', '5 hari lalu', '4 hari lalu', '3 hari lalu', '2 hari lalu', 'Kemarin', 'Hari ini'],
+                        datasets: [{
+                            label: 'Pendapatan (Rp)',
+                            data: [0, 0, 0, 0, 0, 0, 0],
+                            borderColor: '#EA580C',
+                            backgroundColor: 'rgba(234,88,12,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#EA580C'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+
+            function updateDashboard() {
+                const filteredTrx = transactions.filter(t => t.branch === currentBranch);
+                const totalRevenue = filteredTrx.reduce((sum, t) => sum + t.total, 0);
+                document.getElementById('kpi-revenue').textContent = formatRupiah(totalRevenue);
+                const totalItems = filteredTrx.reduce((sum, t) => sum + t.items.reduce((s, i) => s + i.qty, 0), 0);
+                document.getElementById('kpi-items').textContent = totalItems;
+                const conversion = totalItems > 0 ? Math.min(100, (filteredTrx.length / 100) * 100) : 0;
+                document.getElementById('kpi-conversion').textContent = conversion.toFixed(1) + '%';
+                const categories = ['Ayam Geprek Series', 'Rice Bowl & Spesial', 'Bakso Aci & Kuah', 'Cemilan & Pendamping', 'Minuman Big Jumbo'];
+                const catCounts = categories.map(cat => {
+                    return filteredTrx.reduce((sum, t) => {
+                        return sum + t.items.filter(i => i.kategori === cat).reduce((s, i) => s + i.qty, 0);
+                    }, 0);
+                });
+                charts.doughnut.data.datasets[0].data = catCounts;
+                charts.doughnut.update();
+                const today = new Date();
+                const days = [];
+                const revenues = [];
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date(today);
+                    d.setDate(today.getDate() - i);
+                    const dateStr = d.toISOString().split('T')[0];
+                    const dayRevenue = filteredTrx.filter(t => t.date.startsWith(dateStr)).reduce((sum, t) => sum + t.total, 0);
+                    revenues.push(dayRevenue);
+                    days.push(d.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' }));
+                }
+                charts.line.data.labels = days;
+                charts.line.data.datasets[0].data = revenues;
+                charts.line.update();
+            }
+
+            function updateBranchInfo() {
+                const filteredTrx = transactions.filter(t => t.branch === currentBranch);
+                branchTrxCount.textContent = filteredTrx.length;
+                branchName.textContent = currentBranch;
+                headerBranch.textContent = currentBranch;
+            }
+
+            // ===================== FRANCHISE MANAGER =====================
+            function exportTransactions() {
+                const filtered = transactions.filter(t => t.branch === currentBranch);
+                const blob = new Blob([JSON.stringify(filtered, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `transaksi-${currentBranch.toLowerCase().replace(/\s+/g, '-')}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            function importTransactions(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const imported = JSON.parse(e.target.result);
+                        if (!Array.isArray(imported)) throw new Error('Format salah');
+                        transactions = imported;
+                        localStorage.setItem('agp_transactions', JSON.stringify(transactions));
+                        updateDashboard();
+                        updateBranchInfo();
+                        alert('Backup berhasil diimpor!');
+                    } catch (err) {
+                        alert('Gagal mengimpor file. Pastikan format .json benar.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            // ===================== EVENT LISTENERS =====================
+            categoryFilters.addEventListener('click', (e) => {
+                const btn = e.target.closest('.category-btn');
+                if (!btn) return;
+                renderProducts(btn.dataset.category);
+            });
+
+            productGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('.add-to-cart-btn');
+                if (!btn) return;
+                handleAddToCart(parseInt(btn.dataset.addId));
+            });
+
+            cartContainer.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-action]');
+                if (!btn) return;
+                const row = btn.closest('[data-uid]');
+                if (!row) return;
+                const uid = row.dataset.uid;
+                const item = cart.find(i => i.uid === uid);
+                if (!item) return;
+                const action = btn.dataset.action;
+                if (action === 'increment') {
+                    item.qty++;
+                    updateCartItemUI(item);
+                } else if (action === 'decrement') {
+                    if (item.qty > 1) {
+                        item.qty--;
+                        updateCartItemUI(item);
+                    } else {
+                        removeCartItem(uid);
+                    }
+                } else if (action === 'remove') {
+                    removeCartItem(uid);
+                }
+                updateCartSummary();
+            });
+
+            checkoutBtn.addEventListener('click', checkout);
+
+            modalClose.addEventListener('click', () => {
+                pendingItem = null;
+                hideModal(modalCustomizer);
+            });
+            modalConfirm.addEventListener('click', () => {
+                if (pendingItem) {
+                    const level = parseInt(modalLevel.value);
+                    const sambal = document.querySelector('input[name="sambal"]:checked').value;
+                    addToCart(pendingItem, level, sambal);
+                    pendingItem = null;
+                    hideModal(modalCustomizer);
+                }
+            });
+            modalLevel.addEventListener('input', () => {
+                modalLevelValue.textContent = modalLevel.value;
+            });
+
+            receiptClose.addEventListener('click', () => hideModal(receiptModal));
+            receiptPrint.addEventListener('click', () => {
+                const printContent = receiptContent.textContent;
+                const win = window.open('', '', 'width=400,height=600');
+                win.document.write('<pre style="font-family: \'Courier New\', monospace; font-size: 12px;">' + printContent + '</pre>');
+                win.document.close();
+                win.print();
+            });
+
+            workspaceTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.workspaceTarget;
+                    workspaceTabs.forEach(t => {
+                        t.classList.remove('active-tab');
+                        t.classList.add('text-slate-600', 'hover:bg-slate-100');
+                    });
+                    tab.classList.add('active-tab');
+                    tab.classList.remove('text-slate-600', 'hover:bg-slate-100');
+                    workspaceSections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.remove('workspace-hidden');
+                        } else {
+                            section.classList.add('workspace-hidden');
+                        }
+                    });
+                    if (targetId === 'workspace-dashboard') {
+                        updateDashboard();
+                        // Resize charts after the section becomes visible
+                        setTimeout(() => {
+                            if (charts.doughnut) charts.doughnut.resize();
+                            if (charts.line) charts.line.resize();
+                        }, 50);
+                    }
+                });
+            });
+
+            branchSelect.addEventListener('change', () => {
+                currentBranch = branchSelect.value;
+                updateBranchInfo();
+                updateDashboard();
+            });
+
+            exportBtn.addEventListener('click', exportTransactions);
+            importBtn.addEventListener('click', () => importFile.click());
+            importFile.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    importTransactions(e.target.files[0]);
+                    e.target.value = '';
+                }
+            });
+
+            // ===================== INITIALIZATION =====================
+            function init() {
+                headerDate.textContent = getTodayString();
+                headerBranch.textContent = currentBranch;
+                renderProducts('All');
+                updateCartSummary();
+                initCharts();
+                updateDashboard();
+                updateBranchInfo();
+                branchSelect.value = currentBranch;
+                // Handle image errors globally
+                window.handleImageError = handleImageError;
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>
