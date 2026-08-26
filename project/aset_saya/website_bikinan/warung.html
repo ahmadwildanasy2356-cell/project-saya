@@ -1,83 +1,229 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nusantara Bistro - Cita Rasa Autentik Modern</title>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
+        /* ===== GLOBAL ===== */
+        * {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
         }
-        h1, h2, h3, h4, .font-heading {
+        h1,
+        h2,
+        h3,
+        h4,
+        .font-heading {
             font-family: 'Poppins', sans-serif;
+        }
+
+        /* ===== SKELETON LOADING ===== */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 12px;
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox-overlay {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            cursor: zoom-out;
+        }
+        .lightbox-img {
+            max-height: 85vh;
+            max-width: 90vw;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        /* ===== NAVBAR TRANSPARENT SCROLL ===== */
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.92) !important;
+            backdrop-filter: blur(16px) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        /* ===== CART BADGE PULSE ===== */
+        .badge-pulse {
+            animation: pulse-badge 2s infinite;
+        }
+        @keyframes pulse-badge {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* ===== MENU CARD HOVER ===== */
+        .menu-card {
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .menu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.25);
+        }
+        .menu-card img {
+            transition: transform 0.5s ease;
+        }
+        .menu-card:hover img {
+            transform: scale(1.04);
+        }
+
+        /* ===== FILTER BUTTON ACTIVE ===== */
+        .filter-btn.active {
+            background: #ea580c !important;
+            color: #fff !important;
+            box-shadow: 0 8px 24px -6px rgba(234, 88, 12, 0.4);
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1f2937;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ea580c;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c2410c;
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 2.25rem !important;
+            }
         }
     </style>
 </head>
-<body class="bg-zinc-50 text-gray-800 antialiased">
+<body>
 
-    <!-- NAVBAR -->
-    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-40 border-b border-gray-100 shadow-sm">
+    <!-- ============================================================ -->
+    <!--  NAVBAR                                                 -->
+    <!-- ============================================================ -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <a href="#" class="flex items-center gap-2">
-                    <span class="text-2xl font-bold font-heading text-orange-600">Nusantara<span class="text-gray-900">Bistro</span></span>
+                <a href="#home" class="flex items-center gap-2 text-2xl font-bold font-heading">
+                    <span class="text-orange-600">Nusantara</span><span class="text-gray-900">Bistro</span>
                 </a>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8 font-medium">
+                <div class="hidden md:flex items-center space-x-8 font-medium text-gray-700">
                     <a href="#home" class="hover:text-orange-600 transition-colors">Beranda</a>
                     <a href="#menu" class="hover:text-orange-600 transition-colors">Menu</a>
-                    <a href="#about" class="hover:text-orange-600 transition-colors">Tentang Kami</a>
+                    <a href="#gallery" class="hover:text-orange-600 transition-colors">Galeri</a>
+                    <a href="#about" class="hover:text-orange-600 transition-colors">Tentang</a>
                     <a href="#reservation" class="hover:text-orange-600 transition-colors">Reservasi</a>
                 </div>
-
-                <!-- Action Button & Cart -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <button id="dark-toggle" class="p-2 text-gray-600 hover:text-orange-600 transition-colors text-lg">
+                        <i class="fa-regular fa-moon"></i>
+                    </button>
                     <button id="cart-btn" class="relative p-2 text-gray-700 hover:text-orange-600 transition-colors">
                         <i class="fa-solid fa-cart-shopping text-xl"></i>
-                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-orange-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold hidden">0</span>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-orange-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold hidden badge-pulse">0</span>
                     </button>
-                    
-                    <a href="#reservation" class="hidden sm:inline-block bg-orange-600 hover:bg-orange-700 text-white font-medium px-5 py-2.5 rounded-full transition-all shadow-md hover:shadow-orange-200">
-                        Reservasi Meja
+                    <a href="#reservation" class="hidden sm:inline-block bg-orange-600 hover:bg-orange-700 text-white font-medium px-5 py-2.5 rounded-full transition-all shadow-md hover:shadow-orange-200/50">
+                        Reservasi
                     </a>
-
-                    <!-- Mobile Menu Button -->
                     <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 focus:outline-none">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-3 font-medium">
-            <a href="#home" class="block py-2 hover:text-orange-600">Beranda</a>
-            <a href="#menu" class="block py-2 hover:text-orange-600">Menu</a>
-            <a href="#about" class="block py-2 hover:text-orange-600">Tentang Kami</a>
-            <a href="#reservation" class="block py-2 hover:text-orange-600">Reservasi</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-gray-200 px-4 pt-2 pb-6 space-y-2 font-medium">
+            <a href="#home" class="block py-2 hover:text-orange-600 transition">Beranda</a>
+            <a href="#menu" class="block py-2 hover:text-orange-600 transition">Menu</a>
+            <a href="#gallery" class="block py-2 hover:text-orange-600 transition">Galeri</a>
+            <a href="#about" class="block py-2 hover:text-orange-600 transition">Tentang</a>
+            <a href="#reservation" class="block py-2 hover:text-orange-600 transition">Reservasi</a>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-orange-50/50 to-transparent">
+    <!-- ============================================================ -->
+    <!--  TOAST                                                 -->
+    <!-- ============================================================ -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-check-circle text-emerald-400"></i>
+        <span id="toast-message">Item ditambahkan!</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  HERO SECTION (gambar dari Unsplash)                    -->
+    <!-- ============================================================ -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-orange-50/60 via-white to-orange-50/30 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6 text-center md:text-left">
+                <div class="space-y-6 text-center md:text-left reveal">
                     <span class="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 font-semibold text-sm rounded-full">
                         ✨ Kuliner Autentik Nusantara
                     </span>
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
+                    <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
                         Nikmati Keharmonisan Rasa dengan <span class="text-orange-600">Sentuhan Modern.</span>
                     </h1>
                     <p class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
@@ -85,22 +231,26 @@
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                         <a href="#menu" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-lg shadow-orange-600/30 text-center">
-                            Lihat Menu & Pesan
+                            <i class="fa-solid fa-utensils mr-2"></i> Lihat Menu
                         </a>
-                        <a href="#reservation" class="bg-white hover:bg-gray-50 text-gray-800 font-semibold px-8 py-4 rounded-xl border border-gray-200 transition-all text-center">
-                            Reservasi Meja
+                        <a href="#reservation" class="bg-white hover:bg-gray-50 text-gray-800 font-semibold px-8 py-4 rounded-xl border border-gray-200 transition-all text-center shadow-sm">
+                            <i class="fa-regular fa-calendar-check mr-2"></i> Reservasi
                         </a>
                     </div>
                 </div>
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Hidangan Spesial" class="rounded-3xl shadow-2xl w-full object-cover h-[400px] lg:h-[500px]">
-                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 hidden sm:flex">
+                <div class="relative reveal" style="transition-delay:0.2s;">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-orange-100/50">
+                        <img id="hero-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+                        alt="Hidangan Spesial Nusantara Bistro"
+                        class="w-full h-[400px] lg:h-[500px] object-cover" loading="lazy" />
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 hidden sm:flex ring-1 ring-orange-100/50">
                         <div class="bg-orange-100 p-3 rounded-xl text-orange-600">
                             <i class="fa-solid fa-star text-2xl"></i>
                         </div>
                         <div>
-                            <p class="font-bold text-gray-900">4.9 / 5.0 Rating</p>
-                            <p class="text-xs text-gray-500">Dari 1,200+ Pelanggan Puas</p>
+                            <p class="font-bold text-gray-900">4.9 / 5.0</p>
+                            <p class="text-xs text-gray-500">1.200+ pelanggan puas</p>
                         </div>
                     </div>
                 </div>
@@ -108,37 +258,134 @@
         </div>
     </section>
 
-    <!-- MENU SECTION -->
-    <section id="menu" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Menu Pilihan Kami</h2>
-                <p class="text-gray-600">Dibuat langsung oleh chef berpengalaman dengan bahan-bahan berkualitas tinggi.</p>
-                
-                <!-- Category Filter -->
-                <div class="flex flex-wrap justify-center gap-2 mt-8">
-                    <button class="menu-filter-btn active bg-orange-600 text-white px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="all">Semua</button>
-                    <button class="menu-filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="makanan">Makanan Utama</button>
-                    <button class="menu-filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="camilan">Camilan</button>
-                    <button class="menu-filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="minuman">Minuman</button>
+    <!-- ============================================================ -->
+    <!--  PROMO BANNER                                           -->
+    <!-- ============================================================ -->
+    <section class="bg-gradient-to-r from-orange-600 to-amber-600 py-6 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <i class="fa-solid fa-tags text-3xl"></i>
+                <div>
+                    <p class="font-bold text-lg">Promo Spesial Akhir Pekan!</p>
+                    <p class="text-sm text-orange-100">Diskon 15% untuk semua menu makanan utama setiap Jumat–Minggu</p>
                 </div>
             </div>
+            <a href="#menu" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm px-6 py-2 rounded-full font-semibold text-sm transition-all">
+                Pesan Sekarang <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+    </section>
 
-            <!-- Menu Grid -->
-            <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Items populated via JS -->
+    <!-- ============================================================ -->
+    <!--  MENU SECTION (gambar dari folder asset)                -->
+    <!-- ============================================================ -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Menu Pilihan Kami</h2>
+                <p class="text-gray-600">Dibuat langsung oleh chef berpengalaman dengan bahan-bahan berkualitas tinggi.</p>
+                <div class="flex flex-wrap items-center justify-center gap-3 mt-8">
+                    <div class="flex flex-wrap gap-2">
+                        <button class="filter-btn active bg-orange-600 text-white px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="all">Semua</button>
+                        <button class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="makanan">Makanan</button>
+                        <button class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="camilan">Camilan</button>
+                        <button class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="minuman">Minuman</button>
+                    </div>
+                    <div class="relative w-full sm:w-56">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input id="search-input" type="text" placeholder="Cari menu..." class="w-full pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none text-sm" />
+                    </div>
+                </div>
+            </div>
+            <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <!-- diisi JS -->
             </div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
+    <!-- ============================================================ -->
+    <!--  GALERI SECTION (gambar dari Unsplash)                 -->
+    <!-- ============================================================ -->
+    <section id="gallery" class="py-20 bg-zinc-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Galeri Kami</h2>
+                <p class="text-gray-600">Suasana hangat dan hidangan menggugah selera dalam setiap momen.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div class="gallery-item rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer reveal" style="transition-delay:0.0s;">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Suasana restoran" class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer reveal" style="transition-delay:0.1s;">
+                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=600&q=80" alt="Hidangan utama" class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer reveal" style="transition-delay:0.2s;">
+                    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=600&q=80" alt="Makanan ringan" class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer reveal" style="transition-delay:0.3s;">
+                    <img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?auto=format&fit=crop&w=600&q=80" alt="Minuman segar" class="w-full h-48 sm:h-56 object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  TESTIMONI                                             -->
+    <!-- ============================================================ -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Apa Kata Mereka</h2>
+                <p class="text-gray-600">Ulasan dari pelanggan setia Nusantara Bistro.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-orange-50/50 p-6 rounded-2xl border border-orange-100/50 reveal" style="transition-delay:0.0s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.pravatar.cc/80?img=1" alt="Avatar" class="w-12 h-12 rounded-full object-cover ring-2 ring-orange-200" loading="lazy" />
+                        <div>
+                            <h4 class="font-bold text-gray-900">Budi Santoso</h4>
+                            <div class="text-amber-400 text-sm"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">"Nasi goreng wagyu-nya juara! Bumbu meresap sempurna, dagingnya lembut. Suasana restoran juga cozy banget."</p>
+                </div>
+                <div class="bg-orange-50/50 p-6 rounded-2xl border border-orange-100/50 reveal" style="transition-delay:0.1s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.pravatar.cc/80?img=5" alt="Avatar" class="w-12 h-12 rounded-full object-cover ring-2 ring-orange-200" loading="lazy" />
+                        <div>
+                            <h4 class="font-bold text-gray-900">Siti Rahma</h4>
+                            <div class="text-amber-400 text-sm"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">"Es lychee tea-nya segar banget, cocok buat cuaca panas. Ayam bakar madu limau juga recommended!"</p>
+                </div>
+                <div class="bg-orange-50/50 p-6 rounded-2xl border border-orange-100/50 reveal" style="transition-delay:0.2s;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.pravatar.cc/80?img=10" alt="Avatar" class="w-12 h-12 rounded-full object-cover ring-2 ring-orange-200" loading="lazy" />
+                        <div>
+                            <h4 class="font-bold text-gray-900">Andi Wijaya</h4>
+                            <div class="text-amber-400 text-sm"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">"Pelayanan ramah, tempat bersih, makanan enak. Harga sebanding dengan kualitas. Bakal balik lagi!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  ABOUT SECTION (gambar dari Unsplash)                  -->
+    <!-- ============================================================ -->
     <section id="about" class="py-20 bg-zinc-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Suasana Restoran" class="rounded-3xl shadow-xl w-full h-[400px] object-cover">
+                <div class="relative reveal">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Suasana restoran" class="rounded-3xl shadow-xl w-full h-[400px] object-cover ring-1 ring-orange-100/50" loading="lazy" />
+                    <div class="absolute -bottom-4 -right-4 bg-orange-600 text-white px-6 py-3 rounded-2xl shadow-lg text-sm font-bold hidden sm:block">
+                        <i class="fa-solid fa-award mr-2"></i> Sertifikat Halal
+                    </div>
                 </div>
-                <div class="space-y-6">
+                <div class="space-y-6 reveal" style="transition-delay:0.2s;">
                     <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Tentang Nusantara Bistro</h2>
                     <p class="text-gray-600 leading-relaxed">
                         Di <strong>Nusantara Bistro</strong>, kami percaya bahwa makanan bukan sekadar pemuas lapar, melainkan perayaan rasa dan kebersamaan. Kami menghadirkan resep-resep autentik berbahan dasar 100% segar dari petani lokal, dikemas dalam suasana modern yang nyaman.
@@ -153,15 +400,20 @@
                             <p class="text-sm text-gray-500">Pasokan harian lokal</p>
                         </div>
                     </div>
+                    <a href="#menu" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-3 rounded-xl transition-all shadow-md shadow-orange-600/30">
+                        <i class="fa-solid fa-utensils mr-2"></i> Jelajahi Menu
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RESERVATION SECTION -->
+    <!-- ============================================================ -->
+    <!--  RESERVATION SECTION                                   -->
+    <!-- ============================================================ -->
     <section id="reservation" class="py-20 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-orange-50 rounded-3xl p-8 sm:p-12 border border-orange-100 shadow-sm">
+            <div class="bg-orange-50 rounded-3xl p-8 sm:p-12 border border-orange-100 shadow-sm reveal">
                 <div class="text-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-900 mb-2">Reservasi Meja Anda</h2>
                     <p class="text-gray-600">Pastikan tempat Anda tersedia untuk santap siang atau malam istimewa.</p>
@@ -169,15 +421,15 @@
                 <form id="reservation-form" class="grid sm:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="Ahmad Wildan">
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="Ahmad Wildan" />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nomor WhatsApp</label>
-                        <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="08123456789">
+                        <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="08123456789" />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal & Waktu</label>
-                        <input type="datetime-local" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none">
+                        <input type="datetime-local" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Tamu</label>
@@ -193,7 +445,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-orange-600/30">
-                            Konfirmasi Reservasi
+                            <i class="fa-regular fa-calendar-check mr-2"></i> Konfirmasi Reservasi
                         </button>
                     </div>
                 </form>
@@ -201,12 +453,20 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ============================================================ -->
+    <!--  FOOTER                                                -->
+    <!-- ============================================================ -->
     <footer class="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <span class="text-2xl font-bold font-heading text-white">Nusantara<span class="text-orange-500">Bistro</span></span>
                 <p class="mt-4 text-sm text-gray-400">Menyajikan kuliner khas Indonesia dengan sentuhan cita rasa modern dan layanan terbaik.</p>
+                <div class="flex gap-4 mt-4 text-lg">
+                    <a href="#" class="hover:text-orange-500 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-orange-500 transition"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-orange-500 transition"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-orange-500 transition"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-4">Jam Operasional</h4>
@@ -217,6 +477,7 @@
                 <h4 class="text-white font-bold mb-4">Hubungi Kami</h4>
                 <p class="text-sm"><i class="fa-solid fa-location-dot text-orange-500 mr-2"></i> Jl. Culinary No. 123, Jakarta</p>
                 <p class="text-sm mt-2"><i class="fa-brands fa-whatsapp text-orange-500 mr-2"></i> +62 812-3456-7890</p>
+                <p class="text-sm mt-2"><i class="fa-regular fa-envelope text-orange-500 mr-2"></i> hello@nusantarabistro.com</p>
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
@@ -224,19 +485,16 @@
         </div>
     </footer>
 
-    <!-- CART SIDE DRAWER -->
+    <!-- ============================================================ -->
+    <!--  CART DRAWER                                            -->
+    <!-- ============================================================ -->
     <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-full flex pl-10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
         <div class="w-screen max-w-md bg-white shadow-xl flex flex-col">
-            <!-- Header -->
             <div class="p-6 bg-gray-50 border-b flex justify-between items-center">
                 <h3 class="text-lg font-bold text-gray-900"><i class="fa-solid fa-bag-shopping text-orange-600 mr-2"></i> Keranjang Saya</h3>
                 <button id="close-cart-btn" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <!-- Items list -->
-            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <!-- Cart Content Dynamic -->
-            </div>
-            <!-- Footer Total -->
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
             <div class="p-6 border-t bg-gray-50 space-y-4">
                 <div class="flex justify-between font-bold text-lg">
                     <span>Total Pembayaran:</span>
@@ -248,22 +506,72 @@
             </div>
         </div>
     </div>
-    <!-- Cart Overlay -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/40 z-40 hidden"></div>
 
-    <!-- JAVASCRIPT -->
+    <!-- ============================================================ -->
+    <!--  LIGHTBOX                                               -->
+    <!-- ============================================================ -->
+    <div id="lightbox" class="fixed inset-0 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="lightbox-overlay absolute inset-0" id="lightbox-close"></div>
+        <img id="lightbox-img" src="" alt="Lightbox" class="lightbox-img relative z-10 scale-95 transition-transform duration-300" />
+        <button id="lightbox-close-btn" class="absolute top-6 right-6 z-20 text-white text-3xl hover:scale-110 transition">&times;</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  JAVASCRIPT                                             -->
+    <!-- ============================================================ -->
     <script>
-        // Data Produk
-        const products = [
-            { id: 1, name: 'Nasi Goreng Wagyu Royale', price: 65000, category: 'makanan', tag: 'Best Seller', rating: 4.9, img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=500&q=80', desc: 'Nasi goreng rempah dengan potongan daging sapi Wagyu tenderloin.' },
-            { id: 2, name: 'Ayam Bakar Madu Limau', price: 48000, category: 'makanan', tag: 'Favorit', rating: 4.8, img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=500&q=80', desc: 'Ayam diungkep rempah khas, dibakar madu murni & jeruk limau.' },
-            { id: 3, name: 'Cumi Goreng Tepung Crispy', price: 42000, category: 'camilan', tag: 'Chef Choice', rating: 4.7, img: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=500&q=80', desc: 'Cumi renyah berbalut tepung bumbu rahasia & saus tartar.' },
-            { id: 4, name: 'Es Lychee Tea Fusion', price: 22000, category: 'minuman', tag: 'Segar', rating: 4.9, img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Teh harum dengan sirup lychee premium & potongan buah segar.' }
-        ];
+        // =============================================================
+        //  DATA PRODUK – gambar dari folder asset
+        // =============================================================
+        const products = [{
+            id: 1,
+            name: 'Nasi Goreng Wagyu Royale',
+            price: 65000,
+            category: 'makanan',
+            tag: 'Best Seller',
+            rating: 4.9,
+            img: 'asset/nasi goreng wagyu.png',
+            desc: 'Nasi goreng rempah dengan potongan daging sapi Wagyu tenderloin.'
+        }, {
+            id: 2,
+            name: 'Ayam Bakar Madu Limau',
+            price: 48000,
+            category: 'makanan',
+            tag: 'Favorit',
+            rating: 4.8,
+            img: 'asset/ayam bakar limau.png',
+            desc: 'Ayam diungkep rempah khas, dibakar madu murni & jeruk limau.'
+        }, {
+            id: 3,
+            name: 'Cumi Goreng Tepung Crispy',
+            price: 42000,
+            category: 'camilan',
+            tag: 'Chef Choice',
+            rating: 4.7,
+            img: 'asset/cumi goreng tepung.png',
+            desc: 'Cumi renyah berbalut tepung bumbu rahasia & saus tartar.'
+        }, {
+            id: 4,
+            name: 'Es Lychee Tea Fusion',
+            price: 22000,
+            category: 'minuman',
+            tag: 'Segar',
+            rating: 4.9,
+            img: 'asset/es lychee tea.png',
+            desc: 'Teh harum dengan sirup lychee premium & potongan buah segar.'
+        }];
 
+        // =============================================================
+        //  STATE
+        // =============================================================
         let cart = [];
+        let currentCategory = 'all';
+        let searchQuery = '';
 
-        // DOM Elements
+        // =============================================================
+        //  DOM REFS
+        // =============================================================
         const menuGrid = document.getElementById('menu-grid');
         const cartBtn = document.getElementById('cart-btn');
         const closeCartBtn = document.getElementById('close-cart-btn');
@@ -275,20 +583,85 @@
         const checkoutBtn = document.getElementById('checkout-btn');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const searchInput = document.getElementById('search-input');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const navbar = document.getElementById('navbar');
+        const darkToggle = document.getElementById('dark-toggle');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        let toastTimer = null;
 
-        // Render Menu Items
-        function renderMenu(category = 'all') {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+        // =============================================================
+        //  TOAST
+        // =============================================================
+        function showToast(msg) {
+            toastMessage.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        // =============================================================
+        //  RENDER MENU (dengan skeleton)
+        // =============================================================
+        function renderMenu(showSkeleton = false) {
+            if (showSkeleton) {
+                menuGrid.innerHTML = '';
+                for (let i = 0; i < 4; i++) {
+                    const skeleton = document.createElement('div');
+                    skeleton.className = 'rounded-2xl overflow-hidden';
+                    skeleton.innerHTML = `
+                        <div class="skeleton w-full h-48"></div>
+                        <div class="p-5 space-y-3">
+                            <div class="skeleton h-5 w-3/4"></div>
+                            <div class="skeleton h-4 w-full"></div>
+                            <div class="skeleton h-4 w-2/3"></div>
+                            <div class="flex justify-between mt-4">
+                                <div class="skeleton h-6 w-20"></div>
+                                <div class="skeleton h-10 w-10 rounded-xl"></div>
+                            </div>
+                        </div>
+                    `;
+                    menuGrid.appendChild(skeleton);
+                }
+                return;
+            }
+
+            const filtered = products.filter(p => {
+                const matchCategory = currentCategory === 'all' || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    p.desc.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                menuGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-400">
+                        <i class="fa-regular fa-face-frown text-4xl mb-3 block"></i>
+                        <p class="text-lg font-medium">Tidak ada menu yang ditemukan</p>
+                        <p class="text-sm">Coba kata kunci lain atau reset filter</p>
+                    </div>
+                `;
+                return;
+            }
+
             menuGrid.innerHTML = '';
-            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
-            
-            filteredProducts.forEach(product => {
+            filtered.forEach(product => {
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between';
+                card.className = 'menu-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col justify-between';
                 card.innerHTML = `
                     <div>
-                        <div class="relative">
-                            <img src="${product.img}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="relative overflow-hidden">
+                            <img src="${product.img}" alt="${product.name}" class="w-full h-48 object-cover" loading="lazy" />
                             <span class="absolute top-3 left-3 bg-orange-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full">${product.tag}</span>
+                            <span class="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm text-gray-700 text-xs font-medium px-2 py-1 rounded-full shadow-sm">
+                                <i class="fa-regular fa-circle-check text-emerald-500 mr-1"></i> Tersedia
+                            </span>
                         </div>
                         <div class="p-5">
                             <div class="flex justify-between items-center mb-2">
@@ -309,36 +682,34 @@
             });
         }
 
-        // Cart Drawer Handlers
+        // =============================================================
+        //  CART
+        // =============================================================
         function toggleCart() {
             cartDrawer.classList.toggle('translate-x-full');
             cartOverlay.classList.toggle('hidden');
+            document.body.style.overflow = cartDrawer.classList.contains('translate-x-full') ? '' : 'hidden';
         }
 
-        cartBtn.addEventListener('click', toggleCart);
-        closeCartBtn.addEventListener('click', toggleCart);
-        cartOverlay.addEventListener('click', toggleCart);
-
-        // Mobile Menu Toggle
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Cart Actions
         window.addToCart = function(id) {
             const product = products.find(p => p.id === id);
-            const existingItem = cart.find(item => item.id === id);
-
-            if (existingItem) {
-                existingItem.qty += 1;
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
             } else {
                 cart.push({ ...product, qty: 1 });
             }
             updateCartUI();
+            showToast(`${product.name} ditambahkan ke keranjang!`);
+            const btn = document.querySelector(`[onclick="addToCart(${id})"]`);
+            if (btn) {
+                btn.classList.add('bg-emerald-600', 'text-white');
+                setTimeout(() => btn.classList.remove('bg-emerald-600', 'text-white'), 400);
+            }
         };
 
         window.updateQty = function(id, change) {
-            const item = cart.find(item => item.id === id);
+            const item = cart.find(i => i.id === id);
             if (item) {
                 item.qty += change;
                 if (item.qty <= 0) {
@@ -354,32 +725,35 @@
             let totalItems = 0;
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-center text-gray-400 py-8">Keranjang belanja masih kosong.</p>';
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center text-gray-400 py-12">
+                        <i class="fa-regular fa-cart-circle-xmark text-5xl mb-3 block"></i>
+                        <p>Keranjang belanja masih kosong.</p>
+                    </div>
+                `;
             } else {
                 cart.forEach(item => {
                     total += item.price * item.qty;
                     totalItems += item.qty;
-
-                    const cartItem = document.createElement('div');
-                    cartItem.className = 'flex items-center justify-between border-b pb-4';
-                    cartItem.innerHTML = `
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center justify-between border-b pb-4';
+                    div.innerHTML = `
                         <div>
                             <h4 class="font-semibold text-gray-800 text-sm">${item.name}</h4>
                             <p class="text-xs text-gray-500">Rp ${item.price.toLocaleString('id-ID')}</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="updateQty(${item.id}, -1)" class="w-6 h-6 rounded bg-gray-100 hover:bg-gray-200 text-xs">-</button>
-                            <span class="text-sm font-semibold">${item.qty}</span>
-                            <button onclick="updateQty(${item.id}, 1)" class="w-6 h-6 rounded bg-gray-100 hover:bg-gray-200 text-xs">+</button>
+                            <button onclick="updateQty(${item.id}, -1)" class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-bold">−</button>
+                            <span class="text-sm font-semibold min-w-[24px] text-center">${item.qty}</span>
+                            <button onclick="updateQty(${item.id}, 1)" class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-bold">+</button>
                         </div>
                     `;
-                    cartItemsContainer.appendChild(cartItem);
+                    cartItemsContainer.appendChild(div);
                 });
             }
 
             cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
-            
-            // Badge Update
+
             if (totalItems > 0) {
                 cartBadge.innerText = totalItems;
                 cartBadge.classList.remove('hidden');
@@ -388,48 +762,118 @@
             }
         }
 
-        // WhatsApp Checkout
+        // =============================================================
+        //  CHECKOUT WA
+        // =============================================================
         checkoutBtn.addEventListener('click', () => {
             if (cart.length === 0) {
                 alert('Keranjang Anda kosong!');
                 return;
             }
-
-            let message = 'Halo Nusantara Bistro, saya ingin memesan:\n\n';
+            let msg = 'Halo Nusantara Bistro, saya ingin memesan:\n\n';
             let total = 0;
-            
             cart.forEach(item => {
-                const subtotal = item.price * item.qty;
-                total += subtotal;
-                message += `- ${item.name} (${item.qty}x) = Rp ${subtotal.toLocaleString('id-ID')}\n`;
+                const sub = item.price * item.qty;
+                total += sub;
+                msg += `- ${item.name} (${item.qty}x) = Rp ${sub.toLocaleString('id-ID')}\n`;
             });
-
-            message += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`;
-            
-            const phoneNumber = '6281234567890'; // Ganti dengan nomor WA Restoran
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+            msg += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`;
+            const phone = '6281234567890'; // Ganti dengan nomor WA restoran
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
         });
 
-        // Filter Event Listeners
-        document.querySelectorAll('.menu-filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.menu-filter-btn').forEach(b => {
-                    b.classList.remove('bg-orange-600', 'text-white');
-                    b.classList.add('bg-gray-100', 'text-gray-600');
-                });
-                e.target.classList.remove('bg-gray-100', 'text-gray-600');
-                e.target.classList.add('bg-orange-600', 'text-white');
-                
-                renderMenu(e.target.dataset.category);
+        // =============================================================
+        //  FILTER & SEARCH
+        // =============================================================
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active', 'bg-orange-600', 'text-white'));
+                btn.classList.add('active', 'bg-orange-600', 'text-white');
+                currentCategory = btn.dataset.category;
+                renderMenu();
             });
         });
 
-        // Initial Render
-        renderMenu();
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            renderMenu();
+        });
+
+        // =============================================================
+        //  LIGHTBOX
+        // =============================================================
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('opacity-0', 'pointer-events-none');
+            lightbox.classList.add('opacity-100', 'pointer-events-auto');
+            document.body.style.overflow = 'hidden';
+        }
+        const closeLightbox = () => {
+            lightbox.classList.add('opacity-0', 'pointer-events-none');
+            lightbox.classList.remove('opacity-100', 'pointer-events-auto');
+            document.body.style.overflow = '';
+        };
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxCloseBtn.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+        document.querySelectorAll('.gallery-item img, #hero-img').forEach(img => {
+            img.addEventListener('click', () => openLightbox(img.src));
+            img.style.cursor = 'pointer';
+        });
+
+        // =============================================================
+        //  DARK MODE
+        // =============================================================
+        let dark = false;
+        darkToggle.addEventListener('click', () => {
+            dark = !dark;
+            document.documentElement.classList.toggle('dark', dark);
+            darkToggle.innerHTML = dark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-regular fa-moon"></i>';
+            document.querySelectorAll('.bg-white').forEach(el => el.classList.toggle('dark:bg-gray-800'));
+            document.querySelectorAll('.bg-zinc-50').forEach(el => el.classList.toggle('dark:bg-gray-900'));
+            document.querySelectorAll('.text-gray-900').forEach(el => el.classList.toggle('dark:text-white'));
+            document.querySelectorAll('.text-gray-600, .text-gray-500').forEach(el => el.classList.toggle('dark:text-gray-300'));
+            document.querySelectorAll('.border-gray-100, .border-gray-200').forEach(el => el.classList.toggle('dark:border-gray-700'));
+        });
+
+        // =============================================================
+        //  SCROLL REVEAL
+        // =============================================================
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+        revealEls.forEach(el => observer.observe(el));
+
+        // =============================================================
+        //  NAVBAR SCROLL EFFECT
+        // =============================================================
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('navbar-scrolled', window.scrollY > 20);
+        });
+
+        // =============================================================
+        //  EVENT BINDINGS
+        // =============================================================
+        cartBtn.addEventListener('click', toggleCart);
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        // =============================================================
+        //  INIT
+        // =============================================================
+        renderMenu(true);
+        setTimeout(() => {
+            renderMenu(false);
+        }, 800);
+        updateCartUI();
     </script>
+
 </body>
 </html>
-
-
-
