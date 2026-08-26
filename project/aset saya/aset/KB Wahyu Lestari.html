@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="Portal Interaktif KB Wahyu Lestari Puhti - Lembaga Pendidikan Anak Usia Dini (PAUD) Berkualitas di Karangjati, Ngawi.">
+    <meta name="keywords" content="KB Wahyu Lestari, PAUD Ngawi, Puhti, Karangjati, Kelompok Bermain, Pendidikan Anak Usia Dini">
+    <meta name="author" content="Ahmad Wildan Asy Syifa">
+    <meta name="robots" content="index, follow">
+
+    <title>KB Wahyu Lestari Puhti | Sekolah PAUD Menyenangkan di Karangjati Ngawi</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* ===================================================
+           BAGIAN 2: CSS VARIABLES, RESET, & CORE ARCHITECTURE
+           =================================================== */
+        :root {
+            /* Palet Warna Ceria & Edukatif Khas Dunia Anak-Anak */
+            --clr-orange: #f97316;
+            --clr-yellow: #eab308;
+            --clr-teal: #14b8a6;
+            --clr-dark: #0f172a;
+            --clr-muted: #64748b;
+            --clr-light-bg: #fefce8; /* Soft Yellow Background */
+            --clr-card-bg: #ffffff;
+            
+            /* Gradasi Ceria */
+            --grad-main: linear-gradient(135deg, var(--clr-orange), var(--clr-yellow), var(--clr-teal));
+            --grad-soft-orange: #fff7ed;
+            
+            /* Tipografi & Batas Efek */
+            --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.01);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius-lg: 16px;
+            --border-radius-md: 8px;
+        }
+
+        /* Reset Gaya Bawaan Browser */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background-color: var(--clr-light-bg);
+            background: linear-gradient(#f97316,#eab308,#14b8a6);
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Kontainer Utama Pengikat Seluruh Elemen */
+        .app-container {
+            max-width: 1140px;
+            margin: 50px auto;
+            background-color: var(--clr-card-bg);
+            padding: 50px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-premium);
+            border: 1px solid #fef08a;
+            position: relative;
+        }
+        /* ===================================================
+           BAGIAN 3: CSS HEADER & NAVIGASI TAB INTERAKTIF
+           =================================================== */
+        header {
+            text-align: center;
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        header img {
+            max-width: 130px;
+            height: auto;
+            transition: var(--transition-smooth);
+        }
+        
+        header img:hover {
+            transform: scale(1.05) rotate(1deg);
+        }
+        
+        h1 {
+            color: var(--clr-dark);
+            font-size: 34px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            font-weight: 800;
+        }
+        
+        h2 {
+            color: var(--clr-dark);
+            font-size: 26px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        /* Garis bawah dekoratif dinamis berbasis gradasi */
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 5px;
+            background: var(--grad-main);
+            border-radius: 10px;
+        }
+        
+        p {
+            text-align: justify;
+            margin-bottom: 22px;
+            color: #475569;
+            font-size: 16px;
+        }
+
+        /* Navigasi Bilah Tab untuk Pengendali Konten SPA */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            background-color: #f1f5f9;
+            padding: 8px;
+            border-radius: 40px;
+            margin-bottom: 45px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .tab-trigger {
+            padding: 12px 26px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--clr-muted);
+            transition: var(--transition-smooth);
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab-trigger:hover {
+            color: var(--clr-dark);
+            background-color: rgba(15, 23, 42, 0.04);
+        }
+        
+        .tab-trigger.active {
+            background: var(--grad-main);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Logika Transisi Visual Halaman SPA */
+        .spa-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: var(--transition-smooth);
+        }
+        
+        .spa-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* ===================================================
+           BAGIAN 4: CSS GRID GALERI, KARTU STUDI, & TABEL
+           =================================================== */
+        
+        /* Grid Tata Letak Galeri Responsif */
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 35px 0;
+        }
+        .grid-gallery img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            transition: var(--transition-smooth);
+        }
+        .grid-gallery img:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+
+        /* Kartu Rumpun Kelas */
+        .prodi-flex-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        .prodi-premium-card {
+            background-color: var(--clr-card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius-md);
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+            transition: var(--transition-smooth);
+        }
+        .prodi-premium-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border-color: #cbd5e1;
+        }
+        .prodi-premium-card h3 { 
+            margin-top: 0; 
+            border-bottom: 2px dashed #f1f5f9; 
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        ul, ol { padding-left: 22px; color: #475569; }
+        li { margin-bottom: 10px; font-size: 15.5px; }
+
+        /* Komponen Input Pencarian */
+        .search-wrapper { margin-bottom: 30px; position: relative; }
+        .live-search-box {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: var(--border-radius-md);
+            border: 2px solid #e2e8f0;
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition-smooth);
+            background-color: #f8fafc;
+        }
+        .live-search-box:focus {
+            border-color: var(--clr-orange);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+        }
+
+        /* Struktur Tabel Kurikulum Berkualitas */
+        .responsive-table-wrapper { overflow-x: auto; margin: 30px 0; border-radius: var(--border-radius-md); border: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; font-size: 15.5px; text-align: left; }
+        th, td { padding: 16px 20px; }
+        th { background-color: var(--clr-dark); color: #ffffff; font-weight: 600; letter-spacing: 0.5px; }
+        td { border-bottom: 1px solid #f1f5f9; background-color: #ffffff; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) td { background-color: #f8fafc; }
+
+        /* Panel Interaktif Cek Kualifikasi */
+        .interactive-checker-panel {
+            background-color: var(--grad-soft-orange);
+            border: 1px solid #fed7aa;
+            padding: 30px;
+            border-radius: var(--border-radius-lg);
+            margin-top: 30px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+        }
+        .form-control-group { margin-bottom: 18px; }
+        .form-control-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14.5px; color: var(--clr-dark); }
+        .ui-form-input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 14.5px; outline: none; }
+        .ui-form-input:focus { border-color: var(--clr-orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
+        .ui-checkbox-wrapper { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .btn-ui-action { background: var(--grad-main); color: #ffffff; border: none; padding: 12px 24px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: var(--transition-smooth); width: 100%; font-size: 15px; }
+        .btn-ui-action:hover { opacity: 0.95; transform: translateY(-1px); }
+        .dynamic-result-box { margin-top: 20px; padding: 15px; border-radius: 6px; font-weight: 600; display: none; font-size: 15px; border-left: 5px solid transparent; }
+
+        /* Kotak Media Player Terstruktur */
+        .premium-media-card { background-color: #ffffff; padding: 25px; border-radius: var(--border-radius-md); margin-top: 25px; border: 1px solid #e2e8f0; }
+        audio, video { width: 100%; margin-top: 12px; border-radius: 6px; outline: none; }
+
+        /* Hubungi WhatsApp Button */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25d366;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: var(--border-radius-md);
+            margin-top: 15px;
+            transition: var(--transition-smooth);
+        }
+        .btn-whatsapp:hover {
+            background-color: #128c7e;
+            transform: translateY(-2px);
+        }
+
+        /* Styling Tambahan untuk Formulir Pendaftaran */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media (min-width: 600px) {
+            .form-grid-2 { grid-template-columns: 1fr 1fr; }
+            .form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        }
+        .registration-form-panel {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-premium);
+            margin-top: 30px;
+        }
+        .registration-form-panel fieldset {
+            background-color: #fafafa;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .registration-form-panel legend {
+            color: var(--clr-dark);
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e2e8f0;
+        }
+        .radio-inline-group {
+            display: flex;
+            gap: 20px;
+            padding: 8px 0;
+        }
+        .radio-inline-group label {
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Desain Struktur Footer */
+        .footer-branding {
+            text-align: center;
+            padding: 35px;
+            color: #94a3b8;
+            background-color: var(--clr-dark);
+            border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+            margin: 50px -50px -50px -50px;
+            font-size: 14.5px;
+        }
+        .footer-branding a { color: var(--clr-yellow); text-decoration: none; font-weight: 700; transition: var(--transition-smooth); }
+        .footer-branding a:hover { text-decoration: underline; color: var(--clr-orange); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <header>
+            <img src="aset/tut wuri handayani.png" alt="Logo Resmi KB Wahyu Lestari">
+            <h1>KB Wahyu Lestari</h1>
+            <p style="text-align: center; font-style: italic; color: var(--clr-muted); margin: 0; font-size: 16px;">
+                NPSN: 69851656 | Desa Puhti, Kec. Karangjati, Kab. Ngawi
+            </p>
+        </header>
+
+        <ul class="tab-navigation">
+            <li class="tab-trigger active" onclick="executeTabSwitch('tab-tentang', this)">
+                <i class="fa-solid fa-circle-info"></i> Tentang Sekolah
+            </li>
+            <li class="tab-trigger" onclick="executeTabSwitch('tab-prodi', this)">
+                <i class="fa-solid fa-children"></i> Kelompok Bermain
+            </li>
+            <li class="tab-trigger" onclick="executeTabSwitch('tab-syarat', this)">
+                <i class="fa-solid fa-clipboard-list"></i> Pendaftaran & Kontak
+            </li>
+            <li class="tab-trigger" onclick="executeTabSwitch('tab-kurikulum', this)">
+                <i class="fa-solid fa-book-open"></i> Kurikulum & Media
+            </li>
+        </ul>
+
+        <section id="tab-tentang" class="spa-section active">
+            <h2>Tentang KB Wahyu Lestari</h2>
+            <p>
+                Kelompok Bermain (KB) Wahyu Lestari Puhti merupakan salah satu lembaga Pendidikan Anak Usia Dini (PAUD) swasta resmi yang beroperasi di wilayah Kecamatan Karangjati, Kabupaten Ngawi, Jawa Timur. Berlokasi strategis di Jalan Raya Ngawi-Caruban, lembaga ini hadir sebagai solusi pendidikan dasar usia dini yang ramah, interaktif, dan penuh kasih sayang dalam menyambut tumbuh kembang buah hati secara optimal.
+            </p>
+            <p>
+                Lembaga ini berada di bawah naungan resmi Yayasan Wahyu Lestari Putat Puhti yang telah terdaftar secara legal sejak tahun 2009. KB Wahyu Lestari memfokuskan kegiatannya pada penanaman karakter akhlak mulia sejak dini, kemandirian anak, bersosialisasi yang baik, serta melatih kecerdasan motorik melalui berbagai metode bermain sambil belajar yang menyenangkan bagi anak-anak.
+            </p>
+
+            <div class="grid-gallery">
+                <div class="gallery-item"><img src="aset/suasana belajar.png" alt="Aktivitas Belajar Mewarnai"></div>
+                <div class="gallery-item"><img src="aset/halaman.png" alt="Bermain Bersama di Halaman"></div>
+                <div class="gallery-item"><img src="aset/fasilitas tk.png" alt="Ruang Belajar KB Wahyu Lestari"></div>
+            </div>
+        </section>
+
+        <section id="tab-prodi" class="spa-section">
+            <h2>Kelompok Belajar & Minat</h2>
+            <p>KB Wahyu Lestari menyediakan ruang tumbuh kembang yang terbagi berdasarkan program stimulasi kreativitas dasar anak. Gunakan kolom pencarian untuk memfilter kegiatan pembelajaran anak secara instan:</p>
+            
+            <div class="search-wrapper">
+                <input type="text" id="prodiSearch" class="live-search-box" placeholder="Cari kegiatan bermain (contoh: Motorik, Mewarnai, Kognitif)..." oninput="executeLiveSearch()">
+            </div>
+
+            <div class="prodi-flex-container">
+                <div class="prodi-premium-card" style="border-top: 4px solid var(--clr-orange);">
+                    <h3><i class="fa-solid fa-shapes" style="color: var(--clr-orange);"></i> Stimulasi Motorik & Seni</h3>
+                    <ul class="target-search-list">
+                        <li>Mewarnai Gambar</li>
+                        <li>Melipat Kertas Origami</li>
+                        <li>Permainan Ketangkasan Luar Ruangan</li>
+                    </ul>
+                </div>
+
+                <div class="prodi-premium-card" style="border-top: 4px solid var(--clr-teal);">
+                    <h3><i class="fa-solid fa-brain" style="color: var(--clr-teal);"></i> Stimulasi Kognitif & Karakter</h3>
+                    <ul class="target-search-list">
+                        <li>Pengenalan Huruf dan Angka Dasar</li>
+                        <li>Karakter Sopan Santun dan Doa Harian</li>
+                        <li>Bernyanyi Lagu Edukatif Anak</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-syarat" class="spa-section">
+            <h2>Persyaratan Masuk & Pendaftaran</h2>
+            <p>Berikut adalah berkas dan kualifikasi awal yang harus disiapkan oleh Orang Tua / Wali murid baru:</p>
+            
+            <ol style="margin-bottom: 35px; line-height: 2;">
+                <li>Anak berusia minimal 2 s.d 4 tahun pada tahun berjalan</li>
+                <li>Fotokopi Akta Kelahiran Anak (2 lembar)</li>
+                <li>Fotokopi Kartu Keluarga / KK (2 lembar)</li>
+                <li>Mengisi Formulir Pendaftaran Fisik / Online</li>
+            </ol>
+
+            <div style="background-color: #f8fafc; padding: 25px; border-radius: var(--border-radius-md); border: 1px solid #e2e8f0; margin-bottom: 30px;">
+                <h3><i class="fa-solid fa-address-book" style="color: var(--clr-teal)"></i> Hubungi Panitia Pendaftaran</h3>
+                <p style="margin-top: 10px; font-size: 15px;">Jika Anda memiliki pertanyaan mengenai kuota kelas atau biaya pendaftaran, langsung diskusikan secara interaktif via WhatsApp bersama Admin KB Wahyu Lestari:</p>
+                <a href="https://wa.me/6282231287181?text=Halo%20Admin%20KB%20Wahyu%20Lestari%2C%20saya%20ingin%20tanya%20informasi%20pendaftaran%20siswa%20baru" target="_blank" class="btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> Hubungi WhatsApp Admin
+                </a>
+            </div>
+
+            <div class="interactive-checker-panel">
+                <h3 style="margin-top: 0; color: var(--clr-orange); font-size: 18px; margin-bottom: 5px;">
+                    <i class="fa-solid fa-baby"></i> Simulator Kelayakan Usia Calon Murid
+                </h3>
+                <p style="font-size: 14px; margin-bottom: 20px; color: #556575;">
+                    Uji apakah usia buah hati Anda sudah masuk dalam kualifikasi usia Kelompok Bermain (KB) ideal:
+                </p>
+                
+                <div class="form-control-group">
+                    <label for="inputUsia">Berapa Usia Anak Saat Ini (Tahun):</label>
+                    <input type="number" id="inputUsia" class="ui-form-input" placeholder="Contoh: 3">
+                </div>
+
+                <div class="form-control-group">
+                    <div class="ui-checkbox-wrapper">
+                        <input type="checkbox" id="checkBerkas">
+                        <label for="checkBerkas" style="margin: 0; font-weight: normal; color: #475569;">Sudah menyiapkan berkas fotokopi Akta & KK</label>
+                    </div>
+                </div>
+
+                <button class="btn-ui-action" onclick="calculateAdmissionEligibility()">Uji Kelayakan Seleksi</button>
+                <div id="boxHasil" class="dynamic-result-box"></div>
+            </div>
+
+            <div class="registration-form-panel">
+                <h2 style="margin-top:0;">Formulir Pendaftaran Online</h2>
+                <p>Silakan isi data calon siswa baru secara lengkap di bawah ini untuk disimpan langsung ke database pusat sekolah.</p>
+                
+                <form id="registrationForm">
+                    <fieldset>
+                        <legend><i class="fa-solid fa-graduation-cap"></i> I. Pilihan Program</legend>
+                        <div class="radio-inline-group">
+                            <label><input type="radio" name="program" value="KB" required> Kelompok Bermain (KB)</label>
+                            <label><input type="radio" name="program" value="TK"> Taman Kanak-Kanak (TK)</label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="fa-solid fa-child"></i> II. Data Calon Peserta Didik</legend>
+                        
+                        <div class="form-control-group">
+                            <label for="namaLengkap">Nama Lengkap</label>
+                            <input type="text" id="namaLengkap" class="ui-form-input" required>
+                        </div>
+                        
+                        <div class="form-grid form-grid-2">
+                            <div class="form-control-group">
+                                <label for="namaPanggilan">Nama Panggilan</label>
+                                <input type="text" id="namaPanggilan" class="ui-form-input" required>
+                            </div>
+                            <div class="form-control-group">
+                                <label>Jenis Kelamin</label>
+                                <div class="radio-inline-group">
+                                    <label><input type="radio" name="gender" value="Laki-laki" required> Laki-laki</label>
+                                    <label><input type="radio" name="gender" value="Perempuan"> Perempuan</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid form-grid-2">
+                            <div class="form-control-group">
+                                <label for="tempatLahir">Tempat Lahir</label>
+                                <input type="text" id="tempatLahir" class="ui-form-input" required>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="tanggalLahir">Tanggal Lahir</label>
+                                <input type="date" id="tanggalLahir" class="ui-form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid form-grid-2">
+                            <div class="form-control-group">
+                                <label for="nikAnak">NIK Anak</label>
+                                <input type="text" id="nikAnak" class="ui-form-input" placeholder="16 Digit NIK" required>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="agama">Agama</label>
+                                <select id="agama" class="ui-form-input" required>
+                                    <option value="">-- Pilih Agama --</option>
+                                    <option value="Islam">Islam</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Katolik">Katolik</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Buddha">Buddha</option>
+                                    <option value="Khonghucu">Khonghucu</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid form-grid-2">
+                            <div class="form-control-group">
+                                <label for="anakKe">Anak Ke-</label>
+                                <input type="text" id="anakKe" class="ui-form-input" placeholder="Misal: 1" required>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="dariBersaudara">Dari Berapa Bersaudara</label>
+                                <input type="text" id="dariBersaudara" class="ui-form-input" placeholder="Misal: 2" required>
+                            </div>
+                        </div>
+
+                        <div class="form-control-group">
+                            <label for="alamat">Alamat Rumah Lengkap</label>
+                            <textarea id="alamat" class="ui-form-input" style="height:80px;" placeholder="Nama jalan, RT/RW, Dusun, Desa" required></textarea>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="fa-solid fa-users"></i> III. Data Orang Tua / Wali</legend>
+                        
+                        <h4 style="color:var(--clr-orange); margin-bottom: 10px;"><i class="fa-solid fa-user-tie"></i> Data Ayah Kandung</h4>
+                        <div class="form-grid form-grid-2">
+                            <div class="form-control-group">
+                                <label for="namaAyah">Nama Lengkap Ayah</label>
+                                <input type="text" id="namaAyah" class="ui-form-input" required>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="hpAyah">No. WA / HP Aktif</label>
+                                <input type="tel" id="hpAyah" class="ui-form-input" placeholder="08xxxxxxxxxx" required>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed #e2e8f0; margin:15px 0;">
+
+                        <h4 style="color:var(--clr-teal); margin-bottom: 10px;"><i class="fa-solid fa-user-nurse"></i> Data Ibu Kandung</h4>
+                        <div class="form-grid form-grid-2">
+                            <div class="form-control-group">
+                                <label for="namaIbu">Nama Lengkap Ibu</label>
+                                <input type="text" id="namaIbu" class="ui-form-input" required>
+                            </div>
+                            <div class="form-control-group">
+                                <label for="hpIbu">No. WA / HP Aktif</label>
+                                <input type="tel" id="hpIbu" class="ui-form-input" placeholder="08xxxxxxxxxx" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset style="background-color: var(--grad-soft-orange);">
+                        <div class="ui-checkbox-wrapper">
+                            <input type="checkbox" id="pernyataanSih" required>
+                            <label for="pernyataanSih" style="font-weight:normal; font-size:13.5px; color:#475569;">
+                                Saya menyatakan bahwa seluruh data yang diisikan di atas adalah benar dan sesuai dengan dokumen asli yang sah.
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn-ui-action btn-submit-form" style="padding:15px; font-size:16px;">
+                        <i class="fa-solid fa-paper-plane"></i> KIRIM FORMULIR PENDAFTARAN
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="tab-kurikulum" class="spa-section">
+            <h2>Pemetaan Fokus Pembelajaran Dasar</h2>
+            <p>Jadwal pengelompokan fokus stimulasi perkembangan mingguan di KB Wahyu Lestari:</p>
+            
+            <div class="responsive-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>Fokus Pembelajaran Utama</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Senin</strong></td><td>Karakter, Sopan Santun, & Doa Harian</td></tr>
+                        <tr><td><strong>Selasa</strong></td><td>Kreativitas Seni Mewarnai & Musik Anak</td></tr>
+                        <tr><td><strong>Rabu</strong></td><td>Ketangkasan Motorik & Olahraga Ceria</td></tr>
+                        <tr><td><strong>Kamis</strong></td><td>Pengenalan Bahasa Dasar & Kognitif Angka</td></tr>
+                        <tr><td><strong>Jumat</strong></td><td>Eksplorasi Lingkungan & Bermain Bebas Terarah</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Dokumentasi Multimedia</h2>
+            <p>Simak rekaman audio mars anak serta video profil lingkungan bermain sekolah di bawah ini:</p>
+            
+            <div class="premium-media-card" style="border-left: 5px solid var(--clr-teal);">
+                <strong style="color: var(--clr-dark);"><i class="fa-solid fa-volume-high"></i> Audio Lagu Pembuka Belajar:</strong><br>
+                <audio controls>
+                    <source src="aset/11 Someone Like You.mp3" type="audio/mpeg">
+                    Browser Anda tidak mendukung elemen pemutaran audio lokal.
+                </audio>
+            </div>
+
+            <div class="premium-media-card" style="border-left: 5px solid var(--clr-orange);">
+                <strong style="color: var(--clr-dark);"><i class="fa-solid fa-video"></i> Video Simulasi Kelas Bermain:</strong><br>
+                <video controls>
+                    <source src="aset/Moana (2016).mp4" type="video/mp4">
+                    Browser Anda tidak mendukung elemen pemutaran video lokal.
+                </video>
+            </div>
+        </section>
+        
+
+        <footer class="footer-branding">
+            <p>&copy; 2026 KB Wahyu Lestari Puhti. Seluruh Hak Cipta Dilindungi.</p>
+            <p style="font-size: 14.5px; margin-top: 5px; color: #94a3b8;">
+                Tautan Profil Resmi: 
+                <a href="https://referensi.data.kemendikdasmen.go.id/pendidikan/npsn/69851656" target="_blank" rel="noopener noreferrer">Data Kemendikdasmen</a>
+            </p>
+            <p style="font-size: 12px; margin-top: 15px; color: #475569; opacity: 0.7;">
+                Dibuat Sebagai Tugas Praktikum Komplit Pengembangan Web Semantik - Pertemuan 04
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        function executeTabSwitch(sectionId, currentTabElement) {
+            const allSections = document.querySelectorAll('.spa-section');
+            allSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            const allTabs = document.querySelectorAll('.tab-trigger');
+            allTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const targetedSection = document.getElementById(sectionId);
+            targetedSection.classList.add('active');
+            currentTabElement.classList.add('active');
+        }
+
+        function executeLiveSearch() {
+            const searchKeyword = document.getElementById('prodiSearch').value.toLowerCase();
+            const listItems = document.querySelectorAll('.target-search-list li');
+            
+            listItems.forEach(item => {
+                const textValue = item.innerText.toLowerCase();
+                
+                if (textValue.includes(searchKeyword)) {
+                    item.style.display = "list-item";
+                    item.style.color = "var(--clr-orange)";
+                    item.style.fontWeight = "700";
+                } else if (searchKeyword === "") {
+                    item.style.display = "list-item";
+                    item.style.color = "#475569";
+                    item.style.fontWeight = "normal";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function calculateAdmissionEligibility() {
+            const angkaUsia = parseInt(document.getElementById('inputUsia').value);
+            const statusBerkas = document.getElementById('checkBerkas').checked;
+            const resultDisplayBox = document.getElementById('boxHasil');
+            
+            resultDisplayBox.style.display = "block";
+
+            if (isNaN(angkaUsia) || angkaUsia <= 0) {
+                resultDisplayBox.style.backgroundColor = "#fee2e2";
+                resultDisplayBox.style.color = "#991b1b";
+                resultDisplayBox.style.borderColor = "#fca5a5";
+                resultDisplayBox.innerHTML = "⚠️ Harap masukkan angka usia anak yang valid!";
+                return;
+            }
+
+            // Validasi Usia Ideal PAUD Kelompok Bermain (2-4 tahun)
+            if (angkaUsia >= 2 && angkaUsia <= 4 && statusBerkas) {
+                resultDisplayBox.style.backgroundColor = "#dcfce7";
+                resultDisplayBox.style.color = "#166534";
+                resultDisplayBox.style.borderColor = "#86efac";
+                resultDisplayBox.innerHTML = "🎉 <strong>Status: LAYAK DAFTAR!</strong> Usia buah hati Anda ideal untuk masuk Kelompok Bermain (KB) Wahyu Lestari. Berkas pendaftaran siap diajukan.";
+            } else if (angkaUsia > 4) {
+                resultDisplayBox.style.backgroundColor = "#fef3c7";
+                resultDisplayBox.style.color = "#92400e";
+                resultDisplayBox.style.borderColor = "#fcd34d";
+                resultDisplayBox.innerHTML = "❌ <strong>Status: SARAN TK!</strong> Usia di atas 4 tahun disarankan untuk langsung mendaftar ke jenjang Taman Kanak-Kanak (TK).";
+            } else {
+                resultDisplayBox.style.backgroundColor = "#fee2e2";
+                resultDisplayBox.style.color = "#991b1b";
+                resultDisplayBox.style.borderColor = "#fca5a5";
+                resultDisplayBox.innerHTML = "❌ <strong>Status: BELUM CUKUP UMUR!</strong> Usia di bawah 2 tahun belum memenuhi syarat minimal Kelompok Bermain.";
+            }
+        }
+
+        // --- SISTEM INTEGRASI ENGINE GOOGLE SHEETS FORM ---
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyJpwUFclmyigJ-Is1__eDqp6-nN2Jx-eSmcZk5Wnb8LXMooUEQ3J6Km9kWG7xikDPq/exec';
+            const namaLengkap = document.getElementById('namaLengkap').value;
+            const nikAnak = document.getElementById('nikAnak').value;
+
+            if (nikAnak.length < 16) {
+                alert('⚠️ Perhatian: NIK Anak harus berjumlah 16 digit sesuai KTP/KK.');
+                return;
+            }
+
+            const btnSubmit = document.querySelector('.btn-submit-form');
+            const originalText = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan data ke cloud...';
+            btnSubmit.disabled = true;
+
+            const formData = new URLSearchParams();
+            formData.append('program', document.querySelector('input[name="program"]:checked').value);
+            formData.append('namaLengkap', namaLengkap);
+            formData.append('namaPanggilan', document.getElementById('namaPanggilan').value);
+            formData.append('gender', document.querySelector('input[name="gender"]:checked').value);
+            formData.append('tempatLahir', document.getElementById('tempatLahir').value);
+            formData.append('tanggalLahir', document.getElementById('tanggalLahir').value);
+            formData.append('nikAnak', nikAnak);
+            formData.append('agama', document.getElementById('agama').value);
+            formData.append('anakKe', document.getElementById('anakKe').value);
+            formData.append('dariBersaudara', document.getElementById('dariBersaudara').value);
+            formData.append('alamat', document.getElementById('alamat').value);
+            formData.append('namaAyah', document.getElementById('namaAyah').value);
+            formData.append('namaIbu', document.getElementById('namaIbu').value);
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                alert(`Alhamdulillah, data pendaftaran ${namaLengkap} berhasil terkirim ke sistem Google Sheets sekolah!`);
+                document.getElementById('registrationForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan jaringan cloud. Mohon ulangi beberapa saat lagi.');
+            })
+            .finally(() => {
+                btnSubmit.innerHTML = originalText;
+                btnSubmit.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>

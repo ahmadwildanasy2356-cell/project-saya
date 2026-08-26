@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran TK - KB Wahyu Lestari</title>
+    <style>
+        /* --- CSS STYLING --- */
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #5C6BC0;
+            --bg-color: #F4F6F9;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            max-width: 650px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px double #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+        }
+
+        .header h2 {
+            margin: 5px 0 0 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            color: #777;
+            font-style: italic;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fbfbfb;
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+            color: var(--primary-color);
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.row {
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        .form-group.row .child-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="tel"],
+        select,
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-group label, .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 60px;
+        }
+
+        .syarat-list {
+            padding-left: 20px;
+            margin: 5px 0;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #3f51b5;
+        }
+
+        .btn-submit:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="header">
+        <h1>Formulir Pendaftaran Peserta Didik Baru</h1>
+        <h2>TK - KB Wahyu Lestari</h2>
+        <p>Tahun Ajaran 2026/2027</p>
+    </div>
+
+    <form id="registrationForm">
+        <fieldset>
+            <legend>I. Pilihan Program</legend>
+            <div class="radio-group">
+                <label><input type="radio" name="program" value="KB" required> Kelompok Bermain (KB)</label>
+                <label><input type="radio" name="program" value="TK"> Taman Kanak-Kanak (TK)</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>II. Data Calon Peserta Didik</legend>
+            <div class="form-group">
+                <label for="namaLengkap">Nama Lengkap</label>
+                <input type="text" id="namaLengkap" name="namaLengkap" required>
+            </div>
+            
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="namaPanggilan">Nama Panggilan</label>
+                    <input type="text" id="namaPanggilan" name="namaPanggilan" required>
+                </div>
+                <div class="child-group">
+                    <label>Jenis Kelamin</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="Laki-laki" required> Laki-laki</label>
+                        <label><input type="radio" name="gender" value="Perempuan"> Perempuan</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="tempatLahir">Tempat Lahir</label>
+                    <input type="text" id="tempatLahir" name="tempatLahir" required>
+                </div>
+                <div class="child-group">
+                    <label for="tanggalLahir">Tanggal Lahir</label>
+                    <input type="date" id="tanggalLahir" name="tanggalLahir" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="nikAnak">NIK Anak</label>
+                    <input type="text" id="nikAnak" name="nikAnak" placeholder="16 Digit NIK" required>
+                </div>
+                <div class="child-group">
+                    <label for="agama">Agama</label>
+                    <select id="agama" name="agama" required>
+                        <option value="">-- Pilih Agama --</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Kristen">Kristen</option>
+                        <option value="Katolik">Katolik</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Buddha">Buddha</option>
+                        <option value="Khonghucu">Khonghucu</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="anakKe">Anak Ke-</label>
+                    <input type="text" id="anakKe" name="anakKe" style="width: 60px;" required>
+                </div>
+                <div class="child-group">
+                    <label for="dariBersaudara">Dari Berapa Bersaudara</label>
+                    <input type="text" id="dariBersaudara" name="dariBersaudara" style="width: 60px;" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat Rumah</label>
+                <textarea id="alamat" name="alamat" required></textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>III. Data Orang Tua / Wali</legend>
+            
+            <h4 style="margin: 0 0 10px 0; color: #555;">A. Data Ayah</h4>
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="namaAyah">Nama Lengkap Ayah</label>
+                    <input type="text" id="namaAyah" name="namaAyah" required>
+                </div>
+                <div class="child-group">
+                    <label for="nikAyah">NIK Ayah</label>
+                    <input type="text" id="nikAyah" name="nikAyah" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="kerjaAyah">Pekerjaan Ayah</label>
+                    <input type="text" id="kerjaAyah" name="kerjaAyah" required>
+                </div>
+                <div class="child-group">
+                    <label for="hpAyah">No. HP / WA Ayah</label>
+                    <input type="tel" id="hpAyah" name="hpAyah" required>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+            <h4 style="margin: 0 0 10px 0; color: #555;">B. Data Ibu</h4>
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="namaIbu">Nama Lengkap Ibu</label>
+                    <input type="text" id="namaIbu" name="namaIbu" required>
+                </div>
+                <div class="child-group">
+                    <label for="nikIbu">NIK Ibu</label>
+                    <input type="text" id="nikIbu" name="nikIbu" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="child-group">
+                    <label for="kerjaIbu">Pekerjaan Ibu</label>
+                    <input type="text" id="kerjaIbu" name="kerjaIbu" required>
+                </div>
+                <div class="child-group">
+                    <label for="hpIbu">No. HP / WA Ibu</label>
+                    <input type="tel" id="hpIbu" name="hpIbu" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>IV. Data Kesehatan & Khusus</legend>
+            <div class="form-group">
+                <label for="golDarah">Golongan Darah</label>
+                <select id="golDarah" name="golDarah" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="riwayatPenyakit">Riwayat Penyakit / Alergi (Jika tidak ada, isi "-")</label>
+                <input type="text" id="riwayatPenyakit" name="riwayatPenyakit" required>
+            </div>
+            <div class="form-group">
+                <label for="kebutuhanKhusus">Kebutuhan Khusus (Jika tidak ada, isi "-")</label>
+                <input type="text" id="kebutuhanKhusus" name="kebutuhanKhusus" required>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>V. Persyaratan Dokumen & Pernyataan</legend>
+            <p style="font-size: 13px; margin: 0 0 10px 0; font-weight: bold;">Pastikan Anda mempersiapkan berkas berikut saat verifikasi:</p>
+            <ul class="syarat-list">
+                <li>Fotokopi Akta Kelahiran Anak (1 Lembar)</li>
+                <li>Fotokopi Kartu Keluarga / KK (1 Lembar)</li>
+                <li>Fotokopi KTP Kedua Orang Tua (1 Lembar)</li>
+                <li>Pasfoto Anak Ukuran 3x4 (2 Lembar)</li>
+            </ul>
+            <br>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="pernyataan" required> 
+                    Dengan ini saya menyatakan bahwa data yang diisi di atas adalah benar dan sah. Saya bersedia mengikuti seluruh peraturan dan ketentuan yang berlaku di TK - KB Wahyu Lestari.
+                </label>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn-submit">KIRIM PENDAFTARAN</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        // LINK GOOGLE APPS SCRIPT RAHAJALAN ANDA SUDAH SAYA PASANG DI SINI:
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyJpwUFclmyigJ-Is1__eDqp6-nN2Jx-eSmcZk5Wnb8LXMooUEQ3J6Km9kWG7xikDPq/exec'; 
+
+        const namaLengkap = document.getElementById('namaLengkap').value;
+        const nikAnak = document.getElementById('nikAnak').value;
+
+        // Validasi Panjang NIK
+        if (nikAnak.length < 16) {
+            alert('Perhatian: NIK Anak harus berjumlah 16 digit.');
+            return;
+        }
+
+        // Efek Loading pada Tombol
+        const btnSubmit = document.querySelector('.btn-submit');
+        btnSubmit.innerText = 'Mengirim data ke Google Sheets...';
+        btnSubmit.disabled = true;
+
+        // Mengonversi data form menjadi format URLencoded agar lancar masuk Google Sheets
+        const formData = new URLSearchParams();
+        formData.append('program', document.querySelector('input[name="program"]:checked').value);
+        formData.append('namaLengkap', namaLengkap);
+        formData.append('namaPanggilan', document.getElementById('namaPanggilan').value);
+        formData.append('gender', document.querySelector('input[name="gender"]:checked').value);
+        formData.append('tempatLahir', document.getElementById('tempatLahir').value);
+        formData.append('tanggalLahir', document.getElementById('tanggalLahir').value);
+        formData.append('nikAnak', nikAnak);
+        formData.append('agama', document.getElementById('agama').value);
+        formData.append('anakKe', document.getElementById('anakKe').value);
+        formData.append('dariBersaudara', document.getElementById('dariBersaudara').value);
+        formData.append('alamat', document.getElementById('alamat').value);
+        formData.append('namaAyah', document.getElementById('namaAyah').value);
+        formData.append('namaIbu', document.getElementById('namaIbu').value);
+
+        // Eksekusi Pengiriman ke Cloud Google Sheets
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+        })
+        .then(() => {
+            alert(`Alhamdulillah, data pendaftaran ${namaLengkap} telah tersimpan otomatis di Google Sheets!`);
+            document.getElementById('registrationForm').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Maaf, terjadi gangguan server. Data gagal dikirim.');
+        })
+        .finally(() => {
+            btnSubmit.innerText = 'KIRIM PENDAFTARAN';
+            btnSubmit.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
