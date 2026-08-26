@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Bistro - Premium & Modern Culinary Experience</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .font-heading { font-family: 'Poppins', sans-serif; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #ea580c; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-gray-800 dark:text-gray-100 antialiased transition-colors duration-300">
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md z-40 border-b border-gray-100 dark:border-zinc-800 shadow-sm transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <span class="text-2xl font-extrabold font-heading text-brand-600">Nusantara<span class="text-gray-900 dark:text-white">Bistro</span></span>
+                </a>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                    <a href="#home" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Beranda</a>
+                    <a href="#menu" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Menu Explorer</a>
+                    <a href="#about" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Cerita Rasa</a>
+                    <a href="#reservation" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Reservasi VIP</a>
+                </div>
+
+                <!-- Utilities -->
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg hidden"></i>
+                    </button>
+
+                    <!-- Cart Button -->
+                    <button id="cart-btn" class="relative p-2.5 rounded-full bg-orange-50 dark:bg-zinc-800 text-brand-600 dark:text-brand-500 hover:bg-brand-600 hover:text-white transition-all">
+                        <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full hidden border-2 border-white dark:border-zinc-900">0</span>
+                    </button>
+
+                    <a href="#reservation" class="hidden sm:inline-block bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all shadow-md shadow-brand-600/20">
+                        Book Meja
+                    </a>
+
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 dark:text-gray-200">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 px-4 pt-2 pb-6 space-y-3 font-medium text-sm">
+            <a href="#home" class="block py-2">Beranda</a>
+            <a href="#menu" class="block py-2">Menu Explorer</a>
+            <a href="#about" class="block py-2">Cerita Rasa</a>
+            <a href="#reservation" class="block py-2">Reservasi VIP</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-brand-50/60 dark:from-zinc-900/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-100 dark:bg-brand-950/60 text-brand-700 dark:text-brand-400 font-semibold text-xs rounded-full">
+                        <i class="fa-solid fa-award"></i> Modern Culinary & Gastronomy
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
+                        Mahakarya Cita Rasa <span class="text-brand-600">Nusantara Modern.</span>
+                    </h1>
+                    <p class="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
+                        Menyajikan keharmonisan rempah autentik warisan Indonesia dengan teknik pengolahan kuliner modern tingkat tinggi.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#menu" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-4 rounded-2xl transition-all shadow-lg shadow-brand-600/30 text-center">
+                            Eksplorasi Menu
+                        </a>
+                        <a href="#reservation" class="bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-800 dark:text-gray-200 font-semibold px-8 py-4 rounded-2xl border border-gray-200 dark:border-zinc-800 transition-all text-center">
+                            Reservasi Tempat
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -inset-2 bg-gradient-to-r from-brand-500 to-amber-500 rounded-3xl blur-2xl opacity-20 dark:opacity-30"></div>
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Special Dish" class="relative rounded-3xl shadow-2xl w-full object-cover h-[380px] lg:h-[480px]">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADVANCED MENU EXPLORER -->
+    <section id="menu" class="py-20 bg-white dark:bg-zinc-900 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Menu Explorer</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Gunakan filter untuk menemukan sajian favorit Anda.</p>
+                </div>
+                
+                <!-- Search & Filters -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <!-- Search Input -->
+                    <div class="relative flex-1 sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="search-input" placeholder="Cari makanan..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    </div>
+                    <!-- Max Price Select -->
+                    <select id="price-filter" class="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <option value="all">Semua Harga</option>
+                        <option value="30000">< Rp 30.000</option>
+                        <option value="50000">< Rp 50.000</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <button class="category-btn active bg-brand-600 text-white px-5 py-2 rounded-xl text-sm font-medium transition-all" data-category="all">Semua Menu</button>
+                <button class="category-btn bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 px-5 py-2 rounded-xl text-sm font-medium transition-all hover:bg-gray-200" data-category="makanan">Makanan Utama</button>
+                <button class="category-btn bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 px-5 py-2 rounded-xl text-sm font-medium transition-all hover:bg-gray-200" data-category="camilan">Camilan</button>
+                <button class="category-btn bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 px-5 py-2 rounded-xl text-sm font-medium transition-all hover:bg-gray-200" data-category="minuman">Minuman</button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- ABOUT / CERITA RASA -->
+    <section id="about" class="py-20 bg-zinc-50 dark:bg-zinc-950 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior" class="rounded-3xl shadow-xl w-full h-[400px] object-cover">
+                </div>
+                <div class="space-y-6">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Filosofi & Dapur Kami</h2>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Di <strong>Nusantara Bistro</strong>, kami percaya bahwa kuliner Indonesia adalah mahakarya seni yang kaya akan kisah warisan bangsa. Setiap bahan dipasok harian dari petani lokal pilihan untuk menjaga kesegaran dan cita rasa autentik.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800">
+                            <i class="fa-solid fa-leaf text-emerald-500 text-2xl mb-2"></i>
+                            <h4 class="font-bold text-gray-900 dark:text-white">100% Organik</h4>
+                            <p class="text-xs text-gray-500">Bahan lokal segar harian</p>
+                        </div>
+                        <div class="p-4 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800">
+                            <i class="fa-solid fa-utensils text-brand-600 text-2xl mb-2"></i>
+                            <h4 class="font-bold text-gray-900 dark:text-white">Master Chef</h4>
+                            <p class="text-xs text-gray-500">Racikan resep rahasia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MULTI-STEP / ADVANCED RESERVATION -->
+    <section id="reservation" class="py-20 bg-white dark:bg-zinc-900 transition-colors">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-brand-50 to-amber-50 dark:from-zinc-800 dark:to-zinc-800/50 rounded-3xl p-8 sm:p-12 border border-brand-100 dark:border-zinc-700 shadow-sm">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Reservasi Tempat VIP</h2>
+                    <p class="text-gray-600 dark:text-gray-300">Pesan meja pilihan Anda secara instan untuk pengalaman bersantap eksklusif.</p>
+                </div>
+                <form id="reservation-form" class="grid sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nama Lengkap</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-brand-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nomor WhatsApp</label>
+                        <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-brand-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Area Tempat Duduk</label>
+                        <select class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-brand-600 outline-none">
+                            <option>Indoor Main Hall (AC)</option>
+                            <option>Outdoor Garden</option>
+                            <option>Rooftop Lounge</option>
+                            <option>VIP Private Room</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tanggal & Jam</label>
+                        <input type="datetime-local" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-brand-600 outline-none">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium mb-2">Jumlah Tamu</label>
+                        <input type="number" min="1" max="20" value="2" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:ring-2 focus:ring-brand-600 outline-none">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-brand-600/30">
+                            Konfirmasi Reservasi Saya
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 dark:bg-zinc-950 text-gray-300 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <span class="text-2xl font-bold font-heading text-white">Nusantara<span class="text-brand-500">Bistro</span></span>
+                <p class="mt-4 text-sm text-gray-400 leading-relaxed">Pionir masakan Nusantara modern dengan kualitas rasa dan pelayanan bintang lima.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Jam Operasional</h4>
+                <p class="text-sm">Senin - Jumat: 10:00 - 22:00 WIB</p>
+                <p class="text-sm mt-2">Sabtu - Minggu: 09:00 - 23:00 WIB</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Hubungi Kami</h4>
+                <p class="text-sm"><i class="fa-solid fa-location-dot text-brand-500 mr-2"></i> Jl. Culina Royale No. 88, Jakarta</p>
+                <p class="text-sm mt-2"><i class="fa-brands fa-whatsapp text-brand-500 mr-2"></i> +62 812-3456-7890</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+            &copy; 2026 Nusantara Bistro. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-zinc-900 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transition-all transform scale-95" id="modal-card">
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- CART SIDE DRAWER WITH VOUCHER -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-full flex pl-10 z-50 transform translate-x-full transition-transform duration-300">
+        <div class="w-screen max-w-md bg-white dark:bg-zinc-900 shadow-xl flex flex-col">
+            <div class="p-6 bg-gray-50 dark:bg-zinc-800/50 border-b dark:border-zinc-800 flex justify-between items-center">
+                <h3 class="text-lg font-bold"><i class="fa-solid fa-bag-shopping text-brand-600 mr-2"></i> Pesanan Saya</h3>
+                <button id="close-cart-btn" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+            
+            <!-- Voucher Section -->
+            <div class="px-6 py-3 bg-zinc-50 dark:bg-zinc-800/30 border-t dark:border-zinc-800">
+                <div class="flex gap-2">
+                    <input type="text" id="voucher-input" placeholder="Kode Promo (cth: DISKON10)" class="flex-1 px-3 py-2 rounded-lg text-xs border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 uppercase">
+                    <button id="apply-voucher-btn" class="bg-gray-900 dark:bg-zinc-700 text-white text-xs px-4 py-2 rounded-lg font-semibold hover:bg-gray-800">Gunakan</button>
+                </div>
+                <p id="voucher-message" class="text-[11px] mt-1 font-medium hidden"></p>
+            </div>
+
+            <div class="p-6 border-t dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/50 space-y-3">
+                <div class="flex justify-between text-sm text-gray-500">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-sm text-emerald-600 font-medium">
+                    <span>Diskon Voucher</span>
+                    <span id="cart-discount">- Rp 0</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg pt-2 border-t dark:border-zinc-700">
+                    <span>Total Pembayaran</span>
+                    <span id="cart-total" class="text-brand-600">Rp 0</span>
+                </div>
+                <button id="checkout-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Checkout via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-overlay" class="fixed inset-0 bg-black/40 z-40 hidden"></div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Extended Master Data
+        const products = [
+            { id: 1, name: 'Nasi Goreng Wagyu Royale', price: 65000, category: 'makanan', tag: 'Best Seller', rating: 4.9, img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=500&q=80', desc: 'Nasi goreng rempah khas dengan potongan daging sapi Wagyu tenderloin melimpah dan telur ceplok setengah matang.' },
+            { id: 2, name: 'Ayam Bakar Madu Limau', price: 48000, category: 'makanan', tag: 'Favorit', rating: 4.8, img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=500&q=80', desc: 'Ayam diungkep rempah khas, dibakar dengan madu murni dan perasan jeruk limau segar.' },
+            { id: 3, name: 'Cumi Goreng Tepung Crispy', price: 42000, category: 'camilan', tag: 'Chef Choice', rating: 4.7, img: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=500&q=80', desc: 'Cumi segar pilihan berbalut tepung bumbu rahasia yang super renyah disajikan dengan saus tartar.' },
+            { id: 4, name: 'Es Lychee Tea Fusion', price: 22000, category: 'minuman', tag: 'Segar', rating: 4.9, img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Kombinasi kesegaran teh harum dengan sirup lychee premium dan potongan buah segar.' },
+            { id: 5, name: 'Sate Maranggi Premium', price: 55000, category: 'makanan', tag: 'Spesial', rating: 4.9, img: 'https://images.unsplash.com/photo-1529563021893-cc8384be13be?auto=format&fit=crop&w=500&q=80', desc: 'Daging sapi pilihan direndam bumbu ketumbar & gula aren, dibakar sempurna.' },
+            { id: 6, name: 'Es Kopi Gula Aren Bistro', price: 25000, category: 'minuman', tag: 'Popular', rating: 4.8, img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=500&q=80', desc: 'Espresso ganda dikombinasikan dengan susu segar dan gula aren asli.' }
+        ];
+
+        // App State
+        let cart = JSON.parse(localStorage.getItem('bistro_cart')) || [];
+        let appliedDiscount = 0;
+        let activeCategory = 'all';
+
+        // DOM Elements
+        const menuGrid = document.getElementById('menu-grid');
+        const searchInput = document.getElementById('search-input');
+        const priceFilter = document.getElementById('price-filter');
+        const productModal = document.getElementById('product-modal');
+        const modalContent = document.getElementById('modal-content');
+        const cartBadge = document.getElementById('cart-badge');
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+        // Toast Notification System
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transition-all duration-300 pointer-events-auto';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // Render Menu Grid with Filtering & Search
+        function renderMenu() {
+            menuGrid.innerHTML = '';
+            const searchKeyword = searchInput.value.toLowerCase();
+            const maxPrice = priceFilter.value;
+
+            const filtered = products.filter(p => {
+                const matchCategory = activeCategory === 'all' || p.category === activeCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchKeyword) || p.desc.toLowerCase().includes(searchKeyword);
+                const matchPrice = maxPrice === 'all' || p.price <= parseInt(maxPrice);
+                return matchCategory && matchSearch && matchPrice;
+            });
+
+            if (filtered.length === 0) {
+                menuGrid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">Makanan yang Anda cari tidak ditemukan.</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-zinc-800/80 rounded-2xl border border-gray-100 dark:border-zinc-700/50 shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden cursor-pointer" onclick="openProductModal(${p.id})">
+                            <img src="${p.img}" alt="${p.name}" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+                            <span class="absolute top-3 left-3 bg-brand-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">${p.tag}</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-sm cursor-pointer hover:text-brand-600" onclick="openProductModal(${p.id})">${p.name}</h3>
+                                <span class="text-xs font-semibold text-amber-500 flex items-center gap-1"><i class="fa-solid fa-star"></i> ${p.rating}</span>
+                            </div>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 flex items-center justify-between">
+                        <span class="font-bold text-gray-900 dark:text-white text-sm">Rp ${p.price.toLocaleString('id-ID')}</span>
+                        <button onclick="addToCartDirect(${p.id})" class="bg-brand-50 dark:bg-zinc-700 text-brand-600 dark:text-brand-400 hover:bg-brand-600 hover:text-white p-2 rounded-xl transition-all">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        // Product Modal System
+        window.openProductModal = function(id) {
+            const p = products.find(item => item.id === id);
+            modalContent.innerHTML = `
+                <div class="relative">
+                    <img src="${p.img}" class="w-full h-56 object-cover">
+                    <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">${p.name}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${p.desc}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Tingkat Pedas</label>
+                        <select id="modal-spicy" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800">
+                            <option>Level 0 - Tidak Pedas</option>
+                            <option>Level 1 - Sedang</option>
+                            <option>Level 2 - Pedas</option>
+                            <option>Level 3 - Extra Pedas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Catatan Pesanan</label>
+                        <input type="text" id="modal-notes" placeholder="cth: Pisahkan saus/sambal" class="w-full text-xs p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800">
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t dark:border-zinc-800">
+                        <span class="text-lg font-bold text-gray-900 dark:text-white">Rp ${p.price.toLocaleString('id-ID')}</span>
+                        <button onclick="addToCartFromModal(${p.id})" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-6 py-3 rounded-xl transition-all">
+                            Tambah ke Keranjang
+                        </button>
+                    </div>
+                </div>
+            `;
+            productModal.classList.remove('hidden');
+        };
+
+        window.closeModal = function() {
+            productModal.classList.add('hidden');
+        };
+
+        // Cart Core Functions
+        window.addToCartDirect = function(id) {
+            const product = products.find(p => p.id === id);
+            cart.push({ ...product, qty: 1, spicy: 'Level 0', notes: '' });
+            saveCart();
+            showToast(`${product.name} berhasil ditambahkan!`);
+        };
+
+        window.addToCartFromModal = function(id) {
+            const product = products.find(p => p.id === id);
+            const spicy = document.getElementById('modal-spicy').value;
+            const notes = document.getElementById('modal-notes').value;
+            cart.push({ ...product, qty: 1, spicy, notes });
+            saveCart();
+            closeModal();
+            showToast(`${product.name} telah ditambahkan!`);
+        };
+
+        function saveCart() {
+            localStorage.setItem('bistro_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            let subtotal = 0;
+            let totalQty = 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `<p class="text-center text-gray-400 py-12 text-sm">Keranjang Anda masih kosong.</p>`;
+            } else {
+                cart.forEach((item, index) => {
+                    subtotal += item.price * item.qty;
+                    totalQty += item.qty;
+                    const el = document.createElement('div');
+                    el.className = 'flex items-center justify-between border-b dark:border-zinc-800 pb-3 text-xs';
+                    el.innerHTML = `
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200">${item.name}</h4>
+                            <p class="text-[10px] text-gray-400">${item.spicy} ${item.notes ? '| ' + item.notes : ''}</p>
+                            <p class="text-brand-600 font-bold mt-1">Rp ${(item.price * item.qty).toLocaleString('id-ID')}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changeQty(${index}, -1)" class="w-6 h-6 rounded bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300">-</button>
+                            <span class="font-bold">${item.qty}</span>
+                            <button onclick="changeQty(${index}, 1)" class="w-6 h-6 rounded bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300">+</button>
+                        </div>
+                    `;
+                    cartItems.appendChild(el);
+                });
+            }
+
+            const discountAmount = (subtotal * appliedDiscount);
+            const total = subtotal - discountAmount;
+
+            document.getElementById('cart-subtotal').innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            document.getElementById('cart-discount').innerText = `- Rp ${discountAmount.toLocaleString('id-ID')}`;
+            document.getElementById('cart-total').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            
+            if (totalQty > 0) {
+                cartBadge.innerText = totalQty;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+        }
+
+        window.changeQty = function(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            saveCart();
+        };
+
+        // Voucher System
+        document.getElementById('apply-voucher-btn').addEventListener('click', () => {
+            const code = document.getElementById('voucher-input').value.trim().toUpperCase();
+            const msg = document.getElementById('voucher-message');
+            msg.classList.remove('hidden');
+
+            if (code === 'DISKON10') {
+                appliedDiscount = 0.1;
+                msg.className = 'text-[11px] mt-1 font-medium text-emerald-500';
+                msg.innerText = 'Voucher 10% berhasil dipasang!';
+            } else {
+                appliedDiscount = 0;
+                msg.className = 'text-[11px] mt-1 font-medium text-red-500';
+                msg.innerText = 'Kode voucher tidak valid.';
+            }
+            updateCartUI();
+        });
+
+        // WhatsApp Checkout Integration
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            if (cart.length === 0) return alert('Keranjang kosong!');
+            let text = '*PESANAN BARU - NUSANTARA BISTRO*\n\n';
+            let subtotal = 0;
+            
+            cart.forEach((item, i) => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                text += `${i+1}. ${item.name} (${item.qty}x)\n   - Spec: ${item.spicy} ${item.notes ? '(' + item.notes + ')' : ''}\n   - Sub: Rp ${itemTotal.toLocaleString('id-ID')}\n`;
+            });
+
+            const discount = subtotal * appliedDiscount;
+            const total = subtotal - discount;
+
+            text += `\nSubtotal: Rp ${subtotal.toLocaleString('id-ID')}`;
+            if (discount > 0) text += `\nDiskon Voucher: -Rp ${discount.toLocaleString('id-ID')}`;
+            text += `\n*TOTAL BAYAR: Rp ${total.toLocaleString('id-ID')}*`;
+
+            window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, '_blank');
+        });
+
+        // Event Listeners for Filters & Drawer
+        searchInput.addEventListener('input', renderMenu);
+        priceFilter.addEventListener('change', renderMenu);
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('bg-brand-600', 'text-white'));
+                e.target.classList.add('bg-brand-600', 'text-white');
+                activeCategory = e.target.dataset.category;
+                renderMenu();
+            });
+        });
+
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        
+        function toggleCart() {
+            cartDrawer.classList.toggle('translate-x-full');
+            cartOverlay.classList.toggle('hidden');
+        }
+
+        document.getElementById('cart-btn').addEventListener('click', toggleCart);
+        document.getElementById('close-cart-btn').addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+
+        // Initial Render
+        renderMenu();
+        updateCartUI();
+    </script>
+</body>
+</html>

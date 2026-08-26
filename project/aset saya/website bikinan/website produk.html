@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Footwear - Official Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================================================
+   1. RESET & DASAR Halaman
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #334155;
+  background-image: url('asset/Gemini_Generated_Image_k47lgsk47lgsk47l.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. HEADER & NAVIGASI (Premium Translucent)
+   ========================================================================== */
+#main-header {  
+  background: linear-gradient(135deg, #f97316, #eab308, #14b8a6);    
+  padding: 15px 40px;         
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;       
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  height: 45px;       
+  width: auto;        
+  object-fit: contain; 
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));            
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;       
+}
+
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;         
+  padding: 6px 4px;              
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Efek garis bawah animasi saat menu di-hover */
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffd700;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar a:hover {
+  color: #ffd700;                
+}
+
+/* ==========================================================================
+   3. STRUKTUR UTAMA & KARTU KONTEN
+   ========================================================================== */
+main {
+  max-width: 1100px;              
+  margin: 40px auto;             
+  padding: 0 20px;              
+}
+
+/* Menghapus background putih bawaan section agar menyatu dengan background body */
+.section-card {
+  background-color: transparent;     
+  padding: 20px 0 40px 0;
+  margin-bottom: 20px;         
+}
+
+.section-card h2 {
+  color: #0f172a;                
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Garis dekoratif di bawah judul section */
+.section-card h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #1e3c72;
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+/* Khazanah list umum untuk Keunggulan Toko */
+#keunggulan ul {
+  padding-left: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+#keunggulan li {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  color: #334155;
+}
+
+/* ==========================================================================
+   4. DETAIL KARTU PRODUK UTAMA (Premium Card)
+   ========================================================================== */
+.container2 {
+  width: 100%;
+  display: flex;       
+  justify-content: center; 
+  align-items: center;
+  margin-top: 10px;
+}
+
+.project-item {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08); 
+  border: 1px solid #f1f5f9;
+  padding: 35px;
+  max-width: 700px;    
+  width: 100%;         
+  transition: transform 0.3s ease;
+}
+
+.project-item:hover {
+  transform: translateY(-4px);
+}
+
+.project-item h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center; 
+  gap: 35px;              
+}
+
+.project-img {
+  flex-shrink: 0;          
+}
+
+.project-img img {
+  max-width: 200px;        
+  width: 100%;
+  height: auto;
+  border-radius: 14px;      
+  display: block;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.project-item:hover .project-img img {
+  transform: scale(1.05) rotate(-2px); /* Efek interaktif sepatu sedikit bergerak saat kartu didekati */
+}
+
+.project-teks {
+  flex-grow: 1;           
+}
+
+.project-teks h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.project-teks ul {
+  margin-bottom: 20px;
+  padding-left: 20px;              
+}
+
+.project-teks li {
+  margin-bottom: 6px;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.project-teks p {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 15px !important;
+}
+
+/* ==========================================================================
+   5. TABEL PRODUK LAINNYA
+   ========================================================================== */
+.produk-table {
+  width: 100%;                                   
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 15px;     
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.produk-table th, .produk-table td {
+  padding: 16px 24px;
+  text-align: left;
+}
+
+.produk-table th {
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;     
+}
+
+.produk-table td {
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.produk-table tr:last-child td {
+  border-bottom: none;
+}
+
+td ul {
+  list-style-position: inside; 
+  padding-left: 0;
+}
+
+td li {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+/* ==========================================================================
+   6. FORMULIR KONTAK MODERN
+   ========================================================================== */
+.contact-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.form-group {
+  margin-bottom: 24px;           
+}
+
+.form-group label {
+  display: block;               
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;                  
+  border: 1px solid #cbd5e1;
+  background-color: #f8fafc;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #0f172a;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: #14b8a6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+}
+
+/* ==========================================================================
+   7. GAYA TOMBOL UTAMA & ANIMASI
+   ========================================================================== */
+.btn-submit {
+  background-color: #1e3c72;     
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;                  
+  cursor: pointer;              
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(30, 60, 114, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-submit:hover {
+  background-color: #f97316; 
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+  transform: translateY(-2px);   
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   8. FOOTER & MEDIA LAYOUT (RESPONSIVE)
+   ========================================================================== */
+footer {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #f97316, #eab308, #14b8a6);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  #main-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .project-img img {
+    max-width: 100%;
+  }
+  
+  .project-teks ul {
+    text-align: left;
+    display: inline-block;
+  }
+  
+  .contact-form {
+    padding: 25px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <header id="main-header">
+    <div class="header-content">
+      <img src="aset/LOGO.png" alt="Logo Aura Footwear" class="profile-img">
+    </div>
+
+    <nav class="navbar">
+      <a href="#projects">Produk Utama</a>
+      <a href="#keunggulan">Keunggulan Toko</a>
+      <a href="#produk-lainnya">Produk Lainnya</a>
+      <a href="#contact">Kontak</a>
+      <button type="button" class="btn-submit">Belanja Sekarang</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="projects" class="section-card">
+      <h2>Produk Utama</h2>
+      
+      <div class="container2">
+        <div class="project-item">
+          <h3>Aura Air Force</h3>
+          
+          <div class="content-wrapper">
+            <div class="project-img">
+              <img src="aset/Gemini_Generated_Image_k47lgsk47lgsk47l.png" alt="Aura Air Force Sneakers">
+            </div>
+            
+            <div class="project-teks">
+              <h4>Keunggulan Produk</h4>
+              <ul>
+                <li>Bahan Premium Pilihan</li>
+                <li>Desain Modern & Estetik</li>
+                <li>Daya Tahan Tinggi untuk Harian</li>
+                <li>Kenyamanan Kasual Maksimal</li>
+                <li>Sirkulasi Udara Optimal</li>
+              </ul>
+              <p style="font-weight: bold;">Harga: Rp1.300.000</p>
+              <button type="button" class="btn-submit">Belanja Sekarang</button>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </section>
+
+    <section id="keunggulan" class="section-card">
+      <h2>Keunggulan Toko Kami</h2>
+      <ul>
+        <li>Konsep Unik "One-Stop Solution" (Tech Meets Style)</li>
+        <li>Kurasi Produk untuk Kaum Dinamis</li>
+        <li>Fokus pada Kualitas Premium & Original</li>
+        <li>Estetika Desain Modern & Minimalis</li>
+        <li>Fleksibilitas Penggunaan yang Tinggi</li>
+      </ul>
+    </section>
+
+    <section id="produk-lainnya" class="section-card">
+      <h2>Produk Lainnya</h2>
+      <table class="produk-table">
+        <thead>
+          <tr>
+            <th>Nama Produk</th>
+            <th>Kualitas & Fitur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 600;">Aura Dunk Low</td>
+            <td>
+              <ul>
+                <li>Desain Minimalis</li>
+                <li>Bahan Premium</li>
+                <li>Kenyamanan Kasual</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600;">Aura Zoom Pegasus (42)</td>
+            <td>
+              <ul>
+                <li>Sirkulasi Udara Maksimal</li>
+                <li>Daya Tahan Tinggi</li>
+                <li>Transisi Langkah Mulus</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600;">Aura Air Mak</td>
+            <td>
+              <ul>
+                <li>Daya Tahan Tinggi</li>
+                <li>Bahan Premium</li>
+                <li>Desain Modern</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="contact" class="section-card">
+      <h2>Hubungi Saya</h2>
+      <form action="#" method="post" class="contact-form">
+        <div class="form-group">
+          <label for="name">Nama Lengkap</label>
+          <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>                
+        </div>
+
+        <div class="form-group">
+          <label for="email">Alamat Email</label>
+          <input type="email" id="email" name="email" placeholder="nama@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Kritik dan Saran</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tuliskan pesan atau saran Anda di sini..." required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-submit">Kirim Pesan</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ahmad Wildan Asy Syifa. All Rights Reserved.</p> 
+  </footer>
+    
+</body>
+</html>

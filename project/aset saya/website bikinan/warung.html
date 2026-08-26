@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Bistro - Cita Rasa Autentik Modern</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-gray-800 antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-40 border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <span class="text-2xl font-bold font-heading text-orange-600">Nusantara<span class="text-gray-900">Bistro</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 font-medium">
+                    <a href="#home" class="hover:text-orange-600 transition-colors">Beranda</a>
+                    <a href="#menu" class="hover:text-orange-600 transition-colors">Menu</a>
+                    <a href="#about" class="hover:text-orange-600 transition-colors">Tentang Kami</a>
+                    <a href="#reservation" class="hover:text-orange-600 transition-colors">Reservasi</a>
+                </div>
+
+                <!-- Action Button & Cart -->
+                <div class="flex items-center space-x-4">
+                    <button id="cart-btn" class="relative p-2 text-gray-700 hover:text-orange-600 transition-colors">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-orange-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold hidden">0</span>
+                    </button>
+                    
+                    <a href="#reservation" class="hidden sm:inline-block bg-orange-600 hover:bg-orange-700 text-white font-medium px-5 py-2.5 rounded-full transition-all shadow-md hover:shadow-orange-200">
+                        Reservasi Meja
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-3 font-medium">
+            <a href="#home" class="block py-2 hover:text-orange-600">Beranda</a>
+            <a href="#menu" class="block py-2 hover:text-orange-600">Menu</a>
+            <a href="#about" class="block py-2 hover:text-orange-600">Tentang Kami</a>
+            <a href="#reservation" class="block py-2 hover:text-orange-600">Reservasi</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-orange-50/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center md:text-left">
+                    <span class="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 font-semibold text-sm rounded-full">
+                        ✨ Kuliner Autentik Nusantara
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
+                        Nikmati Keharmonisan Rasa dengan <span class="text-orange-600">Sentuhan Modern.</span>
+                    </h1>
+                    <p class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
+                        Setiap hidangan dibuat dari bahan lokal segar pilihan dan resep rahasia warisan kuliner yang siap memanjakan lidah Anda.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#menu" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-lg shadow-orange-600/30 text-center">
+                            Lihat Menu & Pesan
+                        </a>
+                        <a href="#reservation" class="bg-white hover:bg-gray-50 text-gray-800 font-semibold px-8 py-4 rounded-xl border border-gray-200 transition-all text-center">
+                            Reservasi Meja
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Hidangan Spesial" class="rounded-3xl shadow-2xl w-full object-cover h-[400px] lg:h-[500px]">
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 hidden sm:flex">
+                        <div class="bg-orange-100 p-3 rounded-xl text-orange-600">
+                            <i class="fa-solid fa-star text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">4.9 / 5.0 Rating</p>
+                            <p class="text-xs text-gray-500">Dari 1,200+ Pelanggan Puas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Menu Pilihan Kami</h2>
+                <p class="text-gray-600">Dibuat langsung oleh chef berpengalaman dengan bahan-bahan berkualitas tinggi.</p>
+                
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-2 mt-8">
+                    <button class="menu-filter-btn active bg-orange-600 text-white px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="all">Semua</button>
+                    <button class="menu-filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="makanan">Makanan Utama</button>
+                    <button class="menu-filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="camilan">Camilan</button>
+                    <button class="menu-filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-5 py-2 rounded-full font-medium text-sm transition-all" data-category="minuman">Minuman</button>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Items populated via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-20 bg-zinc-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Suasana Restoran" class="rounded-3xl shadow-xl w-full h-[400px] object-cover">
+                </div>
+                <div class="space-y-6">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Tentang Nusantara Bistro</h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        Di <strong>Nusantara Bistro</strong>, kami percaya bahwa makanan bukan sekadar pemuas lapar, melainkan perayaan rasa dan kebersamaan. Kami menghadirkan resep-resep autentik berbahan dasar 100% segar dari petani lokal, dikemas dalam suasana modern yang nyaman.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="border-l-4 border-orange-600 pl-4">
+                            <h4 class="font-bold text-gray-900 text-lg">100% Halal</h4>
+                            <p class="text-sm text-gray-500">Bahan terjamin kualitasnya</p>
+                        </div>
+                        <div class="border-l-4 border-orange-600 pl-4">
+                            <h4 class="font-bold text-gray-900 text-lg">Bahan Segar</h4>
+                            <p class="text-sm text-gray-500">Pasokan harian lokal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESERVATION SECTION -->
+    <section id="reservation" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-orange-50 rounded-3xl p-8 sm:p-12 border border-orange-100 shadow-sm">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Reservasi Meja Anda</h2>
+                    <p class="text-gray-600">Pastikan tempat Anda tersedia untuk santap siang atau malam istimewa.</p>
+                </div>
+                <form id="reservation-form" class="grid sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="Ahmad Wildan">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nomor WhatsApp</label>
+                        <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="08123456789">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal & Waktu</label>
+                        <input type="datetime-local" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Tamu</label>
+                        <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none">
+                            <option>1-2 Orang</option>
+                            <option>3-5 Orang</option>
+                            <option>6+ Orang (Grup)</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Khusus (Opsional)</label>
+                        <textarea rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-orange-600 focus:outline-none" placeholder="Contoh: Meja bebas asap rokok / Tempat duduk dekat jendela"></textarea>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-orange-600/30">
+                            Konfirmasi Reservasi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <span class="text-2xl font-bold font-heading text-white">Nusantara<span class="text-orange-500">Bistro</span></span>
+                <p class="mt-4 text-sm text-gray-400">Menyajikan kuliner khas Indonesia dengan sentuhan cita rasa modern dan layanan terbaik.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Jam Operasional</h4>
+                <p class="text-sm">Senin - Jumat: 10:00 - 22:00 WIB</p>
+                <p class="text-sm mt-2">Sabtu - Minggu: 09:00 - 23:00 WIB</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Hubungi Kami</h4>
+                <p class="text-sm"><i class="fa-solid fa-location-dot text-orange-500 mr-2"></i> Jl. Culinary No. 123, Jakarta</p>
+                <p class="text-sm mt-2"><i class="fa-brands fa-whatsapp text-orange-500 mr-2"></i> +62 812-3456-7890</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+            &copy; 2026 Nusantara Bistro. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- CART SIDE DRAWER -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 max-w-full flex pl-10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="w-screen max-w-md bg-white shadow-xl flex flex-col">
+            <!-- Header -->
+            <div class="p-6 bg-gray-50 border-b flex justify-between items-center">
+                <h3 class="text-lg font-bold text-gray-900"><i class="fa-solid fa-bag-shopping text-orange-600 mr-2"></i> Keranjang Saya</h3>
+                <button id="close-cart-btn" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <!-- Items list -->
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Cart Content Dynamic -->
+            </div>
+            <!-- Footer Total -->
+            <div class="p-6 border-t bg-gray-50 space-y-4">
+                <div class="flex justify-between font-bold text-lg">
+                    <span>Total Pembayaran:</span>
+                    <span id="cart-total" class="text-orange-600">Rp 0</span>
+                </div>
+                <button id="checkout-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Checkout via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/40 z-40 hidden"></div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Data Produk
+        const products = [
+            { id: 1, name: 'Nasi Goreng Wagyu Royale', price: 65000, category: 'makanan', tag: 'Best Seller', rating: 4.9, img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=500&q=80', desc: 'Nasi goreng rempah dengan potongan daging sapi Wagyu tenderloin.' },
+            { id: 2, name: 'Ayam Bakar Madu Limau', price: 48000, category: 'makanan', tag: 'Favorit', rating: 4.8, img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=500&q=80', desc: 'Ayam diungkep rempah khas, dibakar madu murni & jeruk limau.' },
+            { id: 3, name: 'Cumi Goreng Tepung Crispy', price: 42000, category: 'camilan', tag: 'Chef Choice', rating: 4.7, img: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=500&q=80', desc: 'Cumi renyah berbalut tepung bumbu rahasia & saus tartar.' },
+            { id: 4, name: 'Es Lychee Tea Fusion', price: 22000, category: 'minuman', tag: 'Segar', rating: 4.9, img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Teh harum dengan sirup lychee premium & potongan buah segar.' }
+        ];
+
+        let cart = [];
+
+        // DOM Elements
+        const menuGrid = document.getElementById('menu-grid');
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartBadge = document.getElementById('cart-badge');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Render Menu Items
+        function renderMenu(category = 'all') {
+            menuGrid.innerHTML = '';
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative">
+                            <img src="${product.img}" alt="${product.name}" class="w-full h-48 object-cover">
+                            <span class="absolute top-3 left-3 bg-orange-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full">${product.tag}</span>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-gray-900">${product.name}</h3>
+                                <span class="text-xs font-semibold text-amber-500"><i class="fa-solid fa-star"></i> ${product.rating}</span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-4 leading-relaxed">${product.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 flex items-center justify-between">
+                        <span class="font-bold text-gray-900">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <button onclick="addToCart(${product.id})" class="bg-orange-50 hover:bg-orange-600 text-orange-600 hover:text-white p-2.5 rounded-xl transition-all">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                `;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        // Cart Drawer Handlers
+        function toggleCart() {
+            cartDrawer.classList.toggle('translate-x-full');
+            cartOverlay.classList.toggle('hidden');
+        }
+
+        cartBtn.addEventListener('click', toggleCart);
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cart Actions
+        window.addToCart = function(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+        };
+
+        window.updateQty = function(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        };
+
+        function updateCartUI() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center text-gray-400 py-8">Keranjang belanja masih kosong.</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.qty;
+                    totalItems += item.qty;
+
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'flex items-center justify-between border-b pb-4';
+                    cartItem.innerHTML = `
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">${item.name}</h4>
+                            <p class="text-xs text-gray-500">Rp ${item.price.toLocaleString('id-ID')}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="updateQty(${item.id}, -1)" class="w-6 h-6 rounded bg-gray-100 hover:bg-gray-200 text-xs">-</button>
+                            <span class="text-sm font-semibold">${item.qty}</span>
+                            <button onclick="updateQty(${item.id}, 1)" class="w-6 h-6 rounded bg-gray-100 hover:bg-gray-200 text-xs">+</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+
+            cartTotal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            
+            // Badge Update
+            if (totalItems > 0) {
+                cartBadge.innerText = totalItems;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+        }
+
+        // WhatsApp Checkout
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Keranjang Anda kosong!');
+                return;
+            }
+
+            let message = 'Halo Nusantara Bistro, saya ingin memesan:\n\n';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                message += `- ${item.name} (${item.qty}x) = Rp ${subtotal.toLocaleString('id-ID')}\n`;
+            });
+
+            message += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`;
+            
+            const phoneNumber = '6281234567890'; // Ganti dengan nomor WA Restoran
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        });
+
+        // Filter Event Listeners
+        document.querySelectorAll('.menu-filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.menu-filter-btn').forEach(b => {
+                    b.classList.remove('bg-orange-600', 'text-white');
+                    b.classList.add('bg-gray-100', 'text-gray-600');
+                });
+                e.target.classList.remove('bg-gray-100', 'text-gray-600');
+                e.target.classList.add('bg-orange-600', 'text-white');
+                
+                renderMenu(e.target.dataset.category);
+            });
+        });
+
+        // Initial Render
+        renderMenu();
+    </script>
+</body>
+</html>
+
+
+
