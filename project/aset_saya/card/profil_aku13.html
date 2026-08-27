@@ -4,306 +4,270 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Ahmad Wildan · CV One-Page</title>
-  
-  <meta name="description" content="CV One-Page Ahmad Wildan Asy Syifa · Summa Cum Laude · Multilingual" />
-  <meta property="og:title" content="CV · Ahmad Wildan Asy Syifa" />
-  <meta property="og:image" content="pas foto.png" />
-
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a1628'/><text x='50%' y='50%' font-size='56' text-anchor='middle' dy='.35em' fill='%23d4af37' font-family='serif'>AW</text></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ================================================================
-       RESET & BASE
-    ================================================================ */
-    @page {
-      size: A4;
-      margin: 0;
-    }
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     :root {
       --navy: #0a1628;
+      --navy-light: #142c44;
       --gold: #d4af37;
       --gold-light: #e8c95a;
       --cream: #fcf9f2;
       --text-light: #d6d0c4;
-      --shadow: 0 30px 80px rgba(10, 22, 40, 0.35);
     }
+
+    html,
     body {
-      background: #d5cfc4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 12px;
-      font-family: 'Inter', sans-serif;
+      height: 100%;
+      overflow: hidden;
+      background: #0a1628;
+      font-family: 'Inter', -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ================================================================
+       CV WRAPPER — FULL VIEWPORT
+    ================================================================ */
     .cv {
-      width: 210mm;
-      min-height: 297mm;
-      max-width: 210mm;
-      background: var(--cream);
       display: flex;
-      flex-direction: row;
-      box-shadow: var(--shadow);
-      border-radius: 12px;
+      flex-direction: column;
+      height: 100vh;
+      max-height: 100vh;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--cream);
       overflow: hidden;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
     }
 
     /* ================================================================
-       LEFT COLUMN
+       TOP BAR — Foto + Nama + Title
     ================================================================ */
-    .left-col {
-      width: 33%;
-      background: linear-gradient(160deg, #0a1628, #142c44);
-      padding: 28px 18px 24px;
-      color: var(--text-light);
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      border-right: 3px solid var(--gold);
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .left-col::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      right: -40%;
-      width: 80%;
-      height: 80%;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.05), transparent 70%);
-      pointer-events: none;
-    }
-
-    .headshot {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .headshot-circle {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 10px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #1a3a5a, #0a1628);
-      border: 3px solid var(--gold);
+    .top-bar {
       display: flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.12);
-      overflow: hidden;
+      gap: 12px;
+      padding: 8px 14px 6px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      border-bottom: 2.5px solid var(--gold);
+      flex-shrink: 0;
     }
-    .headshot-circle img {
+    .top-bar .photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    }
+    .top-bar .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
       display: block;
     }
-    .headshot-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border-top: 2px solid var(--gold);
-      padding-top: 8px;
-      display: inline-block;
+    .top-bar .name-title {
+      flex: 1;
+      min-width: 0;
     }
-
-    .left-col h3 {
+    .top-bar .name-title h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 0.7rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .top-bar .name-title h1 .gold {
+      color: var(--gold);
+    }
+    .top-bar .name-title .title {
+      font-size: 0.5rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      opacity: 0.9;
+      display: block;
+      margin-top: 1px;
+    }
+    .top-bar .badge-summa {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.45rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+
+    /* ================================================================
+       MAIN CONTENT — GRID 2 KOLOM
+    ================================================================ */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4px 10px;
+      padding: 6px 12px 4px;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ===== KOLOM KIRI ===== */
+    .left-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      overflow: hidden;
+    }
+    .left-grid .section {
+      flex-shrink: 0;
+    }
+    .left-grid .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--gold);
-      border-bottom: 2px solid var(--gold);
-      padding-bottom: 5px;
-      margin-bottom: 10px;
+      border-bottom: 1.5px solid var(--gold);
+      padding-bottom: 1px;
+      margin-bottom: 3px;
       display: inline-block;
     }
 
+    /* Contact */
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.6rem;
-      color: #d6d0c4;
-      margin-bottom: 6px;
-      line-height: 1.3;
-      word-break: break-word;
-      padding: 2px 0;
+      gap: 4px;
+      font-size: 0.45rem;
+      color: #1a1a1e;
+      padding: 1px 0;
+      line-height: 1.2;
+      word-break: break-all;
     }
     .contact-item .icon {
-      font-size: 0.85rem;
-      width: 18px;
+      font-size: 0.55rem;
+      width: 14px;
       text-align: center;
       flex-shrink: 0;
       color: var(--gold);
     }
     .contact-item a {
-      color: #d6d0c4;
+      color: #1a1a1e;
       text-decoration: none;
     }
     .contact-item a:hover {
-      color: #fff;
+      color: var(--navy);
     }
 
+    /* Language & Skill */
     .lang-item,
     .skill-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.6rem;
-      padding: 3px 0 3px 2px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      flex-wrap: wrap;
+      font-size: 0.45rem;
+      padding: 1px 0;
+      border-bottom: 1px solid rgba(10, 22, 40, 0.04);
       gap: 2px;
     }
     .lang-item .lang-name,
     .skill-item .skill-name {
-      color: #ece8de;
+      color: #1a1a1e;
+      font-weight: 500;
     }
     .lang-item .lang-level,
     .skill-item .skill-level {
-      font-size: 0.5rem;
-      color: #b8b0a0;
-      background: rgba(212, 175, 55, 0.1);
-      padding: 1px 8px;
-      border-radius: 20px;
-      border: 1px solid rgba(212, 175, 55, 0.12);
+      font-size: 0.4rem;
+      color: #5a5a5e;
+      background: rgba(212, 175, 55, 0.08);
+      padding: 0 6px;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.08);
       white-space: nowrap;
     }
     .lang-item .lang-level.gold {
       color: var(--gold);
       border-color: var(--gold);
-      background: rgba(212, 175, 55, 0.08);
+      background: rgba(212, 175, 55, 0.06);
+      font-weight: 600;
     }
     .skill-subnote {
-      font-size: 0.5rem;
-      color: #b8b0a0;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      padding-top: 6px;
-      margin-top: 4px;
+      font-size: 0.4rem;
+      color: #5a5a5e;
+      border-top: 1px solid rgba(10, 22, 40, 0.04);
+      padding-top: 3px;
+      margin-top: 2px;
       opacity: 0.7;
     }
 
-    /* ================================================================
-       RIGHT COLUMN
-    ================================================================ */
-    .right-col {
-      width: 67%;
-      padding: 28px 28px 24px;
-      background: var(--cream);
+    /* ===== KOLOM KANAN ===== */
+    .right-grid {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      position: relative;
+      gap: 5px;
+      overflow: hidden;
     }
-    .right-col::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -20%;
-      width: 50%;
-      height: 50%;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.03), transparent 70%);
-      pointer-events: none;
+    .right-grid .section {
+      flex-shrink: 0;
     }
-
-    .cv-header .cv-tag {
+    .right-grid .section-title {
+      font-family: 'Playfair Display', serif;
       font-size: 0.5rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(212, 175, 55, 0.08);
-      padding: 1px 10px;
-      border-radius: 30px;
-      border: 1px solid rgba(212, 175, 55, 0.12);
-      display: inline-block;
-      margin-bottom: 2px;
-    }
-    .cv-header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--navy);
-      line-height: 1.05;
-      word-break: break-word;
-    }
-    .cv-header h1 .gold {
-      background: linear-gradient(135deg, #d4af37, #e8c95a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .cv-header .subtitle {
-      font-size: 0.65rem;
-      font-weight: 500;
-      color: #142c44;
-      background: rgba(212, 175, 55, 0.05);
-      display: inline-block;
-      padding: 2px 12px;
-      border-radius: 30px;
-      border: 1px solid rgba(212, 175, 55, 0.1);
-      margin-top: 1px;
-      -webkit-text-fill-color: #142c44;
-    }
-
-    .right-col h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--navy);
-      border-bottom: 2px solid var(--gold);
-      padding-bottom: 3px;
-      margin-bottom: 6px;
+      border-bottom: 1.5px solid var(--gold);
+      padding-bottom: 1px;
+      margin-bottom: 3px;
       display: inline-block;
     }
 
-    .summary p {
-      font-size: 0.6rem;
-      line-height: 1.5;
+    /* Profile summary */
+    .profile-text {
+      font-size: 0.45rem;
+      line-height: 1.4;
       color: #1a1a1e;
       background: rgba(212, 175, 55, 0.03);
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 3px 6px;
+      border-radius: 4px;
       border-left: 2px solid var(--gold);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
-    .summary p strong {
+    .profile-text strong {
       color: var(--navy);
     }
 
-    /* Compact items */
+    /* Education, Experience, Projects, Awards — compact */
     .edu-item,
     .exp-item,
     .project-item,
     .award-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.6rem;
-      padding: 3px 0 3px 2px;
-      border-bottom: 1px solid rgba(10, 22, 40, 0.04);
+      gap: 4px;
+      font-size: 0.43rem;
+      padding: 1px 0;
+      border-bottom: 1px solid rgba(10, 22, 40, 0.03);
       flex-wrap: wrap;
     }
     .edu-item:last-child,
@@ -314,16 +278,17 @@
     }
 
     .badge-status {
-      font-size: 0.45rem;
+      font-size: 0.35rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      padding: 1px 8px;
-      border-radius: 30px;
+      padding: 0 5px;
+      border-radius: 12px;
       flex-shrink: 0;
       background: #e8e4da;
       color: var(--navy);
       border: 1px solid #d6d0c4;
+      line-height: 1.4;
     }
     .badge-status.current {
       background: var(--navy);
@@ -355,7 +320,7 @@
     .project-desc {
       color: #1a1a1e;
       flex: 1;
-      min-width: 80px;
+      min-width: 50px;
     }
     .edu-desc strong,
     .exp-desc strong,
@@ -365,37 +330,30 @@
     .edu-meta,
     .exp-meta,
     .project-meta {
-      font-size: 0.5rem;
+      font-size: 0.35rem;
       color: #5a5a5e;
       white-space: nowrap;
     }
-    .exp-desc p,
-    .project-desc p {
-      display: none; /* sembunyikan deskripsi panjang di one-page */
-    }
 
     .project-tech {
-      font-size: 0.45rem;
+      font-size: 0.35rem;
       background: rgba(212, 175, 55, 0.08);
-      padding: 1px 8px;
-      border-radius: 30px;
+      padding: 0 5px;
+      border-radius: 12px;
       color: var(--navy);
-      border: 1px solid rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.08);
       white-space: nowrap;
     }
     .project-link a {
       color: var(--gold);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.6rem;
-    }
-    .project-link a:hover {
-      text-decoration: underline;
+      font-size: 0.4rem;
     }
 
     .award-item .award-icon {
-      font-size: 0.8rem;
-      width: 18px;
+      font-size: 0.55rem;
+      width: 14px;
       text-align: center;
       flex-shrink: 0;
       color: var(--gold);
@@ -408,22 +366,23 @@
       color: var(--navy);
     }
     .award-item .award-level {
-      font-size: 0.45rem;
+      font-size: 0.35rem;
       color: #5a5a5e;
-      background: rgba(212, 175, 55, 0.06);
-      padding: 1px 8px;
-      border-radius: 30px;
-      border: 1px solid rgba(212, 175, 55, 0.06);
+      background: rgba(212, 175, 55, 0.05);
+      padding: 0 5px;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.05);
       white-space: nowrap;
     }
 
     /* ================================================================
-       TOMBOL AKSI
+       TOMBOL AKSI — floating di bawah
     ================================================================ */
     .action-buttons {
       position: fixed;
-      bottom: 16px;
-      right: 16px;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       gap: 8px;
       z-index: 999;
@@ -431,33 +390,29 @@
     .action-btn {
       font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 0.7rem;
-      padding: 8px 18px;
-      border-radius: 40px;
+      font-size: 0.6rem;
+      padding: 6px 16px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: 0.25s;
+      transition: 0.2s;
       letter-spacing: 0.03em;
-      border: none;
-      box-shadow: 0 6px 20px rgba(10, 22, 40, 0.25);
+      border: 1.5px solid var(--gold);
       touch-action: manipulation;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
     .action-btn.pdf-btn {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       color: var(--navy);
-      border: 2px solid var(--gold);
     }
-    .action-btn.pdf-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.35);
+    .action-btn.pdf-btn:active {
+      transform: scale(0.95);
     }
     .action-btn.print-btn {
       background: var(--navy);
       color: var(--cream);
-      border: 2px solid var(--gold);
     }
-    .action-btn.print-btn:hover {
-      background: var(--gold);
-      color: var(--navy);
+    .action-btn.print-btn:active {
+      transform: scale(0.95);
     }
     @media print {
       .action-buttons {
@@ -466,399 +421,285 @@
     }
 
     /* ================================================================
-       RESPONSIVE · HP ONE-PAGE (≤ 480px)
+       RESPONSIVE — khusus HP (≤ 480px)
     ================================================================ */
     @media screen and (max-width: 480px) {
-      body {
-        padding: 6px;
-        background: #0a1628; /* latar gelap biar CV menonjol */
-      }
       .cv {
-        width: 100%;
         max-width: 100%;
-        min-height: 100vh;
-        height: 100vh;
-        max-height: 100vh;
-        flex-direction: column;
-        border-radius: 10px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        overflow: hidden;
+        border-radius: 0;
+        box-shadow: none;
       }
 
-      /* LEFT COLUMN — kompak di atas */
-      .left-col {
-        width: 100%;
-        border-right: none;
-        border-bottom: 3px solid var(--gold);
-        padding: 12px 14px 10px;
+      .top-bar {
+        padding: 6px 10px 4px;
         gap: 8px;
-        flex-shrink: 0;
-        height: auto;
-        min-height: 0;
       }
-      .left-col::before {
-        display: none;
-      }
-      .headshot-circle {
-        width: 52px;
-        height: 52px;
-        margin: 0 auto 4px;
-        border-width: 2px;
-        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-      }
-      .headshot-name {
-        font-size: 0.5rem;
-        padding-top: 4px;
-        border-top-width: 1.5px;
-      }
-      .left-col h3 {
-        font-size: 0.55rem;
-        padding-bottom: 2px;
-        margin-bottom: 4px;
-        border-bottom-width: 1.5px;
-      }
-      .contact-item {
-        font-size: 0.5rem;
-        gap: 4px;
-        margin-bottom: 3px;
-        padding: 1px 0;
-      }
-      .contact-item .icon {
-        font-size: 0.7rem;
-        width: 14px;
-      }
-      .lang-item,
-      .skill-item {
-        font-size: 0.5rem;
-        padding: 2px 0;
-      }
-      .lang-item .lang-level,
-      .skill-item .skill-level {
-        font-size: 0.4rem;
-        padding: 1px 6px;
-      }
-      .skill-subnote {
-        font-size: 0.4rem;
-        padding-top: 3px;
-        margin-top: 2px;
-      }
-      /* Sembunyikan dot proficiency di HP one-page */
-      .proficiency-dots {
-        display: none !important;
-      }
-      /* Sembunyikan beberapa item skill/language jika terlalu banyak */
-      .lang-item:nth-child(n+4),
-      .skill-item:nth-child(n+4) {
-        display: none;
-      }
-
-      /* RIGHT COLUMN — konten utama */
-      .right-col {
-        width: 100%;
-        padding: 10px 14px 8px;
-        gap: 6px;
-        flex: 1;
-        overflow: hidden;
-        height: 100%;
-      }
-      .right-col::before {
-        display: none;
-      }
-
-      .cv-header .cv-tag {
-        font-size: 0.4rem;
-        padding: 1px 8px;
-        margin-bottom: 1px;
-      }
-      .cv-header h1 {
-        font-size: 1.5rem;
-        line-height: 1.1;
-      }
-      .cv-header .subtitle {
-        font-size: 0.5rem;
-        padding: 1px 10px;
-        margin-top: 1px;
-      }
-
-      .right-col h3 {
-        font-size: 0.55rem;
-        padding-bottom: 2px;
-        margin-bottom: 4px;
-        border-bottom-width: 1.5px;
-      }
-
-      .summary p {
-        font-size: 0.5rem;
-        padding: 4px 8px;
-        border-left-width: 2px;
-        line-height: 1.4;
-        margin-bottom: 2px;
-      }
-
-      .edu-item,
-      .exp-item,
-      .project-item,
-      .award-item {
-        font-size: 0.5rem;
-        padding: 2px 0;
-        gap: 4px;
-        border-bottom-width: 0.5px;
-      }
-      .badge-status {
-        font-size: 0.4rem;
-        padding: 0 6px;
-      }
-      .edu-desc,
-      .exp-desc,
-      .project-desc {
-        min-width: 60px;
-        font-size: 0.5rem;
-      }
-      .edu-meta,
-      .exp-meta,
-      .project-meta {
-        font-size: 0.4rem;
-        white-space: nowrap;
-      }
-      .project-tech {
-        font-size: 0.4rem;
-        padding: 0 6px;
-      }
-      .project-link a {
-        font-size: 0.5rem;
-      }
-      .award-item .award-icon {
-        font-size: 0.65rem;
-        width: 14px;
-      }
-      .award-item .award-level {
-        font-size: 0.4rem;
-        padding: 0 6px;
-      }
-
-      /* Sembunyikan item ke-4 ke atas di setiap kategori (kecuali education) */
-      .exp-item:nth-child(n+3),
-      .project-item:nth-child(n+3),
-      .award-item:nth-child(n+4) {
-        display: none;
-      }
-
-      /* Tombol aksi di HP — lebih kecil & di bawah */
-      .action-buttons {
-        position: fixed;
-        bottom: 8px;
-        left: 8px;
-        right: 8px;
-        gap: 6px;
-        flex-direction: row;
-        justify-content: stretch;
-        padding: 0;
-      }
-      .action-btn {
-        flex: 1;
-        text-align: center;
-        justify-content: center;
-        padding: 8px 8px;
-        font-size: 0.6rem;
-        border-radius: 30px;
-        min-height: 34px;
-        border-width: 1.5px;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-      }
-    }
-
-    /* ================================================================
-       HP SANGAT KECIL (≤ 360px)
-    ================================================================ */
-    @media screen and (max-width: 360px) {
-      .left-col {
-        padding: 8px 10px 6px;
-        gap: 4px;
-      }
-      .headshot-circle {
+      .top-bar .photo {
         width: 40px;
         height: 40px;
         border-width: 1.5px;
       }
-      .headshot-name {
+      .top-bar .name-title h1 {
+        font-size: 0.9rem;
+      }
+      .top-bar .name-title .title {
         font-size: 0.4rem;
-        padding-top: 2px;
       }
-      .contact-item {
+      .top-bar .badge-summa {
+        font-size: 0.35rem;
+        padding: 1px 6px;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr 1.1fr;
+        gap: 3px 6px;
+        padding: 4px 8px 3px;
+      }
+
+      .left-grid .section-title,
+      .right-grid .section-title {
         font-size: 0.4rem;
-        gap: 3px;
-      }
-      .contact-item .icon {
-        font-size: 0.6rem;
-        width: 12px;
-      }
-      .left-col h3 {
-        font-size: 0.45rem;
+        border-bottom-width: 1px;
+        padding-bottom: 0;
         margin-bottom: 2px;
       }
+
+      .contact-item {
+        font-size: 0.38rem;
+        gap: 3px;
+        padding: 0;
+      }
+      .contact-item .icon {
+        font-size: 0.45rem;
+        width: 12px;
+      }
+
       .lang-item,
       .skill-item {
-        font-size: 0.4rem;
+        font-size: 0.38rem;
+        padding: 0;
       }
       .lang-item .lang-level,
       .skill-item .skill-level {
-        font-size: 0.35rem;
+        font-size: 0.33rem;
         padding: 0 4px;
       }
 
-      .right-col {
-        padding: 6px 10px 4px;
-        gap: 4px;
-      }
-      .cv-header h1 {
-        font-size: 1.2rem;
-      }
-      .cv-header .subtitle {
-        font-size: 0.4rem;
-        padding: 1px 8px;
-      }
-      .right-col h3 {
-        font-size: 0.45rem;
-        padding-bottom: 1px;
-        margin-bottom: 2px;
-      }
-      .summary p {
-        font-size: 0.4rem;
-        padding: 2px 6px;
+      .profile-text {
+        font-size: 0.38rem;
+        padding: 2px 4px;
         line-height: 1.3;
+        -webkit-line-clamp: 2;
+      }
+
+      .edu-item,
+      .exp-item,
+      .project-item,
+      .award-item {
+        font-size: 0.37rem;
+        padding: 0;
+        gap: 3px;
+      }
+      .badge-status {
+        font-size: 0.3rem;
+        padding: 0 4px;
+        line-height: 1.3;
+      }
+      .edu-desc,
+      .exp-desc,
+      .project-desc {
+        font-size: 0.37rem;
+        min-width: 30px;
+      }
+      .edu-meta,
+      .exp-meta,
+      .project-meta {
+        font-size: 0.3rem;
+      }
+      .project-tech {
+        font-size: 0.3rem;
+        padding: 0 4px;
+      }
+      .project-link a {
+        font-size: 0.35rem;
+      }
+      .award-item .award-icon {
+        font-size: 0.45rem;
+        width: 12px;
+      }
+      .award-item .award-level {
+        font-size: 0.3rem;
+        padding: 0 4px;
+      }
+      .skill-subnote {
+        font-size: 0.33rem;
+        padding-top: 2px;
+        margin-top: 1px;
+      }
+
+      .action-buttons {
+        bottom: 4px;
+        gap: 6px;
+      }
+      .action-btn {
+        font-size: 0.5rem;
+        padding: 4px 12px;
+        border-width: 1px;
+      }
+    }
+
+    /* ================================================================
+       HP sangat kecil (≤ 360px)
+    ================================================================ */
+    @media screen and (max-width: 360px) {
+      .top-bar .photo {
+        width: 32px;
+        height: 32px;
+      }
+      .top-bar .name-title h1 {
+        font-size: 0.75rem;
+      }
+      .top-bar .name-title .title {
+        font-size: 0.35rem;
+      }
+      .top-bar .badge-summa {
+        font-size: 0.3rem;
+        padding: 0 4px;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2px 4px;
+        padding: 3px 6px 2px;
+      }
+
+      .contact-item {
+        font-size: 0.33rem;
+      }
+      .lang-item,
+      .skill-item {
+        font-size: 0.33rem;
+      }
+      .profile-text {
+        font-size: 0.33rem;
+        -webkit-line-clamp: 2;
       }
       .edu-item,
       .exp-item,
       .project-item,
       .award-item {
-        font-size: 0.4rem;
-        padding: 1px 0;
-        gap: 2px;
+        font-size: 0.32rem;
       }
       .badge-status {
-        font-size: 0.35rem;
-        padding: 0 4px;
-      }
-      .edu-desc,
-      .exp-desc,
-      .project-desc {
-        font-size: 0.4rem;
-        min-width: 40px;
-      }
-      .edu-meta,
-      .exp-meta,
-      .project-meta {
-        font-size: 0.35rem;
-      }
-      .project-tech {
-        font-size: 0.35rem;
-        padding: 0 4px;
-      }
-      .project-link a {
-        font-size: 0.4rem;
-      }
-      .award-item .award-icon {
-        font-size: 0.5rem;
-        width: 12px;
-      }
-      .award-item .award-level {
-        font-size: 0.35rem;
-        padding: 0 4px;
+        font-size: 0.26rem;
+        padding: 0 3px;
       }
       .action-btn {
-        font-size: 0.5rem;
-        padding: 6px 6px;
-        min-height: 28px;
+        font-size: 0.4rem;
+        padding: 3px 8px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- ================================================================
+       CV — FULL VIEWPORT
+  ================================================================ -->
   <div class="cv" id="cvContainer">
 
-    <!-- ===== LEFT COLUMN ===== -->
-    <div class="left-col">
-      <div class="headshot">
-        <div class="headshot-circle">
-          <img src="pas foto.png" alt="Ahmad Wildan" />
-        </div>
-        <span class="headshot-name">Ahmad Wildan Asy Syifa</span>
+    <!-- ===== TOP BAR ===== -->
+    <div class="top-bar">
+      <div class="photo">
+        <img src="pas foto.png" alt="Ahmad Wildan" />
       </div>
-
-      <div>
-        <h3>📌 Contact</h3>
-        <div class="contact-item"><span class="icon">📞</span> +62 812 5973 0289</div>
-        <div class="contact-item"><span class="icon">✉️</span> ahmad.wildan.asy2356@gmail.com</div>
-        <div class="contact-item"><span class="icon">🔗</span> <a href="https://github.com/AhmadWildan" target="_blank">github.com/AhmadWildan</a></div>
-        <div class="contact-item"><span class="icon">🐙</span> <a href="https://linkedin.com/in/AhmadWildan" target="_blank">linkedin.com/in/AhmadWildan</a></div>
+      <div class="name-title">
+        <h1>Ahmad Wildan <span class="gold">Asy Syifa</span></h1>
+        <span class="title">Summa Cum Laude · Diploma Syariah · Multilingual</span>
       </div>
-
-      <div>
-        <h3>🌐 Languages</h3>
-        <div class="lang-item"><span class="lang-name">English</span><span class="lang-level gold">TOEFL 607 · C1</span></div>
-        <div class="lang-item"><span class="lang-name">Mandarin</span><span class="lang-level">Peking U · Basic</span></div>
-        <div class="lang-item"><span class="lang-name">Korean</span><span class="lang-level">Conversational</span></div>
-        <div class="lang-item"><span class="lang-name">Japanese</span><span class="lang-level">Basic</span></div>
-      </div>
-
-      <div>
-        <h3>⚙️ Tech</h3>
-        <div class="skill-item"><span class="skill-name">HTML5</span><span class="skill-level">Structuring</span></div>
-        <div class="skill-item"><span class="skill-name">CSS3</span><span class="skill-level">Styling</span></div>
-        <div class="skill-item"><span class="skill-name">JavaScript</span><span class="skill-level">Interactivity</span></div>
-        <div class="skill-subnote">🏫 Rumah IT Indonesia · Web Dev</div>
-      </div>
+      <span class="badge-summa">★ GPA 4.00</span>
     </div>
 
-    <!-- ===== RIGHT COLUMN ===== -->
-    <div class="right-col">
+    <!-- ===== MAIN GRID ===== -->
+    <div class="main-grid">
 
-      <div class="cv-header">
-        <span class="cv-tag">✦ Resume</span>
-        <h1>Ahmad Wildan <span class="gold">Asy Syifa</span></h1>
-        <div class="subtitle">Summa Cum Laude · Diploma Syariah · Multilingual</div>
-      </div>
+      <!-- ===== KOLOM KIRI ===== -->
+      <div class="left-grid">
 
-      <div class="summary">
-        <h3>📋 Profile</h3>
-        <p><strong>MA Al Irsyad Piat 7</strong> · Rank #1 (6 yrs) · <strong>GPA 4.00</strong> Markaz Ulum · Accepted Sousse University · Tech @Zad Academy</p>
-      </div>
-
-      <div>
-        <h3>🎓 Education</h3>
-        <div class="edu-item"><span class="badge-status current">Current</span><span class="edu-desc"><strong>Markaz Ulum</strong> · Diploma Syariah</span><span class="edu-meta">GPA 4.00</span></div>
-        <div class="edu-item"><span class="badge-status current">Current</span><span class="edu-desc"><strong>Zad Academy</strong> · Tech Dev</span><span class="edu-meta">Web Basics</span></div>
-        <div class="edu-item"><span class="badge-status accepted">Accepted</span><span class="edu-desc"><strong>Sousse University</strong> · Sastra Arab</span><span class="edu-meta">Tunisia</span></div>
-        <div class="edu-item"><span class="badge-status pending">Pending</span><span class="edu-desc"><strong>Saudi Arabia U</strong> · Advanced</span><span class="edu-meta">In progress</span></div>
-      </div>
-
-      <div>
-        <h3>💼 Experience</h3>
-        <div class="exp-item"><span class="badge-status current">Current</span><span class="exp-desc"><strong>Zad Academy</strong> · Web Dev Trainee <span class="exp-meta">2025–present</span></span></div>
-        <div class="exp-item"><span class="badge-status completed">Completed</span><span class="exp-desc"><strong>Rumah IT Indonesia</strong> · Workshop <span class="exp-meta">2024</span></span></div>
-      </div>
-
-      <div>
-        <h3>🖥️ Projects</h3>
-        <div class="project-item">
-          <span class="project-desc"><strong>CV Digital Premium</strong> <span class="project-tech">HTML · CSS · JS</span></span>
-          <span class="project-link"><a href="https://github.com/AhmadWildan/cv-premium" target="_blank">🔗 Repo</a></span>
+        <!-- Contact -->
+        <div class="section">
+          <span class="section-title">📌 Contact</span>
+          <div class="contact-item"><span class="icon">📞</span> +62 812 5973 0289</div>
+          <div class="contact-item"><span class="icon">✉️</span> ahmad.wildan.asy2356@gmail.com</div>
+          <div class="contact-item"><span class="icon">🔗</span> <a href="https://github.com/ahmadwildanasy.git" target="_blank">github.com/ahmadwildanasy</a></div>
+          <div class="contact-item"><span class="icon">🐙</span> <a href="https://linkedin.com/in/AhmadWildan" target="_blank">linkedin.com/in/AhmadWildan</a></div>
         </div>
-        <div class="project-item">
-          <span class="project-desc"><strong>Landing Page Kampus</strong> <span class="project-tech">HTML · CSS</span></span>
-          <span class="project-link"><a href="https://github.com/AhmadWildan/landing-kampus" target="_blank">🔗 Repo</a></span>
+
+        <!-- Languages -->
+        <div class="section">
+          <span class="section-title">🌐 Languages</span>
+          <div class="lang-item"><span class="lang-name">English</span><span class="lang-level gold">TOEFL 607 · C1</span></div>
+          <div class="lang-item"><span class="lang-name">Mandarin</span><span class="lang-level">Peking U · Basic</span></div>
+          <div class="lang-item"><span class="lang-name">Korean</span><span class="lang-level">Conversational</span></div>
+          <div class="lang-item"><span class="lang-name">Japanese</span><span class="lang-level">Basic</span></div>
         </div>
+
+        <!-- Technical -->
+        <div class="section">
+          <span class="section-title">⚙️ Technical</span>
+          <div class="skill-item"><span class="skill-name">HTML5</span><span class="skill-level">Structuring</span></div>
+          <div class="skill-item"><span class="skill-name">CSS3</span><span class="skill-level">Styling</span></div>
+          <div class="skill-item"><span class="skill-name">JavaScript</span><span class="skill-level">Interactivity</span></div>
+          <div class="skill-subnote">🏫 Rumah IT Indonesia · Web Dev</div>
+        </div>
+
       </div>
 
-      <div>
-        <h3>🏅 Awards</h3>
-        <div class="award-item"><span class="award-icon">🔬</span><span class="award-desc"><strong>KSN</strong> Runner-up 2</span><span class="award-level">National</span></div>
-        <div class="award-item"><span class="award-icon">🌍</span><span class="award-desc"><strong>OBA</strong> 2nd Place</span><span class="award-level">City</span></div>
-        <div class="award-item"><span class="award-icon">🏆</span><span class="award-desc"><strong>OBA</strong> Top 5</span><span class="award-level">Provincial</span></div>
-        <div class="award-item"><span class="award-icon">📜</span><span class="award-desc"><strong>TOEFL 607 · Hamzah C1</strong></span><span class="award-level">Certified</span></div>
-      </div>
+      <!-- ===== KOLOM KANAN ===== -->
+      <div class="right-grid">
 
+        <!-- Profile -->
+        <div class="section">
+          <span class="section-title">📋 Profile</span>
+          <div class="profile-text">
+            <strong>MA Al Irsyad Piat 7</strong> · Rank #1 (6 yrs) · <strong>GPA 4.00</strong> Markaz Ulum · Accepted Sousse University · Tech @Zad Academy
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="section">
+          <span class="section-title">🎓 Education</span>
+          <div class="edu-item"><span class="badge-status current">Current</span><span class="edu-desc"><strong>Markaz Ulum</strong> · Diploma Syariah</span><span class="edu-meta">GPA 4.00</span></div>
+          <div class="edu-item"><span class="badge-status current">Current</span><span class="edu-desc"><strong>Zad Academy</strong> · Tech Dev</span><span class="edu-meta">Web Basics</span></div>
+          <div class="edu-item"><span class="badge-status accepted">Accepted</span><span class="edu-desc"><strong>Sousse U</strong> · Sastra Arab</span><span class="edu-meta">Tunisia</span></div>
+          <div class="edu-item"><span class="badge-status pending">Pending</span><span class="edu-desc"><strong>Saudi Arabia U</strong> · Advanced</span><span class="edu-meta">In progress</span></div>
+        </div>
+
+        <!-- Experience + Projects (digabung untuk hemat space) -->
+        <div class="section">
+          <span class="section-title">💼 Exp &amp; Projects</span>
+          <div class="exp-item"><span class="badge-status current">Current</span><span class="exp-desc"><strong>Zad Academy</strong> · Web Dev Trainee</span><span class="exp-meta">2025–now</span></div>
+          <div class="exp-item"><span class="badge-status completed">Completed</span><span class="exp-desc"><strong>Rumah IT</strong> · Workshop</span><span class="exp-meta">2024</span></div>
+          <div class="project-item">
+            <span class="project-desc"><strong>CV Digital</strong> <span class="project-tech">HTML·CSS·JS</span></span>
+            <span class="project-link"><a href="https://github.com/ahmadwildanasy/cv-premium" target="_blank">Repo</a></span>
+          </div>
+          <div class="project-item">
+            <span class="project-desc"><strong>Landing Kampus</strong> <span class="project-tech">HTML·CSS</span></span>
+            <span class="project-link"><a href="https://github.com/ahmadwildanasy/landing-kampus" target="_blank">Repo</a></span>
+          </div>
+        </div>
+
+        <!-- Awards (compact) -->
+        <div class="section">
+          <span class="section-title">🏅 Awards</span>
+          <div class="award-item"><span class="award-icon">🔬</span><span class="award-desc"><strong>KSN</strong> Runner-up 2</span><span class="award-level">National</span></div>
+          <div class="award-item"><span class="award-icon">🌍</span><span class="award-desc"><strong>OBA</strong> 2nd Place</span><span class="award-level">City</span></div>
+          <div class="award-item"><span class="award-icon">🏆</span><span class="award-desc"><strong>OBA</strong> Top 5</span><span class="award-level">Provincial</span></div>
+          <div class="award-item"><span class="award-icon">📜</span><span class="award-desc"><strong>TOEFL 607 · C1</strong></span><span class="award-level">Certified</span></div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -868,11 +709,13 @@
     <button class="action-btn print-btn" onclick="window.print()">🖨️ Print</button>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+  </script>
   <script>
     function downloadPDF() {
-      const element = document.getElementById('cvContainer');
+      const el = document.getElementById('cvContainer');
       const btn = document.querySelector('.pdf-btn');
-      const original = btn.innerHTML;
+      const orig = btn.innerHTML;
       btn.innerHTML = '⏳';
       btn.disabled = true;
       const opt = {
@@ -882,11 +725,11 @@
         html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#fcf9f2' },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
       };
-      html2pdf().set(opt).from(element).save().then(() => {
-        btn.innerHTML = original;
+      html2pdf().set(opt).from(el).save().then(() => {
+        btn.innerHTML = orig;
         btn.disabled = false;
       }).catch(() => {
-        btn.innerHTML = original;
+        btn.innerHTML = orig;
         btn.disabled = false;
         alert('Gagal generate PDF. Gunakan tombol Print.');
       });
