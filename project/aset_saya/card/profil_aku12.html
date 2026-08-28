@@ -811,6 +811,41 @@
         min-height: 38px;
       }
     }
+
+    /* Print optimization */
+    @media print {
+      .cv, .left-col, .right-col {
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+      }
+      .left-col {
+        width: 33% !important;
+        border-right: 3px solid var(--gold) !important;
+        border-bottom: none !important;
+        background: #0a1628 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .right-col {
+        width: 67% !important;
+        background: #fcf9f2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .left-col::before, .right-col::before {
+        display: none !important;
+      }
+      .contact-item:hover, .lang-item:hover, .skill-item:hover,
+      .edu-item:hover, .exp-item:hover, .project-item:hover, .award-item:hover {
+        background: transparent !important;
+        transform: none !important;
+        padding-left: 4px !important;
+      }
+      .proficiency-dots {
+        display: flex !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -865,7 +900,6 @@
           <span class="lang-level">Basic Grammar</span>
         </div>
 
-        <!-- Visual dots -->
         <div style="display:flex; gap:14px; margin-top:10px; flex-wrap:wrap;">
           <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>English</span>
@@ -939,9 +973,9 @@
           <strong>MA Al Irsyad Piat 7</strong> graduate · Consistent <strong>Rank #1</strong> from MTs to MA 
           (6 consecutive years) with a <strong>95 academic average</strong> and a <strong>97.10 peak score</strong>. 
           Proven excellence through national & provincial competitions. Currently pursuing a 
-          <strong>Diploma Syariah (GPA 4.00)</strong> at Markaz Ulum and advancing technical skills 
-          at Zad Academy. Accepted into <strong>Sousse University</strong> for Arabic Literature with 
-          a pending application for advanced studies in Saudi Arabia.
+          <strong>Diploma Syariah (GPA 4.00)</strong> at Markaz Ulum and deepening knowledge of 
+          <strong>Islamic law & Arabic</strong> at Zad Academy. Accepted into <strong>Sousse University</strong> 
+          for Arabic Literature with a pending application for advanced studies in Saudi Arabia.
         </p>
       </div>
 
@@ -954,8 +988,8 @@
         </div>
         <div class="edu-item">
           <span class="badge-status current">Current</span>
-          <span class="edu-desc"><strong>Zad Academy</strong> · Tech Development</span>
-          <span class="edu-meta">Web Dev Basics</span>
+          <span class="edu-desc"><strong>Zad Academy</strong> · Islamic Studies & Arabic Language</span>
+          <span class="edu-meta">Syariah & Arabic</span>
         </div>
         <div class="edu-item">
           <span class="badge-status accepted">Accepted</span>
@@ -974,7 +1008,7 @@
         <div class="exp-item">
           <span class="badge-status current">Current</span>
           <span class="exp-desc">
-            <strong>Zad Academy</strong> · Web Dev Trainee
+            <strong>Rumah IT Indonesia</strong> · Web Development Trainee
             <span class="exp-meta">2026 – Present</span>
             <p>Membangun landing page responsif, belajar HTML/CSS/JS fundamental, dan mengerjakan proyek kolaboratif.</p>
           </span>
