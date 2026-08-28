@@ -845,6 +845,164 @@
         min-height: 38px;
       }
     }
+
+    /* ================================================================
+       PRINT OPTIMIZATION — semua info terlihat jelas
+    ================================================================ */
+    @media print {
+      /* Reset semua overflow */
+      .cv, .left-col, .right-col, .main-grid, .left-grid, .right-grid {
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+        margin: 0;
+        display: block;
+      }
+
+      .cv {
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        box-shadow: none;
+        border-radius: 0;
+        page-break-after: avoid;
+        flex-direction: row !important;
+      }
+
+      .left-col {
+        width: 33% !important;
+        background: #0a1628 !important;
+        border-right: 3px solid #d4af37 !important;
+        border-bottom: none !important;
+        padding: 32px 20px !important;
+        gap: 20px !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 100% !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .right-col {
+        width: 67% !important;
+        background: #fcf9f2 !important;
+        padding: 32px 36px !important;
+        gap: 18px !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 100% !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* Pastikan semua teks terbaca */
+      .left-col h3, .right-col h3 {
+        font-size: 0.85rem !important;
+        margin-bottom: 10px !important;
+      }
+      .contact-item {
+        font-size: 0.7rem !important;
+        padding: 3px 0 !important;
+        margin-bottom: 6px !important;
+      }
+      .lang-item, .skill-item {
+        font-size: 0.7rem !important;
+        padding: 4px 0 !important;
+      }
+      .lang-item .lang-level, .skill-item .skill-level {
+        font-size: 0.6rem !important;
+        padding: 1px 10px !important;
+      }
+      .summary p {
+        font-size: 0.78rem !important;
+        padding: 10px 14px !important;
+        line-height: 1.6 !important;
+      }
+      .edu-item, .exp-item, .project-item, .award-item {
+        font-size: 0.75rem !important;
+        padding: 5px 0 !important;
+        gap: 8px !important;
+      }
+      .badge-status {
+        font-size: 0.5rem !important;
+        padding: 1px 10px !important;
+      }
+      .edu-desc, .exp-desc, .project-desc {
+        font-size: 0.75rem !important;
+        min-width: 120px !important;
+      }
+      .edu-meta, .exp-meta, .project-meta {
+        font-size: 0.6rem !important;
+        white-space: nowrap !important;
+      }
+      .exp-desc p, .project-desc p {
+        font-size: 0.7rem !important;
+        margin-top: 2px !important;
+      }
+      .project-tech {
+        font-size: 0.55rem !important;
+        padding: 0 10px !important;
+      }
+      .project-link a {
+        font-size: 0.65rem !important;
+      }
+      .award-item .award-level {
+        font-size: 0.55rem !important;
+        padding: 0 10px !important;
+      }
+      .headshot-circle {
+        width: 110px !important;
+        height: 110px !important;
+        border-width: 3px !important;
+        box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+      }
+      .headshot-name {
+        font-size: 0.75rem !important;
+        padding-top: 8px !important;
+      }
+      .cv-header h1 {
+        font-size: 2.8rem !important;
+      }
+      .cv-header .subtitle {
+        font-size: 0.8rem !important;
+        padding: 3px 16px !important;
+      }
+
+      /* Hilangkan dekorasi latar */
+      .left-col::before, .right-col::before {
+        display: none !important;
+      }
+
+      /* Hover effect nonaktif di print */
+      .contact-item:hover, .lang-item:hover, .skill-item:hover,
+      .edu-item:hover, .exp-item:hover, .project-item:hover, .award-item:hover {
+        background: transparent !important;
+        transform: none !important;
+        padding-left: 4px !important;
+      }
+
+      /* Tampilkan semua item yang disembunyikan di mobile */
+      .lang-item:nth-child(n+4), .skill-item:nth-child(n+4),
+      .exp-item:nth-child(n+3), .project-item:nth-child(n+3),
+      .award-item:nth-child(n+4) {
+        display: flex !important;
+      }
+      .exp-desc p, .project-desc p {
+        display: block !important;
+      }
+      .proficiency-dots {
+        display: flex !important;
+      }
+      .skill-subnote {
+        font-size: 0.55rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -873,15 +1031,19 @@
         <div class="contact-item"><span class="icon">✉️</span> ahmad.wildan.asy2356@gmail.com</div>
         <div class="contact-item"><span class="icon">📍</span> Indonesia · Global Reach</div>
         <div class="contact-item"><span class="icon">🔗</span> linkedin.com/in/AhmadWildan</div>
-        <div class="contact-item"><span class="icon">🐙</span> https://github.com/ahmadwildanasy2356-cell/project-saya.git</div>
+        <div class="contact-item"><span class="icon">🐙</span> github.com/ahmadwildanasy2356-cell</div>
       </div>
 
-      <!-- Languages -->
+      <!-- Languages — TAMBAH BAHASA ARAB -->
       <div>
         <h3>🌐 Languages</h3>
         <div class="lang-item">
+          <span class="lang-name">Arabic</span>
+          <span class="lang-level gold">Native · Fasih</span>
+        </div>
+        <div class="lang-item">
           <span class="lang-name">English</span>
-          <span class="lang-level gold">TOEFL 607 · Hamzah C1</span>
+          <span class="lang-level gold">TOEFL 607 · C1</span>
         </div>
         <div class="lang-item">
           <span class="lang-name">Mandarin</span>
@@ -896,8 +1058,16 @@
           <span class="lang-level">Basic Grammar</span>
         </div>
         <!-- Visual dots -->
-        <div style="display:flex; gap:14px; margin-top:10px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
+        <div style="display:flex; gap:12px; margin-top:10px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
+            <span>Arabic</span>
+            <span class="proficiency-dots">
+              <span class="dot filled"></span><span class="dot filled"></span>
+              <span class="dot filled"></span><span class="dot filled"></span>
+              <span class="dot filled"></span>
+            </span>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>English</span>
             <span class="proficiency-dots">
               <span class="dot filled"></span><span class="dot filled"></span>
@@ -905,7 +1075,7 @@
               <span class="dot filled"></span>
             </span>
           </div>
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>Mandarin</span>
             <span class="proficiency-dots">
               <span class="dot filled"></span><span class="dot filled"></span>
@@ -913,7 +1083,7 @@
               <span class="dot"></span>
             </span>
           </div>
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>Korean</span>
             <span class="proficiency-dots">
               <span class="dot filled"></span><span class="dot filled"></span>
@@ -1046,7 +1216,7 @@
         </div>
       </div>
 
-      <!-- Awards -->
+      <!-- Awards — TOEFL dan Hamzah DIPISAHKAN -->
       <div>
         <h3>🏅 Awards</h3>
         <div class="award-item">
@@ -1066,7 +1236,12 @@
         </div>
         <div class="award-item">
           <span class="award-icon">📜</span>
-          <span class="award-desc"><strong>TOEFL 607 · Hamzah C1</strong> · English Proficiency</span>
+          <span class="award-desc"><strong>TOEFL 607</strong> · English Proficiency</span>
+          <span class="award-level">Certified</span>
+        </div>
+        <div class="award-item">
+          <span class="award-icon">📜</span>
+          <span class="award-desc"><strong>Hamzah C1</strong> · Arabic Proficiency</span>
           <span class="award-level">Certified</span>
         </div>
         <div class="award-item">
