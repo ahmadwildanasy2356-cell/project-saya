@@ -1,30 +1,20 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <!-- ═══════════════════════════════════════════════════
-       CV PREMIUM · AHMAD WILDAN ASY SYIFA
-       Design: Midnight Navy · Metallic Gold · Warm Cream
-       Layout: Two-Column · A4 Print-Ready
-       ═══════════════════════════════════════════════════
-  -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>Ahmad Wildan Asy Syifa · CV Premium</title>
   
-  <!-- Meta SEO -->
   <meta name="description" content="CV Premium Ahmad Wildan Asy Syifa · Summa Cum Laude · Multilingual Tech Enthusiast" />
   <meta property="og:title" content="CV Premium · Ahmad Wildan Asy Syifa" />
   <meta property="og:image" content="pas foto.png" />
   
-  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a1628'/><text x='50%' y='50%' font-size='56' text-anchor='middle' dy='.35em' fill='%23d4af37' font-family='serif'>AW</text></svg>" />
 
-  <!-- Google Fonts: Playfair Display (Serif Mewah) + Inter (Sans-Serif Modern) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- html2pdf untuk download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 
   <style>
@@ -68,9 +58,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ================================================================
-       CV WRAPPER · A4
-    ================================================================ */
     .cv {
       width: 210mm;
       min-height: 297mm;
@@ -85,9 +72,6 @@
       position: relative;
     }
 
-    /* ================================================================
-       LEFT COLUMN · MIDNIGHT NAVY + GOLD ACCENTS
-    ================================================================ */
     .left-col {
       width: 33%;
       background: linear-gradient(160deg, #0a1628 0%, #0f1f34 60%, #142c44 100%);
@@ -102,7 +86,6 @@
       overflow: hidden;
     }
 
-    /* Ornamen dekoratif di kiri */
     .left-col::before {
       content: '';
       position: absolute;
@@ -115,7 +98,6 @@
       pointer-events: none;
     }
 
-    /* Headshot — lebih besar dan mewah */
     .headshot {
       text-align: center;
       margin-bottom: 4px;
@@ -161,7 +143,6 @@
       opacity: 0.9;
     }
 
-    /* Left Section Titles — lebih elegan */
     .left-col h3 {
       font-family: 'Playfair Display', serif;
       font-size: 0.9rem;
@@ -186,7 +167,6 @@
       opacity: 0.3;
     }
 
-    /* Contact */
     .contact-item {
       display: flex;
       align-items: center;
@@ -216,7 +196,6 @@
       color: var(--gold);
     }
 
-    /* Language & Skills — lebih rapi */
     .lang-item,
     .skill-item {
       display: flex;
@@ -260,7 +239,6 @@
       font-weight: 500;
     }
 
-    /* Proficiency Dots */
     .proficiency-dots {
       display: flex;
       gap: 4px;
@@ -293,9 +271,6 @@
       opacity: 0.7;
     }
 
-    /* ================================================================
-       RIGHT COLUMN · WARM CREAM
-    ================================================================ */
     .right-col {
       width: 67%;
       padding: 40px 42px 32px;
@@ -306,7 +281,6 @@
       position: relative;
     }
 
-    /* Dekorasi subtle di kanan */
     .right-col::before {
       content: '';
       position: absolute;
@@ -318,7 +292,6 @@
       pointer-events: none;
     }
 
-    /* Header */
     .cv-header {
       border-bottom: 2px solid rgba(212, 175, 55, 0.2);
       padding-bottom: 16px;
@@ -371,7 +344,6 @@
       -webkit-text-fill-color: var(--navy-light);
     }
 
-    /* Right Section Titles */
     .right-col h3 {
       font-family: 'Playfair Display', serif;
       font-size: 0.9rem;
@@ -385,7 +357,6 @@
       display: inline-block;
     }
 
-    /* Summary */
     .summary p {
       font-size: 0.85rem;
       line-height: 1.8;
@@ -401,7 +372,6 @@
       font-weight: 600;
     }
 
-    /* Education, Experience, Projects, Awards */
     .edu-item,
     .exp-item,
     .project-item,
@@ -557,9 +527,6 @@
       margin-top: 2px;
     }
 
-    /* ================================================================
-       TOMBOL AKSI · PREMIUM
-    ================================================================ */
     .action-buttons {
       position: fixed;
       bottom: 28px;
@@ -779,7 +746,6 @@
         white-space: normal;
       }
 
-      /* Tombol aksi di HP */
       .action-buttons {
         position: fixed;
         bottom: 12px;
@@ -845,177 +811,15 @@
         min-height: 38px;
       }
     }
-
-    /* ================================================================
-       PRINT OPTIMIZATION — semua info terlihat jelas
-    ================================================================ */
-    @media print {
-      /* Reset semua overflow */
-      .cv, .left-col, .right-col, .main-grid, .left-grid, .right-grid {
-        overflow: visible !important;
-        height: auto !important;
-        max-height: none !important;
-        min-height: 0 !important;
-      }
-
-      body {
-        background: white;
-        padding: 0;
-        margin: 0;
-        display: block;
-      }
-
-      .cv {
-        width: 100%;
-        max-width: 100%;
-        min-height: 100vh;
-        box-shadow: none;
-        border-radius: 0;
-        page-break-after: avoid;
-        flex-direction: row !important;
-      }
-
-      .left-col {
-        width: 33% !important;
-        background: #0a1628 !important;
-        border-right: 3px solid #d4af37 !important;
-        border-bottom: none !important;
-        padding: 32px 20px !important;
-        gap: 20px !important;
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 100% !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      .right-col {
-        width: 67% !important;
-        background: #fcf9f2 !important;
-        padding: 32px 36px !important;
-        gap: 18px !important;
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 100% !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      /* Pastikan semua teks terbaca */
-      .left-col h3, .right-col h3 {
-        font-size: 0.85rem !important;
-        margin-bottom: 10px !important;
-      }
-      .contact-item {
-        font-size: 0.7rem !important;
-        padding: 3px 0 !important;
-        margin-bottom: 6px !important;
-      }
-      .lang-item, .skill-item {
-        font-size: 0.7rem !important;
-        padding: 4px 0 !important;
-      }
-      .lang-item .lang-level, .skill-item .skill-level {
-        font-size: 0.6rem !important;
-        padding: 1px 10px !important;
-      }
-      .summary p {
-        font-size: 0.78rem !important;
-        padding: 10px 14px !important;
-        line-height: 1.6 !important;
-      }
-      .edu-item, .exp-item, .project-item, .award-item {
-        font-size: 0.75rem !important;
-        padding: 5px 0 !important;
-        gap: 8px !important;
-      }
-      .badge-status {
-        font-size: 0.5rem !important;
-        padding: 1px 10px !important;
-      }
-      .edu-desc, .exp-desc, .project-desc {
-        font-size: 0.75rem !important;
-        min-width: 120px !important;
-      }
-      .edu-meta, .exp-meta, .project-meta {
-        font-size: 0.6rem !important;
-        white-space: nowrap !important;
-      }
-      .exp-desc p, .project-desc p {
-        font-size: 0.7rem !important;
-        margin-top: 2px !important;
-      }
-      .project-tech {
-        font-size: 0.55rem !important;
-        padding: 0 10px !important;
-      }
-      .project-link a {
-        font-size: 0.65rem !important;
-      }
-      .award-item .award-level {
-        font-size: 0.55rem !important;
-        padding: 0 10px !important;
-      }
-      .headshot-circle {
-        width: 110px !important;
-        height: 110px !important;
-        border-width: 3px !important;
-        box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
-      }
-      .headshot-name {
-        font-size: 0.75rem !important;
-        padding-top: 8px !important;
-      }
-      .cv-header h1 {
-        font-size: 2.8rem !important;
-      }
-      .cv-header .subtitle {
-        font-size: 0.8rem !important;
-        padding: 3px 16px !important;
-      }
-
-      /* Hilangkan dekorasi latar */
-      .left-col::before, .right-col::before {
-        display: none !important;
-      }
-
-      /* Hover effect nonaktif di print */
-      .contact-item:hover, .lang-item:hover, .skill-item:hover,
-      .edu-item:hover, .exp-item:hover, .project-item:hover, .award-item:hover {
-        background: transparent !important;
-        transform: none !important;
-        padding-left: 4px !important;
-      }
-
-      /* Tampilkan semua item yang disembunyikan di mobile */
-      .lang-item:nth-child(n+4), .skill-item:nth-child(n+4),
-      .exp-item:nth-child(n+3), .project-item:nth-child(n+3),
-      .award-item:nth-child(n+4) {
-        display: flex !important;
-      }
-      .exp-desc p, .project-desc p {
-        display: block !important;
-      }
-      .proficiency-dots {
-        display: flex !important;
-      }
-      .skill-subnote {
-        font-size: 0.55rem !important;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- ================================================================
-       CV UTAMA
-  ================================================================ -->
   <div class="cv" id="cvContainer">
 
     <!-- ===== LEFT COLUMN ===== -->
     <div class="left-col">
 
-      <!-- Headshot -->
       <div class="headshot">
         <div class="headshot-circle">
           <!-- ⚠️ Ganti "pas foto.png" dengan nama file foto Anda -->
@@ -1024,50 +828,46 @@
         <span class="headshot-name">Ahmad Wildan Asy Syifa</span>
       </div>
 
-      <!-- Contact -->
       <div>
         <h3>📌 Contact</h3>
         <div class="contact-item"><span class="icon">📞</span> +62 812 5973 0289</div>
         <div class="contact-item"><span class="icon">✉️</span> ahmad.wildan.asy2356@gmail.com</div>
         <div class="contact-item"><span class="icon">📍</span> Indonesia · Global Reach</div>
         <div class="contact-item"><span class="icon">🔗</span> linkedin.com/in/AhmadWildan</div>
-        <div class="contact-item"><span class="icon">🐙</span> github.com/ahmadwildanasy2356-cell</div>
+        <div class="contact-item"><span class="icon">🐙</span> https://github.com/ahmadwildanasy2356-cell/project-saya.git</div>
       </div>
 
-      <!-- Languages — TAMBAH BAHASA ARAB -->
+      <!-- Languages -->
       <div>
         <h3>🌐 Languages</h3>
         <div class="lang-item">
-          <span class="lang-name">Arabic</span>
-          <span class="lang-level gold">Native · Fasih</span>
+          <span class="lang-name">🇮🇩 Indonesian</span>
+          <span class="lang-level gold">Native</span>
         </div>
         <div class="lang-item">
-          <span class="lang-name">English</span>
-          <span class="lang-level gold">TOEFL 607 · C1</span>
+          <span class="lang-name">🇬🇧 English</span>
+          <span class="lang-level gold">TOEFL 607</span>
         </div>
         <div class="lang-item">
-          <span class="lang-name">Mandarin</span>
+          <span class="lang-name">🇸🇦 Arabic</span>
+          <span class="lang-level gold">Hamzah C1</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">🇨🇳 Mandarin</span>
           <span class="lang-level">Alison.com · Basic</span>
         </div>
         <div class="lang-item">
-          <span class="lang-name">Korean</span>
+          <span class="lang-name">🇰🇷 Korean</span>
           <span class="lang-level">Conversational</span>
         </div>
         <div class="lang-item">
-          <span class="lang-name">Japanese</span>
+          <span class="lang-name">🇯🇵 Japanese</span>
           <span class="lang-level">Basic Grammar</span>
         </div>
+
         <!-- Visual dots -->
-        <div style="display:flex; gap:12px; margin-top:10px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
-            <span>Arabic</span>
-            <span class="proficiency-dots">
-              <span class="dot filled"></span><span class="dot filled"></span>
-              <span class="dot filled"></span><span class="dot filled"></span>
-              <span class="dot filled"></span>
-            </span>
-          </div>
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
+        <div style="display:flex; gap:14px; margin-top:10px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>English</span>
             <span class="proficiency-dots">
               <span class="dot filled"></span><span class="dot filled"></span>
@@ -1075,7 +875,15 @@
               <span class="dot filled"></span>
             </span>
           </div>
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
+            <span>Arabic</span>
+            <span class="proficiency-dots">
+              <span class="dot filled"></span><span class="dot filled"></span>
+              <span class="dot filled"></span><span class="dot filled"></span>
+              <span class="dot filled"></span>
+            </span>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>Mandarin</span>
             <span class="proficiency-dots">
               <span class="dot filled"></span><span class="dot filled"></span>
@@ -1083,7 +891,7 @@
               <span class="dot"></span>
             </span>
           </div>
-          <div style="display:flex; align-items:center; gap:4px; font-size:0.5rem; color:#b8b0a0; letter-spacing:0.02em;">
+          <div style="display:flex; align-items:center; gap:4px; font-size:0.55rem; color:#b8b0a0; letter-spacing:0.02em;">
             <span>Korean</span>
             <span class="proficiency-dots">
               <span class="dot filled"></span><span class="dot filled"></span>
@@ -1119,14 +927,12 @@
     <!-- ===== RIGHT COLUMN ===== -->
     <div class="right-col">
 
-      <!-- Header -->
       <div class="cv-header">
         <span class="cv-tag">✦ Resume</span>
         <h1>Ahmad Wildan <span class="gold">Asy Syifa</span></h1>
         <div class="subtitle">Summa Cum Laude Diploma Syariah Candidate · Multilingual Tech Enthusiast</div>
       </div>
 
-      <!-- Summary -->
       <div class="summary">
         <h3>📋 Profile</h3>
         <p>
@@ -1139,7 +945,6 @@
         </p>
       </div>
 
-      <!-- Education -->
       <div>
         <h3>🎓 Education</h3>
         <div class="edu-item">
@@ -1164,7 +969,6 @@
         </div>
       </div>
 
-      <!-- Experience -->
       <div>
         <h3>💼 Experience</h3>
         <div class="exp-item">
@@ -1193,7 +997,6 @@
         </div>
       </div>
 
-      <!-- Projects -->
       <div>
         <h3>🖥️ Projects</h3>
         <div class="project-item">
@@ -1216,7 +1019,6 @@
         </div>
       </div>
 
-      <!-- Awards — TOEFL dan Hamzah DIPISAHKAN -->
       <div>
         <h3>🏅 Awards</h3>
         <div class="award-item">
@@ -1298,9 +1100,6 @@
         alert('Gagal generate PDF. Gunakan tombol Print sebagai alternatif.');
       });
     }
-
-    // Optional: auto-print on load? disabled.
-    // window.onload = function() { window.print(); };
   </script>
 
 </body>
