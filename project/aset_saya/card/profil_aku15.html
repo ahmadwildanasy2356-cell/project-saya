@@ -25,9 +25,9 @@
     <style>
         /* ----- CSS Variables (Luxury Dark Theme) ----- */
         :root {
-            --bg-charcoal: #0f0f0f;
-            --bg-surface: #1a1a1a;
-            --bg-elevated: #242424;
+            --bg-charcoal: #0a0a0a;
+            --bg-surface: #141414;
+            --bg-elevated: #1e1e1e;
             --text-white: #f5f5f5;
             --text-muted: #a0a0a0;
             --gold-primary: #d4a847;
@@ -121,9 +121,9 @@
             pointer-events: none;
             overflow: hidden;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(212, 168, 71, 0.07) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(212, 168, 71, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(212, 168, 71, 0.04) 0%, transparent 40%),
+                radial-gradient(ellipse at 20% 50%, rgba(212, 168, 71, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 168, 71, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(212, 168, 71, 0.03) 0%, transparent 40%),
                 var(--bg-charcoal);
         }
 
@@ -134,17 +134,17 @@
             width: 100%;
             height: 100%;
             background-image:
-                linear-gradient(rgba(212, 168, 71, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 168, 71, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(212, 168, 71, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 168, 71, 0.025) 1px, transparent 1px);
             background-size: 60px 60px;
-            opacity: 0.5;
+            opacity: 0.6;
         }
 
         .bg-canvas .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(90px);
-            opacity: 0.30;
+            opacity: 0.25;
             animation: orbFloat 18s ease-in-out infinite alternate;
             will-change: transform;
         }
@@ -154,7 +154,7 @@
             height: 500px;
             top: -100px;
             right: -100px;
-            background: radial-gradient(circle, rgba(212, 168, 71, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(212, 168, 71, 0.12), transparent 70%);
             animation-duration: 22s;
             animation-delay: -4s;
         }
@@ -164,7 +164,7 @@
             height: 400px;
             bottom: -80px;
             left: -80px;
-            background: radial-gradient(circle, rgba(212, 168, 71, 0.10), transparent 70%);
+            background: radial-gradient(circle, rgba(212, 168, 71, 0.08), transparent 70%);
             animation-duration: 20s;
             animation-delay: -8s;
         }
@@ -175,7 +175,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(212, 168, 71, 0.07), transparent 70%);
+            background: radial-gradient(circle, rgba(212, 168, 71, 0.05), transparent 70%);
             animation-duration: 25s;
             animation-delay: -12s;
         }
@@ -202,18 +202,11 @@
             background: linear-gradient(90deg, var(--gold-primary), var(--gold-soft));
             border-radius: 4px;
             margin: 0.75rem 0 1.25rem 0;
+            flex-shrink: 0;
         }
 
         body.rtl .gold-line {
             background: linear-gradient(270deg, var(--gold-primary), var(--gold-soft));
-        }
-
-        .gold-border {
-            border: 1px solid rgba(212, 168, 71, 0.20);
-        }
-
-        .gold-glow-text {
-            color: var(--gold-primary);
         }
 
         .gold-badge {
@@ -351,7 +344,7 @@
             z-index: 100;
             display: flex;
             gap: 0.4rem;
-            background: rgba(26, 26, 26, 0.85);
+            background: rgba(20, 20, 20, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 0.3rem 0.3rem;
@@ -380,7 +373,7 @@
 
         .lang-toggle button.active {
             background: var(--gold-primary);
-            color: #141414;
+            color: #0a0a0a;
             box-shadow: 0 0 24px var(--gold-glow-strong);
         }
 
@@ -414,7 +407,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #141414;
+            color: #0a0a0a;
             font-size: 1.4rem;
         }
 
@@ -435,7 +428,7 @@
             max-width: calc(100vw - 2.5rem);
             height: 480px;
             max-height: calc(100vh - 140px);
-            background: rgba(26, 26, 26, 0.95);
+            background: rgba(20, 20, 20, 0.96);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: var(--radius-xl);
@@ -481,7 +474,7 @@
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
-            color: #141414;
+            color: #0a0a0a;
             font-weight: 700;
         }
 
@@ -561,7 +554,7 @@
 
         .chat-msg.user {
             background: var(--gold-primary);
-            color: #141414;
+            color: #0a0a0a;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
@@ -659,7 +652,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #141414;
+            color: #0a0a0a;
             font-size: 1rem;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -756,7 +749,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 50;
-            color: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.10);
             font-size: 0.6rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -769,11 +762,11 @@
         @keyframes pulseHint {
             0%,
             100% {
-                opacity: 0.12;
+                opacity: 0.10;
                 transform: translateX(-50%) translateY(0);
             }
             50% {
-                opacity: 0.45;
+                opacity: 0.40;
                 transform: translateX(-50%) translateY(-4px);
             }
         }
@@ -894,30 +887,167 @@
             color: var(--gold-primary);
         }
 
-        /* divider */
-        .divider-gold {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(212, 168, 71, 0.20), transparent);
-            margin: 0.5rem 0 1rem 0;
-        }
-
-        body.rtl .divider-gold {
-            background: linear-gradient(270deg, rgba(212, 168, 71, 0.20), transparent);
-        }
-
-        /* small caps */
-        .text-uppercase {
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        /* Hero subtitle */
         .hero-subtitle {
             font-size: clamp(0.9rem, 1.4vw, 1.2rem);
             color: var(--text-muted);
             font-weight: 400;
             letter-spacing: 0.04em;
+        }
+
+        /* ----- Contact Form Styles (premium) ----- */
+        .contact-form {
+            width: 100%;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .contact-form label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+            font-weight: 500;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 0.7rem 1rem;
+            color: var(--text-white);
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: rgba(212, 168, 71, 0.40);
+            box-shadow: 0 0 0 3px rgba(212, 168, 71, 0.08);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .contact-form .submit-btn {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-soft));
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 100px;
+            color: #0a0a0a;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            font-family: inherit;
+            letter-spacing: 0.02em;
+        }
+
+        .contact-form .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212, 168, 71, 0.30);
+        }
+
+        .contact-form .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* WhatsApp button */
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #25D366;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 100px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            font-family: inherit;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.25);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.35);
+        }
+
+        .whatsapp-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* form success state */
+        .form-success {
+            display: none;
+            color: var(--gold-soft);
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-success.show {
+            display: flex;
+        }
+
+        /* form row layout */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        body.rtl .form-row {
+            direction: rtl;
+        }
+
+        /* contact section layout */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        body.rtl .contact-grid {
+            direction: rtl;
         }
     </style>
 </head>
@@ -971,7 +1101,6 @@
                     </p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
-                        <!-- left column -->
                         <div class="space-y-3">
                             <div class="stat-card">
                                 <span class="stat-number">#1</span>
@@ -995,7 +1124,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- right column -->
                         <div class="space-y-3">
                             <div class="stat-card">
                                 <span class="stat-number" style="font-size:clamp(1.4rem,2.6vw,2.2rem);">✓</span>
@@ -1026,7 +1154,6 @@
                     <div class="gold-line"></div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full mt-2">
-                        <!-- Achievements -->
                         <div class="space-y-3">
                             <h3 class="heading-md text-gold" data-i18n="slide2.achieveHead">🏆 Achievements</h3>
                             <div class="achievement-item">
@@ -1052,7 +1179,6 @@
                             </div>
                         </div>
 
-                        <!-- Languages -->
                         <div class="space-y-3">
                             <h3 class="heading-md text-gold" data-i18n="slide2.langHead">🌐 Language Prowess</h3>
                             <div class="flex flex-wrap gap-2">
@@ -1073,45 +1199,92 @@
             </div>
         </section>
 
-        <!-- ===== SLIDE 3: TECHNICAL SKILLS & GLOBAL HOSPITALITY ===== -->
-        <section class="slide" data-index="2" id="slide-3" role="region" aria-label="Technical Skills &amp; Global Hospitality">
+        <!-- ===== SLIDE 3: TECHNICAL SKILLS + CONTACT FORM ===== -->
+        <section class="slide" data-index="2" id="slide-3" role="region" aria-label="Technical Skills &amp; Contact">
             <div class="slide-content">
                 <div class="flex flex-col items-start space-y-4">
-                    <span class="gold-badge" data-i18n="slide3.badge">Skills · Hospitality</span>
+                    <span class="gold-badge" data-i18n="slide3.badge">Skills · Connect</span>
                     <h2 class="heading-lg" data-i18n="slide3.title">Technical Craft &amp;<br />Global Service</h2>
                     <div class="gold-line"></div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full mt-2">
-                        <!-- Technical -->
-                        <div class="space-y-3">
-                            <h3 class="heading-md text-gold" data-i18n="slide3.techHead">💻 Front‑End Web</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag gold">HTML5</span>
-                                <span class="skill-tag gold">CSS3</span>
-                                <span class="skill-tag gold">JavaScript</span>
+                    <!-- Contact Grid: Left = Skills + WhatsApp, Right = Contact Form -->
+                    <div class="contact-grid w-full mt-2">
+                        <!-- Left Column: Skills + WhatsApp -->
+                        <div class="space-y-4">
+                            <!-- Technical Skills -->
+                            <div>
+                                <h3 class="heading-md text-gold" data-i18n="slide3.techHead">💻 Front‑End Web</h3>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <span class="skill-tag gold">HTML5</span>
+                                    <span class="skill-tag gold">CSS3</span>
+                                    <span class="skill-tag gold">JavaScript</span>
+                                </div>
+                                <p class="text-sm text-muted mt-1" data-i18n="slide3.techDetail">
+                                    Rumah IT Indonesia · foundational training
+                                </p>
+                                <div class="mt-2 p-3 rounded-lg border border-gold/10 bg-white/5">
+                                    <span class="text-xs uppercase tracking-wider text-muted" data-i18n="slide3.techCert">Certificate</span>
+                                    <p class="text-sm font-medium" data-i18n="slide3.techCertName">Web Development Basics</p>
+                                </div>
                             </div>
-                            <p class="text-sm text-muted" data-i18n="slide3.techDetail">
-                                Rumah IT Indonesia · foundational training
-                            </p>
-                            <div class="mt-2 p-3 rounded-lg border border-gold/10 bg-white/5">
-                                <span class="text-xs uppercase tracking-wider text-muted" data-i18n="slide3.techCert">Certificate</span>
-                                <p class="text-sm font-medium" data-i18n="slide3.techCertName">Web Development Basics</p>
+
+                            <!-- Hospitality -->
+                            <div>
+                                <h3 class="heading-md text-gold" data-i18n="slide3.hospHead">🏨 Hospitality</h3>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <span class="lang-pill highlight">Alison.com</span>
+                                </div>
+                                <p class="text-sm text-muted mt-1" data-i18n="slide3.hospDetail">
+                                    Diploma in Hospitality &amp; Service Excellence
+                                </p>
+                                <div class="mt-2 p-3 rounded-lg border border-gold/10 bg-white/5">
+                                    <span class="text-xs uppercase tracking-wider text-muted" data-i18n="slide3.hospCert">Diploma</span>
+                                    <p class="text-sm font-medium" data-i18n="slide3.hospCertName">Global Hospitality</p>
+                                </div>
+                            </div>
+
+                            <!-- WhatsApp Button -->
+                            <div class="pt-2">
+                                <a href="#" id="whatsappLink" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    <span data-i18n="slide3.whatsapp">Chat on WhatsApp</span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Hospitality -->
-                        <div class="space-y-3">
-                            <h3 class="heading-md text-gold" data-i18n="slide3.hospHead">🏨 Hospitality</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="lang-pill highlight">Alison.com</span>
-                            </div>
-                            <p class="text-sm text-muted" data-i18n="slide3.hospDetail">
-                                Diploma in Hospitality &amp; Service Excellence
-                            </p>
-                            <div class="mt-2 p-3 rounded-lg border border-gold/10 bg-white/5">
-                                <span class="text-xs uppercase tracking-wider text-muted" data-i18n="slide3.hospCert">Diploma</span>
-                                <p class="text-sm font-medium" data-i18n="slide3.hospCertName">Global Hospitality</p>
-                            </div>
+                        <!-- Right Column: Contact Form -->
+                        <div>
+                            <h3 class="heading-md text-gold mb-3" data-i18n="slide3.formTitle">📬 Send a Message</h3>
+                            <form id="contactForm" class="contact-form" method="POST" action="https://api.web3forms.com/submit">
+                                <!-- Web3Forms Access Key (HARDCODED) -->
+                                <input type="hidden" name="access_key" value="dc8551d5-cf2a-4a01-9f87-72691f0179bb" />
+                                <!-- Optional: redirect to a thank you page (or keep same) -->
+                                <input type="hidden" name="redirect" value="#" />
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="formName" data-i18n="slide3.formName">Full Name</label>
+                                        <input type="text" id="formName" name="name" placeholder="Your name" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="formEmail" data-i18n="slide3.formEmail">Email Address</label>
+                                        <input type="email" id="formEmail" name="email" placeholder="you@example.com" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formMessage" data-i18n="slide3.formMessage">Message</label>
+                                    <textarea id="formMessage" name="message" placeholder="Your message here…" required></textarea>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-4">
+                                    <button type="submit" class="submit-btn" id="formSubmitBtn" data-i18n="slide3.formSubmit">Send Message</button>
+                                    <div class="form-success" id="formSuccess">
+                                        <span>✓</span>
+                                        <span data-i18n="slide3.formSuccess">Message sent successfully!</span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -1130,9 +1303,7 @@
                 </div>
                 <button class="close-btn" id="chatClose" aria-label="Close chat">✕</button>
             </div>
-            <div class="chat-messages" id="chatMessages">
-                <!-- messages injected by JS -->
-            </div>
+            <div class="chat-messages" id="chatMessages"></div>
             <div class="chat-input-area">
                 <input type="text" id="chatInput" placeholder="Ask about qualifications…" data-i18n-placeholder="chat.placeholder" />
                 <button id="chatSend" aria-label="Send message">➤</button>
@@ -1171,7 +1342,7 @@
                 'slide2.oba2Detail': 'Arabic Language Olympiad',
                 'slide2.langHead': '🌐 Language Prowess',
                 'slide2.langNote': 'Certified advanced Arabic · Proficient English · Foundational East Asian languages',
-                'slide3.badge': 'Skills · Hospitality',
+                'slide3.badge': 'Skills · Connect',
                 'slide3.title': 'Technical Craft &amp;<br />Global Service',
                 'slide3.techHead': '💻 Front‑End Web',
                 'slide3.techDetail': 'Rumah IT Indonesia · foundational training',
@@ -1181,6 +1352,13 @@
                 'slide3.hospDetail': 'Diploma in Hospitality &amp; Service Excellence',
                 'slide3.hospCert': 'Diploma',
                 'slide3.hospCertName': 'Global Hospitality',
+                'slide3.whatsapp': 'Chat on WhatsApp',
+                'slide3.formTitle': '📬 Send a Message',
+                'slide3.formName': 'Full Name',
+                'slide3.formEmail': 'Email Address',
+                'slide3.formMessage': 'Message',
+                'slide3.formSubmit': 'Send Message',
+                'slide3.formSuccess': 'Message sent successfully!',
                 'chat.name': 'Elite Assistant',
                 'chat.status': 'Online · ready',
                 'chat.placeholder': 'Ask about qualifications…',
@@ -1218,7 +1396,7 @@
                 'slide2.oba2Detail': 'أولمبياد اللغة العربية',
                 'slide2.langHead': '🌐 الإتقان اللغوي',
                 'slide2.langNote': 'شهادة عربية متقدمة · إنجليزية متقنة · لغات شرق آسيا أساسية',
-                'slide3.badge': 'المهارات · الضيافة',
+                'slide3.badge': 'المهارات · تواصل',
                 'slide3.title': 'الحرفة التقنية<br />والخدمة العالمية',
                 'slide3.techHead': '💻 تطوير الواجهة الأمامية',
                 'slide3.techDetail': 'روماه إيت إندونيسيا · تدريب أساسي',
@@ -1228,6 +1406,13 @@
                 'slide3.hospDetail': 'دبلوم في الضيافة وخدمة التميز',
                 'slide3.hospCert': 'دبلوم',
                 'slide3.hospCertName': 'الضيافة العالمية',
+                'slide3.whatsapp': 'تحدث على واتساب',
+                'slide3.formTitle': '📬 أرسل رسالة',
+                'slide3.formName': 'الاسم الكامل',
+                'slide3.formEmail': 'البريد الإلكتروني',
+                'slide3.formMessage': 'الرسالة',
+                'slide3.formSubmit': 'إرسال',
+                'slide3.formSuccess': 'تم إرسال الرسالة بنجاح!',
                 'chat.name': 'المساعد المتميز',
                 'chat.status': 'متصل · جاهز',
                 'chat.placeholder': 'اسأل عن المؤهلات…',
@@ -1265,7 +1450,7 @@
                 'slide2.oba2Detail': 'Olimpiade Bahasa Arab',
                 'slide2.langHead': '🌐 Kemampuan Bahasa',
                 'slide2.langNote': 'Bahasa Arab mahir tersertifikasi · Bahasa Inggris fasih · Dasar bahasa Asia Timur',
-                'slide3.badge': 'Keterampilan · Perhotelan',
+                'slide3.badge': 'Keterampilan · Hubungi',
                 'slide3.title': 'Keahlian Teknis<br />&amp; Layanan Global',
                 'slide3.techHead': '💻 Front‑End Web',
                 'slide3.techDetail': 'Rumah IT Indonesia · pelatihan dasar',
@@ -1275,6 +1460,13 @@
                 'slide3.hospDetail': 'Diploma Perhotelan &amp; Layanan Unggul',
                 'slide3.hospCert': 'Diploma',
                 'slide3.hospCertName': 'Perhotelan Global',
+                'slide3.whatsapp': 'Chat via WhatsApp',
+                'slide3.formTitle': '📬 Kirim Pesan',
+                'slide3.formName': 'Nama Lengkap',
+                'slide3.formEmail': 'Alamat Email',
+                'slide3.formMessage': 'Pesan',
+                'slide3.formSubmit': 'Kirim',
+                'slide3.formSuccess': 'Pesan berhasil dikirim!',
                 'chat.name': 'Asisten Unggulan',
                 'chat.status': 'Online · siap',
                 'chat.placeholder': 'Tanyakan tentang kualifikasi…',
@@ -1316,6 +1508,12 @@
         const chatInput = document.getElementById('chatInput');
         const chatSend = document.getElementById('chatSend');
 
+        // Contact Form
+        const contactForm = document.getElementById('contactForm');
+        const formSubmitBtn = document.getElementById('formSubmitBtn');
+        const formSuccess = document.getElementById('formSuccess');
+        const whatsappLink = document.getElementById('whatsappLink');
+
         // ================================================================
         // 4. i18n HELPERS
         // ================================================================
@@ -1334,16 +1532,31 @@
                 const val = t(key);
                 if (val) el.placeholder = val;
             });
-            // Update chat welcome if empty
             if (chatMessages.children.length === 0) {
                 addBotMessage(t('chat.welcome'));
             }
+            // Update WhatsApp link with pre-filled message
+            updateWhatsAppLink();
+        }
+
+        function updateWhatsAppLink() {
+            // Nomor WhatsApp sudah disesuaikan dengan 081259730289 -> 6281259730289
+            const phone = '6281259730289';
+            let message = '';
+            if (currentLang === 'ar') {
+                message = 'مرحباً أحمد ولدان الشفاء، أود التواصل معك بخصوص ملفك الأكاديمي.';
+            } else if (currentLang === 'id') {
+                message = 'Halo Ahmad Wildan Asy Syifa, saya ingin menghubungi Anda mengenai profil akademik Anda.';
+            } else {
+                message = 'Hello Ahmad Wildan Asy Syifa, I would like to reach out regarding your academic profile.';
+            }
+            whatsappLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
         }
 
         // ================================================================
         // 5. SLIDE MANAGEMENT
         // ================================================================
-        function goToSlide(index, animate = true) {
+        function goToSlide(index) {
             if (isTransitioning || index === currentSlide || index < 0 || index >= totalSlides) return;
             isTransitioning = true;
 
@@ -1351,7 +1564,6 @@
             const newSlide = slides[index];
             const direction = index > currentSlide ? 1 : -1;
 
-            // Update dots
             dots.forEach((d, i) => d.classList.toggle('active', i === index));
 
             const tl = gsap.timeline({
@@ -1362,7 +1574,6 @@
                 }
             });
 
-            // Fade out old
             tl.to(oldSlide, {
                 opacity: 0,
                 y: direction * -30,
@@ -1374,7 +1585,6 @@
                 }
             }, 0);
 
-            // Fade in new with parallax
             tl.set(newSlide, { opacity: 0, y: direction * 40, visibility: 'visible', pointerEvents: 'none' });
             tl.to(newSlide, {
                 opacity: 1,
@@ -1642,7 +1852,47 @@
         });
 
         // ================================================================
-        // 9. FALLBACK: ensure slide visibility on load
+        // 9. CONTACT FORM — Web3Forms Integration
+        // ================================================================
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(contactForm);
+            const submitBtn = formSubmitBtn;
+            const successEl = formSuccess;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending…';
+            successEl.classList.remove('show');
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    successEl.classList.add('show');
+                    contactForm.reset();
+                    // Auto-hide success after 5 seconds
+                    setTimeout(() => {
+                        successEl.classList.remove('show');
+                    }, 5000);
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+            } catch (err) {
+                alert('Network error. Please check your connection and try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = t('slide3.formSubmit');
+            }
+        });
+
+        // ================================================================
+        // 10. FALLBACK: ensure slide visibility on load
         // ================================================================
         window.addEventListener('load', () => {
             slides.forEach((s, i) => {
@@ -1660,6 +1910,7 @@
             });
             dots.forEach((d, i) => d.classList.toggle('active', i === 0));
             updateI18n();
+            updateWhatsAppLink();
         });
 
         document.addEventListener('contextmenu', (e) => {
@@ -1669,6 +1920,7 @@
 
         console.log('🚀 Ahmad Wildan Asy Syifa · Elite Portfolio');
         console.log('📚 Academic Excellence · Language Prowess · Technical Craft');
+        console.log('📬 Web3Forms integrated · WhatsApp ready');
     </script>
 </body>
 </html>
