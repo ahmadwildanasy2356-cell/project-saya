@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- SEO -->
+    <title>Ahmad Wildan — Academic Portfolio</title>
+    <meta name="description" content="Portofolio akademik Ahmad Wildan — lulusan MA Al Irsyad PIAT 7, mahasiswa Diploma Syariah Markaz Ulum, diterima di University of Sousse program Sastra Arab. Fokus pada pengembangan bahasa, akademik, dan keterampilan digital.">
+    <meta name="keywords" content="Ahmad Wildan, Academic Portfolio, Arabic Literature, University of Sousse, TOEFL 607, Hamzah C1, Markaz Ulum, Diploma Syariah, Multilingual, Academic Portfolio Indonesia">
+    <meta name="author" content="Ahmad Wildan">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0f1b2d">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ahmad Wildan — Academic Portfolio">
+    <meta property="og:description" content="Multilingual Academic Learner with Foundations in Arabic Studies, Digital Skills, and International Education">
+    <meta property="og:image" content="assets/images/profile.jpg">
+    <meta property="og:url" content="https://ahmadwildan-portfolio.com">
+    <meta property="og:site_name" content="Ahmad Wildan Academic Portfolio">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ahmad Wildan — Academic Portfolio">
+    <meta name="twitter:description" content="Multilingual Academic Learner with Foundations in Arabic Studies, Digital Skills, and International Education">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/images/profile.jpg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ahmad Wildan Al-Shifa",
+        "url": "https://ahmadwildan-portfolio.com",
+        "description": "Multilingual Academic Learner with Foundations in Arabic Studies, Digital Skills, and International Education",
+        "alumniOf": "MA Al Irsyad PIAT 7",
+        "knowsLanguage": ["Indonesian", "Arabic", "English", "Mandarin", "Korean", "Japanese"],
+        "affiliation": [
+            {
+                "@type": "Organization",
+                "name": "University of Sousse"
+            },
+            {
+                "@type": "Organization",
+                "name": "Markaz Ulum"
+            },
+            {
+                "@type": "Organization",
+                "name": "Zad Academy"
+            }
+        ],
+        "sameAs": [
+            "https://github.com/ahmadwildanasy2356-cell",
+            "https://www.linkedin.com/in/ahmad-wildan-assyifa/"
+        ]
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link" data-i18n="skipLink">Lewati ke konten utama</a>
+
+    <!-- ============ NAVIGATION ============ -->
+    <header class="site-header" role="banner">
+        <nav class="navbar" aria-label="Navigasi utama">
+            <div class="nav-container">
+                <a href="#home" class="nav-logo" aria-label="Ahmad Wildan — Beranda">
+                    <span class="logo-text">AW</span>
+                    <span class="logo-full" data-i18n="navName">Ahmad Wildan</span>
+                </a>
+
+                <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu navigasi">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+
+                <div class="nav-menu" id="navMenu" role="navigation">
+                    <ul class="nav-links">
+                        <li><a href="#home" class="nav-link" data-i18n="navHome">Beranda</a></li>
+                        <li><a href="#about" class="nav-link" data-i18n="navAbout">Tentang</a></li>
+                        <li><a href="#highlights" class="nav-link" data-i18n="navHighlights">Prestasi</a></li>
+                        <li><a href="#education" class="nav-link" data-i18n="navEducation">Pendidikan</a></li>
+                        <li><a href="#languages" class="nav-link" data-i18n="navLanguages">Bahasa</a></li>
+                        <li><a href="#international" class="nav-link" data-i18n="navInternational">Internasional</a></li>
+                        <li><a href="#certificates" class="nav-link" data-i18n="navCertificates">Sertifikat</a></li>
+                        <li><a href="#contact" class="nav-link" data-i18n="navContact">Kontak</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher" aria-label="Pilih bahasa">
+                        <button class="lang-btn" id="langToggle" aria-haspopup="true" aria-expanded="false" aria-label="Ganti bahasa">
+                            <span class="lang-icon" aria-hidden="true">🌐</span>
+                            <span class="lang-current" id="langCurrent">ID</span>
+                            <svg class="lang-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                                <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown" role="menu" aria-label="Daftar bahasa">
+                            <button class="lang-option active" data-lang="id" role="menuitem" tabindex="0">🇮🇩 <span>Bahasa Indonesia</span></button>
+                            <button class="lang-option" data-lang="en" role="menuitem" tabindex="0">🇬🇧 <span>English</span></button>
+                            <button class="lang-option" data-lang="ar" role="menuitem" tabindex="0">🇸🇦 <span>العربية</span></button>
+                            <button class="lang-option" data-lang="zh" role="menuitem" tabindex="0">🇨🇳 <span>中文</span></button>
+                            <button class="lang-option" data-lang="ko" role="menuitem" tabindex="0">🇰🇷 <span>한국어</span></button>
+                            <button class="lang-option" data-lang="ja" role="menuitem" tabindex="0">🇯🇵 <span>日本語</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Ganti mode gelap/terang">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main id="main-content">
+
+        <!-- ===== HERO SECTION ===== -->
+        <section id="home" class="hero-section" aria-label="Hero">
+            <div class="hero-background" aria-hidden="true">
+                <div class="hero-gradient"></div>
+                <div class="hero-pattern"></div>
+            </div>
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <p class="hero-label reveal" data-i18n="heroLabel">Portofolio Akademik</p>
+                    <h1 class="hero-title reveal">
+                        <span class="hero-name">AHMAD WILDAN</span>
+                        <span class="hero-subtitle" data-i18n="heroSubtitle">Academic Portfolio</span>
+                    </h1>
+                    <p class="hero-description reveal" data-i18n="heroDescription">
+                        Pembelajar multidisiplin yang berfokus pada studi Arab, bahasa, pengembangan akademik, dan keterampilan digital — dengan aspirasi internasional.
+                    </p>
+                    <div class="hero-cta reveal">
+                        <a href="#contact" class="btn btn-primary" data-i18n="heroCtaContact">Hubungi Saya</a>
+                        <a href="#highlights" class="btn btn-secondary" data-i18n="heroCtaHighlights">Lihat Prestasi</a>
+                    </div>
+                </div>
+
+                <div class="hero-stats reveal" aria-label="Statistik utama">
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="95" data-decimal="2" data-suffix=",00">95,00</span>
+                        <span class="stat-label" data-i18n="statAcademic">Rata-rata Akademik</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="97" data-decimal="2" data-suffix=",10">97,10</span>
+                        <span class="stat-label" data-i18n="statSemester">Rata-rata Kelas 12 Semester 1</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="607" data-decimal="0" data-suffix="">607</span>
+                        <span class="stat-label" data-i18n="statToefl">TOEFL</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="4" data-decimal="2" data-suffix=",00">4,00</span>
+                        <span class="stat-label" data-i18n="statGpa">IPK Diploma Syariah</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT SECTION ===== -->
+        <section id="about" class="about-section section" aria-labelledby="about-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="aboutEyebrow">Profil</p>
+                    <h2 class="section-title" id="about-heading" data-i18n="aboutTitle">Tentang Saya</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="about-grid">
+                    <div class="about-text reveal">
+                        <p class="about-paragraph" data-i18n="aboutP1">
+                            Saya adalah lulusan MA Al Irsyad PIAT 7 dengan fokus pada pengembangan akademik, bahasa, dan keterampilan digital. Perjalanan akademik saya dibangun di atas fondasi studi Islam yang kuat, diperluas dengan kompetisi sains dan bahasa, serta diperkaya dengan pembelajaran teknologi.
+                        </p>
+                        <p class="about-paragraph" data-i18n="aboutP2">
+                            Saat ini saya mengikuti program Diploma Syariah di Markaz Ulum, belajar melalui Zad Academy, serta telah diterima di University of Sousse untuk program Sastra Arab. Fokus saya adalah membangun profil akademik yang kuat untuk studi internasional dan kontribusi di bidang pendidikan bahasa Arab.
+                        </p>
+                        <p class="about-paragraph" data-i18n="aboutP3">
+                            Saya juga aktif mengembangkan kemampuan bahasa — Arab, Inggris, Mandarin, Korea, dan Jepang — serta mempelajari dasar-dasar pengembangan web melalui Rumah IT Indonesia. Saya percaya pada pembelajaran berkelanjutan dan persiapan yang matang untuk setiap langkah.
+                        </p>
+                    </div>
+                    <div class="about-highlight-card reveal">
+                        <h3 class="about-card-title" data-i18n="aboutCardTitle">Fokus Pengembangan</h3>
+                        <ul class="about-card-list">
+                            <li data-i18n="aboutList1">Studi Arab & Literatur Arab</li>
+                            <li data-i18n="aboutList2">Pembelajaran Multibahasa</li>
+                            <li data-i18n="aboutList3">Pengembangan Akademik Berkelanjutan</li>
+                            <li data-i18n="aboutList4">Dasar Pengembangan Web</li>
+                            <li data-i18n="aboutList5">Persiapan Studi Internasional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ACADEMIC HIGHLIGHTS ===== -->
+        <section id="highlights" class="highlights-section section section-alt" aria-labelledby="highlights-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="highlightsEyebrow">Pencapaian</p>
+                    <h2 class="section-title" id="highlights-heading" data-i18n="highlightsTitle">Academic Highlights</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="highlights-grid">
+                    <article class="highlight-card reveal" tabindex="0">
+                        <div class="highlight-value">95,00</div>
+                        <div class="highlight-label" data-i18n="highlightAcademic">Rata-rata Akademik</div>
+                        <div class="highlight-detail" data-i18n="highlightAcademicDetail">MA Al Irsyad PIAT 7</div>
+                    </article>
+                    <article class="highlight-card reveal" tabindex="0">
+                        <div class="highlight-value">97,10</div>
+                        <div class="highlight-label" data-i18n="highlightSemester">Rata-rata Kelas 12 Semester 1</div>
+                        <div class="highlight-detail" data-i18n="highlightSemesterDetail">Nilai tertinggi akademik</div>
+                    </article>
+                    <article class="highlight-card reveal" tabindex="0">
+                        <div class="highlight-value">97,76</div>
+                        <div class="highlight-label" data-i18n="highlightUts">Markaz Ulum UTS</div>
+                        <div class="highlight-detail" data-i18n="highlightUtsDetail">Diploma Syariah</div>
+                    </article>
+                    <article class="highlight-card reveal" tabindex="0">
+                        <div class="highlight-value">4,00</div>
+                        <div class="highlight-label" data-i18n="highlightGpa">IPK — Diploma Syariah</div>
+                        <div class="highlight-detail highlight-predicate" data-i18n="highlightGpaDetail">Summa Cum Laude</div>
+                    </article>
+                    <article class="highlight-card reveal" tabindex="0">
+                        <div class="highlight-value">607</div>
+                        <div class="highlight-label" data-i18n="highlightToefl">TOEFL</div>
+                        <div class="highlight-detail" data-i18n="highlightToeflDetail">English Proficiency</div>
+                    </article>
+                    <article class="highlight-card reveal" tabindex="0">
+                        <div class="highlight-value">C1</div>
+                        <div class="highlight-label" data-i18n="highlightArabic">Bahasa Arab — Hamzah</div>
+                        <div class="highlight-detail" data-i18n="highlightArabicDetail">Sertifikasi Resmi</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== EDUCATION TIMELINE ===== -->
+        <section id="education" class="education-section section" aria-labelledby="education-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="educationEyebrow">Perjalanan</p>
+                    <h2 class="section-title" id="education-heading" data-i18n="educationTitle">Pendidikan</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title" data-i18n="eduSchool">MA Al Irsyad PIAT 7</h3>
+                            <p class="timeline-status timeline-completed" data-i18n="eduSchoolStatus">Lulus</p>
+                            <p class="timeline-desc" data-i18n="eduSchoolDesc">Fokus pada pengembangan akademik, kompetisi sains dan bahasa</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title" data-i18n="eduCompetition">Kompetisi & Pengembangan Akademik</h3>
+                            <p class="timeline-status timeline-highlight" data-i18n="eduCompetitionStatus">Prestasi Nasional & Regional</p>
+                            <p class="timeline-desc" data-i18n="eduCompetitionDesc">KSN IPA, Olimpiade Bahasa Arab tingkat daerah dan provinsi</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title" data-i18n="eduMarkaz">Markaz Ulum</h3>
+                            <p class="timeline-status timeline-active" data-i18n="eduMarkazStatus">Sedang Berlangsung</p>
+                            <p class="timeline-desc" data-i18n="eduMarkazDesc">Diploma Syariah — IPK 4,00 — Summa Cum Laude</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title" data-i18n="eduZad">Zad Academy</h3>
+                            <p class="timeline-status timeline-active" data-i18n="eduZadStatus">Sedang Berlangsung</p>
+                            <p class="timeline-desc" data-i18n="eduZadDesc">Sedang mengikuti pembelajaran</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot timeline-dot-gold" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title" data-i18n="eduSousse">University of Sousse</h3>
+                            <p class="timeline-status timeline-accepted" data-i18n="eduSousseStatus">ACCEPTED</p>
+                            <p class="timeline-desc" data-i18n="eduSousseDesc">Program Sastra Arab / Arabic Literature</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot" aria-hidden="true"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title" data-i18n="eduFuture">International Academic Development</h3>
+                            <p class="timeline-status timeline-future" data-i18n="eduFutureStatus">Berkelanjutan</p>
+                            <p class="timeline-desc" data-i18n="eduFutureDesc">Persiapan studi internasional dan pengembangan profesional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== COMPETITIONS ===== -->
+        <section id="competitions" class="competitions-section section section-alt" aria-labelledby="competitions-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="compEyebrow">Kompetisi</p>
+                    <h2 class="section-title" id="competitions-heading" data-i18n="compTitle">Pengalaman Kompetisi</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="competitions-grid">
+                    <article class="competition-card reveal" tabindex="0">
+                        <div class="competition-badge" data-i18n="compKsnBadge">KSN — IPA</div>
+                        <h3 class="competition-title" data-i18n="compKsnTitle">Kompetisi Sains Nasional</h3>
+                        <p class="competition-level" data-i18n="compKsnLevel">Tingkat MTs — Bidang IPA</p>
+                        <div class="competition-result">
+                            <span class="result-label" data-i18n="resultLabel">Hasil:</span>
+                            <span class="result-value" data-i18n="compKsnResult">Juara Harapan 2</span>
+                        </div>
+                    </article>
+                    <article class="competition-card reveal" tabindex="0">
+                        <div class="competition-badge" data-i18n="compObaBadge">OBA</div>
+                        <h3 class="competition-title" data-i18n="compObaTitle">Olimpiade Bahasa Arab</h3>
+                        <p class="competition-level" data-i18n="compObaLevel">Tingkat SMA</p>
+                        <div class="competition-result">
+                            <span class="result-label" data-i18n="resultLabel">Hasil:</span>
+                            <span class="result-value result-gold" data-i18n="compObaResult">Juara 2 — Batu</span>
+                        </div>
+                    </article>
+                    <article class="competition-card reveal" tabindex="0">
+                        <div class="competition-badge" data-i18n="compObaProvBadge">OBA Provinsi</div>
+                        <h3 class="competition-title" data-i18n="compObaProvTitle">Olimpiade Bahasa Arab</h3>
+                        <p class="competition-level" data-i18n="compObaProvLevel">Tingkat Provinsi</p>
+                        <div class="competition-result">
+                            <span class="result-label" data-i18n="resultLabel">Hasil:</span>
+                            <span class="result-value result-silver" data-i18n="compObaProvResult">Peringkat 5</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LANGUAGES ===== -->
+        <section id="languages" class="languages-section section" aria-labelledby="languages-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="langEyebrow">Komunikasi</p>
+                    <h2 class="section-title" id="languages-heading" data-i18n="langTitle">Languages</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                    <p class="section-subtitle" data-i18n="langSubtitle">Language & International Communication</p>
+                </div>
+                <div class="languages-list">
+                    <div class="language-row reveal" tabindex="0">
+                        <span class="language-number">01</span>
+                        <span class="language-name">Arabic</span>
+                        <span class="language-level language-advanced">C1 — Hamzah</span>
+                    </div>
+                    <div class="language-row reveal" tabindex="0">
+                        <span class="language-number">02</span>
+                        <span class="language-name">English</span>
+                        <span class="language-level language-advanced">TOEFL 607</span>
+                    </div>
+                    <div class="language-row reveal" tabindex="0">
+                        <span class="language-number">03</span>
+                        <span class="language-name">Mandarin</span>
+                        <span class="language-level language-basic" data-i18n="langBasic">Basic</span>
+                    </div>
+                    <div class="language-row reveal" tabindex="0">
+                        <span class="language-number">04</span>
+                        <span class="language-name">Korean</span>
+                        <span class="language-level language-basic" data-i18n="langBasic">Basic</span>
+                    </div>
+                    <div class="language-row reveal" tabindex="0">
+                        <span class="language-number">05</span>
+                        <span class="language-name">Japanese</span>
+                        <span class="language-level language-basic" data-i18n="langBasic">Basic</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== INTERNATIONAL DIRECTION ===== -->
+        <section id="international" class="international-section section section-alt" aria-labelledby="international-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="intlEyebrow">Global</p>
+                    <h2 class="section-title" id="international-heading" data-i18n="intlTitle">International Direction</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="international-grid">
+                    <div class="international-card international-accepted reveal" tabindex="0">
+                        <div class="intl-status-badge">ACCEPTED</div>
+                        <h3 class="intl-card-title">University of Sousse</h3>
+                        <p class="intl-card-subtitle">Arabic Literature</p>
+                        <p class="intl-card-desc" data-i18n="intlSousseDesc">Diterima untuk program Sastra Arab di Tunisia</p>
+                    </div>
+                    <div class="international-card international-progress reveal" tabindex="0">
+                        <div class="intl-status-badge intl-badge-progress" data-i18n="intlProgressBadge">Application in Progress</div>
+                        <h3 class="intl-card-title" data-i18n="intlSaudiTitle">Study in Saudi</h3>
+                        <p class="intl-card-subtitle" data-i18n="intlSaudiSubtitle">Dalam proses pemberkasan</p>
+                        <p class="intl-card-desc" data-i18n="intlSaudiDesc">Persiapan dokumen dan persyaratan</p>
+                    </div>
+                    <div class="international-card international-languages reveal" tabindex="0">
+                        <div class="intl-status-badge intl-badge-lang" data-i18n="intlLangBadge">Languages</div>
+                        <h3 class="intl-card-title" data-i18n="intlLangTitle">Multilingual</h3>
+                        <p class="intl-card-subtitle">Arabic · English · Mandarin · Korean · Japanese</p>
+                        <p class="intl-card-desc" data-i18n="intlLangDesc">Pengembangan kemampuan komunikasi internasional</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DIGITAL SKILLS ===== -->
+        <section id="skills" class="skills-section section" aria-labelledby="skills-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="skillsEyebrow">Teknologi</p>
+                    <h2 class="section-title" id="skills-heading" data-i18n="skillsTitle">Digital Skills</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-item reveal" tabindex="0">
+                        <span class="skill-icon" aria-hidden="true">📄</span>
+                        <span class="skill-name">HTML</span>
+                    </div>
+                    <div class="skill-item reveal" tabindex="0">
+                        <span class="skill-icon" aria-hidden="true">🎨</span>
+                        <span class="skill-name">CSS</span>
+                    </div>
+                    <div class="skill-item reveal" tabindex="0">
+                        <span class="skill-icon" aria-hidden="true">⚡</span>
+                        <span class="skill-name">JavaScript</span>
+                    </div>
+                    <div class="skill-item reveal" tabindex="0">
+                        <span class="skill-icon" aria-hidden="true">🔧</span>
+                        <span class="skill-name">Git</span>
+                    </div>
+                    <div class="skill-item reveal" tabindex="0">
+                        <span class="skill-icon" aria-hidden="true">🐙</span>
+                        <span class="skill-name">GitHub</span>
+                    </div>
+                    <div class="skill-item reveal" tabindex="0">
+                        <span class="skill-icon" aria-hidden="true">💻</span>
+                        <span class="skill-name">Web Development</span>
+                    </div>
+                </div>
+                <p class="skills-foundation reveal" data-i18n="skillsFoundation">
+                    Learning Foundation — Rumah IT Indonesia
+                </p>
+                <p class="skills-note reveal" data-i18n="skillsNote">
+                    Foundational Web Development
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== CERTIFICATES ===== -->
+        <section id="certificates" class="certificates-section section section-alt" aria-labelledby="certificates-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="certEyebrow">Bukti</p>
+                    <h2 class="section-title" id="certificates-heading" data-i18n="certTitle">Certificates &amp; Credentials</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="certificates-grid" id="certificatesGrid">
+                    <!-- Certificate cards will be generated by JavaScript -->
+                    <noscript>
+                        <div class="certificate-placeholder">
+                            <p data-i18n="certPlaceholder">Certificate image will be added</p>
+                        </div>
+                    </noscript>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CV SECTION ===== -->
+        <section id="cv" class="cv-section section" aria-labelledby="cv-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="cvEyebrow">Curriculum Vitae</p>
+                    <h2 class="section-title" id="cv-heading" data-i18n="cvTitle">CV Saya</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="cv-content reveal">
+                    <a href="https://project-saya-rose.vercel.app/card/profil_aku12.html" 
+                       class="btn btn-primary" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Lihat CV Ahmad Wildan di tab baru"
+                       data-i18n="cvView">Lihat CV ↗</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section id="contact" class="contact-section section section-alt" aria-labelledby="contact-heading">
+            <div class="container">
+                <div class="section-header reveal">
+                    <p class="section-eyebrow" data-i18n="contactEyebrow">Kontak</p>
+                    <h2 class="section-title" id="contact-heading" data-i18n="contactTitle">Mari Terhubung</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info reveal">
+                        <h3 class="contact-info-title" data-i18n="contactInfoTitle">Informasi Kontak</h3>
+                        <ul class="contact-list">
+                            <li class="contact-item">
+                                <span class="contact-icon" aria-hidden="true">📱</span>
+                                <div>
+                                    <span class="contact-label" data-i18n="contactWhatsapp">WhatsApp</span>
+                                    <a href="https://wa.me/6281259730289" class="contact-link" target="_blank" rel="noopener noreferrer">081259730289</a>
+                                </div>
+                            </li>
+                            <li class="contact-item">
+                                <span class="contact-icon" aria-hidden="true">🐙</span>
+                                <div>
+                                    <span class="contact-label">GitHub</span>
+                                    <a href="https://github.com/ahmadwildanasy2356-cell" class="contact-link" target="_blank" rel="noopener noreferrer">ahmadwildanasy2356-cell</a>
+                                </div>
+                            </li>
+                            <li class="contact-item">
+                                <span class="contact-icon" aria-hidden="true">💼</span>
+                                <div>
+                                    <span class="contact-label">LinkedIn</span>
+                                    <a href="https://www.linkedin.com/in/ahmad-wildan-assyifa/" class="contact-link" target="_blank" rel="noopener noreferrer">linkedin.com/in/ahmad-wildan-assyifa</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contact-form-wrapper reveal">
+                        <form action="https://api.web3forms.com/submit" method="POST" id="contactForm" class="contact-form" novalidate>
+                            <input type="hidden" name="access_key" value="dc8551d5-cf2a-4a01-9f87-72691f0179bb">
+                            <input type="hidden" name="subject" value="Pesan dari Portfolio Website — Ahmad Wildan">
+                            <input type="hidden" name="from_name" value="Portfolio Ahmad Wildan">
+                            <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
+
+                            <div class="form-group">
+                                <label for="formName" class="form-label" data-i18n="formName">Nama</label>
+                                <input type="text" id="formName" name="name" class="form-input" required minlength="2" maxlength="100" autocomplete="name" placeholder="" data-i18n-placeholder="formNamePlaceholder">
+                                <span class="form-error" id="nameError" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="formEmail" class="form-label" data-i18n="formEmail">Email</label>
+                                <input type="email" id="formEmail" name="email" class="form-input" required autocomplete="email" placeholder="" data-i18n-placeholder="formEmailPlaceholder">
+                                <span class="form-error" id="emailError" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="formMessage" class="form-label" data-i18n="formMessage">Pesan</label>
+                                <textarea id="formMessage" name="message" class="form-textarea" required minlength="10" maxlength="5000" rows="5" placeholder="" data-i18n-placeholder="formMessagePlaceholder"></textarea>
+                                <span class="form-error" id="messageError" aria-live="polite"></span>
+                            </div>
+
+                            <div class="form-status" id="formStatus" aria-live="polite"></div>
+
+                            <button type="submit" class="btn btn-primary form-submit" id="submitBtn" data-i18n="formSubmit">
+                                <span class="submit-text">Kirim Pesan</span>
+                                <span class="submit-spinner" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <span class="footer-logo">AW</span>
+                <p class="footer-name">Ahmad Wildan</p>
+                <p class="footer-tagline" data-i18n="footerTagline">Multilingual Academic Learner · International Education</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/ahmadwildanasy2356-cell" target="_blank" rel="noopener noreferrer" aria-label="GitHub Ahmad Wildan" class="footer-social-link">GitHub</a>
+                <a href="https://www.linkedin.com/in/ahmad-wildan-assyifa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Ahmad Wildan" class="footer-social-link">LinkedIn</a>
+                <a href="https://wa.me/6281259730289" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Ahmad Wildan" class="footer-social-link">WhatsApp</a>
+            </div>
+            <p class="footer-copyright">
+                &copy; <span id="currentYear">2025</span> Ahmad Wildan. 
+                <span data-i18n="footerRights">Semua hak dilindungi.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ============ MODAL: CERTIFICATE ============ -->
+    <div class="modal-overlay" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" id="certModalClose" aria-label="Tutup modal" data-i18n-aria="modalClose">×</button>
+            <h3 class="modal-title" id="certModalTitle" data-i18n="certModalTitle">Sertifikat</h3>
+            <div class="modal-body" id="certModalBody">
+                <!-- Certificate image will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ WILDAN AI CHATBOT ============ -->
+    <div id="wildan-ai" class="chatbot-widget" aria-hidden="true">
+      <div class="chatbot-panel" id="chatbot-panel" role="dialog" aria-label="Wildan AI Chatbot">
+        <div class="chatbot-header">
+          <div class="chatbot-header-text">
+            <h3>Wildan AI</h3>
+            <p>Personal Academic Assistant</p>
+          </div>
+          <div class="chatbot-header-actions">
+            <button class="chatbot-clear-btn" id="chatbot-clear" aria-label="Clear chat" title="Clear chat">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+            <button class="chatbot-close-btn" id="chatbot-close" aria-label="Close chat" title="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+        <div class="chatbot-quick-questions" id="chatbot-quick-questions">
+          <button class="chatbot-quick-btn" data-question="Tentang Ahmad">Tentang Ahmad</button>
+          <button class="chatbot-quick-btn" data-question="Pendidikan">Pendidikan</button>
+          <button class="chatbot-quick-btn" data-question="Pencapaian">Pencapaian</button>
+          <button class="chatbot-quick-btn" data-question="Bahasa">Bahasa</button>
+          <button class="chatbot-quick-btn" data-question="Kompetensi">Kompetensi</button>
+          <button class="chatbot-quick-btn" data-question="University of Sousse">University of Sousse</button>
+          <button class="chatbot-quick-btn" data-question="Kontak">Kontak</button>
+        </div>
+        <div class="chatbot-input-area">
+          <input type="text" id="chatbot-input" placeholder="Tulis pertanyaan..." aria-label="Tulis pertanyaan untuk Wildan AI" autocomplete="off">
+          <button class="chatbot-send-btn" id="chatbot-send" aria-label="Kirim pesan">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button class="chatbot-toggle-btn" id="chatbot-toggle" aria-label="Buka Wildan AI">
+        <span class="chatbot-toggle-icon" aria-hidden="true">✦</span>
+        <span class="chatbot-toggle-text">Wildan AI</span>
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

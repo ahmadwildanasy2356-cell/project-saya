@@ -1,0 +1,797 @@
+SUPER PROMPT — ROADMAP WEB DEVELOPER PHASE 1–10
+
+Catatan:
+Gunakan prompt ini secara bertahap di DeepSeek. Setelah satu phase selesai dan diuji, lanjutkan ke phase berikutnya. Jangan langsung mengerjakan semua phase sekaligus.
+
+==================================================
+PHASE 1 — SETUP PROJECT
+==================================================
+
+Buat project web modern menggunakan:
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+
+Aturan:
+- Jangan membuat project baru jika project sudah ada.
+- Gunakan App Router.
+- Gunakan TypeScript.
+- Gunakan Tailwind CSS.
+- Siapkan struktur folder yang rapi.
+- Pastikan project dapat dijalankan dengan npm run dev.
+- Jangan menambahkan dependency yang tidak diperlukan.
+
+Tujuan:
+Membuat fondasi project yang bersih dan siap dikembangkan.
+
+Output:
+1. Struktur folder.
+2. Command instalasi.
+3. File yang dibuat/diubah.
+4. Source code lengkap.
+5. Cara menjalankan project.
+6. Self-check error TypeScript dan build.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 2.
+
+
+==================================================
+PHASE 2 — DESIGN SYSTEM
+==================================================
+
+Lanjutkan project dari PHASE 1.
+
+Jangan membuat project baru.
+Jangan mengulang Phase 1.
+
+Bangun design system menggunakan Tailwind CSS.
+
+Buat sistem:
+- Warna
+- Typography
+- Spacing
+- Container
+- Border radius
+- Shadow
+- Dark mode
+- Responsive design
+
+Buat reusable components:
+- Button
+- Container
+- Card
+- Badge
+- SectionHeading
+- Divider
+- Input
+- Textarea
+- Modal
+
+Button memiliki:
+- primary
+- secondary
+- outline
+- ghost
+- disabled
+- focus
+- hover
+
+Gunakan mobile-first.
+
+Pastikan:
+- accessibility
+- focus-visible
+- keyboard navigation
+- prefers-reduced-motion
+- TypeScript strict
+- tidak ada any yang tidak diperlukan
+
+Buat halaman testing sementara untuk melihat design system.
+
+Jangan membuat website final.
+
+Output:
+1. Audit Phase 1.
+2. File yang diubah.
+3. File baru.
+4. Command.
+5. Source code lengkap.
+6. Cara menjalankan dan menguji.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 3.
+
+
+==================================================
+PHASE 3 — PUBLIC WEBSITE
+==================================================
+
+Lanjutkan project dari PHASE 1 dan PHASE 2.
+
+Jangan mengulang phase sebelumnya.
+
+Bangun public website profesional dengan konsep:
+Apple × Awwwards × Modern University Research Lab × Premium Developer Portfolio.
+
+Buat route:
+/
+/about
+/projects
+/projects/[slug]
+/certificates
+/achievements
+/contact
+
+Buat:
+- Navbar
+- Hero
+- Quick Stats
+- About Preview
+- Achievements
+- Skills
+- Languages
+- Featured Projects
+- Certificates
+- Contact
+- Footer
+
+Homepage harus responsive.
+
+Hero:
+- eyebrow
+- headline
+- subheadline
+- CTA
+- visual
+- subtle animation
+
+Skills:
+- HTML
+- CSS
+- JavaScript
+- TypeScript
+- React
+- Next.js
+- Tailwind CSS
+- Node.js
+- Git
+- GitHub
+
+Languages dapat mencakup:
+- Indonesia
+- Arab
+- Inggris
+- Mandarin
+- Korea
+- Jepang
+
+Jangan mengarang prestasi atau data nyata.
+Gunakan data dummy dengan penanda DATA DUMMY — GANTI.
+
+Projects:
+- search
+- category filter
+- technology filter
+- project card
+- project detail
+- notFound
+
+Certificates:
+- search
+- category filter
+- preview modal
+
+Achievements:
+- timeline/editorial layout
+
+Contact:
+- form frontend
+- validation
+- simulated submit
+- belum perlu database
+
+Gunakan:
+- Server Components sebagai default
+- Client Components hanya jika diperlukan
+- next/image
+- metadata SEO
+
+Buat data lokal terpisah:
+- profile
+- achievements
+- skills
+- languages
+- education
+- certificates
+- projects
+
+Buat component reusable.
+
+Jangan membuat database.
+Jangan membuat authentication.
+Jangan membuat admin dashboard.
+
+Output:
+1. Audit Phase 2.
+2. Routes.
+3. Components.
+4. Data architecture.
+5. File structure.
+6. Source code lengkap.
+7. Testing checklist.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 4.
+
+
+==================================================
+PHASE 4 — DATABASE + PRISMA + POSTGRESQL
+==================================================
+
+Lanjutkan project dari PHASE 1–3.
+
+Jangan membuat project baru.
+Jangan menghapus public website.
+
+Ubah data lokal menjadi database-driven application.
+
+Arsitektur:
+Public Website
+↓
+Data Access Layer
+↓
+Prisma
+↓
+PostgreSQL
+
+Gunakan:
+- PostgreSQL
+- Prisma
+- TypeScript
+
+Buat:
+.env.example
+prisma/schema.prisma
+lib/prisma.ts
+prisma/seed.ts
+
+Database minimal memiliki model:
+- User
+- Profile
+- Achievement
+- Skill
+- Language
+- Education
+- Certificate
+- Project
+- Technology
+- ProjectTechnology jika diperlukan
+- Message
+- SiteSetting
+
+Project:
+- slug unique
+- published
+- featured
+- category
+- technologies
+
+Message:
+- name
+- email
+- message
+- status
+
+Jangan menyimpan password plaintext.
+
+Buat migration.
+
+Buat seed yang idempotent agar tidak membuat duplicate ketika dijalankan berkali-kali.
+
+Buat data dummy dengan penanda DATA DUMMY — GANTI.
+
+Buat data access layer sehingga UI tidak berisi query Prisma secara acak.
+
+Migrasikan public website dari data lokal ke database.
+
+Gunakan Server Components jika memungkinkan.
+
+Jangan membuat authentication.
+Jangan membuat admin dashboard.
+
+Pastikan:
+- DATABASE_URL tidak masuk GitHub
+- .env di .gitignore
+- passwordHash tidak pernah dikirim ke client
+- error database tidak membocorkan informasi sensitif
+
+Output:
+1. Audit Phase 3.
+2. Database architecture.
+3. Models.
+4. File structure.
+5. Commands.
+6. Source code lengkap.
+7. Migration.
+8. Seed.
+9. Cara menjalankan.
+10. Cara membuka Prisma Studio.
+11. Testing checklist.
+
+Jangan menggunakan command destruktif seperti prisma migrate reset kecuali benar-benar diperlukan dan jelaskan risikonya.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 5.
+
+
+==================================================
+PHASE 5 — AUTHENTICATION + ADMIN LOGIN
+==================================================
+
+Lanjutkan project dari PHASE 1–4.
+
+Authentication harus aman.
+
+Buat:
+/admin/login
+
+Fitur:
+- email
+- password
+- show/hide password
+- validation
+- loading
+- error
+- logout
+
+Setelah login:
+→ /admin
+
+Lindungi:
+/admin
+dan semua route turunannya.
+
+Jika belum login:
+→ /admin/login
+
+Gunakan session yang aman dan kompatibel dengan versi Next.js yang digunakan.
+
+Jangan membuat login palsu menggunakan localStorage.
+
+Password:
+- hash
+- tidak plaintext
+- tidak dikirim ke client
+
+Gunakan role:
+ADMIN
+
+Authorization harus diperiksa di server untuk aksi sensitif.
+
+Logout harus menghapus session dengan benar.
+
+Gunakan environment variable untuk secret.
+
+Jangan membuat dashboard lengkap.
+
+Output:
+1. Audit User model.
+2. Authentication architecture.
+3. File structure.
+4. Commands.
+5. Source code lengkap.
+6. Cara membuat admin development.
+7. Cara login.
+8. Cara logout.
+9. Cara menguji protected route.
+10. Security checklist.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 6.
+
+
+==================================================
+PHASE 6 — ADMIN DASHBOARD
+==================================================
+
+Lanjutkan project dari PHASE 1–5.
+
+Authentication sudah tersedia.
+
+Jangan membuat ulang authentication.
+
+Buat:
+ /admin
+ /admin/profile
+ /admin/achievements
+ /admin/skills
+ /admin/languages
+ /admin/education
+ /admin/certificates
+ /admin/projects
+ /admin/messages
+ /admin/settings
+
+Buat:
+- AdminSidebar
+- AdminHeader
+- Mobile navigation
+- Breadcrumb
+- User menu
+- Logout
+
+Dashboard menampilkan data nyata:
+- Total Projects
+- Total Certificates
+- Total Achievements
+- Total Messages
+- Recent Projects
+- Recent Messages
+- Quick Actions
+
+Buat management pages dengan tabel/list data.
+
+Pada phase ini belum perlu CRUD lengkap.
+
+Gunakan design system Phase 2.
+
+Pastikan:
+- responsive
+- dark mode
+- accessible
+- loading state
+- error state
+- empty state
+- protected route
+
+Jangan membuat database baru.
+Jangan membuat authentication baru.
+
+Output:
+1. Route architecture.
+2. Component architecture.
+3. File structure.
+4. Source code lengkap.
+5. Cara testing.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 7.
+
+
+==================================================
+PHASE 7 — COMPLETE CRUD
+==================================================
+
+Lanjutkan project dari PHASE 1–6.
+
+Jangan membuat ulang dashboard.
+
+Buat CRUD untuk:
+- Profile
+- Achievements
+- Skills
+- Languages
+- Education
+- Certificates
+- Projects
+- Messages
+- Site Settings
+
+CRUD:
+C = Create
+R = Read
+U = Update
+D = Delete
+
+Setiap data harus dapat:
+- ditambah
+- dilihat
+- diedit
+- dihapus
+
+Gunakan:
+- form
+- validation
+- loading
+- success feedback
+- error feedback
+- confirmation sebelum delete
+
+Validation:
+- client-side
+- server-side
+
+Semua perubahan harus memeriksa:
+- authentication
+- authorization
+
+Jangan hanya mengandalkan UI.
+
+Projects:
+- title
+- slug
+- description
+- thumbnail
+- gallery
+- technologies
+- category
+- GitHub
+- Live Demo
+- featured
+- published
+
+Certificates:
+- title
+- institution
+- year
+- category
+- image
+- credential ID
+- credential URL
+
+Messages:
+- read
+- archive
+- delete
+
+Setelah perubahan data:
+public website harus menampilkan data terbaru menggunakan strategi revalidation yang sesuai.
+
+Jangan memaksakan cloud image upload jika belum diperlukan.
+
+Output:
+1. CRUD architecture.
+2. Validation.
+3. Server actions/API.
+4. File structure.
+5. Source code lengkap.
+6. Cara testing semua CRUD.
+7. Security checklist.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 8.
+
+
+==================================================
+PHASE 8 — MULTILINGUAL
+==================================================
+
+Lanjutkan project dari PHASE 1–7.
+
+Tambahkan:
+- Indonesia
+- English
+- العربية
+- 中文
+- 日本語
+- 한국어
+
+Buat localization architecture yang kompatibel dengan Next.js App Router dan TypeScript.
+
+Gunakan library hanya jika benar-benar diperlukan dan kompatibel.
+
+Buat locale routing yang jelas, misalnya:
+ /id
+ /en
+ /ar
+ /zh
+ /ja
+ /ko
+
+Sesuaikan dengan struktur project yang sudah ada.
+
+Untuk Arab:
+- RTL
+- dir=rtl
+- layout benar-benar RTL
+- navigation
+- icon direction
+
+Buat language selector.
+
+Jangan hanya menerjemahkan UI.
+Siapkan arsitektur translation untuk database content.
+
+Pertimbangkan:
+- Profile translation
+- Project translation
+- Achievement translation
+
+SEO multilingual:
+- metadata
+- canonical
+- hreflang
+- alternate language
+
+Output:
+1. Localization architecture.
+2. Route structure.
+3. Translation structure.
+4. RTL architecture.
+5. Database translation strategy.
+6. Source code lengkap.
+7. Cara menambahkan bahasa.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 9.
+
+
+==================================================
+PHASE 9 — SEO + ACCESSIBILITY + PERFORMANCE
+==================================================
+
+Lanjutkan project dari PHASE 1–8.
+
+Jangan membangun ulang website.
+
+Lakukan audit:
+
+SEO:
+- metadata
+- dynamic metadata
+- title
+- description
+- Open Graph
+- sitemap
+- robots
+- canonical
+- hreflang
+- semantic HTML
+
+Accessibility:
+- heading hierarchy
+- keyboard navigation
+- focus
+- contrast
+- form labels
+- error messages
+- modal accessibility
+- ARIA jika diperlukan
+- reduced motion
+
+Performance:
+- Server Components
+- Client Components
+- image optimization
+- font loading
+- bundle size
+- dependencies
+- lazy loading
+- dynamic imports
+
+Security:
+- authentication
+- authorization
+- environment variables
+- server validation
+- database access
+- error messages
+- sensitive data
+
+Code quality:
+- duplicate code
+- unused files
+- unused imports
+- any
+- component structure
+- naming
+- error handling
+
+Perbaiki masalah yang ditemukan.
+
+Output:
+1. Audit findings.
+2. Prioritas masalah.
+3. Perbaikan.
+4. File yang berubah.
+5. Source code lengkap.
+6. Testing checklist.
+
+Setelah selesai BERHENTI.
+Tunggu instruksi: LANJUTKAN PHASE 10.
+
+
+==================================================
+PHASE 10 — FINAL AUDIT + GITHUB + DEPLOYMENT
+==================================================
+
+Lanjutkan project dari PHASE 1–9.
+
+Lakukan final audit.
+
+Periksa:
+- TypeScript
+- build
+- Prisma
+- routes
+- environment variables
+- authentication
+- authorization
+- CRUD
+- multilingual
+- SEO
+- accessibility
+- performance
+- responsive design
+
+Pastikan:
+npm run build
+berhasil.
+
+GitHub:
+- .gitignore benar
+- .env tidak masuk repository
+- README.md lengkap
+
+README berisi:
+- overview
+- features
+- tech stack
+- installation
+- environment variables
+- database
+- Prisma migration
+- seed
+- development
+- production
+- deployment
+
+Deployment:
+1. Push ke GitHub.
+2. Setup PostgreSQL production.
+3. Setup environment variables.
+4. Deploy Next.js.
+5. Jalankan production migration.
+6. Seed jika diperlukan.
+7. Test production.
+
+Jangan meminta user mengirim:
+- DATABASE_URL
+- password
+- AUTH_SECRET
+atau secret lainnya.
+
+Buat FINAL HANDOVER:
+1. Struktur project.
+2. Cara menjalankan di komputer baru.
+3. Cara backup database.
+4. Cara menambah project.
+5. Cara menambah certificate.
+6. Cara login admin.
+7. Cara deploy update.
+
+Hasil akhir yang diharapkan:
+
+FULL-STACK PERSONAL PORTFOLIO PLATFORM
+
+dengan:
+- Public Website
+- PostgreSQL
+- Prisma
+- Authentication
+- Admin Dashboard
+- CRUD
+- Project Management
+- Certificate Management
+- Achievement Management
+- Message Management
+- Multilingual
+- Dark Mode
+- Responsive Design
+- SEO
+- Accessibility
+- Performance
+- GitHub Ready
+- Deployment Ready
+
+Setelah final audit selesai, buat laporan singkat tentang:
+- apa yang sudah selesai
+- apa yang perlu diganti dengan data asli
+- apa yang perlu dikonfigurasi sebelum production
+- apa yang masih opsional
+
+==================================================
+END OF SUPER PROMPT
+==================================================

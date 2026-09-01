@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Wildan Asy Syifa — Academic Portfolio</title>
+    <meta name="description" content="Portfolio akademik Ahmad Wildan Asy Syifa — Quantum Academic Dimension.">
+    <meta property="og:title" content="Ahmad Wildan Asy Syifa — Academic Portfolio">
+    <meta property="og:description" content="Portfolio akademik Ahmad Wildan Asy Syifa — Quantum Academic Dimension.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta name="theme-color" content="#F1EEE6">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+                   QUANTUM ACADEMIC DIMENSION
+                   with 4D Visual Transitions
+                   ============================================ */
+        :root {
+            --bg: #F1EEE6;
+            --bg-pure: #FAF8F4;
+            --text: #17121C;
+            --text-secondary: #4A4A55;
+            --text-faint: #8A8A95;
+            --coral: #FF5A36;
+            --coral-dark: #E04A2A;
+            --coral-light: #FFDCD0;
+            --ultra: #304CFF;
+            --ultra-light: #DCE4FF;
+            --acid: #C7FF3D;
+            --violet: #6F35FF;
+            --border: rgba(23, 18, 28, 0.08);
+            --border-strong: rgba(23, 18, 28, 0.16);
+            --font-sans: 'Inter', sans-serif;
+            --font-arabic: 'Noto Sans Arabic', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: 0.4s var(--ease-out);
+            --max-width: 1400px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --shadow-sm: 0 4px 20px rgba(0,0,0,0.04);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        body.rtl {
+            font-family: var(--font-arabic);
+            direction: rtl;
+        }
+
+        /* ============ FIXED CANVAS FOR TRANSITIONS ============ */
+        #transitionCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* ============ BACKGROUND CANVAS ============ */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ============ CUSTOM CURSOR ============ */
+        .cursor-dot,
+        .cursor-crosshair {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--coral);
+            transform: translate(-50%, -50%);
+        }
+        .cursor-crosshair {
+            width: 30px;
+            height: 30px;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+        .cursor-crosshair::before,
+        .cursor-crosshair::after {
+            content: '';
+            position: absolute;
+            background: var(--ultra);
+            transition: all 0.2s ease;
+        }
+        .cursor-crosshair::before {
+            width: 30px;
+            height: 1px;
+            top: 50%;
+            left: 0;
+        }
+        .cursor-crosshair::after {
+            width: 1px;
+            height: 30px;
+            left: 50%;
+            top: 0;
+        }
+        body.has-cursor .cursor-dot {
+            opacity: 1;
+        }
+        body.has-cursor .cursor-crosshair.visible {
+            opacity: 1;
+        }
+        @media (max-width: 1024px) {
+            .cursor-dot,
+            .cursor-crosshair {
+                display: none;
+            }
+        }
+
+        /* ============ SCROLL PROGRESS ============ */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--coral);
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* ============ NAVIGATION ============ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 900;
+            padding: 0 40px;
+            background: rgba(241, 238, 230, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(241, 238, 230, 0.95);
+            box-shadow: var(--shadow-sm);
+        }
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        .navbar-brand {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        .navbar-brand:hover {
+            color: var(--coral);
+        }
+        .navbar-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--coral);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--text);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: var(--coral);
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            padding: 4px 6px;
+            font-family: var(--font-mono);
+            transition: color 0.3s ease;
+        }
+        .lang-btn:hover {
+            color: var(--text);
+        }
+        .lang-btn.active {
+            color: var(--coral);
+            font-weight: 700;
+        }
+        .lang-sep {
+            width: 1px;
+            height: 12px;
+            background: var(--border-strong);
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 910;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .navbar {
+                padding: 0 20px;
+            }
+        }
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            z-index: 850;
+            flex-direction: column;
+            padding: 20px 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+        }
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .mobile-nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 12px 0;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+        }
+        .mobile-menu-footer {
+            margin-top: 20px;
+            color: var(--text-faint);
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+        }
+
+        /* ============ MAIN CONTENT ============ */
+        main {
+            position: relative;
+            z-index: 2;
+            padding-top: 70px;
+        }
+        .section {
+            padding: 120px 0;
+            position: relative;
+            min-height: 100vh;
+        }
+        .section-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 5;
+        }
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ultra);
+            font-family: var(--font-mono);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .section-label::before {
+            content: '';
+            width: 16px;
+            height: 2px;
+            background: var(--ultra);
+        }
+        .section-heading {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            color: var(--text);
+        }
+        .section-heading .highlight {
+            color: var(--coral);
+        }
+        .section-subheading {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+        .hero-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 80px 40px;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .hero-marker {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--coral);
+            font-family: var(--font-mono);
+            margin-bottom: 20px;
+        }
+        .hero-title {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            position: relative;
+            perspective: 1000px;
+        }
+        .hero-title .line {
+            display: block;
+            transition: transform 0.5s var(--ease-out);
+            transform-style: preserve-3d;
+        }
+        .hero-title .line.coral {
+            color: var(--coral);
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .hero-tagline {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+        }
+        .btn-primary {
+            background: var(--coral);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--coral-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 90, 54, 0.2);
+        }
+        .btn-secondary {
+            color: var(--text);
+            border: 1px solid var(--border-strong);
+        }
+        .btn-secondary:hover {
+            border-color: var(--coral);
+            color: var(--coral);
+            transform: translateY(-2px);
+        }
+        .hero-data-grid {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-top: 20px;
+        }
+        .hero-data-item {
+            border-left: 2px solid var(--border-strong);
+            padding-left: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .hero-data-item:hover {
+            border-left-color: var(--coral);
+        }
+        .hero-data-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+            margin-bottom: 4px;
+        }
+        .hero-data-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+        .hero-data-sub {
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            letter-spacing: 1px;
+            font-family: var(--font-mono);
+        }
+
+        /* Dimensional Object */
+        .hero-dimensional {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            pointer-events: none;
+            z-index: 3;
+            display: none;
+        }
+        @media (min-width: 1200px) {
+            .hero-dimensional {
+                display: block;
+            }
+        }
+        .dim-object {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: dimRotate 30s linear infinite;
+        }
+        @keyframes dimRotate {
+            0% { transform: rotateX(15deg) rotateY(0deg); }
+            100% { transform: rotateX(15deg) rotateY(360deg); }
+        }
+        .dim-ring {
+            position: absolute;
+            border: 1px solid rgba(48, 76, 255, 0.25);
+            border-radius: 50%;
+            animation: ringPulse 5s ease-in-out infinite alternate;
+        }
+        .dim-ring.r1 { width: 100%; height: 100%; }
+        .dim-ring.r2 { width: 80%; height: 80%; top: 10%; left: 10%; border-color: rgba(255, 90, 54, 0.2); animation-delay: 1s; }
+        .dim-ring.r3 { width: 60%; height: 60%; top: 20%; left: 20%; border-color: rgba(111, 53, 255, 0.3); animation-delay: 2s; }
+        @keyframes ringPulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+        .dim-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--coral);
+            box-shadow: 0 0 15px rgba(255,90,54,0.4);
+            animation: nodeFloat 4s ease-in-out infinite alternate;
+        }
+        .dim-node.n1 { top: 15%; left: 15%; animation-delay: 0s; }
+        .dim-node.n2 { top: 70%; right: 20%; animation-delay: 1s; background: var(--ultra); }
+        .dim-node.n3 { bottom: 25%; left: 10%; animation-delay: 2s; background: var(--violet); }
+        @keyframes nodeFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+        .dim-label {
+            position: absolute;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ultra);
+            font-family: var(--font-mono);
+        }
+        .dim-label.l1 { top: 5%; left: 5%; }
+        .dim-label.l2 { bottom: 10%; right: 10%; color: var(--coral); }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            z-index: 5;
+        }
+        .scroll-text {
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+        }
+        .scroll-line {
+            width: 1px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--coral), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+        @keyframes scrollPulse {
+            0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+            50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+            100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+        }
+
+        /* ============ SECTIONS ============ */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+            align-items: start;
+        }
+        .profile-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .profile-quote {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .profile-quote span.coral {
+            color: var(--coral);
+        }
+        .profile-quote span.ultra {
+            color: var(--ultra);
+        }
+        .profile-meta {
+            margin-top: 20px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+        }
+
+        .achievements-field {
+            margin-top: 60px;
+            position: relative;
+            min-height: 400px;
+        }
+        .achievement-float {
+            position: absolute;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(48,76,255,0.2);
+            padding: 12px 18px;
+            background: rgba(250,248,244,0.7);
+            backdrop-filter: blur(5px);
+            border-radius: var(--radius-sm);
+        }
+        .achievement-float .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .achievement-float .label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+        .achievement-float:hover {
+            transform: translateY(-5px);
+            border-color: var(--coral);
+        }
+
+        .journey-trajectory {
+            margin-top: 60px;
+            position: relative;
+            min-height: 500px;
+        }
+        .trajectory-point {
+            position: absolute;
+            width: 200px;
+            text-align: left;
+        }
+        .trajectory-point .point-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .trajectory-point .point-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .trajectory-point .point-meta {
+            font-size: 0.55rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+            color: var(--ultra);
+        }
+
+        .sousse-section {
+            background: var(--bg-pure);
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .sousse-abstract {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image:
+                linear-gradient(rgba(255,90,54,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(48,76,255,0.3) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        .sousse-status {
+            display: inline-block;
+            background: var(--acid);
+            color: var(--text);
+            padding: 6px 16px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+        }
+        .sousse-title {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+        }
+        .sousse-title .coral {
+            color: var(--coral);
+        }
+        .sousse-major {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 500;
+            color: var(--ultra);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .sousse-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+        }
+        .sousse-coords {
+            margin-top: 20px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+        }
+
+        .language-field {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .language-item {
+            border: 1px solid var(--border);
+            padding: 25px 20px;
+            text-align: center;
+            background: var(--bg-pure);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s ease;
+        }
+        .language-item:hover {
+            border-color: var(--coral);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+        }
+        .language-script {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .language-script.arabic {
+            color: var(--coral);
+            font-size: 2.2rem;
+        }
+        .language-script.chinese {
+            color: var(--ultra);
+        }
+        .language-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .language-level {
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+        }
+
+        .saudi-module {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px;
+            background: var(--bg-pure);
+            border: 1px solid var(--border);
+            text-align: center;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        .saudi-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .saudi-status {
+            display: inline-block;
+            background: var(--ultra-light);
+            color: var(--ultra);
+            padding: 6px 16px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            border-radius: var(--radius-sm);
+            margin-bottom: 15px;
+        }
+        .saudi-desc {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        .saudi-stages {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .saudi-stage {
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            color: var(--text-faint);
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s ease;
+        }
+        .saudi-stage.active {
+            background: var(--coral);
+            color: #fff;
+            border-color: var(--coral);
+        }
+
+        .final-cta {
+            text-align: center;
+            padding: 120px 0;
+            background: var(--bg-pure);
+        }
+        .final-cta h2 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            margin-bottom: 15px;
+        }
+        .final-cta h2 .coral {
+            color: var(--coral);
+        }
+        .final-cta p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            background: var(--bg);
+        }
+        .footer-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-brand {
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            font-family: var(--font-mono);
+        }
+        .footer-subtle {
+            color: var(--text-faint);
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+        }
+        .footer-top-link {
+            margin-top: 10px;
+            color: var(--coral);
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        /* ============ REVEAL ============ */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+        }
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        [data-reveal="left"] {
+            transform: translateX(-40px);
+        }
+        [data-reveal="left"].revealed {
+            transform: translateX(0);
+        }
+        [data-reveal="right"] {
+            transform: translateX(40px);
+        }
+        [data-reveal="right"].revealed {
+            transform: translateX(0);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .language-field {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .achievements-field {
+                min-height: auto;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .achievement-float {
+                position: relative;
+                width: calc(50% - 10px);
+            }
+            .journey-trajectory {
+                min-height: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+            .trajectory-point {
+                position: relative;
+                width: auto;
+            }
+        }
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            .hero {
+                min-height: auto;
+                padding: 60px 0;
+            }
+            .hero-container {
+                padding: 40px 20px;
+                min-height: auto;
+            }
+            .hero-title {
+                font-size: clamp(2.8rem, 15vw, 5rem);
+            }
+            .hero-data-grid {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .language-field {
+                grid-template-columns: 1fr;
+            }
+            .achievement-float {
+                width: 100%;
+            }
+            .saudi-module {
+                padding: 30px 20px;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .cursor-dot,
+            .cursor-crosshair {
+                display: none;
+            }
+            .dim-object {
+                animation: none;
+            }
+            #bgCanvas,
+            #transitionCanvas {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas background -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <!-- Transition canvas -->
+    <canvas id="transitionCanvas" aria-hidden="true"></canvas>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-crosshair" id="cursorCrosshair"></div>
+
+    <!-- Scroll progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#hero" class="navbar-brand">AWS</a>
+            <nav class="navbar-links" aria-label="Navigasi utama">
+                <a href="#profil" class="nav-link" data-i18n="nav.profil">01 PROFILE</a>
+                <a href="#pencapaian" class="nav-link" data-i18n="nav.pencapaian">02 ACHIEVEMENTS</a>
+                <a href="#perjalanan" class="nav-link" data-i18n="nav.perjalanan">03 JOURNEY</a>
+                <a href="#bahasa" class="nav-link" data-i18n="nav.bahasa">04 LANGUAGES</a>
+            </nav>
+            <div class="navbar-right">
+                <div class="lang-switcher" role="group" aria-label="Pilih bahasa">
+                    <button class="lang-btn active" data-lang="id" aria-pressed="true">ID</button>
+                    <span class="lang-sep"></span>
+                    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+                    <span class="lang-sep"></span>
+                    <button class="lang-btn" data-lang="ar" aria-pressed="false">AR</button>
+                </div>
+                <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <a href="#profil" class="mobile-nav-link" data-i18n="nav.profil">01 PROFILE</a>
+        <a href="#pencapaian" class="mobile-nav-link" data-i18n="nav.pencapaian">02 ACHIEVEMENTS</a>
+        <a href="#perjalanan" class="mobile-nav-link" data-i18n="nav.perjalanan">03 JOURNEY</a>
+        <a href="#bahasa" class="mobile-nav-link" data-i18n="nav.bahasa">04 LANGUAGES</a>
+        <a href="#sousse" class="mobile-nav-link" data-i18n="nav.sousse">SOUSSE</a>
+        <a href="#saudi" class="mobile-nav-link" data-i18n="nav.saudi">STUDY IN SAUDI</a>
+        <div class="mobile-menu-footer" data-i18n="mobile.footer">Quantum Academic Dimension · 2026</div>
+    </div>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero" id="hero" aria-label="Hero">
+            <div class="hero-container">
+                <div class="hero-marker" data-reveal>
+                    <span data-i18n="hero.marker">ACADEMIC FIELD / 2026</span>
+                </div>
+                <h1 class="hero-title" data-reveal>
+                    <span class="line">AHMAD</span>
+                    <span class="line">WILDAN</span>
+                    <span class="line coral">ASY SYIFA</span>
+                </h1>
+                <p class="hero-subtitle" data-reveal data-i18n="hero.subtitle">Scholar · Arabic Literature · Islamic Studies</p>
+                <p class="hero-tagline" data-reveal data-i18n="hero.tagline">Perjalanan akademik yang dibangun melalui konsistensi prestasi, studi keislaman, dan pengembangan bahasa.</p>
+                <div class="hero-buttons" data-reveal>
+                    <a href="#perjalanan" class="btn btn-primary" data-i18n="hero.btnJourney">EXPLORE JOURNEY</a>
+                    <a href="#profil" class="btn btn-secondary" data-i18n="hero.btnProfile">VIEW PROFILE</a>
+                </div>
+                <div class="hero-data-grid" data-reveal>
+                    <div class="hero-data-item">
+                        <div class="hero-data-label" data-i18n="hero.rankLabel">01 · RANK</div>
+                        <div class="hero-data-value">#1</div>
+                        <div class="hero-data-sub" data-i18n="hero.rankSub">GRADE 7—12</div>
+                    </div>
+                    <div class="hero-data-item">
+                        <div class="hero-data-label" data-i18n="hero.avgLabel">HIGHEST AVG</div>
+                        <div class="hero-data-value">97.10</div>
+                        <div class="hero-data-sub" data-i18n="hero.avgSub">G12 · SEMESTER 1</div>
+                    </div>
+                    <div class="hero-data-item">
+                        <div class="hero-data-label" data-i18n="hero.gpaLabel">GPA</div>
+                        <div class="hero-data-value">4.00</div>
+                        <div class="hero-data-sub" data-i18n="hero.gpaSub">MARKAZ ULUM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-dimensional" aria-hidden="true">
+                <div class="dim-object">
+                    <div class="dim-ring r1"></div>
+                    <div class="dim-ring r2"></div>
+                    <div class="dim-ring r3"></div>
+                    <div class="dim-node n1"></div>
+                    <div class="dim-node n2"></div>
+                    <div class="dim-node n3"></div>
+                    <div class="dim-label l1">RANK / 001</div>
+                    <div class="dim-label l2">GPA / 4.00</div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" aria-hidden="true">
+                <span class="scroll-text" data-i18n="hero.scroll">SCROLL</span>
+                <span class="scroll-line"></span>
+            </div>
+        </section>
+
+        <!-- PROFILE -->
+        <section class="section" id="profil" aria-label="Profil">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span data-i18n="about.label">01 / PROFILE</span>
+                </div>
+                <h2 class="section-heading" data-reveal>
+                    <span data-i18n="about.heading">DIBENTUK<br>OLEH<br><span class="highlight">KONSISTENSI.</span></span>
+                </h2>
+                <div class="profile-grid">
+                    <div data-reveal>
+                        <p class="profile-text" data-i18n="about.text">
+                            Perjalanan akademik yang dibangun melalui konsistensi prestasi, studi keislaman, dan pengembangan bahasa.
+                        </p>
+                    </div>
+                    <div data-reveal>
+                        <div class="profile-quote">
+                            <span class="coral">Konsistensi</span> mendahului <span class="ultra">pencapaian</span>.
+                        </div>
+                        <div class="profile-meta" data-i18n="about.meta">AWS / ACADEMIC RECORD / 2026</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS -->
+        <section class="section" id="pencapaian" aria-label="Pencapaian">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span data-i18n="achievements.label">02 / ACHIEVEMENTS</span>
+                </div>
+                <h2 class="section-heading" data-reveal>
+                    <span data-i18n="achievements.heading">EVIDENCE<br><span class="highlight">NOT EXAGGERATION.</span></span>
+                </h2>
+                <div class="achievements-field" data-reveal>
+                    <div class="achievement-float" style="top:0%; left:0%;">
+                        <span class="value">#1</span>
+                        <span class="label" data-i18n="achievements.rankLabel">Peringkat 1 · Kelas 7—12</span>
+                    </div>
+                    <div class="achievement-float" style="top:10%; left:35%;">
+                        <span class="value">95+</span>
+                        <span class="label" data-i18n="achievements.avgLabel">Rata-rata akademik</span>
+                    </div>
+                    <div class="achievement-float" style="top:0%; left:70%;">
+                        <span class="value">97.10</span>
+                        <span class="label" data-i18n="achievements.highestLabel">Nilai tertinggi · Kelas 12 Smt 1</span>
+                    </div>
+                    <div class="achievement-float" style="top:30%; left:15%;">
+                        <span class="value">4.00</span>
+                        <span class="label" data-i18n="achievements.gpaLabel">GPA · Markaz Ulum</span>
+                    </div>
+                    <div class="achievement-float" style="top:30%; left:55%;">
+                        <span class="value">97.76</span>
+                        <span class="label" data-i18n="achievements.midtermLabel">Midterm · Markaz Ulum</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNEY -->
+        <section class="section" id="perjalanan" aria-label="Perjalanan">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span data-i18n="journey.label">03 / JOURNEY</span>
+                </div>
+                <h2 class="section-heading" data-reveal>
+                    <span data-i18n="journey.heading">FROM <span class="highlight">FOUNDATION</span><br>TO DESTINATION.</span>
+                </h2>
+                <div class="journey-trajectory" data-reveal>
+                    <div class="trajectory-point" style="top:0%; left:0%;">
+                        <div class="point-meta">FOUNDATION</div>
+                        <div class="point-title">MA Al Irsyad PIAT 7</div>
+                        <div class="point-desc" data-i18n="journey.stage1Desc">Konsisten peringkat #1 dari kelas 7 hingga kelas 12.</div>
+                    </div>
+                    <div class="trajectory-point" style="top:20%; left:40%;">
+                        <div class="point-meta">CONSISTENCY</div>
+                        <div class="point-title">Markaz Ulum</div>
+                        <div class="point-desc" data-i18n="journey.stage2Desc">Diploma Syariah · GPA 4.00 · Midterm 97.76</div>
+                    </div>
+                    <div class="trajectory-point" style="top:40%; left:80%;">
+                        <div class="point-meta">DESTINATION</div>
+                        <div class="point-title">Sousse University</div>
+                        <div class="point-desc" data-i18n="journey.stage3Desc">Sastra Arab · Tunisia · Status: Accepted</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOUSSE -->
+        <section class="sousse-section" id="sousse" aria-label="Sousse University">
+            <div class="sousse-abstract" aria-hidden="true"></div>
+            <div class="section-container">
+                <div class="section-label" data-reveal style="justify-content:center;">
+                    <span data-i18n="sousse.label">/ DESTINATION</span>
+                </div>
+                <div class="sousse-status" data-reveal data-i18n="sousse.status">ACCEPTED</div>
+                <h2 class="sousse-title" data-reveal>
+                    <span class="coral">SOUSSE</span><br>UNIVERSITY
+                </h2>
+                <p class="sousse-major" data-reveal data-i18n="sousse.major">ARABIC LITERATURE</p>
+                <p class="sousse-location" data-reveal data-i18n="sousse.location">TUNISIA</p>
+                <p class="sousse-coords" data-reveal data-i18n="sousse.coords">35°49'N · 10°38'E · MEDITERRANEAN</p>
+            </div>
+        </section>
+
+        <!-- LANGUAGES -->
+        <section class="section" id="bahasa" aria-label="Bahasa">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span data-i18n="languages.label">04 / LANGUAGES</span>
+                </div>
+                <h2 class="section-heading" data-reveal>
+                    <span data-i18n="languages.heading">LANGUAGE <span class="highlight">FIELD</span></span>
+                </h2>
+                <div class="language-field">
+                    <div class="language-item" data-reveal>
+                        <span class="language-script arabic">العربية</span>
+                        <span class="language-name">Arabic</span>
+                        <span class="language-level" data-i18n="languages.arabicLevel">Lanjutan</span>
+                    </div>
+                    <div class="language-item" data-reveal>
+                        <span class="language-script">Bahasa</span>
+                        <span class="language-name">Indonesian</span>
+                        <span class="language-level" data-i18n="languages.indonesianLevel">Utama</span>
+                    </div>
+                    <div class="language-item" data-reveal>
+                        <span class="language-script">English</span>
+                        <span class="language-name">English</span>
+                        <span class="language-level" data-i18n="languages.englishLevel">Sedang dikembangkan</span>
+                    </div>
+                    <div class="language-item" data-reveal>
+                        <span class="language-script chinese">中文</span>
+                        <span class="language-name">Mandarin</span>
+                        <span class="language-level" data-i18n="languages.mandarinLevel">Dalam pembelajaran</span>
+                    </div>
+                    <div class="language-item" data-reveal>
+                        <span class="language-script chinese">한국어</span>
+                        <span class="language-name">Korean</span>
+                        <span class="language-level" data-i18n="languages.koreanLevel">Dalam pembelajaran</span>
+                    </div>
+                    <div class="language-item" data-reveal>
+                        <span class="language-script chinese">日本語</span>
+                        <span class="language-name">Japanese</span>
+                        <span class="language-level" data-i18n="languages.japaneseLevel">Dalam pembelajaran</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STUDY IN SAUDI -->
+        <section class="section" id="saudi" aria-label="Study in Saudi">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span data-i18n="saudi.label">/ STUDY IN SAUDI</span>
+                </div>
+                <div class="saudi-module" data-reveal>
+                    <h3 class="saudi-title" data-i18n="saudi.title">STUDY IN SAUDI</h3>
+                    <div class="saudi-status" data-i18n="saudi.status">DOCUMENT PROCESSING</div>
+                    <p class="saudi-desc" data-i18n="saudi.desc">Pemrosesan dokumen sedang berlangsung.</p>
+                    <div class="saudi-stages">
+                        <span class="saudi-stage" data-i18n="saudi.stage1">SUBMITTED</span>
+                        <span class="saudi-stage active" data-i18n="saudi.stage2">PROCESSING</span>
+                        <span class="saudi-stage" data-i18n="saudi.stage3">REVIEW</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section class="final-cta" id="kontak" aria-label="Kontak">
+            <h2 data-reveal>DIMENSION<br><span class="coral">COMPLETE</span></h2>
+            <p data-reveal data-i18n="final.sub">Perjalanan akademik masih berlanjut.</p>
+            <a href="#hero" class="btn btn-primary" data-reveal data-i18n="final.cta">EXPLORE AGAIN →</a>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-inner">
+                <span class="footer-brand">AWS</span>
+                <span class="footer-text" data-i18n="footer.text">Ahmad Wildan Asy Syifa · Academic Portfolio · 2026</span>
+                <span class="footer-subtle" data-i18n="footer.subtle">QUANTUM ACADEMIC DIMENSION</span>
+                <a href="#hero" class="footer-top-link" data-i18n="footer.top">BACK TO TOP ↑</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        (function() {
+            // ==================== TRANSLATIONS ====================
+            const translations = {
+                id: {
+                    'nav.profil': '01 PROFIL',
+                    'nav.pencapaian': '02 PENCAPAIAN',
+                    'nav.perjalanan': '03 PERJALANAN',
+                    'nav.bahasa': '04 BAHASA',
+                    'nav.sousse': 'SOUSSE',
+                    'nav.saudi': 'STUDI DI SAUDI',
+                    'mobile.footer': 'Quantum Academic Dimension · 2026',
+                    'hero.marker': 'ACADEMIC FIELD / 2026',
+                    'hero.subtitle': 'Scholar · Arabic Literature · Islamic Studies',
+                    'hero.tagline': 'Perjalanan akademik yang dibangun melalui konsistensi prestasi, studi keislaman, dan pengembangan bahasa.',
+                    'hero.btnJourney': 'JELAJAHI PERJALANAN',
+                    'hero.btnProfile': 'LIHAT PROFIL',
+                    'hero.rankLabel': '01 · RANK',
+                    'hero.rankSub': 'GRADE 7—12',
+                    'hero.avgLabel': 'HIGHEST AVG',
+                    'hero.avgSub': 'G12 · SEMESTER 1',
+                    'hero.gpaLabel': 'GPA',
+                    'hero.gpaSub': 'MARKAZ ULUM',
+                    'hero.scroll': 'SCROLL',
+                    'about.label': '01 / PROFIL',
+                    'about.heading': 'DIBENTUK<br>OLEH<br><span class="highlight">KONSISTENSI.</span>',
+                    'about.text': 'Perjalanan akademik yang dibangun melalui konsistensi prestasi, studi keislaman, dan pengembangan bahasa.',
+                    'about.meta': 'AWS / ACADEMIC RECORD / 2026',
+                    'achievements.label': '02 / PENCAPAIAN',
+                    'achievements.heading': 'BUKTI<br><span class="highlight">BUKAN BERLEBIHAN.</span>',
+                    'achievements.rankLabel': 'Peringkat 1 · Kelas 7—12',
+                    'achievements.avgLabel': 'Rata-rata akademik',
+                    'achievements.highestLabel': 'Nilai tertinggi · Kelas 12 Smt 1',
+                    'achievements.gpaLabel': 'GPA · Markaz Ulum',
+                    'achievements.midtermLabel': 'Midterm · Markaz Ulum',
+                    'journey.label': '03 / PERJALANAN',
+                    'journey.heading': 'DARI <span class="highlight">FONDASI</span><br>MENUJU TUJUAN.',
+                    'journey.stage1Desc': 'Konsisten peringkat #1 dari kelas 7 hingga kelas 12.',
+                    'journey.stage2Desc': 'Diploma Syariah · GPA 4.00 · Midterm 97.76',
+                    'journey.stage3Desc': 'Sastra Arab · Tunisia · Status: Diterima',
+                    'sousse.label': '/ DESTINASI',
+                    'sousse.status': 'ACCEPTED',
+                    'sousse.major': 'ARABIC LITERATURE',
+                    'sousse.location': 'TUNISIA',
+                    'sousse.coords': '35°49\'N · 10°38\'E · MEDITERRANEAN',
+                    'languages.label': '04 / BAHASA',
+                    'languages.heading': 'LANGUAGE <span class="highlight">FIELD</span>',
+                    'languages.arabicLevel': 'Lanjutan',
+                    'languages.indonesianLevel': 'Utama',
+                    'languages.englishLevel': 'Sedang dikembangkan',
+                    'languages.mandarinLevel': 'Dalam pembelajaran',
+                    'languages.koreanLevel': 'Dalam pembelajaran',
+                    'languages.japaneseLevel': 'Dalam pembelajaran',
+                    'saudi.label': '/ STUDI DI SAUDI',
+                    'saudi.title': 'STUDY IN SAUDI',
+                    'saudi.status': 'DOCUMENT PROCESSING',
+                    'saudi.desc': 'Pemrosesan dokumen sedang berlangsung.',
+                    'saudi.stage1': 'SUBMITTED',
+                    'saudi.stage2': 'PROCESSING',
+                    'saudi.stage3': 'REVIEW',
+                    'final.sub': 'Perjalanan akademik masih berlanjut.',
+                    'final.cta': 'JELAJAHI LAGI →',
+                    'footer.text': 'Ahmad Wildan Asy Syifa · Academic Portfolio · 2026',
+                    'footer.subtle': 'QUANTUM ACADEMIC DIMENSION',
+                    'footer.top': 'BACK TO TOP ↑'
+                },
+                en: {
+                    'nav.profil': '01 PROFILE',
+                    'nav.pencapaian': '02 ACHIEVEMENTS',
+                    'nav.perjalanan': '03 JOURNEY',
+                    'nav.bahasa': '04 LANGUAGES',
+                    'nav.sousse': 'SOUSSE',
+                    'nav.saudi': 'STUDY IN SAUDI',
+                    'mobile.footer': 'Quantum Academic Dimension · 2026',
+                    'hero.marker': 'ACADEMIC FIELD / 2026',
+                    'hero.subtitle': 'Scholar · Arabic Literature · Islamic Studies',
+                    'hero.tagline': 'An academic journey built through consistent achievement, Islamic studies, and language development.',
+                    'hero.btnJourney': 'EXPLORE JOURNEY',
+                    'hero.btnProfile': 'VIEW PROFILE',
+                    'hero.rankLabel': '01 · RANK',
+                    'hero.rankSub': 'GRADE 7—12',
+                    'hero.avgLabel': 'HIGHEST AVG',
+                    'hero.avgSub': 'G12 · SEMESTER 1',
+                    'hero.gpaLabel': 'GPA',
+                    'hero.gpaSub': 'MARKAZ ULUM',
+                    'hero.scroll': 'SCROLL',
+                    'about.label': '01 / PROFILE',
+                    'about.heading': 'BUILT<br>THROUGH<br><span class="highlight">CONSISTENCY.</span>',
+                    'about.text': 'An academic journey built through consistent achievement, Islamic studies, and language development.',
+                    'about.meta': 'AWS / ACADEMIC RECORD / 2026',
+                    'achievements.label': '02 / ACHIEVEMENTS',
+                    'achievements.heading': 'EVIDENCE<br><span class="highlight">NOT EXAGGERATION.</span>',
+                    'achievements.rankLabel': 'Rank 1 · Grade 7—12',
+                    'achievements.avgLabel': 'Academic average',
+                    'achievements.highestLabel': 'Highest score · Grade 12 Smt 1',
+                    'achievements.gpaLabel': 'GPA · Markaz Ulum',
+                    'achievements.midtermLabel': 'Midterm · Markaz Ulum',
+                    'journey.label': '03 / JOURNEY',
+                    'journey.heading': 'FROM <span class="highlight">FOUNDATION</span><br>TO DESTINATION.',
+                    'journey.stage1Desc': 'Consistently ranked #1 from grade 7 to grade 12.',
+                    'journey.stage2Desc': 'Sharia Diploma · GPA 4.00 · Midterm 97.76',
+                    'journey.stage3Desc': 'Arabic Literature · Tunisia · Status: Accepted',
+                    'sousse.label': '/ DESTINATION',
+                    'sousse.status': 'ACCEPTED',
+                    'sousse.major': 'ARABIC LITERATURE',
+                    'sousse.location': 'TUNISIA',
+                    'sousse.coords': '35°49\'N · 10°38\'E · MEDITERRANEAN',
+                    'languages.label': '04 / LANGUAGES',
+                    'languages.heading': 'LANGUAGE <span class="highlight">FIELD</span>',
+                    'languages.arabicLevel': 'Advanced',
+                    'languages.indonesianLevel': 'Primary',
+                    'languages.englishLevel': 'Developing',
+                    'languages.mandarinLevel': 'In learning',
+                    'languages.koreanLevel': 'In learning',
+                    'languages.japaneseLevel': 'In learning',
+                    'saudi.label': '/ STUDY IN SAUDI',
+                    'saudi.title': 'STUDY IN SAUDI',
+                    'saudi.status': 'DOCUMENT PROCESSING',
+                    'saudi.desc': 'Document processing is in progress.',
+                    'saudi.stage1': 'SUBMITTED',
+                    'saudi.stage2': 'PROCESSING',
+                    'saudi.stage3': 'REVIEW',
+                    'final.sub': 'The academic journey continues.',
+                    'final.cta': 'EXPLORE AGAIN →',
+                    'footer.text': 'Ahmad Wildan Asy Syifa · Academic Portfolio · 2026',
+                    'footer.subtle': 'QUANTUM ACADEMIC DIMENSION',
+                    'footer.top': 'BACK TO TOP ↑'
+                },
+                ar: {
+                    'nav.profil': '٠١ الملف',
+                    'nav.pencapaian': '٠٢ الإنجازات',
+                    'nav.perjalanan': '٠٣ الرحلة',
+                    'nav.bahasa': '٠٤ اللغات',
+                    'nav.sousse': 'سوسة',
+                    'nav.saudi': 'الدراسة في السعودية',
+                    'mobile.footer': 'البعد الأكاديمي الكمومي · 2026',
+                    'hero.marker': 'المجال الأكاديمي / 2026',
+                    'hero.subtitle': 'عالم · أدب عربي · دراسات إسلامية',
+                    'hero.tagline': 'رحلة أكاديمية بُنيت عبر الاتساق في الإنجاز والدراسات الإسلامية وتطوير اللغة.',
+                    'hero.btnJourney': 'استكشف الرحلة',
+                    'hero.btnProfile': 'عرض الملف',
+                    'hero.rankLabel': '٠١ · المرتبة',
+                    'hero.rankSub': 'الصف ٧—١٢',
+                    'hero.avgLabel': 'أعلى متوسط',
+                    'hero.avgSub': 'الصف ١٢ · الفصل ١',
+                    'hero.gpaLabel': 'المعدل',
+                    'hero.gpaSub': 'مركز العلوم',
+                    'hero.scroll': 'مرر',
+                    'about.label': '٠١ / الملف',
+                    'about.heading': 'تشكلت<br>من خلال<br><span class="highlight">الاستمرارية.</span>',
+                    'about.text': 'رحلة أكاديمية بُنيت عبر الاتساق في الإنجاز والدراسات الإسلامية وتطوير اللغة.',
+                    'about.meta': 'AWS / السجل الأكاديمي / 2026',
+                    'achievements.label': '٠٢ / الإنجازات',
+                    'achievements.heading': 'الدليل<br><span class="highlight">لا المبالغة.</span>',
+                    'achievements.rankLabel': 'المرتبة 1 · الصف 7—12',
+                    'achievements.avgLabel': 'المتوسط الأكاديمي',
+                    'achievements.highestLabel': 'أعلى درجة · الصف 12 الفصل 1',
+                    'achievements.gpaLabel': 'المعدل · مركز العلوم',
+                    'achievements.midtermLabel': 'منتصف الفصل · مركز العلوم',
+                    'journey.label': '٠٣ / الرحلة',
+                    'journey.heading': 'من <span class="highlight">الأساس</span><br>إلى الوجهة.',
+                    'journey.stage1Desc': 'المرتبة الأولى باستمرار من الصف 7 إلى الصف 12.',
+                    'journey.stage2Desc': 'دبلوم الشريعة · المعدل 4.00 · منتصف الفصل 97.76',
+                    'journey.stage3Desc': 'أدب عربي · تونس · الحالة: مقبول',
+                    'sousse.label': '/ الوجهة',
+                    'sousse.status': 'مقبول',
+                    'sousse.major': 'أدب عربي',
+                    'sousse.location': 'تونس',
+                    'sousse.coords': '35°49\'N · 10°38\'E · البحر المتوسط',
+                    'languages.label': '٠٤ / اللغات',
+                    'languages.heading': 'حقل <span class="highlight">اللغة</span>',
+                    'languages.arabicLevel': 'متقدم',
+                    'languages.indonesianLevel': 'اللغة الأم',
+                    'languages.englishLevel': 'قيد التطوير',
+                    'languages.mandarinLevel': 'قيد التعلم',
+                    'languages.koreanLevel': 'قيد التعلم',
+                    'languages.japaneseLevel': 'قيد التعلم',
+                    'saudi.label': '/ الدراسة في السعودية',
+                    'saudi.title': 'الدراسة في السعودية',
+                    'saudi.status': 'معالجة الوثائق',
+                    'saudi.desc': 'معالجة الوثائق قيد التنفيذ.',
+                    'saudi.stage1': 'مُقدم',
+                    'saudi.stage2': 'قيد المعالجة',
+                    'saudi.stage3': 'مراجعة',
+                    'final.sub': 'الرحلة الأكاديمية مستمرة.',
+                    'final.cta': 'استكشف مرة أخرى ←',
+                    'footer.text': 'أحمد ويلدان أشي شيفا · محفظة أكاديمية · 2026',
+                    'footer.subtle': 'البعد الأكاديمي الكمومي',
+                    'footer.top': 'العودة للأعلى ↑'
+                }
+            };
+
+            // ==================== DOM ====================
+            const body = document.body;
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const cursorDot = document.getElementById('cursorDot');
+            const cursorCrosshair = document.getElementById('cursorCrosshair');
+            const scrollProgress = document.getElementById('scrollProgress');
+            const revealElements = document.querySelectorAll('[data-reveal]');
+            const bgCanvas = document.getElementById('bgCanvas');
+            const transitionCanvas = document.getElementById('transitionCanvas');
+            const bgCtx = bgCanvas.getContext('2d');
+            const transCtx = transitionCanvas.getContext('2d');
+
+            // ==================== LANGUAGE ====================
+            let currentLang = localStorage.getItem('aws-lang-qad2') || 'id';
+
+            function setLanguage(lang) {
+                if (!translations[lang]) return;
+                currentLang = lang;
+                localStorage.setItem('aws-lang-qad2', lang);
+
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[lang][key]) {
+                        if (key.includes('heading')) {
+                            el.innerHTML = translations[lang][key];
+                        } else {
+                            el.textContent = translations[lang][key];
+                        }
+                    }
+                });
+
+                langBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                    btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
+                });
+
+                if (lang === 'ar') {
+                    body.classList.add('rtl');
+                    body.setAttribute('dir', 'rtl');
+                    body.style.fontFamily = "'Noto Sans Arabic', sans-serif";
+                } else {
+                    body.classList.remove('rtl');
+                    body.setAttribute('dir', 'ltr');
+                    body.style.fontFamily = '';
+                }
+
+                document.title = lang === 'id' ? 'Ahmad Wildan Asy Syifa — Portofolio Akademik' : lang === 'en' ? 'Ahmad Wildan Asy Syifa — Academic Portfolio' : 'أحمد ويلدان أشي شيفا — محفظة أكاديمية';
+            }
+
+            setLanguage(currentLang);
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setLanguage(btn.dataset.lang);
+                    if (mobileMenu.classList.contains('open')) {
+                        mobileMenu.classList.remove('open');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+
+            // ==================== NAVBAR SCROLL ====================
+            function handleScroll() {
+                if (window.scrollY > 30) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                scrollProgress.style.width = (scrollTop / docHeight) * 100 + '%';
+                updateActiveNav();
+                updateTransitionCanvas();
+            }
+
+            function updateActiveNav() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPos = window.scrollY + 150;
+                sections.forEach(section => {
+                    if (section.offsetTop <= scrollPos && section.offsetTop + section.offsetHeight > scrollPos) {
+                        const id = section.getAttribute('id');
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            // ==================== MOBILE MENU ====================
+            menuToggle.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('open');
+                menuToggle.setAttribute('aria-expanded', isOpen);
+                const spans = menuToggle.querySelectorAll('span');
+                if (isOpen) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                });
+            });
+
+            // ==================== CUSTOM CURSOR ====================
+            if (window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                body.classList.add('has-cursor');
+                document.addEventListener('mousemove', (e) => {
+                    cursorDot.style.left = e.clientX + 'px';
+                    cursorDot.style.top = e.clientY + 'px';
+                    cursorCrosshair.style.left = e.clientX + 'px';
+                    cursorCrosshair.style.top = e.clientY + 'px';
+                });
+                document.querySelectorAll('a, button, .achievement-float, .language-item').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorCrosshair.classList.add('visible'));
+                    el.addEventListener('mouseleave', () => cursorCrosshair.classList.remove('visible'));
+                });
+            }
+
+            // ==================== REVEAL ====================
+            function checkReveals() {
+                revealElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    if (rect.top < windowHeight * 0.88 && rect.bottom > 0) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }
+            window.addEventListener('load', () => setTimeout(checkReveals, 100));
+            window.addEventListener('scroll', checkReveals);
+
+            // ==================== SMOOTH SCROLL ====================
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (mobileMenu.classList.contains('open')) {
+                            mobileMenu.classList.remove('open');
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+            });
+
+            // ==================== BACKGROUND CANVAS ====================
+            function resizeCanvases() {
+                bgCanvas.width = window.innerWidth;
+                bgCanvas.height = window.innerHeight;
+                transitionCanvas.width = window.innerWidth;
+                transitionCanvas.height = window.innerHeight;
+            }
+            resizeCanvases();
+            window.addEventListener('resize', resizeCanvases);
+
+            const bgParticles = [];
+            const bgParticleCount = Math.min(100, Math.floor(window.innerWidth / 15));
+            for (let i = 0; i < bgParticleCount; i++) {
+                bgParticles.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: Math.random() * 1.5 + 0.5,
+                    color: Math.random() > 0.7 ? 'rgba(255,90,54,0.3)' : 'rgba(48,76,255,0.3)'
+                });
+            }
+
+            function drawBackground() {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+                // Grid
+                bgCtx.strokeStyle = 'rgba(23,18,28,0.03)';
+                bgCtx.lineWidth = 0.5;
+                const gridSize = 60;
+                for (let x = 0; x < bgCanvas.width; x += gridSize) {
+                    bgCtx.beginPath();
+                    bgCtx.moveTo(x, 0);
+                    bgCtx.lineTo(x, bgCanvas.height);
+                    bgCtx.stroke();
+                }
+                for (let y = 0; y < bgCanvas.height; y += gridSize) {
+                    bgCtx.beginPath();
+                    bgCtx.moveTo(0, y);
+                    bgCtx.lineTo(bgCanvas.width, y);
+                    bgCtx.stroke();
+                }
+                // Particles
+                bgParticles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > bgCanvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > bgCanvas.height) p.vy *= -1;
+                    bgCtx.beginPath();
+                    bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    bgCtx.fillStyle = p.color;
+                    bgCtx.fill();
+                });
+                // Connections
+                for (let i = 0; i < bgParticles.length; i++) {
+                    for (let j = i + 1; j < bgParticles.length; j++) {
+                        const dx = bgParticles[i].x - bgParticles[j].x;
+                        const dy = bgParticles[i].y - bgParticles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 100) {
+                            bgCtx.beginPath();
+                            bgCtx.moveTo(bgParticles[i].x, bgParticles[i].y);
+                            bgCtx.lineTo(bgParticles[j].x, bgParticles[j].y);
+                            bgCtx.strokeStyle = 'rgba(23,18,28,0.06)';
+                            bgCtx.lineWidth = 0.5;
+                            bgCtx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(drawBackground);
+            }
+            drawBackground();
+
+            // ==================== 4D TRANSITION CANVAS ====================
+            // We'll draw a morphing geometric line/particle system based on scroll progress.
+            // For each section transition, we'll interpolate between two states defined by a set of points.
+            // This creates a continuous morphing visual.
+
+            const sections = ['hero', 'profil', 'pencapaian', 'perjalanan', 'sousse', 'bahasa', 'saudi', 'kontak'];
+            let lastProgress = 0;
+            let morphProgress = 0; // Smooth interpolated progress
+
+            function updateTransitionCanvas() {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    transCtx.clearRect(0, 0, transitionCanvas.width, transitionCanvas.height);
+                    return;
+                }
+
+                const scrollY = window.scrollY;
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const rawProgress = scrollY / totalHeight;
+
+                // Smooth interpolation
+                morphProgress += (rawProgress - morphProgress) * 0.1;
+
+                transCtx.clearRect(0, 0, transitionCanvas.width, transitionCanvas.height);
+
+                // Determine current segment between sections
+                // We'll map progress to a global morph value 0..1 across the whole page.
+                // Then we draw a continuous line that changes shape based on this global morph.
+
+                const w = transitionCanvas.width;
+                const h = transitionCanvas.height;
+                const cx = w / 2;
+                const cy = h / 2;
+                const radius = Math.min(w, h) * 0.3;
+
+                // Use morphProgress to define angle, scale, and shape
+                const angle = morphProgress * Math.PI * 4;
+                const scale = 0.6 + Math.sin(morphProgress * Math.PI * 2) * 0.2;
+                const wave = Math.sin(morphProgress * Math.PI * 6) * 0.2;
+
+                // Draw a morphing spiral/path
+                transCtx.beginPath();
+                transCtx.strokeStyle = `rgba(255,90,54,${0.3 + wave})`;
+                transCtx.lineWidth = 1.5;
+                transCtx.setLineDash([4, 4]);
+
+                for (let t = 0; t <= 1; t += 0.01) {
+                    const theta = t * Math.PI * 4 + angle;
+                    const r = radius * (0.5 + t * 0.5) * scale;
+                    const x = cx + r * Math.cos(theta);
+                    const y = cy + r * Math.sin(theta) * (0.8 + wave * 0.2);
+                    if (t === 0) transCtx.moveTo(x, y);
+                    else transCtx.lineTo(x, y);
+                }
+                transCtx.stroke();
+                transCtx.setLineDash([]);
+
+                // Draw nodes
+                const nodeCount = 7;
+                for (let i = 0; i < nodeCount; i++) {
+                    const nodeAngle = (i / nodeCount) * Math.PI * 2 + morphProgress * Math.PI * 2;
+                    const nodeRadius = radius * (0.7 + Math.sin(morphProgress * Math.PI * 3 + i) * 0.1);
+                    const nx = cx + nodeRadius * Math.cos(nodeAngle);
+                    const ny = cy + nodeRadius * Math.sin(nodeAngle) * 0.6;
+                    transCtx.beginPath();
+                    transCtx.arc(nx, ny, 4 + Math.sin(morphProgress * Math.PI * 2 + i) * 2, 0, Math.PI * 2);
+                    transCtx.fillStyle = i % 3 === 0 ? `rgba(48,76,255,${0.6})` : `rgba(111,53,255,${0.5})`;
+                    transCtx.fill();
+                }
+
+                // Draw connections between nodes
+                transCtx.beginPath();
+                transCtx.strokeStyle = `rgba(23,18,28,0.15)`;
+                transCtx.lineWidth = 0.5;
+                for (let i = 0; i < nodeCount; i++) {
+                    const angle1 = (i / nodeCount) * Math.PI * 2 + morphProgress * Math.PI * 2;
+                    const r1 = radius * (0.7 + Math.sin(morphProgress * Math.PI * 3 + i) * 0.1);
+                    const x1 = cx + r1 * Math.cos(angle1);
+                    const y1 = cy + r1 * Math.sin(angle1) * 0.6;
+                    for (let j = i + 1; j < nodeCount; j++) {
+                        const angle2 = (j / nodeCount) * Math.PI * 2 + morphProgress * Math.PI * 2;
+                        const r2 = radius * (0.7 + Math.sin(morphProgress * Math.PI * 3 + j) * 0.1);
+                        const x2 = cx + r2 * Math.cos(angle2);
+                        const y2 = cy + r2 * Math.sin(angle2) * 0.6;
+                        transCtx.moveTo(x1, y1);
+                        transCtx.lineTo(x2, y2);
+                    }
+                }
+                transCtx.stroke();
+            }
+
+            window.addEventListener('scroll', updateTransitionCanvas);
+            window.addEventListener('load', updateTransitionCanvas);
+
+            // ==================== MOUSE PARALLAX ====================
+            if (window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.addEventListener('mousemove', (e) => {
+                    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                    const dimObject = document.querySelector('.hero-dimensional');
+                    if (dimObject) {
+                        dimObject.style.transform = `translateY(-50%) rotateX(${y * 5}deg) rotateY(${x * 5}deg)`;
+                    }
+                    const titleLines = document.querySelectorAll('.hero-title .line');
+                    titleLines.forEach((line, i) => {
+                        line.style.transform = `translate3d(${x * (i + 1) * 3}px, ${y * (i + 1) * 2}px, 0)`;
+                    });
+                });
+            }
+
+            // ==================== INIT ====================
+            handleScroll();
+            console.log('✨ QUANTUM ACADEMIC DIMENSION — 4D Transitions Active');
+        })();
+    </script>
+</body>
+</html>

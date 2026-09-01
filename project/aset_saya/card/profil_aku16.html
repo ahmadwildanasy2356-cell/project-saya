@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Wildan Asy Syifa — Academic Portfolio</title>
+    <meta name="description" content="Portfolio akademik Ahmad Wildan Asy Syifa — Scholar, Arabic Literature, Islamic Studies.">
+    <meta property="og:title" content="Ahmad Wildan Asy Syifa — Academic Portfolio">
+    <meta property="og:description" content="Portfolio akademik Ahmad Wildan Asy Syifa — Scholar, Arabic Literature, Islamic Studies.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta name="theme-color" content="#0a0a0f">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== CSS VARIABLES & RESET ==================== */
+        :root {
+            --background: #0a0a0f;
+            --surface: #111118;
+            --surface-2: #171720;
+            --text: #f5f0e8;
+            --muted: #9a958c;
+            --gold: #c5a86b;
+            --gold-soft: #e0cda5;
+            --border: rgba(197, 168, 107, 0.15);
+            --border-light: rgba(245, 240, 232, 0.08);
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-arabic: 'Tajawal', sans-serif;
+            --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        body.rtl {
+            font-family: var(--font-arabic);
+            direction: rtl;
+        }
+
+        /* ==================== BACKGROUND LAYERS ==================== */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(197, 168, 107, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(197, 168, 107, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        .bg-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+        }
+
+        .bg-gradient-mesh {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(197, 168, 107, 0.04) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(197, 168, 107, 0.03) 0%, transparent 35%),
+                radial-gradient(circle at 50% 50%, rgba(245, 240, 232, 0.02) 0%, transparent 50%);
+            animation: gradientShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5%, -3%); }
+        }
+
+        .cursor-spotlight {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle, rgba(197, 168, 107, 0.06) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        body:hover .cursor-spotlight {
+            opacity: 1;
+        }
+
+        /* ==================== NAVBAR ==================== */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: calc(100% - 40px);
+            max-width: 1200px;
+            transition: all 0.4s ease;
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(197, 168, 107, 0.12);
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar.scrolled .navbar-inner {
+            background: rgba(10, 10, 15, 0.9);
+            border-color: rgba(197, 168, 107, 0.25);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .navbar-brand:hover {
+            color: var(--gold);
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            padding: 6px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(197, 168, 107, 0.08);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            padding: 4px 6px;
+            transition: color 0.3s ease, background 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .lang-btn:hover {
+            color: var(--text);
+        }
+
+        .lang-btn.active {
+            color: var(--gold);
+            background: rgba(197, 168, 107, 0.15);
+        }
+
+        .lang-sep {
+            width: 1px;
+            height: 16px;
+            background: var(--border);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 110;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 15, 0.98);
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .mobile-nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--gold);
+        }
+
+        .mobile-menu-footer {
+            position: absolute;
+            bottom: 30px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        main {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .label-number {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .section-heading {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            color: var(--text);
+        }
+
+        /* ==================== HERO ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-left {
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(197, 168, 107, 0.08);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-soft);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+            100% { opacity: 0.7; transform: scale(1); }
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .hero-name-line {
+            display: block;
+        }
+
+        .gold-text {
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: var(--text);
+            margin-bottom: 15px;
+        }
+
+        .hero-tagline {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 450px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: #0a0a0f;
+            box-shadow: 0 5px 20px rgba(197, 168, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-soft);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(197, 168, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .hero-right {
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbital-ring {
+            position: absolute;
+            border: 1px solid rgba(197, 168, 107, 0.15);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+        }
+
+        .ring-1 { width: 85%; height: 85%; }
+        .ring-2 { width: 70%; height: 70%; animation-duration: 25s; animation-direction: reverse; }
+        .ring-3 { width: 55%; height: 55%; border-color: rgba(197, 168, 107, 0.2); }
+        .ring-4 { width: 40%; height: 40%; border-style: dashed; animation-duration: 20s; }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .monogram-circle {
+            width: 200px;
+            height: 200px;
+            background: rgba(17, 17, 24, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 0 60px rgba(197, 168, 107, 0.1);
+        }
+
+        .monogram-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: var(--gold);
+        }
+
+        .monogram-sub {
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        .geo-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(197, 168, 107, 0.2), transparent);
+            height: 1px;
+            width: 70%;
+            left: 15%;
+        }
+
+        .geo-line-1 { top: 20%; }
+        .geo-line-2 { bottom: 20%; transform: rotate(180deg); }
+
+        .geo-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(197, 168, 107, 0.5);
+        }
+
+        .geo-dot-1 { top: 20%; left: 15%; }
+        .geo-dot-2 { bottom: 20%; right: 15%; }
+
+        .float-card {
+            position: absolute;
+            background: rgba(17, 17, 24, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            z-index: 20;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .float-card-1 { top: 10%; right: 5%; animation-delay: 0s; }
+        .float-card-2 { bottom: 15%; left: 0%; animation-delay: 2s; }
+        .float-card-3 { bottom: 40%; right: -5%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .float-card-label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .float-card-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .scroll-text {
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+
+        @keyframes scrollPulse {
+            0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+            50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+            100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+        }
+
+        /* ==================== ABOUT ==================== */
+        .about-section {
+            background: transparent;
+        }
+
+        .about-heading {
+            max-width: 800px;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text);
+            max-width: 700px;
+            border-left: 3px solid var(--gold);
+            padding-left: 24px;
+            font-weight: 300;
+        }
+
+        body.rtl .about-text {
+            border-left: none;
+            border-right: 3px solid var(--gold);
+            padding-left: 0;
+            padding-right: 24px;
+        }
+
+        /* ==================== STATS ==================== */
+        .stats-section {
+            background: rgba(17, 17, 24, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* ==================== JOURNEY / TIMELINE ==================== */
+        .journey-section {
+            background: transparent;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 50px;
+            padding-left: 20px;
+        }
+
+        body.rtl .timeline {
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 5px;
+            width: 1px;
+            background: rgba(197, 168, 107, 0.2);
+        }
+
+        body.rtl .timeline::before {
+            left: auto;
+            right: 5px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 30px 0 30px 40px;
+            transition: all 0.3s ease;
+        }
+
+        body.rtl .timeline-item {
+            padding: 30px 40px 30px 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -7px;
+            top: 35px;
+            width: 15px;
+            height: 15px;
+            background: var(--background);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            z-index: 2;
+        }
+
+        body.rtl .timeline-marker {
+            left: auto;
+            right: -7px;
+        }
+
+        .timeline-item:hover .timeline-marker {
+            background: var(--gold);
+            box-shadow: 0 0 20px rgba(197, 168, 107, 0.5);
+            transform: scale(1.3);
+        }
+
+        .accent-marker {
+            border-color: var(--gold-soft);
+        }
+
+        .timeline-content {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 25px 30px;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-item:hover .timeline-content {
+            border-color: var(--gold);
+            transform: translateX(5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        body.rtl .timeline-item:hover .timeline-content {
+            transform: translateX(-5px);
+        }
+
+        .timeline-period {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        /* ==================== DESTINATION ==================== */
+        .destination-section {
+            background: rgba(17, 17, 24, 0.5);
+            overflow: hidden;
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .destination-bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(197, 168, 107, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(197, 168, 107, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .destination-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 24px;
+            z-index: 2;
+        }
+
+        .destination-coords {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .destination-geo-line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197, 168, 107, 0.3), transparent);
+            left: 0;
+        }
+
+        .destination-geo-line-1 { top: 20%; }
+        .destination-geo-line-2 { bottom: 20%; }
+
+        .destination-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .destination-status-badge {
+            display: inline-block;
+            background: rgba(197, 168, 107, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .destination-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .destination-major {
+            font-size: 1.3rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .destination-location {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .destination-status-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--gold-soft);
+        }
+
+        .status-dot-pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* ==================== LANGUAGES ==================== */
+        .languages-section {
+            background: transparent;
+        }
+
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .language-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: default;
+        }
+
+        .language-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .language-script {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .language-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .language-level {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+
+        /* ==================== SAUDI ==================== */
+        .saudi-section {
+            background: rgba(17, 17, 24, 0.3);
+        }
+
+        .saudi-module {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .saudi-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .saudi-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text);
+        }
+
+        .saudi-status-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            background: rgba(197, 168, 107, 0.1);
+            padding: 6px 18px;
+            border-radius: 30px;
+        }
+
+        .saudi-desc {
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .saudi-progress {
+            margin-top: 30px;
+        }
+
+        .progress-track {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-segment {
+            width: 30px;
+            height: 4px;
+            background: rgba(197, 168, 107, 0.15);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-segment.active {
+            background: var(--gold);
+            box-shadow: 0 0 10px rgba(197, 168, 107, 0.4);
+        }
+
+        .progress-flow {
+            position: relative;
+            height: 20px;
+        }
+
+        .flow-dot {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: flowMove 3s ease-in-out infinite;
+        }
+
+        @keyframes flowMove {
+            0% { left: 0; opacity: 0.5; }
+            50% { left: calc(100% - 10px); opacity: 1; }
+            100% { left: 0; opacity: 0.5; }
+        }
+
+        /* ==================== CONTACT ==================== */
+        .contact-section {
+            background: transparent;
+            padding-bottom: 100px;
+        }
+
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-heading {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .contact-heading-en {
+            display: block;
+            color: var(--gold);
+            font-size: 0.9em;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-heading-id {
+            display: block;
+            font-size: 0.6em;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 8px;
+        }
+
+        .btn-whatsapp {
+            margin-top: 30px;
+            background: #25D366;
+            color: #0a0a0f;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebc57;
+            transform: translateY(-2px);
+        }
+
+        .contact-number {
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border-light);
+            background: rgba(10, 10, 15, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand {
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        .footer-text {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-subtle {
+            color: rgba(154, 149, 140, 0.5);
+            font-size: 0.7rem;
+        }
+
+        /* ==================== REVEAL ANIMATIONS ==================== */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .hero-container {
+                gap: 40px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .languages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .hero {
+                padding-top: 100px;
+            }
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+            .hero-left {
+                order: 1;
+            }
+            .hero-right {
+                order: 2;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-tagline {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-badge {
+                justify-content: center;
+            }
+            .hero-visual {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            .float-card-1 { top: 0%; right: 10%; }
+            .float-card-2 { bottom: 10%; left: 5%; }
+            .float-card-3 { bottom: 35%; right: 0%; }
+            .section {
+                padding: 70px 0;
+            }
+            .timeline-item {
+                padding-left: 30px;
+            }
+            body.rtl .timeline-item {
+                padding-right: 30px;
+            }
+            .destination-section {
+                padding: 80px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .languages-grid {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                width: calc(100% - 20px);
+                top: 10px;
+            }
+            .navbar-inner {
+                padding: 10px 16px;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .float-card {
+                padding: 10px 14px;
+            }
+            .float-card-value {
+                font-size: 1.4rem;
+            }
+            .destination-title {
+                font-size: 2rem;
+            }
+            .saudi-module {
+                padding: 30px 20px;
+            }
+        }
+
+        /* ==================== REDUCED MOTION ==================== */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .cursor-spotlight {
+                display: none;
+            }
+        }
+
+        /* ==================== UTILITY ==================== */
+        .magnetic {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Background Layers -->
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-grain" aria-hidden="true"></div>
+    <div class="bg-gradient-mesh" aria-hidden="true"></div>
+    <div class="cursor-spotlight" id="cursorSpotlight" aria-hidden="true"></div>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <header class="navbar" id="navbar" role="banner">
+        <div class="navbar-inner">
+            <a href="#hero" class="navbar-brand" aria-label="AWS — Ahmad Wildan Asy Syifa">
+                <span class="brand-mark">AWS</span>
+            </a>
+
+            <nav class="navbar-links" id="navbarLinks" role="navigation" aria-label="Navigasi utama">
+                <a href="#profil" data-i18n="nav.profil" class="nav-link">Profil</a>
+                <a href="#pencapaian" data-i18n="nav.pencapaian" class="nav-link">Pencapaian</a>
+                <a href="#perjalanan" data-i18n="nav.perjalanan" class="nav-link">Perjalanan</a>
+                <a href="#bahasa" data-i18n="nav.bahasa" class="nav-link">Bahasa</a>
+            </nav>
+
+            <div class="navbar-right">
+                <div class="lang-switcher" role="group" aria-label="Pilih bahasa">
+                    <button class="lang-btn active" data-lang="id" aria-pressed="true" aria-label="Bahasa Indonesia">ID</button>
+                    <span class="lang-sep" aria-hidden="true"></span>
+                    <button class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English">EN</button>
+                    <span class="lang-sep" aria-hidden="true"></span>
+                    <button class="lang-btn" data-lang="ar" aria-pressed="false" aria-label="العربية">AR</button>
+                </div>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <nav class="mobile-menu-links" role="navigation" aria-label="Menu mobile">
+            <a href="#profil" data-i18n="nav.profil" class="mobile-nav-link">Profil</a>
+            <a href="#pencapaian" data-i18n="nav.pencapaian" class="mobile-nav-link">Pencapaian</a>
+            <a href="#perjalanan" data-i18n="nav.perjalanan" class="mobile-nav-link">Perjalanan</a>
+            <a href="#bahasa" data-i18n="nav.bahasa" class="mobile-nav-link">Bahasa</a>
+            <a href="#kontak" data-i18n="nav.kontak" class="mobile-nav-link">Kontak</a>
+        </nav>
+        <div class="mobile-menu-footer">
+            <p data-i18n="mobile.footer">Portfolio Akademik · 2026</p>
+        </div>
+    </div>
+
+    <main id="main">
+        <!-- ==================== HERO ==================== -->
+        <section class="hero" id="hero" aria-label="Hero">
+            <div class="hero-container">
+                <div class="hero-left">
+                    <div class="hero-badge" data-reveal>
+                        <span class="badge-dot" aria-hidden="true"></span>
+                        <span data-i18n="hero.badge">PORTOFOLIO AKADEMIK · 2026</span>
+                    </div>
+
+                    <h1 class="hero-title" data-reveal>
+                        <span class="hero-name-line">Ahmad</span>
+                        <span class="hero-name-line">Wildan</span>
+                        <span class="hero-name-line gold-text">Asy Syifa</span>
+                    </h1>
+
+                    <p class="hero-subtitle" data-reveal>
+                        <span data-i18n="hero.subtitle">Scholar · Arabic Literature · Islamic Studies</span>
+                    </p>
+
+                    <p class="hero-tagline" data-reveal>
+                        <span data-i18n="hero.tagline">Perjalanan akademik yang dibangun melalui konsistensi prestasi, studi keislaman, dan pengembangan bahasa.</span>
+                    </p>
+
+                    <div class="hero-buttons" data-reveal>
+                        <a href="#perjalanan" class="btn btn-primary magnetic" data-i18n="hero.btnJourney">Jelajahi Perjalanan</a>
+                        <a href="#kontak" class="btn btn-secondary magnetic" data-i18n="hero.btnContact">Hubungi Saya</a>
+                    </div>
+                </div>
+
+                <div class="hero-right" data-reveal>
+                    <div class="hero-visual" aria-hidden="false">
+                        <div class="orbital-ring ring-1"></div>
+                        <div class="orbital-ring ring-2"></div>
+                        <div class="orbital-ring ring-3"></div>
+                        <div class="orbital-ring ring-4"></div>
+
+                        <div class="monogram-circle">
+                            <span class="monogram-text">AWS</span>
+                            <span class="monogram-sub">2026</span>
+                        </div>
+
+                        <div class="geo-line geo-line-1" aria-hidden="true"></div>
+                        <div class="geo-line geo-line-2" aria-hidden="true"></div>
+                        <div class="geo-dot geo-dot-1" aria-hidden="true"></div>
+                        <div class="geo-dot geo-dot-2" aria-hidden="true"></div>
+
+                        <div class="float-card float-card-1">
+                            <span class="float-card-label" data-i18n="hero.card1Label">RANK 1 · GRADE 7–12</span>
+                            <span class="float-card-value">#1</span>
+                        </div>
+                        <div class="float-card float-card-2">
+                            <span class="float-card-label">GPA</span>
+                            <span class="float-card-value">4.00</span>
+                        </div>
+                        <div class="float-card float-card-3">
+                            <span class="float-card-label" data-i18n="hero.card3Label">HIGHEST AVERAGE</span>
+                            <span class="float-card-value">97.10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" aria-hidden="true">
+                <span class="scroll-text" data-i18n="hero.scroll">SCROLL TO EXPLORE</span>
+                <span class="scroll-line"></span>
+            </div>
+        </section>
+
+        <!-- ==================== ABOUT / INTRODUCTION ==================== -->
+        <section class="section about-section" id="profil" aria-label="Profil">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">01</span>
+                    <span data-i18n="about.label">· PROFIL</span>
+                </div>
+                <h2 class="section-heading about-heading" data-reveal>
+                    <span data-i18n="about.heading">Dibentuk oleh konsistensi.</span>
+                </h2>
+                <p class="about-text" data-reveal>
+                    <span data-i18n="about.text">Sejak pendidikan menengah, saya menjaga konsistensi dalam pencapaian akademik sekaligus memperluas studi dalam bidang keislaman dan bahasa.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- ==================== ACADEMIC NUMBERS ==================== -->
+        <section class="section stats-section" id="pencapaian" aria-label="Pencapaian">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">—</span>
+                    <span data-i18n="stats.label">PENCAPAIAN</span>
+                </div>
+                <h2 class="section-heading stats-heading" data-reveal>
+                    <span data-i18n="stats.heading">Angka yang menceritakan perjalanan.</span>
+                </h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card" data-reveal data-tilt>
+                        <span class="stat-number" data-count="1" data-prefix="#" data-i18n="stats.stat1Value">#1</span>
+                        <span class="stat-label" data-i18n="stats.stat1Label">Peringkat 1 · Kelas 7–12</span>
+                    </div>
+                    <div class="stat-card" data-reveal data-tilt>
+                        <span class="stat-number" data-count="95" data-suffix="+" data-i18n="stats.stat2Value">95+</span>
+                        <span class="stat-label" data-i18n="stats.stat2Label">Rata-rata akademik</span>
+                    </div>
+                    <div class="stat-card" data-reveal data-tilt>
+                        <span class="stat-number" data-count="97.10" data-decimal="true" data-i18n="stats.stat3Value">97.10</span>
+                        <span class="stat-label" data-i18n="stats.stat3Label">Nilai tertinggi · Kelas 12 Semester 1</span>
+                    </div>
+                    <div class="stat-card" data-reveal data-tilt>
+                        <span class="stat-number" data-count="4.00" data-decimal="true" data-i18n="stats.stat4Value">4.00</span>
+                        <span class="stat-label" data-i18n="stats.stat4Label">GPA · Markaz Ulum</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ACADEMIC JOURNEY ==================== -->
+        <section class="section journey-section" id="perjalanan" aria-label="Perjalanan Akademik">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">02</span>
+                    <span data-i18n="journey.label">· PERJALANAN</span>
+                </div>
+                <h2 class="section-heading journey-heading" data-reveal>
+                    <span data-i18n="journey.heading">From foundation to destination.</span>
+                </h2>
+
+                <div class="timeline" role="list">
+                    <div class="timeline-item" data-reveal role="listitem">
+                        <div class="timeline-marker" aria-hidden="true"><span></span></div>
+                        <div class="timeline-content">
+                            <span class="timeline-period">2019–2025</span>
+                            <h3 class="timeline-title">MA Al Irsyad PIAT 7</h3>
+                            <p class="timeline-desc" data-i18n="journey.item1Desc">Pendidikan menengah · Konsisten peringkat #1 dari kelas 7–12</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-reveal role="listitem">
+                        <div class="timeline-marker" aria-hidden="true"><span></span></div>
+                        <div class="timeline-content">
+                            <span class="timeline-period">Diploma</span>
+                            <h3 class="timeline-title">Markaz Ulum</h3>
+                            <p class="timeline-desc" data-i18n="journey.item2Desc">Diploma Syariah · GPA 4.00 · Midterm 97.76</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-reveal role="listitem">
+                        <div class="timeline-marker accent-marker" aria-hidden="true"><span></span></div>
+                        <div class="timeline-content">
+                            <span class="timeline-period">2026</span>
+                            <h3 class="timeline-title">Sousse University</h3>
+                            <p class="timeline-desc" data-i18n="journey.item3Desc">Sastra Arab · Tunisia · Status: Accepted</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ACADEMIC DESTINATION ==================== -->
+        <section class="section destination-section" id="destinasi" aria-label="Destinasi Akademik">
+            <div class="destination-bg-grid" aria-hidden="true"></div>
+            <div class="destination-container">
+                <div class="destination-coords destination-coords-top" aria-hidden="true" data-i18n="destinasi.coords">35°49'N · 10°38'E</div>
+                <div class="destination-coords destination-coords-bottom" aria-hidden="true" data-i18n="destinasi.coords2">SOUSSE · TUNISIA</div>
+                <div class="destination-geo-line destination-geo-line-1" aria-hidden="true"></div>
+                <div class="destination-geo-line destination-geo-line-2" aria-hidden="true"></div>
+
+                <div class="destination-content" data-reveal>
+                    <span class="destination-status-badge" data-i18n="destinasi.statusBadge">STATUS: ACCEPTED</span>
+                    <h2 class="destination-title">SOUSSE<br>UNIVERSITY</h2>
+                    <p class="destination-major" data-i18n="destinasi.major">Arabic Literature</p>
+                    <p class="destination-location" data-i18n="destinasi.location">Tunisia</p>
+                    <div class="destination-status-line">
+                        <span class="status-dot-pulse" aria-hidden="true"></span>
+                        <span data-i18n="destinasi.accepted">ACCEPTED</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== LANGUAGE SECTION ==================== -->
+        <section class="section languages-section" id="bahasa" aria-label="Bahasa">
+            <div class="section-container">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">03</span>
+                    <span data-i18n="languages.label">· BAHASA</span>
+                </div>
+                <h2 class="section-heading languages-heading" data-reveal>
+                    <span data-i18n="languages.heading">Language is part of the journey.</span>
+                </h2>
+
+                <div class="languages-grid">
+                    <div class="language-card" data-reveal data-tilt>
+                        <span class="language-script">العربية</span>
+                        <span class="language-name">Arabic</span>
+                        <span class="language-level" data-i18n="languages.arabicLevel">Lanjutan</span>
+                    </div>
+                    <div class="language-card" data-reveal data-tilt>
+                        <span class="language-script">Bahasa</span>
+                        <span class="language-name">Indonesian</span>
+                        <span class="language-level" data-i18n="languages.indonesianLevel">Utama</span>
+                    </div>
+                    <div class="language-card" data-reveal data-tilt>
+                        <span class="language-script">English</span>
+                        <span class="language-name">English</span>
+                        <span class="language-level" data-i18n="languages.englishLevel">Sedang dikembangkan</span>
+                    </div>
+                    <div class="language-card" data-reveal data-tilt>
+                        <span class="language-script">中文</span>
+                        <span class="language-name">Mandarin</span>
+                        <span class="language-level" data-i18n="languages.mandarinLevel">Dalam pembelajaran</span>
+                    </div>
+                    <div class="language-card" data-reveal data-tilt>
+                        <span class="language-script">한국어</span>
+                        <span class="language-name">Korean</span>
+                        <span class="language-level" data-i18n="languages.koreanLevel">Dalam pembelajaran</span>
+                    </div>
+                    <div class="language-card" data-reveal data-tilt>
+                        <span class="language-script">日本語</span>
+                        <span class="language-name">Japanese</span>
+                        <span class="language-level" data-i18n="languages.japaneseLevel">Dalam pembelajaran</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== STUDY IN SAUDI ==================== -->
+        <section class="section saudi-section" id="saudi" aria-label="Study in Saudi">
+            <div class="section-container">
+                <div class="saudi-module" data-reveal>
+                    <div class="saudi-header">
+                        <span class="saudi-title" data-i18n="saudi.title">STUDY IN SAUDI</span>
+                        <span class="saudi-status-label" data-i18n="saudi.statusLabel">DOCUMENT PROCESSING</span>
+                    </div>
+                    <p class="saudi-desc" data-i18n="saudi.desc">Pemrosesan dokumen sedang berlangsung.</p>
+
+                    <div class="saudi-progress" aria-hidden="true">
+                        <div class="progress-track">
+                            <div class="progress-segment"></div>
+                            <div class="progress-segment"></div>
+                            <div class="progress-segment active"></div>
+                            <div class="progress-segment"></div>
+                            <div class="progress-segment"></div>
+                            <div class="progress-segment"></div>
+                            <div class="progress-segment"></div>
+                        </div>
+                        <div class="progress-flow">
+                            <span class="flow-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONTACT ==================== -->
+        <section class="section contact-section" id="kontak" aria-label="Kontak">
+            <div class="section-container">
+                <div class="contact-content" data-reveal>
+                    <h2 class="contact-heading">
+                        <span class="contact-heading-en" data-i18n="contact.headingEn">Let's connect.</span>
+                        <span class="contact-heading-id" data-i18n="contact.headingId">Mari terhubung untuk komunikasi akademik dan profesional.</span>
+                    </h2>
+                    <a href="https://wa.me/6281259730289" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-whatsapp magnetic">
+                        <span class="wa-icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        </span>
+                        <span>WhatsApp</span>
+                    </a>
+                    <p class="contact-number">+62 812-5973-0289</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="footer" role="contentinfo">
+            <div class="footer-inner">
+                <span class="footer-brand">AWS</span>
+                <p class="footer-text" data-i18n="footer.text">Ahmad Wildan Asy Syifa · Academic Portfolio · 2026</p>
+                <p class="footer-subtle" data-i18n="footer.subtle">Dibangun dengan konsistensi.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        (function() {
+            // ==================== LANGUAGE DICTIONARY ====================
+            const translations = {
+                id: {
+                    'nav.profil': 'Profil',
+                    'nav.pencapaian': 'Pencapaian',
+                    'nav.perjalanan': 'Perjalanan',
+                    'nav.bahasa': 'Bahasa',
+                    'nav.kontak': 'Kontak',
+                    'mobile.footer': 'Portfolio Akademik · 2026',
+                    'hero.badge': 'PORTOFOLIO AKADEMIK · 2026',
+                    'hero.subtitle': 'Scholar · Arabic Literature · Islamic Studies',
+                    'hero.tagline': 'Perjalanan akademik yang dibangun melalui konsistensi prestasi, studi keislaman, dan pengembangan bahasa.',
+                    'hero.btnJourney': 'Jelajahi Perjalanan',
+                    'hero.btnContact': 'Hubungi Saya',
+                    'hero.card1Label': 'RANK 1 · GRADE 7–12',
+                    'hero.card3Label': 'HIGHEST AVERAGE',
+                    'hero.scroll': 'SCROLL TO EXPLORE',
+                    'about.label': '· PROFIL',
+                    'about.heading': 'Dibentuk oleh konsistensi.',
+                    'about.text': 'Sejak pendidikan menengah, saya menjaga konsistensi dalam pencapaian akademik sekaligus memperluas studi dalam bidang keislaman dan bahasa.',
+                    'stats.label': 'PENCAPAIAN',
+                    'stats.heading': 'Angka yang menceritakan perjalanan.',
+                    'stats.stat1Value': '#1',
+                    'stats.stat1Label': 'Peringkat 1 · Kelas 7–12',
+                    'stats.stat2Value': '95+',
+                    'stats.stat2Label': 'Rata-rata akademik',
+                    'stats.stat3Value': '97.10',
+                    'stats.stat3Label': 'Nilai tertinggi · Kelas 12 Semester 1',
+                    'stats.stat4Value': '4.00',
+                    'stats.stat4Label': 'GPA · Markaz Ulum',
+                    'journey.label': '· PERJALANAN',
+                    'journey.heading': 'From foundation to destination.',
+                    'journey.item1Desc': 'Pendidikan menengah · Konsisten peringkat #1 dari kelas 7–12',
+                    'journey.item2Desc': 'Diploma Syariah · GPA 4.00 · Midterm 97.76',
+                    'journey.item3Desc': 'Sastra Arab · Tunisia · Status: Accepted',
+                    'destinasi.coords': '35°49\'N · 10°38\'E',
+                    'destinasi.coords2': 'SOUSSE · TUNISIA',
+                    'destinasi.statusBadge': 'STATUS: ACCEPTED',
+                    'destinasi.major': 'Arabic Literature',
+                    'destinasi.location': 'Tunisia',
+                    'destinasi.accepted': 'ACCEPTED',
+                    'languages.label': '· BAHASA',
+                    'languages.heading': 'Language is part of the journey.',
+                    'languages.arabicLevel': 'Lanjutan',
+                    'languages.indonesianLevel': 'Utama',
+                    'languages.englishLevel': 'Sedang dikembangkan',
+                    'languages.mandarinLevel': 'Dalam pembelajaran',
+                    'languages.koreanLevel': 'Dalam pembelajaran',
+                    'languages.japaneseLevel': 'Dalam pembelajaran',
+                    'saudi.title': 'STUDY IN SAUDI',
+                    'saudi.statusLabel': 'DOCUMENT PROCESSING',
+                    'saudi.desc': 'Pemrosesan dokumen sedang berlangsung.',
+                    'contact.headingEn': "Let's connect.",
+                    'contact.headingId': 'Mari terhubung untuk komunikasi akademik dan profesional.',
+                    'footer.text': 'Ahmad Wildan Asy Syifa · Academic Portfolio · 2026',
+                    'footer.subtle': 'Dibangun dengan konsistensi.'
+                },
+                en: {
+                    'nav.profil': 'Profile',
+                    'nav.pencapaian': 'Achievements',
+                    'nav.perjalanan': 'Journey',
+                    'nav.bahasa': 'Languages',
+                    'nav.kontak': 'Contact',
+                    'mobile.footer': 'Academic Portfolio · 2026',
+                    'hero.badge': 'ACADEMIC PORTFOLIO · 2026',
+                    'hero.subtitle': 'Scholar · Arabic Literature · Islamic Studies',
+                    'hero.tagline': 'An academic journey built through consistent achievement, Islamic studies, and language development.',
+                    'hero.btnJourney': 'Explore the Journey',
+                    'hero.btnContact': 'Contact Me',
+                    'hero.card1Label': 'RANK 1 · GRADE 7–12',
+                    'hero.card3Label': 'HIGHEST AVERAGE',
+                    'hero.scroll': 'SCROLL TO EXPLORE',
+                    'about.label': '· PROFILE',
+                    'about.heading': 'Shaped by consistency.',
+                    'about.text': 'Since secondary education, I have maintained consistency in academic achievement while expanding studies in Islamic sciences and language.',
+                    'stats.label': 'ACHIEVEMENTS',
+                    'stats.heading': 'Numbers that tell the journey.',
+                    'stats.stat1Value': '#1',
+                    'stats.stat1Label': 'Rank 1 · Grade 7–12',
+                    'stats.stat2Value': '95+',
+                    'stats.stat2Label': 'Academic average',
+                    'stats.stat3Value': '97.10',
+                    'stats.stat3Label': 'Highest score · Grade 12 Semester 1',
+                    'stats.stat4Value': '4.00',
+                    'stats.stat4Label': 'GPA · Markaz Ulum',
+                    'journey.label': '· JOURNEY',
+                    'journey.heading': 'From foundation to destination.',
+                    'journey.item1Desc': 'Secondary education · Consistently ranked #1 from grade 7–12',
+                    'journey.item2Desc': 'Sharia Diploma · GPA 4.00 · Midterm 97.76',
+                    'journey.item3Desc': 'Arabic Literature · Tunisia · Status: Accepted',
+                    'destinasi.coords': '35°49\'N · 10°38\'E',
+                    'destinasi.coords2': 'SOUSSE · TUNISIA',
+                    'destinasi.statusBadge': 'STATUS: ACCEPTED',
+                    'destinasi.major': 'Arabic Literature',
+                    'destinasi.location': 'Tunisia',
+                    'destinasi.accepted': 'ACCEPTED',
+                    'languages.label': '· LANGUAGES',
+                    'languages.heading': 'Language is part of the journey.',
+                    'languages.arabicLevel': 'Advanced',
+                    'languages.indonesianLevel': 'Primary',
+                    'languages.englishLevel': 'Developing',
+                    'languages.mandarinLevel': 'In learning',
+                    'languages.koreanLevel': 'In learning',
+                    'languages.japaneseLevel': 'In learning',
+                    'saudi.title': 'STUDY IN SAUDI',
+                    'saudi.statusLabel': 'DOCUMENT PROCESSING',
+                    'saudi.desc': 'Document processing is in progress.',
+                    'contact.headingEn': "Let's connect.",
+                    'contact.headingId': 'Let us connect for academic and professional communication.',
+                    'footer.text': 'Ahmad Wildan Asy Syifa · Academic Portfolio · 2026',
+                    'footer.subtle': 'Built with consistency.'
+                },
+                ar: {
+                    'nav.profil': 'الملف',
+                    'nav.pencapaian': 'الإنجازات',
+                    'nav.perjalanan': 'الرحلة',
+                    'nav.bahasa': 'اللغات',
+                    'nav.kontak': 'اتصال',
+                    'mobile.footer': 'محفظة أكاديمية · 2026',
+                    'hero.badge': 'محفظة أكاديمية · 2026',
+                    'hero.subtitle': 'عالم · أدب عربي · دراسات إسلامية',
+                    'hero.tagline': 'رحلة أكاديمية بُنيت عبر الاتساق في الإنجاز والدراسات الإسلامية وتطوير اللغة.',
+                    'hero.btnJourney': 'استكشف الرحلة',
+                    'hero.btnContact': 'اتصل بي',
+                    'hero.card1Label': 'المرتبة 1 · الصف 7–12',
+                    'hero.card3Label': 'أعلى متوسط',
+                    'hero.scroll': 'مرر للاستكشاف',
+                    'about.label': '· الملف',
+                    'about.heading': 'تشكله الاستمرارية.',
+                    'about.text': 'منذ التعليم الثانوي، حافظت على الاتساق في الإنجاز الأكاديمي مع توسيع الدراسة في العلوم الإسلامية واللغة.',
+                    'stats.label': 'الإنجازات',
+                    'stats.heading': 'أرقام تروي الرحلة.',
+                    'stats.stat1Value': '#1',
+                    'stats.stat1Label': 'المرتبة 1 · الصف 7–12',
+                    'stats.stat2Value': '95+',
+                    'stats.stat2Label': 'المتوسط الأكاديمي',
+                    'stats.stat3Value': '97.10',
+                    'stats.stat3Label': 'أعلى درجة · الصف 12 الفصل الأول',
+                    'stats.stat4Value': '4.00',
+                    'stats.stat4Label': 'المعدل التراكمي · مركز العلوم',
+                    'journey.label': '· الرحلة',
+                    'journey.heading': 'من الأساس إلى الوجهة.',
+                    'journey.item1Desc': 'التعليم الثانوي · المرتبة الأولى باستمرار من الصف 7–12',
+                    'journey.item2Desc': 'دبلوم الشريعة · المعدل 4.00 · منتصف الفصل 97.76',
+                    'journey.item3Desc': 'أدب عربي · تونس · الحالة: مقبول',
+                    'destinasi.coords': '35°49\'N · 10°38\'E',
+                    'destinasi.coords2': 'سوسة · تونس',
+                    'destinasi.statusBadge': 'الحالة: مقبول',
+                    'destinasi.major': 'أدب عربي',
+                    'destinasi.location': 'تونس',
+                    'destinasi.accepted': 'مقبول',
+                    'languages.label': '· اللغات',
+                    'languages.heading': 'اللغة جزء من الرحلة.',
+                    'languages.arabicLevel': 'متقدم',
+                    'languages.indonesianLevel': 'اللغة الأم',
+                    'languages.englishLevel': 'قيد التطوير',
+                    'languages.mandarinLevel': 'قيد التعلم',
+                    'languages.koreanLevel': 'قيد التعلم',
+                    'languages.japaneseLevel': 'قيد التعلم',
+                    'saudi.title': 'الدراسة في السعودية',
+                    'saudi.statusLabel': 'معالجة الوثائق',
+                    'saudi.desc': 'معالجة الوثائق قيد التنفيذ.',
+                    'contact.headingEn': 'لنتواصل.',
+                    'contact.headingId': 'لنتواصل من أجل التواصل الأكاديمي والمهني.',
+                    'footer.text': 'أحمد ويلدان أشي شيفا · محفظة أكاديمية · 2026',
+                    'footer.subtle': 'بُني بالاستمرارية.'
+                }
+            };
+
+            // ==================== DOM ELEMENTS ====================
+            const body = document.body;
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const spotlight = document.getElementById('cursorSpotlight');
+            const revealElements = document.querySelectorAll('[data-reveal]');
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const tiltElements = document.querySelectorAll('[data-tilt]');
+            const magneticElements = document.querySelectorAll('.magnetic');
+
+            // ==================== LANGUAGE HANDLING ====================
+            let currentLang = localStorage.getItem('aws-lang') || 'id';
+
+            function setLanguage(lang) {
+                if (!translations[lang]) return;
+                currentLang = lang;
+                localStorage.setItem('aws-lang', lang);
+                
+                // Update all data-i18n elements
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+
+                // Update language buttons active state
+                langBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                    btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
+                });
+
+                // Handle RTL for Arabic
+                if (lang === 'ar') {
+                    body.classList.add('rtl');
+                    body.setAttribute('dir', 'rtl');
+                    body.style.fontFamily = "'Tajawal', sans-serif";
+                } else {
+                    body.classList.remove('rtl');
+                    body.setAttribute('dir', 'ltr');
+                    body.style.fontFamily = '';
+                }
+
+                // Update document title (optional)
+                if (lang === 'id') {
+                    document.title = 'Ahmad Wildan Asy Syifa — Portofolio Akademik';
+                } else if (lang === 'en') {
+                    document.title = 'Ahmad Wildan Asy Syifa — Academic Portfolio';
+                } else {
+                    document.title = 'أحمد ويلدان أشي شيفا — محفظة أكاديمية';
+                }
+
+                // Re-trigger number formatting for stats if necessary
+                // (stat values already have translations set, but count animation may need reset)
+                if (typeof resetStatAnimations === 'function') {
+                    resetStatAnimations();
+                }
+            }
+
+            // Initialize language
+            setLanguage(currentLang);
+
+            // Language switcher
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setLanguage(btn.dataset.lang);
+                    // Close mobile menu if open
+                    if (mobileMenu.classList.contains('open')) {
+                        mobileMenu.classList.remove('open');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+
+            // ==================== NAVBAR SCROLL EFFECT ====================
+            function handleScroll() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                updateActiveNav();
+            }
+
+            function updateActiveNav() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPos = window.scrollY + 100;
+                sections.forEach(section => {
+                    if (section.offsetTop <= scrollPos && section.offsetTop + section.offsetHeight > scrollPos) {
+                        const id = section.getAttribute('id');
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            // ==================== MOBILE MENU ====================
+            menuToggle.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('open');
+                menuToggle.setAttribute('aria-expanded', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+                // Toggle menu icon animation
+                const spans = menuToggle.querySelectorAll('span');
+                if (isOpen) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                });
+            });
+
+            // ==================== MOUSE SPOTLIGHT ====================
+            window.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.clientX + 'px';
+                spotlight.style.top = e.clientY + 'px';
+            });
+
+            // ==================== SCROLL REVEAL ====================
+            function checkReveals() {
+                revealElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    if (rect.top < windowHeight * 0.85 && rect.bottom > 0) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }
+
+            // Initial reveal check
+            window.addEventListener('load', checkReveals);
+            window.addEventListener('scroll', checkReveals);
+            // Trigger reveal after a short delay for hero elements
+            setTimeout(checkReveals, 100);
+
+            // ==================== NUMBER COUNT-UP ANIMATION ====================
+            function animateNumbers() {
+                statNumbers.forEach(stat => {
+                    if (stat.classList.contains('counted')) return;
+                    const target = parseFloat(stat.dataset.count || stat.textContent.replace(/[^0-9.]/g, ''));
+                    const prefix = stat.dataset.prefix || '';
+                    const suffix = stat.dataset.suffix || '';
+                    const isDecimal = stat.dataset.decimal === 'true';
+                    const duration = 2000;
+                    const startTime = performance.now();
+                    
+                    function update(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const currentValue = target * eased;
+                        
+                        if (isDecimal) {
+                            stat.textContent = prefix + currentValue.toFixed(2) + suffix;
+                        } else {
+                            stat.textContent = prefix + Math.round(currentValue) + suffix;
+                        }
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        } else {
+                            stat.classList.add('counted');
+                            // Final value exactly
+                            if (isDecimal) {
+                                stat.textContent = prefix + target.toFixed(2) + suffix;
+                            } else {
+                                stat.textContent = prefix + Math.round(target) + suffix;
+                            }
+                        }
+                    }
+                    
+                    // Only animate if element is visible
+                    const rect = stat.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        requestAnimationFrame(update);
+                    } else {
+                        stat.classList.add('counted');
+                        if (isDecimal) {
+                            stat.textContent = prefix + target.toFixed(2) + suffix;
+                        } else {
+                            stat.textContent = prefix + Math.round(target) + suffix;
+                        }
+                    }
+                });
+            }
+
+            // Check stats on scroll
+            window.addEventListener('scroll', () => {
+                statNumbers.forEach(stat => {
+                    const rect = stat.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.9 && !stat.classList.contains('counted')) {
+                        animateNumbers();
+                    }
+                });
+            });
+
+            // Initial animation trigger
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    statNumbers.forEach(stat => {
+                        const rect = stat.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom > 0 && !stat.classList.contains('counted')) {
+                            animateNumbers();
+                        }
+                    });
+                }, 300);
+            });
+
+            // Reset function for language changes (re-run animation)
+            function resetStatAnimations() {
+                statNumbers.forEach(stat => {
+                    stat.classList.remove('counted');
+                });
+                // Re-trigger animation
+                setTimeout(() => {
+                    animateNumbers();
+                }, 100);
+            }
+
+            // ==================== MAGNETIC BUTTONS ====================
+            magneticElements.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = '';
+                });
+            });
+
+            // ==================== TILT EFFECT ====================
+            tiltElements.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+
+            // ==================== SMOOTH SCROLL FOR ANCHOR LINKS ====================
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Close mobile menu if open
+                        if (mobileMenu.classList.contains('open')) {
+                            mobileMenu.classList.remove('open');
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                            document.body.style.overflow = '';
+                            const spans = menuToggle.querySelectorAll('span');
+                            spans[0].style.transform = 'none';
+                            spans[1].style.opacity = '1';
+                            spans[2].style.transform = 'none';
+                        }
+                    }
+                });
+            });
+
+            // ==================== ACTIVE NAV HIGHLIGHT ON LOAD ====================
+            handleScroll();
+
+            // ==================== DYNAMIC YEAR ====================
+            const yearSpan = document.querySelector('.footer-subtle');
+            if (yearSpan) {
+                const year = new Date().getFullYear();
+                yearSpan.textContent = yearSpan.textContent.replace('2026', year);
+            }
+
+            console.log('✨ Premium Academic Portfolio — Ahmad Wildan Asy Syifa');
+        })();
+    </script>
+</body>
+</html>
