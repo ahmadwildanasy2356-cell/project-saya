@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Latar navy gelap dengan sudut membulat -->
+  <rect width="64" height="64" rx="14" fill="#0f1b2d"/>
+  
+  <!-- Buku terbuka emas -->
+  <path d="M32 18 C26.5 13.5 17 14.5 12.5 18.5 L12.5 42 C17 38 26.5 37 32 42 C37.5 37 47 38 51.5 42 L51.5 18.5 C47 14.5 37.5 13.5 32 18 Z"
+        fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="32" y1="18" x2="32" y2="42" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Monogram AW di bawah buku -->
+  <text x="32" y="57" font-family="'Inter','Segoe UI',sans-serif" font-size="13"
+        font-weight="700" fill="#e8e8e8" text-anchor="middle" letter-spacing="1">
+    AW
+  </text>
+</svg>
