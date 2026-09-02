@@ -1286,41 +1286,13 @@ ol {
 }
 
 /* ===== CERTIFICATES ===== */
-/* Horizontal scroll container */
 .certificates-grid {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 1.5rem;
-    padding-bottom: 1rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-accent) var(--color-bg-alt);
-    cursor: grab;
-    user-select: none;
-}
-
-.certificates-grid:active {
-    cursor: grabbing;
-}
-
-.certificates-grid::-webkit-scrollbar {
-    height: 6px;
-}
-.certificates-grid::-webkit-scrollbar-track {
-    background: var(--color-bg-alt);
-    border-radius: 3px;
-}
-.certificates-grid::-webkit-scrollbar-thumb {
-    background: var(--color-accent);
-    border-radius: 3px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
 }
 
 .certificate-card {
-    flex: 0 0 auto;
-    width: min(85vw, 320px);
-    scroll-snap-align: start;
     background: var(--color-surface);
     border: 1px solid var(--color-border-light);
     border-radius: var(--border-radius-md);
@@ -1386,67 +1358,6 @@ ol {
 .certificate-issuer {
     font-size: 0.8125rem;
     color: var(--color-text-muted);
-}
-
-/* Tombol navigasi panah */
-.cert-scroll-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-text);
-    transition: all var(--transition-fast);
-    z-index: 5;
-}
-.cert-scroll-btn:hover {
-    background: var(--color-accent-light);
-    border-color: var(--color-accent);
-    color: var(--color-accent-dark);
-}
-.cert-scroll-btn.prev {
-    left: 10px;
-}
-.cert-scroll-btn.next {
-    right: 10px;
-}
-@media (max-width: 768px) {
-    .cert-scroll-btn {
-        display: none;
-    }
-}
-
-/* Indikator dots */
-.cert-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.25rem;
-}
-
-.cert-dots .dot {
-    width: 8px;
-    height: 8px;
-    background: var(--color-border);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.cert-dots .dot.active {
-    background: var(--color-accent);
-    transform: scale(1.3);
-}
-
-.cert-dots .dot:hover {
-    background: var(--color-accent-light);
 }
 
 /* ===== CV SECTION ===== */
@@ -1854,7 +1765,7 @@ ol {
     }
 
     .certificates-grid {
-        /* tetap horizontal */
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .about-grid {
@@ -1935,13 +1846,10 @@ ol {
     .highlights-grid,
     .competitions-grid,
     .international-grid,
-    .skills-grid {
+    .skills-grid,
+    .certificates-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
-    }
-
-    .certificates-grid {
-        /* tetap horizontal */
     }
 
     .language-row {

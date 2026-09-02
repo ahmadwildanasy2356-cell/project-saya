@@ -965,52 +965,52 @@
         },
     };
 
-    /* ===== CERTIFICATES DATA ===== */
+    /* ===== CERTIFICATES DATA (UPDATED) ===== */
     const certificatesData = [
         {
             name: 'Hamzah — C1',
             issuer: 'Arabic Language Certification',
-            imageSrc: 'assets/certificates/certificate-hamzah.png',
+            imageSrc: 'assets/certificates/hamzah.png',
         },
         {
             name: 'Diploma Syariah — Markaz Ulum',
             issuer: 'Markaz Ulum',
-            imageSrc: 'assets/certificates/certificate-diploma-markaz.png',
+            imageSrc: 'assets/certificates/markaz_ulum.png',
         },
         {
             name: 'Daurah Al Miskah',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-daurah-al-miskah.png',
+            imageSrc: 'assets/certificates/miskah.png',
         },
         {
             name: 'Daurah Risalatul Jamiah Mazhab Syafi\'i',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-daurah-risalatul-jamiah.png',
+            imageSrc: 'assets/certificates/jamiah.png',
         },
         {
             name: 'Daurah Arbain An Nawawi',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-daurah-arbain-nawawi.png',
+            imageSrc: 'assets/certificates/arbain.png',
         },
         {
             name: 'Daurah Tajwid Tuhfatul Athfal',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-daurah-tuhfatul-athfal.png',
+            imageSrc: 'assets/certificates/athfal.png',
         },
         {
             name: 'Bersanad Najmul Maqsud fi Ilmi Shorf',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-najmul-maqsud.png',
+            imageSrc: 'assets/certificates/najmul_maqsud.png',
         },
         {
             name: 'Sertifikat Nasional Mental Healthy',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-mental-healthy.png',
+            imageSrc: 'assets/certificates/mental_healty.png',
         },
         {
             name: 'Sertifikat Anggota OSIS',
-            issuer: 'OSIS MA Al Irsyad PIAT 7',
-            imageSrc: 'assets/certificates/certificate-osis.png',
+            issuer: 'OSIS MA Al Irsyad PIAT 7',  // bisa disesuaikan
+            imageSrc: 'assets/certificates/osis.png',
         },
     ];
 
@@ -1018,7 +1018,6 @@
     function init() {
         applyTheme();
         renderCertificates();
-        setupCertScrollButtons(); // <-- carousel baru
         setupEventListeners();
         updateYear();
         initRevealAnimations();
@@ -1188,157 +1187,6 @@
 
         // Re-trigger reveal animations for new elements
         initRevealAnimations();
-    }
-
-    /* ===== SETUP CAROUSEL (BIOSKOP STYLE) ===== */
-    function setupCertScrollButtons() {
-        const grid = document.getElementById('certificatesGrid');
-        if (!grid) return;
-
-        // Buat tombol prev
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'cert-scroll-btn prev';
-        prevBtn.setAttribute('aria-label', 'Slide sebelumnya');
-        prevBtn.innerHTML = '&#10094;';
-
-        // Buat tombol next
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'cert-scroll-btn next';
-        nextBtn.setAttribute('aria-label', 'Slide berikutnya');
-        nextBtn.innerHTML = '&#10095;';
-
-        // Sisipkan tombol dan container dots
-        grid.parentElement.style.position = 'relative';
-        grid.parentElement.insertBefore(prevBtn, grid);
-        grid.parentElement.insertBefore(nextBtn, grid.nextSibling);
-
-        // Buat container dots
-        const dotsContainer = document.createElement('div');
-        dotsContainer.className = 'cert-dots';
-        grid.parentElement.insertBefore(dotsContainer, grid.nextSibling);
-
-        // Setup carousel
-        const cards = grid.querySelectorAll('.certificate-card');
-        const totalCards = cards.length;
-        const cardWidth = 320 + 24; // 320px lebar kartu + 24px gap
-        let currentIndex = 0;
-        let autoSlideInterval = null;
-
-        // Hitung jumlah slide maksimal
-        function getMaxIndex() {
-            const visibleCards = Math.floor(grid.clientWidth / cardWidth) || 1;
-            return Math.max(0, totalCards - visibleCards);
-        }
-
-        // Buat dots
-        function createDots() {
-            const maxIndex = getMaxIndex();
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i <= maxIndex; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === currentIndex) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    goToSlide(i);
-                    restartAutoSlide();
-                });
-                dotsContainer.appendChild(dot);
-            }
-        }
-
-        // Navigasi ke slide tertentu
-        function goToSlide(index) {
-            const maxIndex = getMaxIndex();
-            if (index > maxIndex) index = 0;
-            if (index < 0) index = maxIndex;
-            currentIndex = index;
-
-            grid.scrollTo({
-                left: index * cardWidth,
-                behavior: 'smooth',
-            });
-
-            updateDots();
-        }
-
-        function updateDots() {
-            const dots = dotsContainer.querySelectorAll('.dot');
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentIndex);
-            });
-        }
-
-        // Auto slide
-        function startAutoSlide() {
-            if (autoSlideInterval) return;
-            autoSlideInterval = setInterval(() => {
-                const maxIndex = getMaxIndex();
-                currentIndex = (currentIndex >= maxIndex) ? 0 : currentIndex + 1;
-                goToSlide(currentIndex);
-            }, 3500);
-        }
-
-        function stopAutoSlide() {
-            if (autoSlideInterval) {
-                clearInterval(autoSlideInterval);
-                autoSlideInterval = null;
-            }
-        }
-
-        function restartAutoSlide() {
-            stopAutoSlide();
-            startAutoSlide();
-        }
-
-        // Event tombol
-        prevBtn.addEventListener('click', () => {
-            goToSlide(currentIndex - 1);
-            restartAutoSlide();
-        });
-        nextBtn.addEventListener('click', () => {
-            goToSlide(currentIndex + 1);
-            restartAutoSlide();
-        });
-
-        // Pause saat hover, lanjut saat keluar
-        grid.addEventListener('mouseenter', stopAutoSlide);
-        grid.addEventListener('mouseleave', startAutoSlide);
-
-        // Pause saat touch (mobile)
-        grid.addEventListener('touchstart', stopAutoSlide);
-        grid.addEventListener('touchend', () => {
-            setTimeout(startAutoSlide, 2000);
-        });
-
-        // Drag manual juga menghentikan auto slide sementara
-        grid.addEventListener('mousedown', () => stopAutoSlide());
-        grid.addEventListener('mouseup', () => setTimeout(startAutoSlide, 3000));
-
-        // Sinkronkan index saat scroll manual
-        let scrollTimeout;
-        grid.addEventListener('scroll', () => {
-            stopAutoSlide();
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                const newIndex = Math.round(grid.scrollLeft / cardWidth);
-                if (newIndex !== currentIndex) {
-                    currentIndex = newIndex;
-                    updateDots();
-                }
-                startAutoSlide();
-            }, 2000);
-        });
-
-        // Inisialisasi
-        createDots();
-        updateDots();
-        startAutoSlide();
-
-        // Recalculate dots saat resize
-        window.addEventListener('resize', () => {
-            createDots();
-            goToSlide(currentIndex);
-        });
     }
 
     /* ===== MODAL — CERTIFICATE ===== */
