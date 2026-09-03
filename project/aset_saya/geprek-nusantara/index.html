@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geprek Nusantara — Ayam Crispy & Sambal Fresh</title>
+    <meta name="description" content="Geprek Nusantara — Ayam crispy renyah dengan sambal fresh pilihan level pedas. Pesan sekarang, rasakan sensasi geprek premium khas Nusantara.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#home" class="navbar-logo" data-view="home" aria-label="Geprek Nusantara Beranda">
+                <span class="logo-text">GEPREK</span>
+                <span class="logo-highlight">NUSANTARA</span>
+            </a>
+
+            <nav class="navbar-desktop" aria-label="Navigasi utama">
+                <a href="#home" class="nav-link active" data-view="home">Beranda</a>
+                <a href="#menu" class="nav-link" data-view="menu">Menu</a>
+                <a href="#promo" class="nav-link" data-view="promo">Promo</a>
+                <a href="#about" class="nav-link" data-view="about">Tentang</a>
+                <a href="#gallery" class="nav-link" data-view="gallery">Galeri</a>
+                <a href="#location" class="nav-link" data-view="location">Lokasi</a>
+            </nav>
+
+            <div class="navbar-actions">
+                <button class="btn-cart-desktop" id="btn-cart-desktop" aria-label="Buka keranjang">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/>
+                        <path d="M2.5 3h2l2.5 12.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.5L21 7H6"/>
+                    </svg>
+                    <span class="cart-badge" id="cart-badge-desktop">0</span>
+                </button>
+                <a href="#menu" class="btn btn-primary btn-pesan-nav" data-view="menu">Pesan Sekarang</a>
+                <button class="btn-hamburger" id="btn-hamburger" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobile-menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MOBILE MENU OVERLAY ==================== -->
+    <div class="mobile-menu-overlay" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+                <span class="logo-text">GEPREK</span>
+                <span class="logo-highlight">NUSANTARA</span>
+                <button class="btn-close-menu" id="btn-close-menu" aria-label="Tutup menu">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M18 6 6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="mobile-menu-nav" aria-label="Menu mobile">
+                <a href="#home" class="nav-link-mobile active" data-view="home">Beranda</a>
+                <a href="#menu" class="nav-link-mobile" data-view="menu">Menu</a>
+                <a href="#promo" class="nav-link-mobile" data-view="promo">Promo</a>
+                <a href="#about" class="nav-link-mobile" data-view="about">Tentang</a>
+                <a href="#gallery" class="nav-link-mobile" data-view="gallery">Galeri</a>
+                <a href="#location" class="nav-link-mobile" data-view="location">Lokasi</a>
+                <a href="#contact" class="nav-link-mobile" data-view="contact">Kontak</a>
+            </nav>
+            <button class="btn btn-primary btn-pesan-mobile" data-view="menu">Pesan Sekarang</button>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main id="main-content">
+
+        <!-- ====== VIEW: HOME ====== -->
+        <section id="view-home" class="page-view active" data-view="home" aria-label="Beranda">
+            <div class="hero">
+                <div class="hero-image-wrapper">
+                    <img src="assets/images/hero.jpg" alt="Ayam geprek crispy dengan sambal fresh Geprek Nusantara" class="hero-image" onerror="handleImageError(this)">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-content">
+                    <p class="hero-tag">🌶️ Premium Indonesian Geprek</p>
+                    <h1 class="hero-title">Ayam Crispy.<br>Sambal Nampol.<br><span class="hero-title-accent">Bikin Nagih.</span></h1>
+                    <p class="hero-subtitle">Ayam geprek renyah dengan sambal fresh yang bisa kamu pilih level pedasnya.</p>
+                    <div class="hero-buttons">
+                        <a href="#menu" class="btn btn-primary btn-lg" data-view="menu">Pesan Sekarang</a>
+                        <a href="#menu" class="btn btn-outline-light btn-lg" data-view="menu">Lihat Menu</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="quick-actions-grid">
+                    <a href="#menu" class="quick-action-card" data-view="menu" data-category="geprek">
+                        <span class="quick-action-icon">🌶️</span>
+                        <span class="quick-action-label">Pilih Level Pedas</span>
+                    </a>
+                    <a href="#menu" class="quick-action-card" data-view="menu">
+                        <span class="quick-action-icon">📋</span>
+                        <span class="quick-action-label">Lihat Menu</span>
+                    </a>
+                    <a href="#menu" class="quick-action-card" data-view="menu">
+                        <span class="quick-action-icon">🛒</span>
+                        <span class="quick-action-label">Pesan Sekarang</span>
+                    </a>
+                    <a href="#location" class="quick-action-card" data-view="location">
+                        <span class="quick-action-icon">📍</span>
+                        <span class="quick-action-label">Cari Outlet</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Marquee -->
+            <div class="marquee-wrapper" aria-hidden="true">
+                <div class="marquee-track">
+                    <div class="marquee-content">
+                        <span>🔥 AYAM CRISPY</span><span class="marquee-dot">•</span>
+                        <span>SAMBAL FRESH</span><span class="marquee-dot">•</span>
+                        <span>LEVEL PEDAS SESUKAMU</span><span class="marquee-dot">•</span>
+                        <span>BIKIN NAGIH</span><span class="marquee-dot">•</span>
+                        <span>🔥 AYAM CRISPY</span><span class="marquee-dot">•</span>
+                        <span>SAMBAL FRESH</span><span class="marquee-dot">•</span>
+                        <span>LEVEL PEDAS SESUKAMU</span><span class="marquee-dot">•</span>
+                        <span>BIKIN NAGIH</span><span class="marquee-dot">•</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item reveal">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Pesanan</span>
+                    </div>
+                    <div class="stat-item reveal" style="animation-delay:0.1s">
+                        <span class="stat-number">4.9/5</span>
+                        <span class="stat-label">Rating</span>
+                    </div>
+                    <div class="stat-item reveal" style="animation-delay:0.2s">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Menu</span>
+                    </div>
+                    <div class="stat-item reveal" style="animation-delay:0.3s">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Tahun</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="testimonial-section">
+                <h2 class="section-title">Kata Mereka</h2>
+                <p class="section-subtitle">Pelanggan setia yang sudah merasakan sensasi geprek Nusantara</p>
+                <div class="testimonial-scroll" id="testimonial-scroll">
+                    <div class="testimonial-track">
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">AR</div>
+                            <div class="testimonial-name">Andi Rahmat</div>
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-text">"Sambalnya bener-bener nampol! Ayamnya crispy banget. Level 4 sudah cukup membuat saya menangis bahagia."</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">SP</div>
+                            <div class="testimonial-name">Sari Puspita</div>
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-text">"Geprek keju-nya juara! Porsinya besar, harganya bersahabat. Langganan tetap ini."</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">BA</div>
+                            <div class="testimonial-name">Bima Aditya</div>
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-text">"Tempatnya bersih, pelayanannya cepat. Geprek Mozzarella-nya wajib coba!"</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">DN</div>
+                            <div class="testimonial-name">Dewi Nirmala</div>
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-text">"Cocok banget buat makan siang. Sambal matahnya segar, ayamnya renyah. Recommended!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big CTA -->
+            <div class="big-cta">
+                <div class="big-cta-inner">
+                    <h2 class="big-cta-title">Lagi Lapar?<br>Saatnya Geprek.</h2>
+                    <p class="big-cta-text">Rasakan sensasi ayam crispy dengan sambal fresh yang bikin nagih.</p>
+                    <a href="#menu" class="btn btn-primary btn-lg" data-view="menu">Pesan Sekarang</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== VIEW: MENU ====== -->
+        <section id="view-menu" class="page-view" data-view="menu" aria-label="Menu">
+            <div class="page-header">
+                <h1 class="page-title">Menu Kami</h1>
+                <p class="page-subtitle">Pilih geprek favoritmu dan sesuaikan level pedasnya</p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="category-filter" id="category-filter" role="tablist" aria-label="Filter kategori menu">
+                <button class="category-btn active" data-category="all" role="tab" aria-selected="true">Semua</button>
+                <button class="category-btn" data-category="geprek" role="tab" aria-selected="false">Geprek</button>
+                <button class="category-btn" data-category="paket" role="tab" aria-selected="false">Paket</button>
+                <button class="category-btn" data-category="extra" role="tab" aria-selected="false">Extra</button>
+                <button class="category-btn" data-category="minuman" role="tab" aria-selected="false">Minuman</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="product-grid">
+                <!-- Products rendered by JavaScript -->
+            </div>
+        </section>
+
+        <!-- ====== VIEW: PROMO ====== -->
+        <section id="view-promo" class="page-view" data-view="promo" aria-label="Promo">
+            <div class="promo-hero">
+                <img src="assets/images/promo.jpg" alt="Promo Geprek Nusantara" class="promo-hero-image" onerror="handleImageError(this)">
+                <div class="promo-hero-overlay"></div>
+                <div class="promo-hero-content">
+                    <h1 class="promo-hero-title">Promo Hari Ini</h1>
+                    <p class="promo-hero-subtitle">Penawaran spesial yang sayang untuk dilewatkan</p>
+                </div>
+            </div>
+
+            <div class="promo-grid">
+                <div class="promo-card promo-card-large reveal">
+                    <div class="promo-card-tag">🔥 Promo Utama</div>
+                    <h3 class="promo-card-title">Paket Geprek + Minuman</h3>
+                    <p class="promo-card-desc">Geprek Original + Es Teh hanya dengan Rp 25.000</p>
+                    <span class="promo-card-price">Rp 25.000</span>
+                    <a href="#menu" class="btn btn-primary" data-view="menu">Pesan Sekarang</a>
+                </div>
+                <div class="promo-card reveal" style="animation-delay:0.1s">
+                    <div class="promo-card-tag">🍗 Paket Hemat</div>
+                    <h3 class="promo-card-title">Paket Hemat 2</h3>
+                    <p class="promo-card-desc">Geprek + Telur + Nasi + Es Teh</p>
+                    <span class="promo-card-price">Rp 22.000</span>
+                    <a href="#menu" class="btn btn-outline" data-view="menu">Lihat Detail</a>
+                </div>
+                <div class="promo-card reveal" style="animation-delay:0.2s">
+                    <div class="promo-card-tag">🥤 Promo Minuman</div>
+                    <h3 class="promo-card-title">Gratis Upgrade Es Jeruk</h3>
+                    <p class="promo-card-desc">Setiap pembelian Paket Hemat 1</p>
+                    <span class="promo-card-price">Gratis</span>
+                    <a href="#menu" class="btn btn-outline" data-view="menu">Lihat Detail</a>
+                </div>
+                <div class="promo-card promo-card-limited reveal" style="animation-delay:0.3s">
+                    <div class="promo-card-tag">⏰ Promo Terbatas</div>
+                    <h3 class="promo-card-title">Geprek Mozzarella</h3>
+                    <p class="promo-card-desc">Diskon 20% setiap hari Senin-Kamis</p>
+                    <span class="promo-card-price">Rp 24.000</span>
+                    <a href="#menu" class="btn btn-primary" data-view="menu">Pesan Sekarang</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== VIEW: ABOUT ====== -->
+        <section id="view-about" class="page-view" data-view="about" aria-label="Tentang">
+            <div class="about-hero">
+                <div class="about-image-wrapper">
+                    <img src="assets/images/about.jpg" alt="Tentang Geprek Nusantara" class="about-image" onerror="handleImageError(this)">
+                </div>
+                <div class="about-content">
+                    <h1 class="page-title">Bukan Sekadar<br>Ayam Geprek.</h1>
+                    <p class="about-desc">Geprek Nusantara lahir dari kecintaan pada kuliner Indonesia yang kaya rasa. Kami menggabungkan teknik memasak modern dengan resep sambal tradisional Nusantara untuk menciptakan pengalaman makan yang tak terlupakan.</p>
+                    <p class="about-desc">Setiap ayam dipilih dengan teliti, digoreng hingga crispy sempurna, lalu digeprek dengan sambal fresh yang diracik setiap hari. Hasilnya: perpaduan tekstur dan rasa yang membuatmu ketagihan.</p>
+                </div>
+            </div>
+
+            <div class="about-features">
+                <div class="about-feature-card reveal">
+                    <span class="about-feature-icon">🌶️</span>
+                    <h3 class="about-feature-title">Sambal Fresh</h3>
+                    <p class="about-feature-desc">Diracik setiap hari dari cabai pilihan, bawang, dan bumbu rahasia Nusantara.</p>
+                </div>
+                <div class="about-feature-card reveal" style="animation-delay:0.1s">
+                    <span class="about-feature-icon">🍗</span>
+                    <h3 class="about-feature-title">Ayam Crispy</h3>
+                    <p class="about-feature-desc">Digoreng dengan tepung khusus hingga renyah di luar, juicy di dalam.</p>
+                </div>
+                <div class="about-feature-card reveal" style="animation-delay:0.2s">
+                    <span class="about-feature-icon">✨</span>
+                    <h3 class="about-feature-title">Bahan Berkualitas</h3>
+                    <p class="about-feature-desc">Hanya bahan segar pilihan yang digunakan untuk setiap pesanan.</p>
+                </div>
+                <div class="about-feature-card reveal" style="animation-delay:0.3s">
+                    <span class="about-feature-icon">💰</span>
+                    <h3 class="about-feature-title">Harga Bersahabat</h3>
+                    <p class="about-feature-desc">Kualitas premium dengan harga yang ramah di kantong.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== VIEW: GALLERY ====== -->
+        <section id="view-gallery" class="page-view" data-view="gallery" aria-label="Galeri">
+            <div class="page-header">
+                <h1 class="page-title">Galeri</h1>
+                <p class="page-subtitle">Momen-momen kelezatan Geprek Nusantara</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item gallery-item-tall reveal">
+                    <img src="assets/images/gallery-1.jpg" alt="Geprek Nusantara - Ayam crispy dengan sambal" class="gallery-image" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="gallery-item reveal" style="animation-delay:0.1s">
+                    <img src="assets/images/gallery-2.jpg" alt="Geprek Nusantara - Sajian geprek lezat" class="gallery-image" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="gallery-item reveal" style="animation-delay:0.2s">
+                    <img src="assets/images/gallery-3.jpg" alt="Geprek Nusantara - Interior outlet" class="gallery-image" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item-wide reveal" style="animation-delay:0.15s">
+                    <img src="assets/images/gallery-4.jpg" alt="Geprek Nusantara - Menu paket lengkap" class="gallery-image" onerror="handleImageError(this)" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== VIEW: LOCATION ====== -->
+        <section id="view-location" class="page-view" data-view="location" aria-label="Lokasi">
+            <div class="page-header">
+                <h1 class="page-title">Lokasi Kami</h1>
+                <p class="page-subtitle">Temukan outlet Geprek Nusantara terdekat</p>
+            </div>
+
+            <div class="location-grid">
+                <div class="location-card reveal">
+                    <div class="location-card-header">
+                        <h3 class="location-name">Geprek Nusantara — Cabang Utama</h3>
+                        <span class="location-badge">Outlet Pusat</span>
+                    </div>
+                    <p class="location-address">Jl. Nusantara Raya No. 123, Jakarta Selatan, DKI Jakarta 12120</p>
+                    <p class="location-hours">🕐 Setiap Hari: 10.00 - 22.00 WIB</p>
+                    <p class="location-phone">📞 0812-3456-7890</p>
+                    <a href="https://maps.google.com/?q=Geprek+Nusantara" target="_blank" rel="noopener" class="btn btn-primary btn-maps">Lihat Lokasi</a>
+                </div>
+                <div class="location-card reveal" style="animation-delay:0.1s">
+                    <div class="location-card-header">
+                        <h3 class="location-name">Geprek Nusantara — Cabang BSD</h3>
+                        <span class="location-badge">Outlet 2</span>
+                    </div>
+                    <p class="location-address">Jl. Raya BSD No. 45, Tangerang Selatan, Banten 15310</p>
+                    <p class="location-hours">🕐 Setiap Hari: 10.00 - 21.00 WIB</p>
+                    <p class="location-phone">📞 0812-3456-7891</p>
+                    <a href="https://maps.google.com/?q=Geprek+Nusantara+BSD" target="_blank" rel="noopener" class="btn btn-primary btn-maps">Lihat Lokasi</a>
+                </div>
+                <div class="location-card reveal" style="animation-delay:0.2s">
+                    <div class="location-card-header">
+                        <h3 class="location-name">Geprek Nusantara — Cabang Depok</h3>
+                        <span class="location-badge">Outlet 3</span>
+                    </div>
+                    <p class="location-address">Jl. Margonda Raya No. 200, Depok, Jawa Barat 16424</p>
+                    <p class="location-hours">🕐 Setiap Hari: 10.00 - 21.30 WIB</p>
+                    <p class="location-phone">📞 0812-3456-7892</p>
+                    <a href="https://maps.google.com/?q=Geprek+Nusantara+Depok" target="_blank" rel="noopener" class="btn btn-primary btn-maps">Lihat Lokasi</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== VIEW: CONTACT ====== -->
+        <section id="view-contact" class="page-view" data-view="contact" aria-label="Kontak">
+            <div class="page-header">
+                <h1 class="page-title">Hubungi Kami</h1>
+                <p class="page-subtitle">Punya pertanyaan atau saran? Kami siap membantu</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-info-item reveal">
+                        <span class="contact-info-icon">📱</span>
+                        <div>
+                            <h3 class="contact-info-label">WhatsApp</h3>
+                            <p class="contact-info-value">0812-3456-7890</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item reveal" style="animation-delay:0.1s">
+                        <span class="contact-info-icon">📸</span>
+                        <div>
+                            <h3 class="contact-info-label">Instagram</h3>
+                            <p class="contact-info-value">@geprek.nusantara</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item reveal" style="animation-delay:0.2s">
+                        <span class="contact-info-icon">🕐</span>
+                        <div>
+                            <h3 class="contact-info-label">Jam Operasional</h3>
+                            <p class="contact-info-value">Setiap Hari: 10.00 - 22.00 WIB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form reveal" id="contact-form" style="animation-delay:0.1s">
+                    <div class="form-group">
+                        <label for="contact-name">Nama</label>
+                        <input type="text" id="contact-name" name="contact-name" placeholder="Nama kamu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-phone">No. WhatsApp</label>
+                        <input type="tel" id="contact-phone" name="contact-phone" placeholder="08xxxxxxxxxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Pesan</label>
+                        <textarea id="contact-message" name="contact-message" rows="4" placeholder="Tulis pesan kamu..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Kirim Pesan</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">GEPREK <span class="logo-highlight">NUSANTARA</span></span>
+                <p class="footer-desc">Ayam crispy dengan sambal fresh khas Nusantara. Dibuat dengan bahan berkualitas dan penuh cinta.</p>
+            </div>
+            <div class="footer-nav">
+                <h4 class="footer-heading">Navigasi</h4>
+                <a href="#home" class="footer-link" data-view="home">Beranda</a>
+                <a href="#menu" class="footer-link" data-view="menu">Menu</a>
+                <a href="#promo" class="footer-link" data-view="promo">Promo</a>
+                <a href="#about" class="footer-link" data-view="about">Tentang</a>
+                <a href="#gallery" class="footer-link" data-view="gallery">Galeri</a>
+                <a href="#location" class="footer-link" data-view="location">Lokasi</a>
+            </div>
+            <div class="footer-contact">
+                <h4 class="footer-heading">Kontak</h4>
+                <p class="footer-text">📞 0812-3456-7890</p>
+                <p class="footer-text">📸 @geprek.nusantara</p>
+                <p class="footer-text">📍 Jakarta Selatan</p>
+                <p class="footer-text">🕐 10.00 - 22.00 WIB</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Geprek Nusantara. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== FLOATING CART (MOBILE) ==================== -->
+    <div class="floating-cart-bar" id="floating-cart-bar" aria-hidden="true">
+        <button class="floating-cart-btn" id="btn-floating-cart" aria-label="Lihat keranjang">
+            <span class="floating-cart-icon">🛒</span>
+            <span class="floating-cart-count" id="floating-cart-count">0 Item</span>
+            <span class="floating-cart-total" id="floating-cart-total">Rp 0</span>
+            <span class="floating-cart-action">Lihat Keranjang →</span>
+        </button>
+    </div>
+
+    <!-- ==================== PRODUCT DETAIL MODAL / BOTTOM SHEET ==================== -->
+    <div class="modal-overlay" id="product-modal" role="dialog" aria-modal="true" aria-label="Detail produk" aria-hidden="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="bottom-sheet" id="product-sheet">
+            <div class="sheet-handle" aria-hidden="true"></div>
+            <button class="modal-close" data-close-modal aria-label="Tutup detail produk">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="sheet-content" id="product-detail-content">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CART MODAL / BOTTOM SHEET ==================== -->
+    <div class="modal-overlay" id="cart-modal" role="dialog" aria-modal="true" aria-label="Keranjang" aria-hidden="true">
+        <div class="modal-backdrop" data-close-cart></div>
+        <div class="bottom-sheet" id="cart-sheet">
+            <div class="sheet-handle" aria-hidden="true"></div>
+            <button class="modal-close" data-close-cart aria-label="Tutup keranjang">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="sheet-content" id="cart-content">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CHECKOUT MODAL ==================== -->
+    <div class="modal-overlay" id="checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout" aria-hidden="true">
+        <div class="modal-backdrop" data-close-checkout></div>
+        <div class="checkout-sheet" id="checkout-sheet">
+            <button class="modal-close" data-close-checkout aria-label="Tutup checkout">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="checkout-content" id="checkout-content">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LIGHTBOX ==================== -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Lightbox galeri" aria-hidden="true">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Tutup lightbox">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        <img src="" alt="Lightbox" class="lightbox-image" id="lightbox-image">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

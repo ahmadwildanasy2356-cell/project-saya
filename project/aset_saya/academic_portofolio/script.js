@@ -1004,13 +1004,18 @@
         },
         {
             name: 'Sertifikat Nasional Mental Healthy',
-            issuer: 'Daurah',
+            issuer: 'Webinar',
             imageSrc: 'assets/certificates/certificate-mental-healthy.png',
         },
         {
             name: 'Sertifikat Anggota OSIS',
             issuer: 'OSIS MA Al Irsyad PIAT 7',
             imageSrc: 'assets/certificates/certificate-osis.png',
+        },
+        {
+            name: 'Sertifikat Public Speaking',
+            issuer: 'Webinar',
+            imageSrc: 'assets/certificates/certificate-public-speaking.png'
         },
     ];
 
