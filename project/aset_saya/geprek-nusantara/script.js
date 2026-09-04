@@ -17,7 +17,7 @@ const MENU_ITEMS = [
         price: 20000,
         rating: 4.8,
         desc: "Ayam crispy digeprek dengan sambal bawang khas Nusantara.",
-        image: IMAGE_BASE + "geprek-original.jpg",
+        image: IMAGE_BASE + "geprek-original.png",
     },
     {
         id: 2,
@@ -26,7 +26,7 @@ const MENU_ITEMS = [
         price: 24000,
         rating: 4.9,
         desc: "Geprek original dengan lelehan keju melimpah.",
-        image: IMAGE_BASE + "geprek-keju.jpg",
+        image: IMAGE_BASE + "geprek-keju.png",
     },
     {
         id: 3,
@@ -35,7 +35,7 @@ const MENU_ITEMS = [
         price: 28000,
         rating: 4.9,
         desc: "Geprek dengan mozzarella premium yang meleleh.",
-        image: IMAGE_BASE + "geprek-mozzarella.jpg",
+        image: IMAGE_BASE + "geprek-mozzarella.png",
     },
     {
         id: 4,
@@ -44,7 +44,7 @@ const MENU_ITEMS = [
         price: 26000,
         rating: 4.8,
         desc: "Ayam crispy dengan sambal matah segar khas Bali.",
-        image: IMAGE_BASE + "geprek-matah.jpg",
+        image: IMAGE_BASE + "geprek-matah.png",
     },
     {
         id: 5,
@@ -53,7 +53,7 @@ const MENU_ITEMS = [
         price: 25000,
         rating: 4.7,
         desc: "Geprek Original + Nasi + Es Teh.",
-        image: IMAGE_BASE + "paket-hemat-1.jpg",
+        image: IMAGE_BASE + "paket-hemat-1.png",
     },
     {
         id: 6,
@@ -62,7 +62,7 @@ const MENU_ITEMS = [
         price: 30000,
         rating: 4.8,
         desc: "Geprek Keju + Nasi + Telur + Es Teh.",
-        image: IMAGE_BASE + "paket-hemat-2.jpg",
+        image: IMAGE_BASE + "paket-hemat-2.png",
     },
     {
         id: 7,
@@ -71,7 +71,7 @@ const MENU_ITEMS = [
         price: 5000,
         rating: 4.5,
         desc: "Telur dadar / ceplok tambahan.",
-        image: IMAGE_BASE + "telur.jpg",
+        image: IMAGE_BASE + "telur.png",
     },
     {
         id: 8,
@@ -80,7 +80,7 @@ const MENU_ITEMS = [
         price: 6000,
         rating: 4.9,
         desc: "Sambal extra dengan level sesuai selera.",
-        image: IMAGE_BASE + "extra-sambal.jpg",
+        image: IMAGE_BASE + "extra-sambal.png",
     },
     {
         id: 9,
@@ -89,7 +89,7 @@ const MENU_ITEMS = [
         price: 8000,
         rating: 4.8,
         desc: "Tambahan keju parut / slice.",
-        image: IMAGE_BASE + "keju.jpg",
+        image: IMAGE_BASE + "keju.png",
     },
     {
         id: 10,
@@ -98,7 +98,7 @@ const MENU_ITEMS = [
         price: 15000,
         rating: 4.9,
         desc: "Ayam crispy tambahan tanpa sambal.",
-        image: IMAGE_BASE + "extra-ayam.jpg",
+        image: IMAGE_BASE + "extra-ayam.png",
     },
     {
         id: 11,
@@ -107,7 +107,7 @@ const MENU_ITEMS = [
         price: 7000,
         rating: 4.7,
         desc: "Es teh manis segar.",
-        image: IMAGE_BASE + "es-teh.jpg",
+        image: IMAGE_BASE + "es-teh.png",
     },
     {
         id: 12,
@@ -116,7 +116,7 @@ const MENU_ITEMS = [
         price: 9000,
         rating: 4.8,
         desc: "Es jeruk peras dengan rasa asli.",
-        image: IMAGE_BASE + "es-jeruk.jpg",
+        image: IMAGE_BASE + "es-jeruk.png",
     },
     {
         id: 13,
@@ -125,7 +125,7 @@ const MENU_ITEMS = [
         price: 5000,
         rating: 4.6,
         desc: "Air mineral botol 500ml.",
-        image: IMAGE_BASE + "air-mineral.jpg",
+        image: IMAGE_BASE + "air-mineral.png",
     },
 ];
 
