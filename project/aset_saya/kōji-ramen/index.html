@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KŌJI RAMEN — A Bowl Worth Slowing Down For</title>
+    <meta name="description" content="Modern Japanese ramen crafted with slow broth, springy noodles and carefully selected ingredients. A bowl worth slowing down for.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Custom Cursor Dot (subtle) -->
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar" role="banner">
+        <div class="navbar__inner">
+            <a href="#home" class="navbar__logo" data-nav aria-label="Kōji Ramen Home">
+                <span class="navbar__logo-mark">KŌJI</span>
+                <span class="navbar__logo-sub">RAMEN</span>
+            </a>
+
+            <nav class="navbar__desktop" aria-label="Primary navigation">
+                <a href="#home" class="navbar__link active" data-nav>HOME</a>
+                <a href="#menu" class="navbar__link" data-nav>MENU</a>
+                <a href="#story" class="navbar__link" data-nav>STORY</a>
+                <a href="#ramen" class="navbar__link" data-nav>RAMEN</a>
+                <a href="#builder" class="navbar__link" data-nav>BUILD YOUR BOWL</a>
+                <a href="#gallery" class="navbar__link" data-nav>GALLERY</a>
+                <a href="#location" class="navbar__link" data-nav>VISIT</a>
+            </nav>
+
+            <div class="navbar__actions">
+                <button class="navbar__cart-btn" id="navCartBtn" aria-label="Open cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="navbar__cart-count" id="navCartCount">0</span>
+                </button>
+                <a href="#builder" class="navbar__cta" data-nav>ORDER NOW</a>
+                <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MOBILE NAVIGATION ===== -->
+    <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div class="mobile-nav__inner">
+            <div class="mobile-nav__header">
+                <span class="mobile-nav__logo">KŌJI RAMEN</span>
+                <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close menu">✕</button>
+            </div>
+            <nav class="mobile-nav__links" aria-label="Mobile navigation links">
+                <a href="#home" class="mobile-nav__link" data-nav data-index="01">HOME</a>
+                <a href="#menu" class="mobile-nav__link" data-nav data-index="02">MENU</a>
+                <a href="#story" class="mobile-nav__link" data-nav data-index="03">STORY</a>
+                <a href="#ramen" class="mobile-nav__link" data-nav data-index="04">RAMEN</a>
+                <a href="#builder" class="mobile-nav__link" data-nav data-index="05">BUILD YOUR BOWL</a>
+                <a href="#gallery" class="mobile-nav__link" data-nav data-index="06">GALLERY</a>
+                <a href="#location" class="mobile-nav__link" data-nav data-index="07">VISIT</a>
+            </nav>
+            <div class="mobile-nav__footer">
+                <p>"A Bowl Worth Slowing Down For."</p>
+                <a href="#builder" class="mobile-nav__cta" data-nav>ORDER NOW →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="mainContent" role="main">
+
+        <!-- ========== VIEW: HOME ========== -->
+        <section class="view view--active" id="home" data-view="home" aria-label="Home">
+            <!-- HERO -->
+            <div class="hero">
+                <div class="hero__bg">
+                    <img src="assets/images/hero.jpg" alt="Kōji Ramen hero bowl" class="hero__img" onerror="handleImageError(this)">
+                    <div class="hero__overlay"></div>
+                </div>
+                <div class="hero__content">
+                    <div class="hero__eyebrow" data-reveal>
+                        <span class="hero__eyebrow-line"></span>
+                        KŌJI RAMEN — TOKYO-INSPIRED RAMEN HOUSE
+                    </div>
+                    <h1 class="hero__title" data-reveal>
+                        <span class="hero__title-line">A BOWL</span>
+                        <span class="hero__title-line">WORTH</span>
+                        <span class="hero__title-line hero__title-line--accent">SLOWING DOWN FOR.</span>
+                    </h1>
+                    <p class="hero__subtitle" data-reveal>Hand-crafted broth. Springy noodles. Made to be remembered.</p>
+                    <div class="hero__actions" data-reveal>
+                        <a href="#builder" class="btn btn--primary" data-nav>BUILD YOUR BOWL</a>
+                        <a href="#menu" class="btn btn--ghost-light" data-nav>EXPLORE MENU</a>
+                    </div>
+                </div>
+                <div class="hero__scroll" data-reveal>
+                    <span class="hero__scroll-text">SCROLL TO DISCOVER</span>
+                    <span class="hero__scroll-line"></span>
+                </div>
+            </div>
+
+            <!-- INTRO STATEMENT -->
+            <div class="intro-statement section-pad">
+                <div class="container">
+                    <div class="intro-statement__grid">
+                        <div class="intro-statement__eyebrow" data-reveal>THE KŌJI PHILOSOPHY</div>
+                        <h2 class="intro-statement__title" data-reveal>
+                            RAMEN IS MORE<br>THAN A BOWL.
+                        </h2>
+                        <p class="intro-statement__body" data-reveal>
+                            Every bowl begins with patience — slow broth, carefully made noodles,
+                            and ingredients chosen for balance. We don't rush. We don't compromise.
+                            We craft each bowl the way it was meant to be made.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RAMEN CRAFT PREVIEW -->
+            <div class="craft-preview section-pad">
+                <div class="container">
+                    <div class="craft-preview__header">
+                        <span class="craft-preview__eyebrow" data-reveal>CRAFTED FROM THE BOTTOM UP</span>
+                        <h2 class="craft-preview__title" data-reveal>THE ART OF RAMEN</h2>
+                    </div>
+                    <div class="craft-preview__grid">
+                        <div class="craft-preview__item" data-reveal>
+                            <span class="craft-preview__number">01</span>
+                            <h3 class="craft-preview__name">BROTH</h3>
+                            <p class="craft-preview__desc">Slow-simmered for 12+ hours. Rich, complex, deeply satisfying.</p>
+                        </div>
+                        <div class="craft-preview__item" data-reveal>
+                            <span class="craft-preview__number">02</span>
+                            <h3 class="craft-preview__name">NOODLES</h3>
+                            <p class="craft-preview__desc">Made fresh daily. Springy texture with the perfect bite.</p>
+                        </div>
+                        <div class="craft-preview__item" data-reveal>
+                            <span class="craft-preview__number">03</span>
+                            <h3 class="craft-preview__name">TARE</h3>
+                            <p class="craft-preview__desc">House-blended seasoning that defines each bowl's character.</p>
+                        </div>
+                        <div class="craft-preview__item" data-reveal>
+                            <span class="craft-preview__number">04</span>
+                            <h3 class="craft-preview__name">TOPPINGS</h3>
+                            <p class="craft-preview__desc">Chashu, ajitama, nori — each element chosen for balance.</p>
+                        </div>
+                        <div class="craft-preview__item" data-reveal>
+                            <span class="craft-preview__number">05</span>
+                            <h3 class="craft-preview__name">FINISH</h3>
+                            <p class="craft-preview__desc">A final touch of precision. Served hot, ready to savor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BROTH STORY CINEMATIC -->
+            <div class="broth-story section-pad">
+                <div class="broth-story__image-wrap" data-reveal>
+                    <img src="assets/images/ramen-signature.jpg" alt="Signature broth ramen" class="broth-story__img" onerror="handleImageError(this)">
+                    <div class="broth-story__overlay"></div>
+                    <div class="broth-story__content">
+                        <span class="broth-story__eyebrow">THE BROTH TAKES ITS TIME</span>
+                        <h2 class="broth-story__title">12+ HOURS<br>OF PATIENCE</h2>
+                        <p class="broth-story__text">
+                            Our broth simmers slowly, drawing out every layer of flavor from
+                            carefully sourced bones, aromatics, and time-honored technique.
+                        </p>
+                        <div class="broth-story__stats">
+                            <div class="broth-story__stat">
+                                <span class="broth-story__stat-number">12+</span>
+                                <span class="broth-story__stat-label">HOURS</span>
+                            </div>
+                            <div class="broth-story__stat">
+                                <span class="broth-story__stat-number">18</span>
+                                <span class="broth-story__stat-label">INGREDIENTS</span>
+                            </div>
+                            <div class="broth-story__stat">
+                                <span class="broth-story__stat-number">100%</span>
+                                <span class="broth-story__stat-label">FROM SCRATCH</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU PREVIEW -->
+            <div class="menu-preview section-pad">
+                <div class="container">
+                    <div class="menu-preview__header">
+                        <span class="menu-preview__eyebrow" data-reveal>SIGNATURE BOWLS</span>
+                        <h2 class="menu-preview__title" data-reveal>THE ESSENTIALS</h2>
+                        <a href="#menu" class="menu-preview__link" data-nav data-reveal>VIEW FULL MENU →</a>
+                    </div>
+                    <div class="menu-preview__grid" id="menuPreviewGrid">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROMO -->
+            <div class="promo section-pad">
+                <div class="promo__inner">
+                    <img src="assets/images/ramen-black-garlic.jpg" alt="Ramen Night promo" class="promo__img" onerror="handleImageError(this)">
+                    <div class="promo__overlay"></div>
+                    <div class="promo__content" data-reveal>
+                        <span class="promo__eyebrow">RAMEN NIGHT</span>
+                        <h2 class="promo__title">EVERY FRIDAY,<br>STAY A LITTLE LONGER.</h2>
+                        <p class="promo__text">Special bowls, warm atmosphere, and the comfort of good ramen. Join us after dark.</p>
+                        <a href="#location" class="btn btn--primary" data-nav>SEE THE OFFER</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOCIAL PROOF -->
+            <div class="social-proof section-pad">
+                <div class="container">
+                    <div class="social-proof__grid">
+                        <div class="social-proof__quote" data-reveal>
+                            <span class="social-proof__mark">"</span>
+                            <p class="social-proof__text">Good ramen doesn't rush.</p>
+                        </div>
+                        <div class="social-proof__stats">
+                            <div class="social-proof__stat" data-reveal>
+                                <span class="social-proof__stat-number">4.9</span>
+                                <span class="social-proof__stat-label">CUSTOMER RATING</span>
+                            </div>
+                            <div class="social-proof__stat" data-reveal>
+                                <span class="social-proof__stat-number">50K+</span>
+                                <span class="social-proof__stat-label">BOWLS SERVED</span>
+                            </div>
+                            <div class="social-proof__stat" data-reveal>
+                                <span class="social-proof__stat-number">12+</span>
+                                <span class="social-proof__stat-label">HOURS BROTH</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MARQUEE -->
+            <div class="marquee" aria-hidden="true">
+                <div class="marquee__track" id="marqueeTrack">
+                    <span class="marquee__item">RAMEN</span><span class="marquee__dot">•</span>
+                    <span class="marquee__item">BROTH</span><span class="marquee__dot">•</span>
+                    <span class="marquee__item">NOODLES</span><span class="marquee__dot">•</span>
+                    <span class="marquee__item">CHASHU</span><span class="marquee__dot">•</span>
+                    <span class="marquee__item">JAPANESE CRAFT</span><span class="marquee__dot">•</span>
+                    <span class="marquee__item">GOOD BOWLS</span><span class="marquee__dot">•</span>
+                </div>
+            </div>
+
+            <!-- FINAL CTA -->
+            <div class="final-cta section-pad">
+                <div class="container text-center">
+                    <h2 class="final-cta__title" data-reveal>YOUR BOWL<br>IS WAITING.</h2>
+                    <p class="final-cta__subtitle" data-reveal>Come hungry. Leave happy.</p>
+                    <div class="final-cta__actions" data-reveal>
+                        <a href="#builder" class="btn btn--primary" data-nav>BUILD YOUR BOWL</a>
+                        <a href="#location" class="btn btn--ghost" data-nav>VISIT KŌJI</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========== VIEW: MENU ========== -->
+        <section class="view" id="menu" data-view="menu" aria-label="Menu" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>THE MENU</span>
+                    <h1 class="view-header__title" data-reveal>BOWLS & MORE</h1>
+                </div>
+            </div>
+            <div class="menu-filter section-pad-sm" data-reveal>
+                <div class="container">
+                    <div class="menu-filter__tabs" role="tablist" aria-label="Menu categories">
+                        <button class="menu-filter__tab active" data-filter="all" role="tab" aria-selected="true">ALL</button>
+                        <button class="menu-filter__tab" data-filter="ramen" role="tab" aria-selected="false">RAMEN</button>
+                        <button class="menu-filter__tab" data-filter="sides" role="tab" aria-selected="false">SIDES</button>
+                        <button class="menu-filter__tab" data-filter="toppings" role="tab" aria-selected="false">TOPPINGS</button>
+                        <button class="menu-filter__tab" data-filter="drinks" role="tab" aria-selected="false">DRINKS</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-grid section-pad-sm">
+                <div class="container">
+                    <div class="menu-grid__items" id="menuGrid">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== VIEW: STORY ========== -->
+        <section class="view" id="story" data-view="story" aria-label="Story" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>OUR STORY</span>
+                    <h1 class="view-header__title" data-reveal>IT STARTED<br>WITH A BOWL.</h1>
+                </div>
+            </div>
+            <div class="story-content section-pad">
+                <div class="container">
+                    <div class="story-content__grid">
+                        <div class="story-content__image" data-reveal>
+                            <img src="assets/images/story.jpg" alt="Kōji Ramen story" class="story-content__img" onerror="handleImageError(this)">
+                        </div>
+                        <div class="story-content__text" data-reveal>
+                            <p class="story-content__para">
+                                KŌJI RAMEN began with a simple belief: that a bowl of ramen can be more than food.
+                                It can be a moment of pause in a busy world. A ritual. A return to craft.
+                            </p>
+                            <p class="story-content__para">
+                                Our founders spent years studying the art of ramen — from the back alleys of Tokyo
+                                to the bustling ramen counters of Sapporo. They learned that great ramen isn't about
+                                shortcuts. It's about time, patience, and the courage to keep things simple.
+                            </p>
+                            <p class="story-content__para">
+                                Today, KŌJI RAMEN continues that tradition. Every broth is simmered slowly.
+                                Every noodle is made fresh. Every bowl is assembled with intention.
+                                Because we believe that in a world that never stops, a bowl of ramen
+                                should be worth slowing down for.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHEF / CRAFT -->
+            <div class="chef-craft section-pad">
+                <div class="container">
+                    <div class="chef-craft__header">
+                        <span class="chef-craft__eyebrow" data-reveal>MADE BY HAND</span>
+                        <h2 class="chef-craft__title" data-reveal>THE CRAFTSMANSHIP</h2>
+                    </div>
+                    <div class="chef-craft__grid">
+                        <div class="chef-craft__item" data-reveal>
+                            <img src="assets/images/chef.jpg" alt="Chef preparing ramen" class="chef-craft__img" onerror="handleImageError(this)">
+                            <span class="chef-craft__label">HANDMADE NOODLES</span>
+                        </div>
+                        <div class="chef-craft__item" data-reveal>
+                            <img src="assets/images/kitchen.jpg" alt="Kitchen preparation" class="chef-craft__img" onerror="handleImageError(this)">
+                            <span class="chef-craft__label">BROTH PREPARATION</span>
+                        </div>
+                        <div class="chef-craft__item" data-reveal>
+                            <img src="assets/images/chashu.jpg" alt="Topping preparation" class="chef-craft__img" onerror="handleImageError(this)">
+                            <span class="chef-craft__label">TOPPING CRAFT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SPACE -->
+            <div class="space-section section-pad">
+                <div class="container">
+                    <div class="space-section__grid">
+                        <div class="space-section__text" data-reveal>
+                            <span class="space-section__eyebrow">THE SPACE</span>
+                            <h2 class="space-section__title">THE RAMEN<br>COUNTER.</h2>
+                            <p class="space-section__desc">Come for the bowl. Stay for the atmosphere.</p>
+                            <p class="space-section__body">
+                                Warm wood, soft lighting, and the sound of broth simmering.
+                                Our counter is designed for the full ramen experience —
+                                intimate, welcoming, and always aromatic.
+                            </p>
+                        </div>
+                        <div class="space-section__images" data-reveal>
+                            <img src="assets/images/space-1.jpg" alt="Restaurant interior" class="space-section__img space-section__img--large" onerror="handleImageError(this)">
+                            <img src="assets/images/space-2.jpg" alt="Ramen counter" class="space-section__img space-section__img--small" onerror="handleImageError(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========== VIEW: RAMEN CRAFT ========== -->
+        <section class="view" id="ramen" data-view="ramen" aria-label="Ramen Craft" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>THE PROCESS</span>
+                    <h1 class="view-header__title" data-reveal>CRAFTED FROM<br>THE BOTTOM UP.</h1>
+                </div>
+            </div>
+            <div class="craft-timeline section-pad">
+                <div class="container">
+                    <div class="craft-timeline__track" id="craftTimeline">
+                        <div class="craft-timeline__item" data-reveal>
+                            <span class="craft-timeline__number">01</span>
+                            <img src="assets/images/ramen-shoyu.jpg" alt="Broth preparation" class="craft-timeline__img" onerror="handleImageError(this)">
+                            <h3 class="craft-timeline__title">BROTH</h3>
+                            <p class="craft-timeline__desc">Slow-simmered for 12+ hours. We use a blend of pork bones, chicken, and aromatics to create a rich, layered foundation.</p>
+                        </div>
+                        <div class="craft-timeline__item" data-reveal>
+                            <span class="craft-timeline__number">02</span>
+                            <img src="assets/images/ramen-miso.jpg" alt="Noodle making" class="craft-timeline__img" onerror="handleImageError(this)">
+                            <h3 class="craft-timeline__title">NOODLES</h3>
+                            <p class="craft-timeline__desc">Made fresh every morning. Our noodles are springy, chewy, and perfectly paired with each broth style.</p>
+                        </div>
+                        <div class="craft-timeline__item" data-reveal>
+                            <span class="craft-timeline__number">03</span>
+                            <img src="assets/images/ramen-paitan.jpg" alt="Tare seasoning" class="craft-timeline__img" onerror="handleImageError(this)">
+                            <h3 class="craft-timeline__title">TARE</h3>
+                            <p class="craft-timeline__desc">The soul of the bowl. Our house tare is a careful blend of soy, miso, and secret spices that defines each ramen.</p>
+                        </div>
+                        <div class="craft-timeline__item" data-reveal>
+                            <span class="craft-timeline__number">04</span>
+                            <img src="assets/images/ramen-spicy.jpg" alt="Toppings" class="craft-timeline__img" onerror="handleImageError(this)">
+                            <h3 class="craft-timeline__title">TOPPINGS</h3>
+                            <p class="craft-timeline__desc">From tender chashu to jammy ajitama, each topping is prepared with the same care as the broth itself.</p>
+                        </div>
+                        <div class="craft-timeline__item" data-reveal>
+                            <span class="craft-timeline__number">05</span>
+                            <img src="assets/images/ramen-black-garlic.jpg" alt="Finished bowl" class="craft-timeline__img" onerror="handleImageError(this)">
+                            <h3 class="craft-timeline__title">FINISH</h3>
+                            <p class="craft-timeline__desc">The final assembly. Every bowl is composed with precision, served hot and ready to be savored.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========== VIEW: BUILDER ========== -->
+        <section class="view" id="builder" data-view="builder" aria-label="Build Your Bowl" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>CONFIGURATOR</span>
+                    <h1 class="view-header__title" data-reveal>BUILD YOUR BOWL.</h1>
+                    <p class="view-header__subtitle" data-reveal>Your ramen. Your way.</p>
+                </div>
+            </div>
+            <div class="builder section-pad-sm">
+                <div class="container">
+                    <div class="builder__layout">
+                        <!-- Preview -->
+                        <div class="builder__preview" data-reveal>
+                            <div class="bowl-preview" id="bowlPreview" role="img" aria-label="Ramen bowl preview">
+                                <div class="bowl-preview__bowl">
+                                    <div class="bowl-preview__broth" id="bowlBroth"></div>
+                                    <div class="bowl-preview__noodles" id="bowlNoodles"></div>
+                                    <div class="bowl-preview__toppings" id="bowlToppings"></div>
+                                    <div class="bowl-preview__rim"></div>
+                                </div>
+                                <div class="bowl-preview__labels" id="bowlLabels">
+                                    <span class="bowl-preview__label" id="bowlBrothLabel">SHOYU</span>
+                                    <span class="bowl-preview__label" id="bowlNoodleLabel">THIN</span>
+                                    <span class="bowl-preview__label" id="bowlHeatLabel">HEAT 0</span>
+                                </div>
+                            </div>
+                            <div class="builder__summary" id="builderSummary">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+                        <!-- Config -->
+                        <div class="builder__config" data-reveal>
+                            <!-- Step 1: Broth -->
+                            <div class="builder-step">
+                                <h3 class="builder-step__title">01 — CHOOSE YOUR BROTH</h3>
+                                <div class="builder-step__options" id="brothOptions">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                            <!-- Step 2: Noodles -->
+                            <div class="builder-step">
+                                <h3 class="builder-step__title">02 — CHOOSE YOUR NOODLES</h3>
+                                <div class="builder-step__options builder-step__options--noodles" id="noodleOptions">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                            <!-- Step 3: Toppings -->
+                            <div class="builder-step">
+                                <h3 class="builder-step__title">03 — CHOOSE YOUR TOPPINGS</h3>
+                                <div class="builder-step__options builder-step__options--toppings" id="toppingOptions">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                            <!-- Step 4: Heat -->
+                            <div class="builder-step">
+                                <h3 class="builder-step__title">04 — CHOOSE YOUR HEAT</h3>
+                                <div class="builder-step__heat" id="heatOptions">
+                                    <!-- Dynamically populated -->
+                                </div>
+                                <p class="builder-step__heat-label" id="heatLabel">0 — No Heat</p>
+                            </div>
+                            <!-- Step 5: Extras -->
+                            <div class="builder-step">
+                                <h3 class="builder-step__title">05 — ADD EXTRAS</h3>
+                                <div class="builder-step__options builder-step__options--extras" id="extrasOptions">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                            <!-- Live Price -->
+                            <div class="builder-price" id="builderPrice">
+                                <span class="builder-price__label">TOTAL</span>
+                                <span class="builder-price__value" id="builderTotal">Rp 38.000</span>
+                            </div>
+                            <button class="btn btn--primary btn--full" id="addBuilderToCart">ADD TO ORDER</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========== VIEW: GALLERY ========== -->
+        <section class="view" id="gallery" data-view="gallery" aria-label="Gallery" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>MOMENTS</span>
+                    <h1 class="view-header__title" data-reveal>THE GALLERY</h1>
+                </div>
+            </div>
+            <div class="gallery section-pad-sm">
+                <div class="container">
+                    <div class="gallery__collage" id="galleryCollage">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========== VIEW: RESERVATION ========== -->
+        <section class="view" id="reservation" data-view="reservation" aria-label="Reservation" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>RESERVATION</span>
+                    <h1 class="view-header__title" data-reveal>TAKE A SEAT.</h1>
+                    <p class="view-header__subtitle" data-reveal>Meet us at the counter.</p>
+                </div>
+            </div>
+            <div class="reservation section-pad-sm">
+                <div class="container">
+                    <form class="reservation__form" id="reservationForm" data-reveal>
+                        <div class="reservation__row">
+                            <div class="reservation__field">
+                                <label for="resName">NAME</label>
+                                <input type="text" id="resName" name="name" required placeholder="Your name">
+                            </div>
+                            <div class="reservation__field">
+                                <label for="resWhatsApp">WHATSAPP</label>
+                                <input type="tel" id="resWhatsApp" name="whatsapp" required placeholder="62xxxxxxxxxx">
+                            </div>
+                        </div>
+                        <div class="reservation__row">
+                            <div class="reservation__field">
+                                <label for="resDate">DATE</label>
+                                <input type="date" id="resDate" name="date" required>
+                            </div>
+                            <div class="reservation__field">
+                                <label for="resTime">TIME</label>
+                                <input type="time" id="resTime" name="time" required>
+                            </div>
+                        </div>
+                        <div class="reservation__row">
+                            <div class="reservation__field">
+                                <label for="resGuests">NUMBER OF GUESTS</label>
+                                <select id="resGuests" name="guests" required>
+                                    <option value="1">1 Guest</option>
+                                    <option value="2">2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5">5 Guests</option>
+                                    <option value="6">6+ Guests</option>
+                                </select>
+                            </div>
+                            <div class="reservation__field">
+                                <label for="resNotes">NOTES (OPTIONAL)</label>
+                                <input type="text" id="resNotes" name="notes" placeholder="Any special requests?">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full">SUBMIT RESERVATION</button>
+                    </form>
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========== VIEW: LOCATION ========== -->
+        <section class="view" id="location" data-view="location" aria-label="Location" hidden>
+            <div class="view-header section-pad-sm">
+                <div class="container">
+                    <span class="view-header__eyebrow" data-reveal>VISIT US</span>
+                    <h1 class="view-header__title" data-reveal>COME FIND US.</h1>
+                </div>
+            </div>
+            <div class="location section-pad-sm">
+                <div class="container">
+                    <div class="location__card" data-reveal>
+                        <div class="location__info">
+                            <h3 class="location__name">KŌJI RAMEN</h3>
+                            <p class="location__address">Jl. Culinary District No. 12<br>Jakarta Selatan, Indonesia</p>
+                            <div class="location__details">
+                                <div class="location__detail">
+                                    <span class="location__label">HOURS</span>
+                                    <span class="location__value">Mon–Sun · 11:00 – 21:00</span>
+                                </div>
+                                <div class="location__detail">
+                                    <span class="location__label">WHATSAPP</span>
+                                    <span class="location__value" id="locationWhatsApp">+62 812-3456-7890</span>
+                                </div>
+                                <div class="location__detail">
+                                    <span class="location__label">INSTAGRAM</span>
+                                    <span class="location__value">@kojiramen</span>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn--primary" id="getDirectionsBtn" target="_blank" rel="noopener">GET DIRECTIONS</a>
+                        </div>
+                        <div class="location__map">
+                            <img src="assets/images/space-1.jpg" alt="Kōji Ramen location" class="location__map-img" onerror="handleImageError(this)">
+                            <div class="location__map-overlay">
+                                <span class="location__map-pin">📍</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <footer class="footer" role="contentinfo">
+                <div class="container footer__inner">
+                    <div class="footer__brand">
+                        <span class="footer__logo">KŌJI RAMEN</span>
+                        <p class="footer__tagline">"A Bowl Worth Slowing Down For."</p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#menu" data-nav>Menu</a>
+                        <a href="#story" data-nav>Story</a>
+                        <a href="#builder" data-nav>Builder</a>
+                        <a href="#gallery" data-nav>Gallery</a>
+                        <a href="#location" data-nav>Visit</a>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <div class="footer__copyright">© 2026 KŌJI RAMEN</div>
+                </div>
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- ===== CART DRAWER ===== -->
+    <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+    <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+        <div class="cart-drawer__header">
+            <h2 class="cart-drawer__title">YOUR ORDER</h2>
+            <button class="cart-drawer__close" id="cartClose" aria-label="Close cart">✕</button>
+        </div>
+        <div class="cart-drawer__items" id="cartItems">
+            <!-- Dynamically populated -->
+        </div>
+        <div class="cart-drawer__footer">
+            <div class="cart-drawer__total">
+                <span class="cart-drawer__total-label">TOTAL</span>
+                <span class="cart-drawer__total-value" id="cartTotal">Rp 0</span>
+            </div>
+            <button class="btn btn--primary btn--full" id="checkoutBtn">CHECKOUT</button>
+        </div>
+    </aside>
+
+    <!-- ===== CHECKOUT MODAL ===== -->
+    <div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-label="Checkout" hidden>
+        <div class="checkout-modal__overlay" id="checkoutOverlay"></div>
+        <div class="checkout-modal__content">
+            <button class="checkout-modal__close" id="checkoutClose" aria-label="Close checkout">✕</button>
+            <h2 class="checkout-modal__title">CHECKOUT</h2>
+            <form class="checkout-modal__form" id="checkoutForm">
+                <div class="checkout-modal__field">
+                    <label for="checkoutName">NAME</label>
+                    <input type="text" id="checkoutName" required placeholder="Your name">
+                </div>
+                <div class="checkout-modal__field">
+                    <label for="checkoutWhatsApp">WHATSAPP</label>
+                    <input type="tel" id="checkoutWhatsApp" required placeholder="62xxxxxxxxxx">
+                </div>
+                <div class="checkout-modal__field">
+                    <label>ORDER METHOD</label>
+                    <div class="checkout-modal__methods">
+                        <label class="checkout-modal__method">
+                            <input type="radio" name="orderMethod" value="pickup" checked>
+                            <span>PICK UP</span>
+                        </label>
+                        <label class="checkout-modal__method">
+                            <input type="radio" name="orderMethod" value="delivery">
+                            <span>DELIVERY</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="checkout-modal__field" id="deliveryAddressField" hidden>
+                    <label for="checkoutAddress">DELIVERY ADDRESS</label>
+                    <input type="text" id="checkoutAddress" placeholder="Your address">
+                </div>
+                <button type="submit" class="btn btn--primary btn--full">CONFIRM & SEND ORDER</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== PRODUCT MODAL ===== -->
+    <div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-label="Product details" hidden>
+        <div class="product-modal__overlay" id="productModalOverlay"></div>
+        <div class="product-modal__content" id="productModalContent">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox" hidden>
+        <button class="lightbox__close" id="lightboxClose" aria-label="Close lightbox">✕</button>
+        <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+        <img class="lightbox__img" id="lightboxImg" src="" alt="Lightbox image">
+        <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next image">›</button>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Lingkaran latar belakang warna tanah/batik (coklat kemerahan) -->
+  <circle cx="50" cy="50" r="48" fill="#6B3A2A" />
+  
+  <!-- Lingkaran dalam berwarna emas (kesan bistro premium) -->
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#D4AF37" stroke-width="2" />
+  
+  <!-- Huruf N di tengah (untuk Nusantara) dengan font elegan -->
+  <text x="50" y="57" font-family="Georgia, 'Times New Roman', serif" font-size="38" 
+        font-weight="bold" fill="#D4AF37" text-anchor="middle">N</text>
+  
+  <!-- Sendok (kiri bawah) menyilang -->
+  <ellipse cx="32" cy="72" rx="10" ry="6" fill="none" stroke="#D4AF37" stroke-width="2.5" transform="rotate(-30 32 72)" />
+  <line x1="28" y1="76" x2="18" y2="85" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" />
+  
+  <!-- Garpu (kanan bawah) menyilang -->
+  <line x1="68" y1="72" x2="78" y2="85" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="66" y1="68" x2="71" y2="76" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+  <line x1="70" y1="66" x2="75" y2="74" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+  
+  <!-- Aksen Daun Tradisional Melengkung (seperti janur / daun pandan) di kiri -->
+  <path d="M15 40 Q5 30 8 20 Q15 25 18 35 Q20 40 15 40" fill="#2E8B57" opacity="0.9" />
+  <path d="M18 45 Q8 38 10 28 Q17 32 20 42 Q22 47 18 45" fill="#3CB371" opacity="0.8" />
+  
+  <!-- Aksen Daun Tradisional di kanan -->
+  <path d="M85 40 Q95 30 92 20 Q85 25 82 35 Q80 40 85 40" fill="#2E8B57" opacity="0.9" />
+  <path d="M82 45 Q92 38 90 28 Q83 32 80 42 Q78 47 82 45" fill="#3CB371" opacity="0.8" />
+  
+  <!-- Bintik-bintik hiasan kecil (seperti rempah atau butiran padi) -->
+  <circle cx="50" cy="18" r="2.5" fill="#D4AF37" opacity="0.6" />
+  <circle cx="42" cy="20" r="1.5" fill="#D4AF37" opacity="0.4" />
+  <circle cx="58" cy="20" r="1.5" fill="#D4AF37" opacity="0.4" />
+  
+  <!-- Garis lengkung bawah (seperti piring atau alas) -->
+  <path d="M30 88 Q50 94 70 88" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5" />
+</svg>

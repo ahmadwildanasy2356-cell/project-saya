@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nara Coffee — Specialty Coffee & Slow Moments</title>
+    <meta name="description" content="Specialty coffee, slow moments, and good conversations at Nara Coffee.">
+    <meta name="theme-color" content="#241B17">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" onerror="this.onerror=null; this.src='assets/images/fallback.jpg';">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- ========== HEADER / NAVIGATION ========== -->
+    <header class="navbar" id="navbar" role="banner">
+        <div class="navbar-inner">
+            <a href="#home" class="navbar-logo" aria-label="Nara Coffee Home" data-nav-link>
+                <span class="logo-mark">N</span>
+                <span class="logo-text">NARA COFFEE</span>
+            </a>
+
+            <nav class="navbar-links" role="navigation" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="#home" data-nav-link class="nav-link active">Home</a></li>
+                    <li><a href="#menu" data-nav-link class="nav-link">Menu</a></li>
+                    <li><a href="#story" data-nav-link class="nav-link">Story</a></li>
+                    <li><a href="#coffee" data-nav-link class="nav-link">Coffee</a></li>
+                    <li><a href="#gallery" data-nav-link class="nav-link">Gallery</a></li>
+                    <li><a href="#reservation" data-nav-link class="nav-link">Reservation</a></li>
+                    <li><a href="#location" data-nav-link class="nav-link nav-cta">Visit Us</a></li>
+                </ul>
+            </nav>
+
+            <div class="navbar-actions">
+                <button class="cart-indicator" id="cartIndicator" aria-label="Open cart" aria-expanded="false">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+
+                <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MOBILE NAVIGATION OVERLAY ========== -->
+    <div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <div class="mobile-nav-content">
+            <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <nav class="mobile-nav-links" role="navigation" aria-label="Mobile Navigation Links">
+                <a href="#home" data-nav-link class="mobile-nav-link">01 <span>Home</span></a>
+                <a href="#menu" data-nav-link class="mobile-nav-link">02 <span>Menu</span></a>
+                <a href="#story" data-nav-link class="mobile-nav-link">03 <span>Story</span></a>
+                <a href="#coffee" data-nav-link class="mobile-nav-link">04 <span>Coffee</span></a>
+                <a href="#gallery" data-nav-link class="mobile-nav-link">05 <span>Gallery</span></a>
+                <a href="#reservation" data-nav-link class="mobile-nav-link">06 <span>Reservation</span></a>
+                <a href="#location" data-nav-link class="mobile-nav-link">07 <span>Visit Us</span></a>
+            </nav>
+            <div class="mobile-nav-footer">
+                <p>Coffee, crafted slowly.</p>
+                <p>© 2026 Nara Coffee</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main id="main-content" role="main">
+
+        <!-- ========== VIEW: HOME ========== -->
+        <section class="view active" id="view-home" data-view="home" role="article">
+            <!-- HERO -->
+            <div class="hero" id="hero">
+                <div class="hero-image-wrapper">
+                    <img src="assets/images/hero.jpg" alt="Nara Coffee — Cinematic coffee atmosphere" class="hero-image" id="heroImage" onerror="handleImageError(this)" fetchpriority="high">
+                </div>
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <p class="hero-eyebrow reveal" data-reveal>NARA COFFEE / EST. 2026</p>
+                    <h1 class="hero-title reveal" data-reveal data-reveal-delay="100">Take a<br><em>moment.</em></h1>
+                    <p class="hero-subtitle reveal" data-reveal data-reveal-delay="200">Coffee, crafted slowly.<br>Moments, made to stay.</p>
+                    <div class="hero-buttons reveal" data-reveal data-reveal-delay="300">
+                        <a href="#menu" class="btn btn-primary" data-nav-link>Discover Nara</a>
+                        <a href="#location" class="btn btn-outline" data-nav-link>Visit Us</a>
+                    </div>
+                </div>
+                <div class="hero-scroll-indicator" aria-hidden="true">
+                    <span>SCROLL TO DISCOVER</span>
+                    <span class="scroll-line"></span>
+                </div>
+            </div>
+
+            <!-- OPENING STATEMENT -->
+            <div class="opening-statement section-pad">
+                <div class="opening-inner">
+                    <p class="opening-text reveal" data-reveal>Coffee is not just a drink.</p>
+                    <p class="opening-text opening-text-accent reveal" data-reveal data-reveal-delay="150">It is a pause.<br>A conversation.<br><em>A moment worth keeping.</em></p>
+                </div>
+            </div>
+
+            <!-- COFFEE PHILOSOPHY -->
+            <div class="philosophy section-pad">
+                <div class="philosophy-header">
+                    <p class="eyebrow reveal" data-reveal>The Process</p>
+                    <h2 class="section-title reveal" data-reveal>Crafted with<br><em>intention.</em></h2>
+                </div>
+                <div class="philosophy-timeline" id="philosophyTimeline">
+                    <!-- Timeline items rendered by JS -->
+                </div>
+            </div>
+
+            <!-- COFFEE JOURNAL -->
+            <div class="journal section-pad">
+                <div class="journal-header">
+                    <p class="eyebrow reveal" data-reveal>Featured Origin</p>
+                    <h2 class="section-title reveal" data-reveal>The Coffee<br><em>Journal.</em></h2>
+                </div>
+                <div class="journal-content">
+                    <div class="journal-image reveal" data-reveal>
+                        <img src="assets/images/coffee-1.jpg" alt="Ethiopia Natural Process coffee beans" onerror="handleImageError(this)" loading="lazy">
+                    </div>
+                    <div class="journal-details reveal" data-reveal data-reveal-delay="150">
+                        <p class="journal-origin">ETHIOPIA — YIRGACHEFFE</p>
+                        <h3 class="journal-name">Natural Process</h3>
+                        <p class="journal-desc">A bright and complex cup with notes of wild berry, floral aromatics, and a dark chocolate finish. Grown at high altitude in the birthplace of coffee.</p>
+                        <div class="journal-meta">
+                            <div class="journal-meta-item">
+                                <span class="meta-label">Origin</span>
+                                <span class="meta-value">Ethiopia</span>
+                            </div>
+                            <div class="journal-meta-item">
+                                <span class="meta-label">Altitude</span>
+                                <span class="meta-value">1950–2100m</span>
+                            </div>
+                            <div class="journal-meta-item">
+                                <span class="meta-label">Process</span>
+                                <span class="meta-value">Natural</span>
+                            </div>
+                            <div class="journal-meta-item">
+                                <span class="meta-label">Roast</span>
+                                <span class="meta-value">Light-Medium</span>
+                            </div>
+                        </div>
+                        <div class="journal-flavors">
+                            <span class="flavor-tag">Berry</span>
+                            <span class="flavor-tag">Floral</span>
+                            <span class="flavor-tag">Chocolate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROMO -->
+            <div class="promo section-pad">
+                <div class="promo-bg">
+                    <img src="assets/images/signature-1.jpg" alt="Weekend Slow Morning promotion" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="promo-overlay"></div>
+                <div class="promo-content">
+                    <p class="eyebrow eyebrow-light reveal" data-reveal>Weekend Special</p>
+                    <h2 class="promo-title reveal" data-reveal data-reveal-delay="100">Weekend<br><em>Slow Morning.</em></h2>
+                    <p class="promo-desc reveal" data-reveal data-reveal-delay="200">Buy 2 coffees, get 1 pastry on us.<br>Every Saturday & Sunday, 7 AM – 10 AM.</p>
+                    <a href="#menu" class="btn btn-light reveal" data-reveal data-reveal-delay="300" data-nav-link>Explore Offer</a>
+                </div>
+            </div>
+
+            <!-- SOCIAL PROOF -->
+            <div class="proof section-pad">
+                <div class="proof-quote reveal" data-reveal>
+                    <span class="quote-mark">"</span>
+                    <p class="quote-text">Some of the best conversations start with coffee.</p>
+                    <span class="quote-mark quote-mark-close">"</span>
+                </div>
+                <div class="proof-stats">
+                    <div class="stat reveal" data-reveal data-reveal-delay="100">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">Rating</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat reveal" data-reveal data-reveal-delay="200">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Coffee Selections</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat reveal" data-reveal data-reveal-delay="300">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Cups Served</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MARQUEE -->
+            <div class="marquee-section" aria-hidden="true">
+                <div class="marquee-track" id="marqueeTrack">
+                    <div class="marquee-content">
+                        <span>SPECIALTY COFFEE</span><span class="marquee-sep">•</span>
+                        <span>SLOW MORNINGS</span><span class="marquee-sep">•</span>
+                        <span>GOOD CONVERSATIONS</span><span class="marquee-sep">•</span>
+                        <span>FRESHLY BREWED</span><span class="marquee-sep">•</span>
+                        <span>STAY A LITTLE LONGER</span><span class="marquee-sep">•</span>
+                    </div>
+                    <div class="marquee-content" aria-hidden="true">
+                        <span>SPECIALTY COFFEE</span><span class="marquee-sep">•</span>
+                        <span>SLOW MORNINGS</span><span class="marquee-sep">•</span>
+                        <span>GOOD CONVERSATIONS</span><span class="marquee-sep">•</span>
+                        <span>FRESHLY BREWED</span><span class="marquee-sep">•</span>
+                        <span>STAY A LITTLE LONGER</span><span class="marquee-sep">•</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FINAL CTA -->
+            <div class="final-cta section-pad">
+                <h2 class="final-cta-title reveal" data-reveal>Take your <em>time.</em></h2>
+                <p class="final-cta-sub reveal" data-reveal data-reveal-delay="150">Your table is waiting.</p>
+                <div class="final-cta-buttons reveal" data-reveal data-reveal-delay="250">
+                    <a href="#reservation" class="btn btn-primary" data-nav-link>Reserve a Table</a>
+                    <a href="#menu" class="btn btn-outline" data-nav-link>Explore Menu</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== VIEW: MENU ========== -->
+        <section class="view" id="view-menu" data-view="menu" role="article">
+            <div class="page-header section-pad">
+                <p class="eyebrow reveal" data-reveal>Our Selection</p>
+                <h1 class="page-title reveal" data-reveal>The <em>Menu.</em></h1>
+                <p class="page-subtitle reveal" data-reveal data-reveal-delay="150">Every cup, crafted with care. Every bite, made to be savored.</p>
+            </div>
+
+            <div class="menu-filters section-pad-sm" role="tablist" aria-label="Menu categories">
+                <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+                <button class="filter-btn" data-filter="coffee" role="tab" aria-selected="false">Coffee</button>
+                <button class="filter-btn" data-filter="signature" role="tab" aria-selected="false">Signature</button>
+                <button class="filter-btn" data-filter="non-coffee" role="tab" aria-selected="false">Non-Coffee</button>
+                <button class="filter-btn" data-filter="pastry" role="tab" aria-selected="false">Pastry</button>
+                <button class="filter-btn" data-filter="food" role="tab" aria-selected="false">Food</button>
+            </div>
+
+            <div class="menu-grid section-pad-sm" id="menuGrid">
+                <!-- Menu items rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ========== VIEW: STORY ========== -->
+        <section class="view" id="view-story" data-view="story" role="article">
+            <div class="page-header section-pad">
+                <p class="eyebrow reveal" data-reveal>Our Story</p>
+                <h1 class="page-title reveal" data-reveal>It started with<br>a <em>cup.</em></h1>
+            </div>
+
+            <div class="story-content">
+                <div class="story-block story-block-intro section-pad-sm">
+                    <p class="story-large-text reveal" data-reveal>NARA began with a simple belief — that coffee deserves to be experienced, not rushed.</p>
+                </div>
+
+                <div class="story-grid section-pad-sm">
+                    <div class="story-image reveal" data-reveal>
+                        <img src="assets/images/about.jpg" alt="Nara Coffee — our story" onerror="handleImageError(this)" loading="lazy">
+                    </div>
+                    <div class="story-text reveal" data-reveal data-reveal-delay="150">
+                        <p>Founded in 2026 in Jakarta, NARA was born from a desire to create a space where time slows down. A place where the ritual of coffee-making becomes an act of presence.</p>
+                        <p>We source our beans directly from farmers who share our commitment to quality. Every roast is done in small batches, every brew is measured with care.</p>
+                    </div>
+                </div>
+
+                <div class="story-quote section-pad-sm">
+                    <blockquote class="reveal" data-reveal>
+                        <p>"We wanted to create a place that feels like a deep breath. Where the aroma of freshly brewed coffee reminds you to be here, now."</p>
+                        <cite>— The Founders of NARA</cite>
+                    </blockquote>
+                </div>
+
+                <div class="story-numbers section-pad-sm">
+                    <div class="story-number reveal" data-reveal>
+                        <span class="story-number-value">2026</span>
+                        <span class="story-number-label">Established</span>
+                    </div>
+                    <div class="story-number reveal" data-reveal data-reveal-delay="100">
+                        <span class="story-number-value">15+</span>
+                        <span class="story-number-label">Coffee Origins</span>
+                    </div>
+                    <div class="story-number reveal" data-reveal data-reveal-delay="200">
+                        <span class="story-number-value">48hr</span>
+                        <span class="story-number-label">Peak Freshness</span>
+                    </div>
+                </div>
+
+                <!-- THE SPACE -->
+                <div class="space-section section-pad">
+                    <div class="space-header">
+                        <p class="eyebrow reveal" data-reveal>The Space</p>
+                        <h2 class="section-title reveal" data-reveal>A place to<br><em>slow down.</em></h2>
+                    </div>
+                    <div class="space-grid">
+                        <div class="space-image space-image-main reveal" data-reveal>
+                            <img src="assets/images/space-1.jpg" alt="Nara Coffee interior — seating area" onerror="handleImageError(this)" loading="lazy">
+                        </div>
+                        <div class="space-image space-image-secondary reveal" data-reveal data-reveal-delay="150">
+                            <img src="assets/images/space-2.jpg" alt="Nara Coffee — coffee bar detail" onerror="handleImageError(this)" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="space-desc reveal" data-reveal data-reveal-delay="200">Natural light, warm wood, and the gentle hum of conversation. Our space is designed to make you want to stay a little longer.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== VIEW: COFFEE ========== -->
+        <section class="view" id="view-coffee" data-view="coffee" role="article">
+            <div class="page-header section-pad">
+                <p class="eyebrow reveal" data-reveal>Our Coffee</p>
+                <h1 class="page-title reveal" data-reveal>Beans with<br>a <em>story.</em></h1>
+            </div>
+
+            <div class="coffee-profiles section-pad-sm">
+                <div class="coffee-profile reveal" data-reveal>
+                    <div class="coffee-profile-image">
+                        <img src="assets/images/coffee-1.jpg" alt="Ethiopia Yirgacheffe coffee" onerror="handleImageError(this)" loading="lazy">
+                    </div>
+                    <div class="coffee-profile-content">
+                        <span class="coffee-profile-origin">ETHIOPIA</span>
+                        <h3>Yirgacheffe Natural</h3>
+                        <p>Bright, complex, and aromatic. Notes of wild berry, jasmine, and dark chocolate. Our signature single-origin for pour-over.</p>
+                        <div class="coffee-profile-meta">
+                            <span>Altitude: 1950–2100m</span>
+                            <span>Process: Natural</span>
+                            <span>Roast: Light-Medium</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="coffee-profile coffee-profile-reverse reveal" data-reveal>
+                    <div class="coffee-profile-image">
+                        <img src="assets/images/coffee-2.jpg" alt="Colombia Huila coffee" onerror="handleImageError(this)" loading="lazy">
+                    </div>
+                    <div class="coffee-profile-content">
+                        <span class="coffee-profile-origin">COLOMBIA</span>
+                        <h3>Huila Washed</h3>
+                        <p>Balanced and sweet with notes of caramel, red apple, and a silky body. Perfect for espresso and milk-based drinks.</p>
+                        <div class="coffee-profile-meta">
+                            <span>Altitude: 1750–1900m</span>
+                            <span>Process: Washed</span>
+                            <span>Roast: Medium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== VIEW: GALLERY ========== -->
+        <section class="view" id="view-gallery" data-view="gallery" role="article">
+            <div class="page-header section-pad">
+                <p class="eyebrow reveal" data-reveal>Moments</p>
+                <h1 class="page-title reveal" data-reveal>The <em>Gallery.</em></h1>
+                <p class="page-subtitle reveal" data-reveal data-reveal-delay="150">Fragments of time, captured in the soft light of slow mornings.</p>
+            </div>
+
+            <div class="gallery-collage section-pad-sm" id="galleryCollage">
+                <div class="gallery-item gallery-item-large reveal" data-reveal data-gallery="0">
+                    <img src="assets/images/gallery-1.jpg" alt="Nara Coffee — gallery image 1" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item-small reveal" data-reveal data-reveal-delay="100" data-gallery="1">
+                    <img src="assets/images/gallery-2.jpg" alt="Nara Coffee — gallery image 2" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item-tall reveal" data-reveal data-reveal-delay="150" data-gallery="2">
+                    <img src="assets/images/gallery-3.jpg" alt="Nara Coffee — gallery image 3" onerror="handleImageError(this)" loading="lazy">
+                </div>
+                <div class="gallery-item gallery-item-wide reveal" data-reveal data-reveal-delay="200" data-gallery="3">
+                    <img src="assets/images/gallery-4.jpg" alt="Nara Coffee — gallery image 4" onerror="handleImageError(this)" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== VIEW: RESERVATION ========== -->
+        <section class="view" id="view-reservation" data-view="reservation" role="article">
+            <div class="page-header section-pad">
+                <p class="eyebrow reveal" data-reveal>Reservation</p>
+                <h1 class="page-title reveal" data-reveal>Stay a little<br><em>longer.</em></h1>
+                <p class="page-subtitle reveal" data-reveal data-reveal-delay="150">Reserve a table for your next slow morning.</p>
+            </div>
+
+            <div class="reservation-container section-pad-sm">
+                <form class="reservation-form" id="reservationForm" novalidate>
+                    <div class="form-group reveal" data-reveal>
+                        <label for="resName">Name</label>
+                        <input type="text" id="resName" name="resName" placeholder="Your name" required autocomplete="name">
+                        <span class="form-error" id="resNameError">Please enter your name</span>
+                    </div>
+                    <div class="form-group reveal" data-reveal data-reveal-delay="50">
+                        <label for="resWhatsapp">WhatsApp</label>
+                        <input type="tel" id="resWhatsapp" name="resWhatsapp" placeholder="08xxxxxxxxxx" required autocomplete="tel">
+                        <span class="form-error" id="resWhatsappError">Please enter a valid WhatsApp number</span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group reveal" data-reveal data-reveal-delay="100">
+                            <label for="resDate">Date</label>
+                            <input type="date" id="resDate" name="resDate" required>
+                            <span class="form-error" id="resDateError">Please select a date</span>
+                        </div>
+                        <div class="form-group reveal" data-reveal data-reveal-delay="150">
+                            <label for="resTime">Time</label>
+                            <input type="time" id="resTime" name="resTime" required>
+                            <span class="form-error" id="resTimeError">Please select a time</span>
+                        </div>
+                    </div>
+                    <div class="form-group reveal" data-reveal data-reveal-delay="200">
+                        <label for="resPeople">Number of People</label>
+                        <select id="resPeople" name="resPeople" required>
+                            <option value="">Select...</option>
+                            <option value="1">1 person</option>
+                            <option value="2">2 people</option>
+                            <option value="3">3 people</option>
+                            <option value="4">4 people</option>
+                            <option value="5">5 people</option>
+                            <option value="6">6 people</option>
+                            <option value="7+">7+ people</option>
+                        </select>
+                        <span class="form-error" id="resPeopleError">Please select number of people</span>
+                    </div>
+                    <div class="form-group reveal" data-reveal data-reveal-delay="250">
+                        <label for="resNotes">Notes (optional)</label>
+                        <textarea id="resNotes" name="resNotes" placeholder="Special requests..." rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block reveal" data-reveal data-reveal-delay="300">
+                        Reserve via WhatsApp
+                    </button>
+                    <p class="form-success" id="reservationSuccess" style="display:none;">Reservation sent! We'll confirm shortly.</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- ========== VIEW: LOCATION ========== -->
+        <section class="view" id="view-location" data-view="location" role="article">
+            <div class="page-header section-pad">
+                <p class="eyebrow reveal" data-reveal>Visit Us</p>
+                <h1 class="page-title reveal" data-reveal>Come <em>find us.</em></h1>
+            </div>
+
+            <div class="location-container section-pad-sm">
+                <div class="location-card reveal" data-reveal>
+                    <div class="location-image">
+                        <img src="assets/images/space-1.jpg" alt="Nara Coffee location" onerror="handleImageError(this)" loading="lazy">
+                    </div>
+                    <div class="location-details">
+                        <div class="location-address">
+                            <h3>Address</h3>
+                            <p>Jl. Senopati No. 88<br>Kebayoran Baru, Jakarta Selatan<br>DKI Jakarta 12190</p>
+                        </div>
+                        <div class="location-hours">
+                            <h3>Opening Hours</h3>
+                            <p>Monday – Friday: 7:00 AM – 9:00 PM<br>Saturday – Sunday: 7:00 AM – 10:00 PM</p>
+                        </div>
+                        <div class="location-contact">
+                            <h3>Contact</h3>
+                            <p>WhatsApp: <a href="https://wa.me/628xxxxxxxxxx" target="_blank" rel="noopener">+62 8xx-xxxx-xxxx</a></p>
+                            <p>Instagram: <a href="https://instagram.com/naracoffee" target="_blank" rel="noopener">@naracoffee</a></p>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Nara+Coffee+Jakarta+Senopati" target="_blank" rel="noopener" class="btn btn-primary">Get Directions</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-text">NARA COFFEE</span>
+                <p class="footer-tagline">Coffee, crafted slowly.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://instagram.com/naracoffee" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+                <a href="https://wa.me/628xxxxxxxxxx" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>
+                <a href="#location" data-nav-link>Visit Us</a>
+                <a href="#menu" data-nav-link>Menu</a>
+            </div>
+            <div class="footer-copy">
+                <p>© 2026 Nara Coffee. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== PRODUCT MODAL / BOTTOM SHEET ========== -->
+    <div class="product-overlay" id="productOverlay" role="dialog" aria-modal="true" aria-label="Product Details">
+        <div class="product-overlay-backdrop" id="productBackdrop"></div>
+        <div class="product-sheet" id="productSheet" role="document">
+            <button class="product-close" id="productClose" aria-label="Close product details">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <div class="product-sheet-content" id="productSheetContent">
+                <!-- Product details rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== CART DRAWER ========== -->
+    <div class="cart-overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="Shopping Cart">
+        <div class="cart-backdrop" id="cartBackdrop"></div>
+        <div class="cart-drawer" id="cartDrawer">
+            <div class="cart-header">
+                <h3>Your Order</h3>
+                <button class="cart-close" id="cartClose" aria-label="Close cart">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="cart-body" id="cartBody">
+                <!-- Cart items rendered by JS -->
+            </div>
+            <div class="cart-footer" id="cartFooter">
+                <!-- Cart summary and checkout buttons -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== CHECKOUT MODAL ========== -->
+    <div class="checkout-overlay" id="checkoutOverlay" role="dialog" aria-modal="true" aria-label="Checkout">
+        <div class="checkout-backdrop" id="checkoutBackdrop"></div>
+        <div class="checkout-modal" id="checkoutModal">
+            <button class="checkout-close" id="checkoutClose" aria-label="Close checkout">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <div class="checkout-content" id="checkoutContent">
+                <!-- Checkout steps rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== LIGHTBOX ========== -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image Lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous image">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </button>
+        <div class="lightbox-image-container">
+            <img src="" alt="Gallery image" id="lightboxImage" onerror="handleImageError(this)">
+        </div>
+        <button class="lightbox-next" id="lightboxNext" aria-label="Next image">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- ========== STICKY MOBILE CART BAR ========== -->
+    <div class="mobile-cart-bar" id="mobileCartBar" style="display:none;">
+        <div class="mobile-cart-info">
+            <span id="mobileCartItems">0 items</span>
+            <span id="mobileCartTotal">Rp 0</span>
+        </div>
+        <button class="btn btn-primary btn-sm" id="mobileCartViewBtn">View Order</button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

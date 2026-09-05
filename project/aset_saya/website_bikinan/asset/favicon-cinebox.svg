@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Kotak latar belakang -->
+  <rect width="100" height="100" rx="20" fill="#E50914" />
+  
+  <!-- Huruf C -->
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="56" 
+        font-weight="bold" fill="white" text-anchor="middle">C</text>
+  
+  <!-- Garis film (seperti gulungan film) -->
+  <rect x="15" y="78" width="70" height="6" rx="3" fill="white" opacity="0.6" />
+  <rect x="15" y="88" width="70" height="6" rx="3" fill="white" opacity="0.6" />
+  
+  <!-- Bintik-bintik di sisi (seperti lubang film) -->
+  <circle cx="20" cy="50" r="4" fill="white" opacity="0.3" />
+  <circle cx="80" cy="50" r="4" fill="white" opacity="0.3" />
+</svg>

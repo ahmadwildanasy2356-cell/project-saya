@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <rect width="200" height="200" rx="40" fill="#241B17"/>
+    <circle cx="100" cy="100" r="70" fill="none" stroke="#B59A6A" stroke-width="2" opacity="0.3"/>
+    <text x="100" y="125" font-family="Georgia, serif" font-size="90" font-weight="bold" font-style="italic" fill="#F4EFE8" text-anchor="middle">N</text>
+    <text x="100" y="165" font-family="Poppins, sans-serif" font-size="16" letter-spacing="4" fill="#CBBBA8" text-anchor="middle">COFFEE</text>
+</svg>
