@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NOVA — Everyday things, considered. Modern lifestyle e-commerce for simple, functional everyday products.">
+    <title>NOVA — Everyday Things, Considered.</title>
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+
+    <!-- Google Fonts: Poppins untuk UI + Fraunces untuk heading editorial -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/favicon.jpg" type="image/png">
+
+    <!-- Tailwind CSS CDN (untuk utility class, opsional) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- NOISE OVERLAY (subtle texture)              -->
+    <!-- ============================================ -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ============================================ -->
+    <!-- NAVBAR                                       -->
+    <!-- ============================================ -->
+    <header id="navbar" class="navbar" role="banner">
+        <div class="navbar-inner">
+            <!-- Tombol Menu Mobile (kiri) -->
+            <button id="mobileMenuBtn" class="navbar-icon-btn mobile-only" aria-label="Open menu" aria-expanded="false">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="3" y1="7" x2="21" y2="7"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="17" x2="21" y2="17"></line>
+                </svg>
+            </button>
+
+            <!-- Logo -->
+            <a href="#home" class="navbar-logo" aria-label="NOVA Home">
+                <span class="logo-text">NOVA</span>
+            </a>
+
+            <!-- Navigasi Desktop -->
+            <nav class="navbar-links desktop-only" aria-label="Main navigation">
+                <a href="#home" class="nav-link" data-nav="home">Home</a>
+                <a href="#shop" class="nav-link" data-nav="shop">Shop</a>
+                <a href="#collection" class="nav-link" data-nav="collection">Collection</a>
+                <a href="#about" class="nav-link" data-nav="about">About</a>
+            </nav>
+
+            <!-- Ikon Kanan -->
+            <div class="navbar-icons">
+                <!-- Search Icon (mengarah ke shop) -->
+                <a href="#shop" class="navbar-icon-btn" aria-label="Search products">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </a>
+
+                <!-- Wishlist -->
+                <button id="wishlistBtn" class="navbar-icon-btn relative" aria-label="Open wishlist" aria-expanded="false">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span id="wishlistBadge" class="badge hidden">0</span>
+                </button>
+
+                <!-- Cart -->
+                <button id="cartBtn" class="navbar-icon-btn relative" aria-label="Open cart" aria-expanded="false">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span id="cartBadge" class="badge hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- MOBILE MENU OVERLAY                          -->
+    <!-- ============================================ -->
+    <div id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile menu">
+        <div class="mobile-menu-inner">
+            <div class="mobile-menu-header">
+                <span class="logo-text">NOVA</span>
+                <button id="mobileMenuClose" class="navbar-icon-btn" aria-label="Close menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <nav class="mobile-menu-links" aria-label="Mobile navigation">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#shop" class="mobile-nav-link">Shop</a>
+                <a href="#collection" class="mobile-nav-link">Collection</a>
+                <a href="#about" class="mobile-nav-link">About</a>
+            </nav>
+            <div class="mobile-menu-footer">
+                <p class="mobile-menu-tagline">EVERYDAY THINGS, CONSIDERED.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- WISHLIST DRAWER                              -->
+    <!-- ============================================ -->
+    <div id="wishlistDrawer" class="drawer wishlist-drawer" role="dialog" aria-modal="true" aria-label="Wishlist">
+        <div class="drawer-overlay" data-close-drawer="wishlist"></div>
+        <div class="drawer-content wishlist-drawer-content">
+            <div class="drawer-header">
+                <h2 class="drawer-title">WISHLIST</h2>
+                <button class="drawer-close" data-close-drawer="wishlist" aria-label="Close wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div id="wishlistItems" class="drawer-body">
+                <!-- Wishlist items rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CART DRAWER                                  -->
+    <!-- ============================================ -->
+    <div id="cartDrawer" class="drawer cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+        <div class="drawer-overlay" data-close-drawer="cart"></div>
+        <div class="drawer-content cart-drawer-content">
+            <div class="drawer-header">
+                <h2 class="drawer-title">CART</h2>
+                <button class="drawer-close" data-close-drawer="cart" aria-label="Close cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div id="cartItems" class="drawer-body">
+                <!-- Cart items rendered by JS -->
+            </div>
+            <div id="cartSummary" class="cart-summary">
+                <!-- Cart summary rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- QUICK VIEW MODAL                             -->
+    <!-- ============================================ -->
+    <div id="quickViewModal" class="modal" role="dialog" aria-modal="true" aria-label="Quick view">
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-content">
+            <button class="modal-close" data-close-modal aria-label="Close quick view">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div id="quickViewContent">
+                <!-- Quick view content rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TOAST NOTIFICATION                           -->
+    <!-- ============================================ -->
+    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+    <!-- ============================================ -->
+    <!-- MAIN VIEWS CONTAINER                         -->
+    <!-- ============================================ -->
+    <main id="app" class="app-container">
+
+        <!-- ============ HOME VIEW ============ -->
+        <section id="view-home" class="view active" data-view="home">
+
+            <!-- HERO -->
+            <div class="hero-section">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">NEW SEASON — 2026 COLLECTION</p>
+                    <h1 class="hero-title">EVERYDAY THINGS,<br><em>CONSIDERED.</em></h1>
+                    <p class="hero-subtitle">Simple products for a better everyday.</p>
+                    <div class="hero-cta">
+                        <a href="#shop" class="btn btn-primary">SHOP COLLECTION</a>
+                        <a href="#collection" class="btn btn-secondary">EXPLORE</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="assets/images/hero.jpg" alt="NOVA hero — considered everyday objects" class="hero-image" loading="eager" onerror="handleImageError(this)">
+                </div>
+            </div>
+
+            <!-- FEATURED PRODUCTS -->
+            <section class="section featured-section" id="home-featured">
+                <div class="section-header">
+                    <h2 class="section-title">FEATURED</h2>
+                    <p class="section-subtitle">A considered selection for everyday living.</p>
+                </div>
+                <div id="featuredProducts" class="product-grid">
+                    <!-- Rendered by JS -->
+                </div>
+                <div class="section-footer">
+                    <a href="#shop" class="btn btn-outline">VIEW ALL PRODUCTS</a>
+                </div>
+            </section>
+
+            <!-- CATEGORIES -->
+            <section class="section categories-section">
+                <div class="section-header">
+                    <h2 class="section-title">SHOP BY CATEGORY</h2>
+                    <p class="section-subtitle">Find exactly what you need.</p>
+                </div>
+                <div class="categories-grid">
+                    <a href="#shop" class="category-card" data-category="Fashion">
+                        <div class="category-placeholder" style="background-color:#E8E4DE;">
+                            <span class="category-label">FASHION</span>
+                        </div>
+                    </a>
+                    <a href="#shop" class="category-card" data-category="Accessories">
+                        <div class="category-placeholder" style="background-color:#E5E5E0;">
+                            <span class="category-label">ACCESSORIES</span>
+                        </div>
+                    </a>
+                    <a href="#shop" class="category-card" data-category="Home">
+                        <div class="category-placeholder" style="background-color:#E2E5E4;">
+                            <span class="category-label">HOME</span>
+                        </div>
+                    </a>
+                    <a href="#shop" class="category-card" data-category="Lifestyle">
+                        <div class="category-placeholder" style="background-color:#EAE8E2;">
+                            <span class="category-label">LIFESTYLE</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- NEW ARRIVALS -->
+            <section class="section new-arrivals-section">
+                <div class="section-header">
+                    <h2 class="section-title">NEW ARRIVALS</h2>
+                    <p class="section-subtitle">Just in — quiet essentials for the season ahead.</p>
+                </div>
+                <div id="newArrivals" class="product-grid">
+                    <!-- Rendered by JS -->
+                </div>
+            </section>
+
+            <!-- PROMOTIONAL BANNER -->
+            <section class="promo-section">
+                <div class="promo-content">
+                    <p class="promo-eyebrow">NEW SEASON</p>
+                    <h2 class="promo-title">A quieter approach to<br>everyday essentials.</h2>
+                    <a href="#collection" class="btn btn-light">DISCOVER COLLECTION</a>
+                </div>
+            </section>
+
+            <!-- NEWSLETTER -->
+            <section class="newsletter-section">
+                <div class="newsletter-inner">
+                    <h2 class="newsletter-title">STAY IN THE LOOP.</h2>
+                    <p class="newsletter-subtitle">New products, considered releases, and seasonal collections.</p>
+                    <form id="newsletterForm" class="newsletter-form" novalidate>
+                        <label for="newsletterEmail" class="sr-only">Email address</label>
+                        <input type="email" id="newsletterEmail" class="newsletter-input" placeholder="Your email address" required autocomplete="email">
+                        <button type="submit" class="btn btn-primary">SUBSCRIBE</button>
+                    </form>
+                    <p id="newsletterFeedback" class="newsletter-feedback" role="status"></p>
+                </div>
+            </section>
+        </section>
+
+        <!-- ============ SHOP VIEW ============ -->
+        <section id="view-shop" class="view" data-view="shop">
+            <div class="shop-header">
+                <h1 class="shop-title">SHOP ALL</h1>
+                <p class="shop-subtitle">Explore the complete NOVA collection.</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="shop-search-bar">
+                <label for="shopSearch" class="sr-only">Search products</label>
+                <input type="text" id="shopSearch" class="shop-search-input" placeholder="SEARCH PRODUCTS..." autocomplete="off">
+                <button id="clearSearch" class="clear-search-btn hidden" aria-label="Clear search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Filters & Sort -->
+            <div class="shop-controls">
+                <div class="filter-buttons" role="group" aria-label="Category filters">
+                    <button class="filter-btn active" data-filter="all">ALL</button>
+                    <button class="filter-btn" data-filter="Fashion">FASHION</button>
+                    <button class="filter-btn" data-filter="Accessories">ACCESSORIES</button>
+                    <button class="filter-btn" data-filter="Home">HOME</button>
+                    <button class="filter-btn" data-filter="Lifestyle">LIFESTYLE</button>
+                </div>
+                <div class="sort-dropdown">
+                    <label for="sortSelect" class="sr-only">Sort products</label>
+                    <select id="sortSelect" class="sort-select">
+                        <option value="featured">FEATURED</option>
+                        <option value="price-low">PRICE: LOW → HIGH</option>
+                        <option value="price-high">PRICE: HIGH → LOW</option>
+                        <option value="newest">NEWEST</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="shopProducts" class="product-grid shop-grid">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- No Results State -->
+            <div id="noResults" class="no-results hidden">
+                <p class="no-results-title">NO PRODUCTS FOUND</p>
+                <p class="no-results-subtitle">Try adjusting your search or filter.</p>
+                <button id="clearSearchBtn" class="btn btn-outline">CLEAR SEARCH</button>
+            </div>
+        </section>
+
+        <!-- ============ PRODUCT DETAIL VIEW ============ -->
+        <section id="view-product" class="view" data-view="product">
+            <div id="productDetail" class="product-detail">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ============ COLLECTION VIEW (dengan gambar asli) ============ -->
+        <section id="view-collection" class="view" data-view="collection">
+            <div class="collection-header">
+                <h1 class="collection-title">COLLECTIONS</h1>
+                <p class="collection-subtitle">Curated selections for considered living.</p>
+            </div>
+            <div class="collections-grid">
+                <div class="collection-card" data-collection-category="Accessories">
+                    <img src="assets/images/collection-essentials.jpg" 
+                         alt="Essentials Collection" 
+                         class="collection-image" 
+                         loading="lazy" 
+                         onerror="handleImageError(this)">
+                    <h3 class="collection-card-title">ESSENTIALS</h3>
+                    <p class="collection-card-desc">Timeless pieces designed for daily use.</p>
+                    <a href="#shop" class="collection-link" data-filter-category="Accessories">EXPLORE →</a>
+                </div>
+                <div class="collection-card" data-collection-category="Fashion">
+                    <img src="assets/images/collection-dailywear.jpg" 
+                         alt="Daily Wear Collection" 
+                         class="collection-image" 
+                         loading="lazy" 
+                         onerror="handleImageError(this)">
+                    <h3 class="collection-card-title">DAILY WEAR</h3>
+                    <p class="collection-card-desc">Comfortable, functional clothing for every day.</p>
+                    <a href="#shop" class="collection-link" data-filter-category="Fashion">EXPLORE →</a>
+                </div>
+                <div class="collection-card" data-collection-category="Home">
+                    <img src="assets/images/collection-objects.jpg" 
+                         alt="Objects Collection" 
+                         class="collection-image" 
+                         loading="lazy" 
+                         onerror="handleImageError(this)">
+                    <h3 class="collection-card-title">OBJECTS</h3>
+                    <p class="collection-card-desc">Considered home goods that bring calm.</p>
+                    <a href="#shop" class="collection-link" data-filter-category="Home">EXPLORE →</a>
+                </div>
+                <div class="collection-card" data-collection-category="Lifestyle">
+                    <img src="assets/images/collection-newseason.jpg" 
+                         alt="New Season Collection" 
+                         class="collection-image" 
+                         loading="lazy" 
+                         onerror="handleImageError(this)">
+                    <h3 class="collection-card-title">NEW SEASON</h3>
+                    <p class="collection-card-desc">Fresh arrivals for the 2026 collection.</p>
+                    <a href="#shop" class="collection-link" data-filter-category="Lifestyle">EXPLORE →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ ABOUT VIEW ============ -->
+        <section id="view-about" class="view" data-view="about">
+            <div class="about-content">
+                <h1 class="about-title">DESIGNED FOR EVERYDAY.</h1>
+                <div class="about-text">
+                    <p>NOVA was founded on a simple belief: the objects we use every day should be designed with care. No excess, no noise — just honest, functional products that quietly improve your daily routine.</p>
+                    <p>Every piece in our collection is considered from material to form, ensuring it serves a purpose and lasts beyond trends.</p>
+                </div>
+                <div class="approach-grid">
+                    <div class="approach-item">
+                        <span class="approach-number">01</span>
+                        <h3 class="approach-title">SIMPLE</h3>
+                        <p>Clean forms, clear purpose. Nothing unnecessary.</p>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-number">02</span>
+                        <h3 class="approach-title">FUNCTIONAL</h3>
+                        <p>Designed to work beautifully in real life.</p>
+                    </div>
+                    <div class="approach-item">
+                        <span class="approach-number">03</span>
+                        <h3 class="approach-title">CONSIDERED</h3>
+                        <p>Every material, every detail — thoughtfully chosen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHECKOUT VIEW ============ -->
+        <section id="view-checkout" class="view" data-view="checkout">
+            <div class="checkout-content">
+                <h1 class="checkout-title">CHECKOUT</h1>
+                <form id="checkoutForm" class="checkout-form" novalidate>
+                    <div class="checkout-grid">
+                        <!-- Kiri: Shipping & Payment -->
+                        <div class="checkout-left">
+                            <h2 class="checkout-section-title">SHIPPING DETAILS</h2>
+                            <div class="form-group">
+                                <label for="fullName">FULL NAME *</label>
+                                <input type="text" id="fullName" class="form-input" required autocomplete="name">
+                                <span class="form-error" id="fullNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsappNumber">WHATSAPP NUMBER *</label>
+                                <input type="tel" id="whatsappNumber" class="form-input" required placeholder="e.g. 081234567890" autocomplete="tel">
+                                <span class="form-error" id="whatsappError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">ADDRESS *</label>
+                                <textarea id="address" class="form-input" rows="3" required autocomplete="street-address"></textarea>
+                                <span class="form-error" id="addressError"></span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">CITY *</label>
+                                    <input type="text" id="city" class="form-input" required autocomplete="address-level2">
+                                    <span class="form-error" id="cityError"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode">POSTAL CODE *</label>
+                                    <input type="text" id="postalCode" class="form-input" required autocomplete="postal-code">
+                                    <span class="form-error" id="postalCodeError"></span>
+                                </div>
+                            </div>
+
+                            <h2 class="checkout-section-title">DELIVERY METHOD</h2>
+                            <div class="delivery-options">
+                                <label class="radio-option">
+                                    <input type="radio" name="delivery" value="Standard" checked>
+                                    <span class="radio-label">Standard Delivery</span>
+                                    <span class="radio-price">Rp 15.000</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="delivery" value="Express">
+                                    <span class="radio-label">Express Delivery</span>
+                                    <span class="radio-price">Rp 35.000</span>
+                                </label>
+                            </div>
+
+                            <h2 class="checkout-section-title">PAYMENT METHOD</h2>
+                            <div class="payment-options">
+                                <label class="radio-option">
+                                    <input type="radio" name="payment" value="Bank Transfer" checked>
+                                    <span class="radio-label">Bank Transfer</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="payment" value="E-Wallet">
+                                    <span class="radio-label">E-Wallet</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="payment" value="COD">
+                                    <span class="radio-label">Cash on Delivery (COD)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Kanan: Order Summary -->
+                        <div class="checkout-right">
+                            <div class="order-summary">
+                                <h2 class="checkout-section-title">ORDER SUMMARY</h2>
+                                <div id="orderSummaryItems" class="order-summary-items">
+                                    <!-- Rendered by JS -->
+                                </div>
+                                <div class="order-summary-divider"></div>
+                                <div class="order-summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="orderSubtotal">Rp 0</span>
+                                </div>
+                                <div class="order-summary-row">
+                                    <span>Shipping</span>
+                                    <span id="orderShipping">Rp 15.000</span>
+                                </div>
+                                <div class="order-summary-row order-summary-total">
+                                    <span>Total</span>
+                                    <span id="orderTotal">Rp 0</span>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-full">REVIEW ORDER</button>
+                                <a href="#shop" class="btn btn-outline btn-full">BACK TO SHOP</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ============ ORDER CONFIRMATION VIEW ============ -->
+        <section id="view-order-confirmation" class="view" data-view="order-confirmation">
+            <div class="confirmation-content">
+                <div class="confirmation-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="16 12 11 7 6 12"></polyline>
+                        <line x1="12" y1="7" x2="12" y2="17"></line>
+                    </svg>
+                </div>
+                <h1 class="confirmation-title">ORDER READY</h1>
+                <p class="confirmation-text">Your order summary is ready to continue on WhatsApp.</p>
+                <div class="confirmation-actions">
+                    <button id="whatsappBtn" class="btn btn-primary">CONTINUE TO WHATSAPP</button>
+                    <a href="#shop" class="btn btn-outline">BACK TO SHOP</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                       -->
+    <!-- ============================================ -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">NOVA</span>
+                <p class="footer-tagline">EVERYDAY THINGS, CONSIDERED.</p>
+            </div>
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h4 class="footer-heading">NAVIGATION</h4>
+                    <a href="#shop" class="footer-link">Shop</a>
+                    <a href="#collection" class="footer-link">Collection</a>
+                    <a href="#about" class="footer-link">About</a>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">SUPPORT</h4>
+                    <a href="#about" class="footer-link">Contact</a>
+                    <a href="#about" class="footer-link">Shipping</a>
+                    <a href="#about" class="footer-link">Returns</a>
+                    <a href="#about" class="footer-link">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">SOCIAL</h4>
+                    <a href="#" class="footer-link" target="_blank" rel="noopener">Instagram</a>
+                    <a href="#" class="footer-link" target="_blank" rel="noopener">Pinterest</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 NOVA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- MOBILE BOTTOM BAR                            -->
+    <!-- ============================================ -->
+    <nav class="mobile-bottom-bar" aria-label="Mobile navigation" role="navigation">
+        <a href="#home" class="bottom-bar-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="#shop" class="bottom-bar-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span>Shop</span>
+        </a>
+        <button class="bottom-bar-link" id="bottomWishlistBtn" aria-label="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span>Wishlist</span>
+        </button>
+        <button class="bottom-bar-link" id="bottomCartBtn" aria-label="Cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span>Cart</span>
+            <span id="bottomCartBadge" class="badge hidden">0</span>
+        </button>
+    </nav>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
