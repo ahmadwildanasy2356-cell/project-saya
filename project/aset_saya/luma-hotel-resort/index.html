@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LŪMA — Stay Beyond the Ordinary</title>
+    <meta name="description" content="LŪMA — A contemporary tropical retreat in Bali, Indonesia. Stay beyond the ordinary.">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#17352F',
+                        sand: '#D8C7A8',
+                        ivory: '#F5F1E8',
+                        terracotta: '#A9674F',
+                        charcoal: '#202421',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-ivory text-charcoal font-sans antialiased overflow-x-hidden" data-reduced-motion="false">
+    <!-- Accessibility skip link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-forest focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Skip to main content</a>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-transparent border-b border-transparent" role="navigation" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+            <div class="flex items-center justify-between h-20 md:h-24">
+                <a href="#" class="text-white text-2xl md:text-3xl font-serif tracking-widest transition-colors duration-300" id="navbar-logo" aria-label="LŪMA home">LŪMA</a>
+                <div class="hidden md:flex items-center gap-8 lg:gap-12">
+                    <a href="#rooms" class="navbar-link text-sm text-white/80 hover:text-white tracking-wider transition-all duration-300">ROOMS</a>
+                    <a href="#experiences" class="navbar-link text-sm text-white/80 hover:text-white tracking-wider transition-all duration-300">EXPERIENCES</a>
+                    <a href="#dining" class="navbar-link text-sm text-white/80 hover:text-white tracking-wider transition-all duration-300">DINING</a>
+                    <a href="#wellness" class="navbar-link text-sm text-white/80 hover:text-white tracking-wider transition-all duration-300">WELLNESS</a>
+                    <a href="#offers" class="navbar-link text-sm text-white/80 hover:text-white tracking-wider transition-all duration-300">OFFERS</a>
+                    <button id="desktop-book-btn" class="bg-white text-forest px-6 py-2.5 rounded-full text-sm font-medium tracking-wider transition-all duration-300 hover:bg-sand hover:text-forest cursor-pointer" aria-label="Book your stay">
+                        BOOK YOUR STAY
+                    </button>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white p-2 cursor-pointer" aria-label="Open menu" aria-expanded="false">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE FULLSCREEN MENU -->
+    <div id="mobile-menu" class="fixed inset-0 bg-forest z-[60] hidden flex-col items-center justify-center transition-opacity duration-500 opacity-0 pointer-events-none" role="dialog" aria-modal="true" aria-label="Mobile menu">
+        <button id="mobile-menu-close" class="absolute top-6 right-6 text-white p-2 cursor-pointer" aria-label="Close menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <nav class="flex flex-col items-center gap-6 text-center">
+            <a href="#rooms" class="mobile-menu-link text-white text-2xl font-serif tracking-widest hover:text-sand transition-colors duration-300">ROOMS & SUITES</a>
+            <a href="#experiences" class="mobile-menu-link text-white text-2xl font-serif tracking-widest hover:text-sand transition-colors duration-300">EXPERIENCES</a>
+            <a href="#dining" class="mobile-menu-link text-white text-2xl font-serif tracking-widest hover:text-sand transition-colors duration-300">DINING</a>
+            <a href="#wellness" class="mobile-menu-link text-white text-2xl font-serif tracking-widest hover:text-sand transition-colors duration-300">WELLNESS</a>
+            <a href="#offers" class="mobile-menu-link text-white text-2xl font-serif tracking-widest hover:text-sand transition-colors duration-300">OFFERS</a>
+            <a href="#story" class="mobile-menu-link text-white text-2xl font-serif tracking-widest hover:text-sand transition-colors duration-300">OUR STORY</a>
+            <button id="mobile-menu-book" class="mt-6 bg-sand text-forest px-8 py-3 rounded-full text-base font-medium tracking-wider transition-all duration-300 hover:bg-white cursor-pointer">BOOK YOUR STAY</button>
+        </nav>
+    </div>
+
+    <!-- STICKY MOBILE BOOKING CTA -->
+    <button id="sticky-book-btn" class="md:hidden fixed bottom-5 left-4 right-4 bg-forest text-white py-4 rounded-full text-sm font-medium tracking-widest shadow-xl z-40 hidden cursor-pointer transition-all duration-300 hover:bg-charcoal" aria-label="Book your stay">
+        BOOK YOUR STAY
+    </button>
+
+    <!-- HERO SECTION -->
+    <header id="hero" class="relative h-screen min-h-[600px] w-full overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="assets/images/hero.jpg" alt="LŪMA Resort tropical paradise in Bali" class="w-full h-full object-cover scale-105" id="hero-image" loading="eager" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
+        </div>
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+            <h1 class="hero-title font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight tracking-wider mb-4 animate-fade-up" style="animation-delay: 0.2s;">
+                STAY<br>BEYOND<br><span class="italic">THE ORDINARY.</span>
+            </h1>
+            <p class="hero-subtitle text-base sm:text-lg md:text-xl text-white/70 font-light max-w-xl mt-4 animate-fade-up" style="animation-delay: 0.5s;">
+                A private tropical retreat shaped by nature, light and quiet moments.
+            </p>
+            <p class="text-sm tracking-[0.3em] text-sand mt-6 animate-fade-up" style="animation-delay: 0.7s;">BALI, INDONESIA</p>
+            <div class="flex flex-col sm:flex-row gap-4 mt-8 animate-fade-up" style="animation-delay: 0.9s;">
+                <button id="hero-book-btn" class="bg-white text-forest px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-sand hover:text-forest cursor-pointer shadow-lg">
+                    BOOK YOUR STAY
+                </button>
+                <a href="#intro" class="border border-white/40 text-white px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-white/10 cursor-pointer">
+                    EXPLORE LŪMA
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-fade-up" style="animation-delay: 1.2s;">
+            <a href="#booking-widget" class="text-white/60 text-xs tracking-[0.3em] flex flex-col items-center gap-2 cursor-pointer hover:text-white transition-colors duration-300" aria-label="Scroll to explore">
+                SCROLL TO EXPLORE
+                <svg class="w-4 h-4 animate-bounce-slow" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- BOOKING WIDGET -->
+        <section id="booking-widget" class="relative z-20 -mt-16 sm:-mt-20 px-4 sm:px-8 lg:px-12" aria-label="Booking widget">
+            <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="booking-field">
+                        <label for="check-in" class="block text-xs tracking-widest text-charcoal/60 font-medium mb-1.5">CHECK-IN</label>
+                        <input type="date" id="check-in" class="w-full border-0 border-b border-charcoal/20 focus:border-forest focus:ring-0 text-base py-2 bg-transparent cursor-pointer transition-colors" aria-label="Check-in date">
+                        <p id="check-in-error" class="text-terracotta text-xs mt-1 hidden" role="alert"></p>
+                    </div>
+                    <div class="booking-field">
+                        <label for="check-out" class="block text-xs tracking-widest text-charcoal/60 font-medium mb-1.5">CHECK-OUT</label>
+                        <input type="date" id="check-out" class="w-full border-0 border-b border-charcoal/20 focus:border-forest focus:ring-0 text-base py-2 bg-transparent cursor-pointer transition-colors" aria-label="Check-out date">
+                        <p id="check-out-error" class="text-terracotta text-xs mt-1 hidden" role="alert"></p>
+                    </div>
+                    <div class="booking-field">
+                        <label for="guest-count" class="block text-xs tracking-widest text-charcoal/60 font-medium mb-1.5">GUESTS</label>
+                        <select id="guest-count" class="w-full border-0 border-b border-charcoal/20 focus:border-forest focus:ring-0 text-base py-2 bg-transparent cursor-pointer transition-colors" aria-label="Number of guests">
+                            <option value="1">1 Guest</option>
+                            <option value="2" selected>2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                        </select>
+                        <p id="guest-error" class="text-terracotta text-xs mt-1 hidden" role="alert"></p>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="check-availability-btn" class="w-full bg-forest text-white py-3 rounded-xl font-medium tracking-widest text-sm transition-all duration-300 hover:bg-charcoal cursor-pointer" aria-label="Check availability">
+                            CHECK AVAILABILITY
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOME INTRO -->
+        <section id="intro" class="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="The LŪMA Experience">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+                    <div class="order-2 md:order-1">
+                        <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">01 — THE LŪMA EXPERIENCE</p>
+                        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight mb-6">A PLACE<br>TO PAUSE.</h2>
+                        <p class="text-lg text-charcoal/70 leading-relaxed max-w-lg">
+                            LŪMA is a contemporary tropical retreat designed for slow mornings, long afternoons and quiet evenings. Every detail — from the architecture to the scent of frangipani — invites you to linger.
+                        </p>
+                    </div>
+                    <div class="order-1 md:order-2 image-reveal">
+                        <img src="assets/images/story.jpg" alt="LŪMA Resort architecture blending with tropical nature" class="w-full h-[400px] sm:h-[500px] object-cover rounded-2xl" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROOMS & SUITES -->
+        <section id="rooms" class="py-20 sm:py-28 bg-forest text-white px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Rooms and Suites">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 sm:mb-16">
+                    <p class="text-xs tracking-[0.35em] text-sand font-medium mb-4">02 — ACCOMMODATION</p>
+                    <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">ROOMS & SUITES</h2>
+                    <p class="text-white/60 text-lg max-w-xl mx-auto font-light">
+                        Spaces designed for slow mornings, quiet evenings and everything between.
+                    </p>
+                </div>
+
+                <!-- FILTERS -->
+                <div class="flex flex-wrap gap-3 sm:gap-4 justify-center mb-10" id="room-filters" role="group" aria-label="Room filters">
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-xs text-white/50 tracking-widest mr-2">TYPE:</span>
+                        <button class="filter-btn active-filter" data-filter-type="all" data-filter-group="type" aria-pressed="true">All</button>
+                        <button class="filter-btn" data-filter-type="room" data-filter-group="type" aria-pressed="false">Room</button>
+                        <button class="filter-btn" data-filter-type="villa" data-filter-group="type" aria-pressed="false">Villa</button>
+                        <button class="filter-btn" data-filter-type="residence" data-filter-group="type" aria-pressed="false">Residence</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-xs text-white/50 tracking-widest mr-2">VIEW:</span>
+                        <button class="filter-btn active-filter" data-filter-view="all" data-filter-group="view" aria-pressed="true">All</button>
+                        <button class="filter-btn" data-filter-view="garden" data-filter-group="view" aria-pressed="false">Garden</button>
+                        <button class="filter-btn" data-filter-view="jungle" data-filter-group="view" aria-pressed="false">Jungle</button>
+                        <button class="filter-btn" data-filter-view="ocean" data-filter-group="view" aria-pressed="false">Ocean</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-xs text-white/50 tracking-widest mr-2">PRICE:</span>
+                        <button class="filter-btn active-filter" data-filter-price="all" data-filter-group="price" aria-pressed="true">All</button>
+                        <button class="filter-btn" data-filter-price="under5" data-filter-group="price" aria-pressed="false">Under 5M</button>
+                        <button class="filter-btn" data-filter-price="5to8" data-filter-group="price" aria-pressed="false">5M — 8M</button>
+                        <button class="filter-btn" data-filter-price="above8" data-filter-group="price" aria-pressed="false">Above 8M</button>
+                    </div>
+                </div>
+
+                <!-- ROOM GRID -->
+                <div id="rooms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Room cards rendered by JavaScript -->
+                </div>
+                <div id="no-rooms-found" class="hidden text-center py-16 text-white/60 text-lg" role="status">
+                    <p class="font-serif text-2xl mb-2">NO ROOMS FOUND</p>
+                    <p>Try adjusting your filters.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCES -->
+        <section id="experiences" class="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Experiences">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-12 sm:mb-16">
+                    <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">03 — CURATED MOMENTS</p>
+                    <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight mb-4">MORE THAN A STAY.</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="experience-item group cursor-pointer" data-experience="01">
+                        <div class="overflow-hidden rounded-2xl mb-4">
+                            <img src="assets/images/experience-01.jpg" alt="Sunrise yoga session at LŪMA resort" class="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                        </div>
+                        <p class="text-xs tracking-widest text-terracotta font-medium">01</p>
+                        <h3 class="font-serif text-2xl text-forest mt-1">SUNRISE YOGA</h3>
+                    </div>
+                    <div class="experience-item group cursor-pointer md:mt-16" data-experience="02">
+                        <div class="overflow-hidden rounded-2xl mb-4">
+                            <img src="assets/images/experience-02.jpg" alt="Island escape adventure around Bali" class="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                        </div>
+                        <p class="text-xs tracking-widest text-terracotta font-medium">02</p>
+                        <h3 class="font-serif text-2xl text-forest mt-1">ISLAND ESCAPE</h3>
+                    </div>
+                    <div class="experience-item group cursor-pointer md:-mt-16" data-experience="03">
+                        <div class="overflow-hidden rounded-2xl mb-4">
+                            <img src="assets/images/experience-03.jpg" alt="Private dinner under the stars at LŪMA" class="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                        </div>
+                        <p class="text-xs tracking-widest text-terracotta font-medium">03</p>
+                        <h3 class="font-serif text-2xl text-forest mt-1">PRIVATE DINNER</h3>
+                    </div>
+                    <div class="experience-item group cursor-pointer" data-experience="04">
+                        <div class="overflow-hidden rounded-2xl mb-4">
+                            <img src="assets/images/experience-04.jpg" alt="Sunset cruise along the Bali coastline" class="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                        </div>
+                        <p class="text-xs tracking-widest text-terracotta font-medium">04</p>
+                        <h3 class="font-serif text-2xl text-forest mt-1">SUNSET CRUISE</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DINING -->
+        <section id="dining" class="py-20 sm:py-28 bg-forest text-white px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Dining">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+                    <div class="image-reveal">
+                        <img src="assets/images/dining.jpg" alt="ARA restaurant at LŪMA with contemporary Indonesian coastal dining" class="w-full h-[350px] sm:h-[450px] object-cover rounded-2xl" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                    </div>
+                    <div>
+                        <p class="text-xs tracking-[0.35em] text-sand font-medium mb-4">04 — DINING</p>
+                        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">TASTE THE<br>ISLAND.</h2>
+                        <p class="text-white/70 text-lg mb-6 max-w-md font-light">
+                            At <span class="font-medium text-white">ARA</span>, contemporary Indonesian coastal dining celebrates the sea, the land and the hands that gather.
+                        </p>
+                        <ul class="text-white/60 space-y-2 mb-8 font-light">
+                            <li>Breakfast — from 7:00</li>
+                            <li>Lunch — from 12:00</li>
+                            <li>Dinner — from 18:00</li>
+                            <li>Private Dining — by reservation</li>
+                        </ul>
+                        <button class="bg-white text-forest px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-sand cursor-pointer" aria-label="Explore dining">
+                            EXPLORE DINING
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WELLNESS -->
+        <section id="wellness" class="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Wellness">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+                    <div class="order-2 md:order-1">
+                        <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">05 — WELLNESS</p>
+                        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight mb-4">SLOW DOWN.</h2>
+                        <p class="text-charcoal/70 text-lg mb-6 max-w-md font-light">
+                            A sanctuary within the sanctuary. Restore balance through body and breath.
+                        </p>
+                        <ul class="text-charcoal/60 space-y-2 mb-8 font-light">
+                            <li>Spa Treatments</li>
+                            <li>Traditional Massage</li>
+                            <li>Yoga & Movement</li>
+                            <li>Guided Meditation</li>
+                            <li>Wellness Rituals</li>
+                        </ul>
+                        <button class="bg-forest text-white px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-charcoal cursor-pointer" aria-label="Discover wellness">
+                            DISCOVER WELLNESS
+                        </button>
+                    </div>
+                    <div class="order-1 md:order-2 image-reveal">
+                        <img src="assets/images/wellness.jpg" alt="Wellness spa treatment at LŪMA resort" class="w-full h-[350px] sm:h-[450px] object-cover rounded-2xl" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OFFERS -->
+        <section id="offers" class="py-20 sm:py-28 bg-sand px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Special offers">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 sm:mb-16">
+                    <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">06 — OFFERS</p>
+                    <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight mb-4">STAY A LITTLE LONGER.</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow duration-500">
+                        <h3 class="font-serif text-2xl text-forest mb-3">STAY 3, SAVE MORE</h3>
+                        <p class="text-charcoal/60 mb-4 font-light text-sm leading-relaxed">Enjoy a reduced rate when you stay three nights or more at any room category.</p>
+                        <span class="text-terracotta text-sm font-medium tracking-widest">UP TO 15% OFF</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow duration-500">
+                        <h3 class="font-serif text-2xl text-forest mb-3">SUNSET ESCAPE</h3>
+                        <p class="text-charcoal/60 mb-4 font-light text-sm leading-relaxed">A romantic evening begins with a private sunset dinner and a late checkout.</p>
+                        <span class="text-terracotta text-sm font-medium tracking-widest">SUNSET DINING INCLUDED</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow duration-500">
+                        <h3 class="font-serif text-2xl text-forest mb-3">LONGER STAY</h3>
+                        <p class="text-charcoal/60 mb-4 font-light text-sm leading-relaxed">Stay seven nights or more and receive a complimentary wellness treatment.</p>
+                        <span class="text-terracotta text-sm font-medium tracking-widest">SPA ACCESS INCLUDED</span>
+                    </div>
+                </div>
+                <div class="text-center mt-10">
+                    <img src="assets/images/offer.jpg" alt="LŪMA special offers" class="inline-block w-full max-w-2xl h-[200px] sm:h-[250px] object-cover rounded-2xl shadow-md" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION -->
+        <section id="location" class="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Location">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">07 — FIND US</p>
+                    <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight mb-4">FIND YOUR WAY TO LŪMA.</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="assets/images/location.jpg" alt="LŪMA Island Retreat location in Bali" class="w-full h-[300px] sm:h-[400px] object-cover rounded-2xl mb-8" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <span class="text-terracotta text-sm tracking-widest font-medium mt-0.5">LOCATION:</span>
+                                <p class="text-charcoal/70">LŪMA Island Retreat, Bali, Indonesia</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-terracotta text-sm tracking-widest font-medium mt-0.5">AIRPORT:</span>
+                                <p class="text-charcoal/70">Approx. 45 minutes</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-terracotta text-sm tracking-widest font-medium mt-0.5">BEACH:</span>
+                                <p class="text-charcoal/70">Direct access to private beach</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-terracotta text-sm tracking-widest font-medium mt-0.5">UBUD:</span>
+                                <p class="text-charcoal/70">Approx. 60 minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Simplified visual map -->
+                    <div class="bg-forest rounded-2xl p-6 sm:p-8 h-[400px] sm:h-[500px] flex items-center justify-center" aria-label="Simplified map showing LŪMA location">
+                        <div class="relative w-full h-full">
+                            <div class="absolute top-[15%] left-[10%] text-sand text-xs tracking-widest">AIRPORT</div>
+                            <div class="absolute top-[15%] left-[10%] w-2 h-2 bg-sand rounded-full"></div>
+                            <div class="absolute top-[55%] left-[70%] text-white/70 text-xs tracking-widest">UBUD</div>
+                            <div class="absolute top-[55%] left-[70%] w-2 h-2 bg-white/70 rounded-full"></div>
+                            <div class="absolute top-[75%] left-[40%] text-sand text-xs tracking-widest">PRIVATE BEACH</div>
+                            <div class="absolute top-[75%] left-[40%] w-2 h-2 bg-terracotta rounded-full"></div>
+                            <div class="absolute top-[45%] left-[45%] text-center">
+                                <div class="w-4 h-4 bg-white rounded-full mx-auto mb-2 animate-pulse"></div>
+                                <p class="text-white font-serif text-lg tracking-widest">LŪMA</p>
+                            </div>
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M42 68 Q 180 150 180 180 Q 180 260 280 228" stroke="#D8C7A8" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+                                <path d="M180 180 Q 180 280 162 300" stroke="#A9674F" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+                                <path d="M180 180 Q 180 200 190 210" stroke="#D8C7A8" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STORY -->
+        <section id="story" class="py-20 sm:py-28 bg-forest text-white px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Our story">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+                    <div class="image-reveal">
+                        <img src="assets/images/story.jpg" alt="The story of LŪMA - architecture disappearing into nature" class="w-full h-[350px] sm:h-[450px] object-cover rounded-2xl" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg'">
+                    </div>
+                    <div>
+                        <p class="text-xs tracking-[0.35em] text-sand font-medium mb-4">08 — OUR STORY</p>
+                        <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4">A PLACE TO<br>PAUSE.</h2>
+                        <p class="text-white/70 text-lg leading-relaxed mb-8 max-w-md font-light">
+                            LŪMA was imagined as a retreat where architecture disappears into nature and time feels a little slower. Every path, every shadow, every breath of ocean air was considered.
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="border-t border-white/20 pt-4">
+                                <p class="font-serif text-2xl text-sand mb-1">NATURE</p>
+                                <p class="text-white/50 text-xs font-light">At the center of everything</p>
+                            </div>
+                            <div class="border-t border-white/20 pt-4">
+                                <p class="font-serif text-2xl text-sand mb-1">SPACE</p>
+                                <p class="text-white/50 text-xs font-light">Room to breathe</p>
+                            </div>
+                            <div class="border-t border-white/20 pt-4">
+                                <p class="font-serif text-2xl text-sand mb-1">TIME</p>
+                                <p class="text-white/50 text-xs font-light">Moves at your pace</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUEST REVIEWS -->
+        <section id="reviews" class="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Guest reviews">
+            <div class="max-w-7xl mx-auto text-center">
+                <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">09 — TESTIMONIALS</p>
+                <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-forest leading-tight mb-12">WORDS FROM OUR GUESTS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-500">
+                        <p class="text-charcoal/70 italic leading-relaxed mb-6 font-light">"A beautifully quiet place to disconnect and simply enjoy being present. The attention to detail is extraordinary."</p>
+                        <p class="text-sm font-medium text-forest">Amelia R.</p>
+                        <p class="text-xs text-charcoal/50">Australia</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-500">
+                        <p class="text-charcoal/70 italic leading-relaxed mb-6 font-light">"The Ocean Villa exceeded every expectation. Waking up to the sound of waves and stepping directly onto soft sand — pure magic."</p>
+                        <p class="text-sm font-medium text-forest">Daniel K.</p>
+                        <p class="text-xs text-charcoal/50">Switzerland</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-500">
+                        <p class="text-charcoal/70 italic leading-relaxed mb-6 font-light">"The staff anticipated our needs before we even knew what we wanted. This is hospitality at its finest, without pretense."</p>
+                        <p class="text-sm font-medium text-forest">Sari W.</p>
+                        <p class="text-xs text-charcoal/50">Indonesia</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIRECT BOOKING BENEFIT -->
+        <section id="direct-booking" class="py-16 bg-forest text-white px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Direct booking benefits">
+            <div class="max-w-5xl mx-auto text-center">
+                <p class="text-xs tracking-[0.35em] text-sand font-medium mb-4">BOOK DIRECT</p>
+                <h2 class="font-serif text-3xl sm:text-4xl text-white mb-8">THE LŪMA ADVANTAGE</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="p-6 rounded-xl bg-white/5">
+                        <p class="text-sand font-medium mb-2">Best Available Rate</p>
+                        <p class="text-white/60 text-sm font-light">Direct booking access to our most favorable rates</p>
+                    </div>
+                    <div class="p-6 rounded-xl bg-white/5">
+                        <p class="text-sand font-medium mb-2">Flexible Support</p>
+                        <p class="text-white/60 text-sm font-light">Reservation assistance tailored to your needs</p>
+                    </div>
+                    <div class="p-6 rounded-xl bg-white/5">
+                        <p class="text-sand font-medium mb-2">Direct Contact</p>
+                        <p class="text-white/60 text-sm font-light">Reach the LŪMA team anytime via WhatsApp</p>
+                    </div>
+                    <div class="p-6 rounded-xl bg-white/5">
+                        <p class="text-sand font-medium mb-2">Personalized Stay</p>
+                        <p class="text-white/60 text-sm font-light">We craft your experience before you arrive</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 scroll-reveal" aria-label="Contact">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-xs tracking-[0.35em] text-terracotta font-medium mb-4">10 — CONTACT</p>
+                <h2 class="font-serif text-4xl sm:text-5xl text-forest leading-tight mb-6">TALK TO LŪMA</h2>
+                <p class="text-charcoal/60 text-lg mb-10 font-light">We're here to help you plan your stay.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" id="contact-whatsapp" class="bg-forest text-white px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-charcoal cursor-pointer">
+                        WHATSAPP
+                    </a>
+                    <a href="mailto:hello@luma.resort" class="border border-forest text-forest px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-forest hover:text-white cursor-pointer">
+                        EMAIL
+                    </a>
+                    <a href="#" class="border border-forest text-forest px-8 py-3.5 rounded-full text-sm font-medium tracking-widest transition-all duration-300 hover:bg-forest hover:text-white cursor-pointer">
+                        INSTAGRAM
+                    </a>
+                </div>
+                <p class="text-charcoal/50 text-sm mt-8 font-light">LŪMA Island Retreat, Bali, Indonesia</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-charcoal text-white py-16 px-4 sm:px-8 lg:px-12" role="contentinfo">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                <div>
+                    <h3 class="font-serif text-3xl mb-4">LŪMA</h3>
+                    <p class="text-white/50 text-sm font-light tracking-widest">STAY BEYOND THE ORDINARY.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm tracking-widest text-sand mb-4">NAVIGATION</h4>
+                    <ul class="space-y-2 text-white/50 text-sm font-light">
+                        <li><a href="#rooms" class="hover:text-white transition-colors duration-300">ROOMS</a></li>
+                        <li><a href="#experiences" class="hover:text-white transition-colors duration-300">EXPERIENCES</a></li>
+                        <li><a href="#dining" class="hover:text-white transition-colors duration-300">DINING</a></li>
+                        <li><a href="#wellness" class="hover:text-white transition-colors duration-300">WELLNESS</a></li>
+                        <li><a href="#offers" class="hover:text-white transition-colors duration-300">OFFERS</a></li>
+                        <li><a href="#story" class="hover:text-white transition-colors duration-300">OUR STORY</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm tracking-widest text-sand mb-4">CONNECT</h4>
+                    <ul class="space-y-2 text-white/50 text-sm font-light">
+                        <li><a href="#" id="footer-whatsapp" class="hover:text-white transition-colors duration-300 cursor-pointer">WHATSAPP</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300 cursor-pointer">INSTAGRAM</a></li>
+                        <li><a href="mailto:hello@luma.resort" class="hover:text-white transition-colors duration-300">EMAIL</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-12 pt-8 text-center text-xs text-white/40 font-light">
+                © 2026 LŪMA. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ROOM DETAIL MODAL -->
+    <div id="room-detail-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 sm:p-8" role="dialog" aria-modal="true" aria-label="Room details">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="room-detail-overlay"></div>
+        <div class="relative bg-ivory rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl z-10">
+            <button id="room-detail-close" class="absolute top-4 right-4 text-charcoal hover:text-terracotta p-2 cursor-pointer z-20 transition-colors duration-300" aria-label="Close room details">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <div id="room-detail-content" class="p-6 sm:p-10">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING MODAL -->
+    <div id="booking-modal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 sm:p-8" role="dialog" aria-modal="true" aria-label="Booking flow">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="booking-overlay"></div>
+        <div class="relative bg-ivory rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl z-10">
+            <button id="booking-modal-close" class="absolute top-4 right-4 text-charcoal hover:text-terracotta p-2 cursor-pointer z-20 transition-colors duration-300" aria-label="Close booking">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <div id="booking-modal-content" class="p-6 sm:p-10">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-24 sm:bottom-8 left-1/2 -translate-x-1/2 z-[90] bg-charcoal text-white px-6 py-3 rounded-full text-sm font-light tracking-wide shadow-xl hidden transition-all duration-500 opacity-0 pointer-events-none" role="status" aria-live="polite">
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+/* =========================================
+   LŪMA RESORT — CUSTOM STYLES
+   ========================================= */
+
+/* CSS Variables (optional, for custom use) */
+:root {
+    --forest: #17352F;
+    --sand: #D8C7A8;
+    --ivory: #F5F1E8;
+    --terracotta: #A9674F;
+    --charcoal: #202421;
+    --white: #FFFFFF;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    --shadow-soft: 0 8px 30px rgba(0,0,0,0.05);
+    --shadow-medium: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--charcoal);
+    background-color: var(--ivory);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================
+   TYPOGRAPHY
+   ========================================= */
+.font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+#navbar {
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+#navbar.scrolled {
+    background-color: rgba(23, 53, 47, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+#navbar-logo {
+    transition: color 0.3s ease;
+}
+
+.navbar-link {
+    position: relative;
+}
+
+.navbar-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--sand);
+    transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+    width: 100%;
+}
+
+/* =========================================
+   MOBILE MENU
+   ========================================= */
+#mobile-menu {
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.mobile-menu-link {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.mobile-menu-link:hover {
+    color: var(--sand);
+    transform: translateX(5px);
+}
+
+/* =========================================
+   STICKY MOBILE BOOKING CTA
+   ========================================= */
+#sticky-book-btn {
+    transition: all 0.4s ease;
+}
+
+#sticky-book-btn.show {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+#hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#hero-image {
+    animation: slow-zoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes slow-zoom {
+    from {
+        transform: scale(1.0);
+    }
+    to {
+        transform: scale(1.06);
+    }
+}
+
+.hero-title {
+    animation: fadeUp 1s ease-out both;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    animation: fadeUp 1s ease-out both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.8s ease-out both;
+}
+
+.animate-bounce-slow {
+    animation: bounceSlow 2.5s ease-in-out infinite;
+}
+
+@keyframes bounceSlow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* =========================================
+   BOOKING WIDGET
+   ========================================= */
+.booking-field input,
+.booking-field select {
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+}
+
+.booking-field input:focus,
+.booking-field select:focus {
+    border-color: var(--forest);
+}
+
+.booking-field input[type="date"] {
+    color: var(--charcoal);
+}
+
+.booking-field input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+/* =========================================
+   ROOM FILTERS
+   ========================================= */
+.filter-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.7);
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--sand);
+    color: var(--sand);
+    background: rgba(255,255,255,0.05);
+}
+
+.filter-btn.active-filter {
+    background: var(--sand);
+    border-color: var(--sand);
+    color: var(--forest);
+}
+
+/* =========================================
+   ROOM CARDS
+   ========================================= */
+.room-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.room-card:hover {
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.room-card-image {
+    overflow: hidden;
+}
+
+.room-card-image img {
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.room-card:hover .room-card-image img {
+    transform: scale(1.05);
+}
+
+/* =========================================
+   IMAGE REVEAL (scroll animations)
+   ========================================= */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.image-reveal {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    transition: opacity 0.9s ease-out, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.image-reveal.revealed {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* =========================================
+   EXPERIENCE ITEMS
+   ========================================= */
+.experience-item {
+    transition: transform 0.3s ease;
+}
+
+.experience-item:hover {
+    transform: translateY(-5px);
+}
+
+/* =========================================
+   MODAL (ROOM DETAIL & BOOKING)
+   ========================================= */
+#room-detail-modal,
+#booking-modal {
+    display: none;
+}
+
+#room-detail-modal.open,
+#booking-modal.open {
+    display: flex;
+}
+
+.modal-content {
+    animation: modalIn 0.4s ease-out;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================================
+   ROOM DETAIL GALLERY
+   ========================================= */
+.room-gallery-thumb {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.room-gallery-thumb.active,
+.room-gallery-thumb:hover {
+    opacity: 1;
+    border-color: var(--forest);
+}
+
+/* =========================================
+   BOOKING STEPS
+   ========================================= */
+.booking-step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.step-dot.active {
+    background-color: var(--forest);
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
+.step-dot.completed {
+    background-color: var(--terracotta);
+}
+
+/* Form validation */
+.error-text {
+    color: var(--terracotta);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.input-error {
+    border-color: var(--terracotta) !important;
+}
+
+/* =========================================
+   TOAST NOTIFICATION
+   ========================================= */
+#toast {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#toast.show {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .hero-title,
+    .hero-subtitle,
+    .animate-fade-up,
+    .scroll-reveal,
+    .image-reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}
+
+/* =========================================
+   RESPONSIVE TWEAKS
+   ========================================= */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .navbar-link {
+        font-size: 0.75rem;
+    }
+    #desktop-book-btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.7rem;
+    }
+    .filter-btn {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* Extra small devices (320px-375px) */
+@media (max-width: 375px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-subtitle {
+        font-size: 0.875rem;
+    }
+    #sticky-book-btn {
+        padding: 0.8rem;
+        font-size: 0.7rem;
+    }
+}
