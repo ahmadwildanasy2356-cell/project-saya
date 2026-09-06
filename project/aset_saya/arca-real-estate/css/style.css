@@ -1,0 +1,814 @@
+/* ============================================================
+   ARCA — SPACES WORTH LIVING IN.
+   Premium Real Estate Portfolio Stylesheet
+   ============================================================ */
+
+/* ---------- CSS VARIABLES ---------- */
+:root {
+    --obsidian: #111111;
+    --warm-ivory: #F1EEE7;
+    --stone: #C9C4BA;
+    --terracotta: #A56A52;
+    --soft-gray: #77736C;
+    --white: #FFFFFF;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --transition-fast: 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-medium: 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-slow: 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-ease: 800ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ---------- GLOBAL RESET & BASE ---------- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--obsidian);
+    background-color: var(--white);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    outline: none;
+}
+
+input,
+select,
+textarea {
+    font-family: var(--font-body);
+    font-size: inherit;
+}
+
+::selection {
+    background: var(--terracotta);
+    color: var(--white);
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--warm-ivory);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--stone);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terracotta);
+}
+
+/* ---------- ACCESSIBILITY FOCUS ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 3px;
+}
+
+/* ---------- NAVIGATION ---------- */
+#navbar {
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background var(--transition-medium), border-color var(--transition-medium), padding var(--transition-medium), backdrop-filter var(--transition-medium);
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+#navbar.scrolled {
+    background: rgba(17, 17, 17, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+#navbar .arca-logo {
+    color: var(--white);
+    transition: color var(--transition-medium);
+    letter-spacing: 0.25em;
+    font-weight: 600;
+}
+
+#navbar .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    position: relative;
+}
+
+#navbar .nav-link:hover {
+    color: var(--white);
+}
+
+#navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--terracotta);
+    transition: width var(--transition-medium);
+}
+
+#navbar .nav-link:hover::after {
+    width: 100%;
+}
+
+#navbar .inquire-btn {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--white);
+}
+
+#navbar .inquire-btn:hover {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--white);
+}
+
+/* Mobile menu bars */
+.menu-bar {
+    background: var(--white);
+    transition: all var(--transition-medium);
+}
+
+#mobileMenuBtn.open .menu-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+#mobileMenuBtn.open .menu-bar:nth-child(2) {
+    opacity: 0;
+}
+
+#mobileMenuBtn.open .menu-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+    width: 24px;
+}
+
+/* Mobile fullscreen menu */
+#mobileMenuOverlay {
+    background: var(--obsidian);
+}
+
+#mobileMenuOverlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.mobile-nav-link {
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+#mobileMenuOverlay.open .mobile-nav-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#mobileMenuOverlay.open .mobile-nav-link:nth-child(1) { transition-delay: 80ms; }
+#mobileMenuOverlay.open .mobile-nav-link:nth-child(2) { transition-delay: 160ms; }
+#mobileMenuOverlay.open .mobile-nav-link:nth-child(3) { transition-delay: 240ms; }
+#mobileMenuOverlay.open .mobile-nav-link:nth-child(4) { transition-delay: 320ms; }
+#mobileMenuOverlay.open .mobile-nav-link:nth-child(5) { transition-delay: 400ms; }
+
+/* ---------- HERO ---------- */
+#hero {
+    background: var(--obsidian);
+}
+
+.hero-image {
+    animation: heroScaleOut 1.8s var(--transition-ease) both;
+}
+
+@keyframes heroScaleOut {
+    0% {
+        transform: scale(1.12);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.hero-number,
+.hero-title,
+.hero-subtitle,
+.hero-location,
+.hero-explore {
+    animation: heroFadeUp 1s var(--transition-ease) both;
+}
+
+.hero-number { animation-delay: 300ms; }
+.hero-title { animation-delay: 400ms; }
+.hero-subtitle { animation-delay: 550ms; }
+.hero-location { animation-delay: 650ms; }
+.hero-explore { animation-delay: 750ms; }
+
+@keyframes heroFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scroll-line {
+    animation: scrollPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%, 100% {
+        transform: scaleY(0.4);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scaleY(1);
+        opacity: 0.9;
+    }
+}
+
+/* ---------- SECTION LABELS ---------- */
+.section-label {
+    letter-spacing: 0.35em;
+    font-weight: 500;
+}
+
+/* ---------- FEATURED RESIDENCES ---------- */
+#propertyGrid {
+    transition: opacity var(--transition-medium);
+}
+
+.property-card {
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.property-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.property-card-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--warm-ivory);
+}
+
+.property-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.property-card:hover .property-card-image {
+    transform: scale(1.03);
+}
+
+.property-card-number {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    color: var(--white);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    font-weight: 500;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.property-card-info {
+    padding-top: 1.25rem;
+    transition: transform var(--transition-medium);
+}
+
+.property-card:hover .property-card-info {
+    transform: translateY(-4px);
+}
+
+.property-card-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.25rem;
+    letter-spacing: 0.08em;
+    color: var(--obsidian);
+    transition: color var(--transition-fast);
+}
+
+.property-card:hover .property-card-name {
+    color: var(--terracotta);
+}
+
+.property-card-location {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--soft-gray);
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
+
+.property-card-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone);
+    font-weight: 400;
+}
+
+/* ---------- FILTER BAR ---------- */
+.filter-btn,
+.location-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--soft-gray);
+    border: 1px solid var(--stone);
+    border-radius: 0;
+    transition: all var(--transition-fast);
+    background: transparent;
+    white-space: nowrap;
+}
+
+.filter-btn:hover,
+.location-btn:hover {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+    background: rgba(165, 106, 82, 0.05);
+}
+
+.filter-btn.active,
+.location-btn.active {
+    background: var(--obsidian);
+    border-color: var(--obsidian);
+    color: var(--white);
+}
+
+.filter-btn.active:hover,
+.location-btn.active:hover {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--white);
+}
+
+.filter-divider {
+    background: var(--stone);
+}
+
+/* ---------- SEARCH ---------- */
+#searchInput {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--stone);
+    border-radius: 0;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--obsidian);
+    padding-left: 0;
+    transition: border-color var(--transition-medium);
+}
+
+#searchInput::placeholder {
+    color: var(--stone);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-bottom-color: var(--terracotta);
+}
+
+#searchResult {
+    animation: fadeInResult var(--transition-medium) both;
+}
+
+@keyframes fadeInResult {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- ARCHITECTURE SECTION ---------- */
+.arch-image-wrapper {
+    border-radius: 0;
+}
+
+.arch-image {
+    transition: transform var(--transition-slow);
+}
+
+.arch-image-wrapper:hover .arch-image {
+    transform: scale(1.02);
+}
+
+/* ---------- MATERIAL SECTION ---------- */
+.material-gallery {
+    scrollbar-width: thin;
+    scrollbar-color: var(--stone) transparent;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    gap: 1.5rem;
+}
+
+.material-item {
+    flex-shrink: 0;
+}
+
+.material-item img {
+    transition: transform var(--transition-medium);
+}
+
+.material-item:hover img {
+    transform: scale(1.02);
+}
+
+.material-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--obsidian);
+    font-weight: 500;
+    margin-top: 0.75rem;
+}
+
+/* ---------- LIFESTYLE ---------- */
+.lifestyle-image-wrapper {
+    overflow: hidden;
+}
+
+.lifestyle-image {
+    transition: transform var(--transition-slow);
+}
+
+.lifestyle-image-wrapper:hover .lifestyle-image {
+    transform: scale(1.015);
+}
+
+/* ---------- LOCATIONS ---------- */
+.neighborhood-image {
+    transition: transform var(--transition-slow);
+}
+
+.neighborhood-image:hover {
+    transform: scale(1.02);
+}
+
+#locationResult {
+    animation: fadeInResult var(--transition-medium) both;
+}
+
+/* ---------- ABOUT ---------- */
+.about-principle {
+    transition: transform var(--transition-medium);
+}
+
+.about-principle:hover {
+    transform: translateX(8px);
+}
+
+.about-principle span {
+    display: inline-block;
+    transition: color var(--transition-fast);
+}
+
+.about-principle:hover span {
+    color: var(--terracotta);
+}
+
+/* ---------- INQUIRY FORM ---------- */
+.form-input,
+.form-select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--stone);
+    border-radius: 0;
+    color: var(--obsidian);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    padding: 0.75rem 0;
+    transition: border-color var(--transition-medium);
+    width: 100%;
+}
+
+.form-input::placeholder {
+    color: var(--stone);
+    font-weight: 300;
+}
+
+.form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2377736C' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    cursor: pointer;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-bottom-color: var(--terracotta);
+}
+
+.form-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--soft-gray);
+}
+
+#sendInquiryBtn {
+    transition: all var(--transition-medium);
+}
+
+#sendInquiryBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(165, 106, 82, 0.25);
+}
+
+#inquirySuccess {
+    animation: fadeInResult var(--transition-medium) both;
+}
+
+/* ---------- FOOTER ---------- */
+.footer-link {
+    position: relative;
+}
+
+.footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--terracotta);
+    transition: width var(--transition-medium);
+}
+
+.footer-link:hover::after {
+    width: 100%;
+}
+
+.social-link {
+    transition: all var(--transition-fast);
+}
+
+.social-link:hover {
+    opacity: 0.8;
+    letter-spacing: 0.3em;
+}
+
+/* ---------- PROPERTY DETAIL OVERLAY ---------- */
+#propertyDetailOverlay {
+    background: var(--obsidian);
+    transition: opacity var(--transition-slow);
+}
+
+#propertyDetailOverlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#detailMainImage {
+    transition: opacity var(--transition-medium), transform var(--transition-medium);
+}
+
+.gallery-thumb {
+    opacity: 0.6;
+    border-color: transparent;
+    transition: all var(--transition-fast);
+}
+
+.gallery-thumb.active {
+    opacity: 1;
+    border-color: var(--terracotta);
+}
+
+.gallery-thumb:hover {
+    opacity: 0.9;
+}
+
+.gallery-nav {
+    transition: all var(--transition-fast);
+}
+
+.gallery-nav:hover {
+    background: rgba(165, 106, 82, 0.7) !important;
+    color: var(--white) !important;
+}
+
+/* ---------- SCROLL TO TOP ---------- */
+#scrollToTopBtn {
+    transition: all var(--transition-medium);
+}
+
+#scrollToTopBtn.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#scrollToTopBtn:hover {
+    background: var(--terracotta) !important;
+    border-color: var(--terracotta) !important;
+    transform: translateY(-4px);
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal-section.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- IMAGE FALLBACK STYLES ---------- */
+img {
+    background: var(--warm-ivory);
+}
+
+img[alt=""] {
+    background: var(--warm-ivory);
+    min-height: 100px;
+}
+
+/* ---------- RESPONSIVE BREAKPOINTS ---------- */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    .intro-heading {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        scroll-padding-top: 70px;
+    }
+    .hero-title {
+        font-size: 2.75rem;
+        letter-spacing: 0.04em;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    .intro-heading {
+        font-size: 2.25rem;
+    }
+    .property-card-name {
+        font-size: 1.1rem;
+    }
+    .filter-btn,
+    .location-btn {
+        padding: 0.4rem 0.9rem;
+        font-size: 9px;
+    }
+    #detailName {
+        font-size: 2rem;
+    }
+    #detailMainImage {
+        height: 220px;
+    }
+    .gallery-thumb {
+        width: 60px;
+        height: 44px;
+    }
+}
+
+@media (max-width: 430px) {
+    .hero-title {
+        font-size: 2.25rem;
+    }
+    .hero-location {
+        font-size: 10px;
+    }
+    .intro-heading {
+        font-size: 1.8rem;
+    }
+    .property-card-name {
+        font-size: 1rem;
+    }
+    .property-card-meta {
+        font-size: 9px;
+        gap: 0.75rem;
+    }
+    .filter-btn,
+    .location-btn {
+        padding: 0.35rem 0.7rem;
+        font-size: 8px;
+        letter-spacing: 0.15em;
+    }
+    .material-item {
+        min-width: 200px;
+    }
+    .material-item img {
+        height: 36px;
+    }
+}
+
+@media (max-width: 320px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .arca-logo {
+        font-size: 1.25rem;
+    }
+    .intro-heading {
+        font-size: 1.5rem;
+    }
+    .property-card-meta {
+        font-size: 8px;
+    }
+    .filter-btn,
+    .location-btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 7px;
+    }
+    .footer-logo {
+        font-size: 1.5rem;
+    }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+}

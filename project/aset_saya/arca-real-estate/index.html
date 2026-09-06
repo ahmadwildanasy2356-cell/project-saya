@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCA — Spaces Worth Living In</title>
+    <meta name="description" content="ARCA presents a curated collection of residences shaped by architecture, material, and the way people live.">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/logo.jpg" type="image/jpg">
+
+</head>
+<body>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 py-5 flex items-center justify-between">
+            <a href="#" class="arca-logo text-2xl md:text-3xl tracking-[0.3em] font-semibold" style="font-family:'Playfair Display',serif;">ARCA</a>
+
+            <nav class="hidden md:flex items-center gap-10" aria-label="Main navigation">
+                <a href="#residences" class="nav-link text-[11px] tracking-[0.25em] uppercase font-medium transition-colors duration-300">Residences</a>
+                <a href="#architecture" class="nav-link text-[11px] tracking-[0.25em] uppercase font-medium transition-colors duration-300">Architecture</a>
+                <a href="#locations" class="nav-link text-[11px] tracking-[0.25em] uppercase font-medium transition-colors duration-300">Locations</a>
+                <a href="#about" class="nav-link text-[11px] tracking-[0.25em] uppercase font-medium transition-colors duration-300">About</a>
+            </nav>
+
+            <div class="hidden md:block">
+                <a href="#inquiry" class="inquire-btn text-[11px] tracking-[0.25em] uppercase font-medium px-6 py-3 border transition-all duration-300">Inquire</a>
+            </div>
+
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Open menu" aria-expanded="false">
+                <span class="menu-bar block w-6 h-[1.5px] transition-all duration-300"></span>
+                <span class="menu-bar block w-6 h-[1.5px] transition-all duration-300"></span>
+                <span class="menu-bar block w-4 h-[1.5px] transition-all duration-300 ml-auto"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== MOBILE MENU OVERLAY ==================== -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 z-[60] flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-500" style="background:#111111;">
+        <button id="mobileMenuClose" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors duration-300 p-3" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <nav class="flex flex-col items-center gap-8" aria-label="Mobile navigation">
+            <a href="#residences" class="mobile-nav-link text-white text-3xl md:text-4xl tracking-[0.15em] uppercase font-light transition-all duration-300 hover:opacity-60" style="font-family:'Playfair Display',serif;">Residences</a>
+            <a href="#architecture" class="mobile-nav-link text-white text-3xl md:text-4xl tracking-[0.15em] uppercase font-light transition-all duration-300 hover:opacity-60" style="font-family:'Playfair Display',serif;">Architecture</a>
+            <a href="#locations" class="mobile-nav-link text-white text-3xl md:text-4xl tracking-[0.15em] uppercase font-light transition-all duration-300 hover:opacity-60" style="font-family:'Playfair Display',serif;">Locations</a>
+            <a href="#about" class="mobile-nav-link text-white text-3xl md:text-4xl tracking-[0.15em] uppercase font-light transition-all duration-300 hover:opacity-60" style="font-family:'Playfair Display',serif;">About</a>
+            <a href="#inquiry" class="mobile-nav-link text-white text-3xl md:text-4xl tracking-[0.15em] uppercase font-light transition-all duration-300 hover:opacity-60" style="font-family:'Playfair Display',serif;">Inquire</a>
+        </nav>
+        <p class="absolute bottom-10 text-white/40 text-[10px] tracking-[0.3em] uppercase">Spaces Worth Living In</p>
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="relative w-full min-h-screen flex flex-col justify-end overflow-hidden" style="background:#111111;">
+        <div class="absolute inset-0">
+            <img src="assets/images/hero.jpg" alt="ARCA hero residence — CASA NO. 17 architectural exterior at dusk" class="w-full h-full object-cover hero-image" loading="eager" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+            <div class="absolute inset-0 hero-overlay" style="background:linear-gradient(to top,rgba(17,17,17,0.7) 0%,rgba(17,17,17,0.25) 40%,rgba(17,17,17,0.1) 100%);"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[1440px] w-full mx-auto px-6 md:px-10 lg:px-16 pb-16 md:pb-24 pt-32">
+            <div class="hero-number text-[14px] md:text-[16px] tracking-[0.4em] uppercase mb-4 md:mb-6" style="color:#C9C4BA;">01</div>
+            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl xl:text-[96px] font-medium leading-[1.05] text-white mb-4 md:mb-6" style="font-family:'Playfair Display',serif;">
+                CASA NO. 17
+            </h1>
+            <p class="hero-subtitle text-base md:text-xl text-white/80 max-w-lg mb-2 md:mb-3 font-light tracking-wide">
+                A residence shaped by light, material and proportion.
+            </p>
+            <p class="hero-location text-[12px] md:text-[14px] tracking-[0.3em] uppercase mb-8 md:mb-10" style="color:#A56A52;">Jakarta Selatan</p>
+            <a href="#residences" class="hero-explore inline-flex items-center gap-3 text-white text-[12px] md:text-[13px] tracking-[0.25em] uppercase group transition-all duration-300 hover:gap-5">
+                Explore Residence
+                <span class="text-xl md:text-2xl transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-3">
+            <span class="text-[9px] tracking-[0.5em] uppercase text-white/40">Scroll to Explore</span>
+            <span class="w-[1px] h-10 bg-white/30 scroll-line"></span>
+        </div>
+    </section>
+
+    <!-- ==================== INTRODUCTION ==================== -->
+    <section id="intro" class="py-20 md:py-32 lg:py-40" style="background:#F1EEE7;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+                <div class="lg:col-span-3">
+                    <p class="section-label text-[11px] tracking-[0.4em] uppercase mb-4" style="color:#A56A52;">01 — The Arca Approach</p>
+                </div>
+                <div class="lg:col-span-9">
+                    <h2 class="intro-heading text-4xl md:text-6xl lg:text-7xl xl:text-[80px] font-medium leading-[1.1] mb-6 md:mb-8" style="font-family:'Playfair Display',serif;color:#111111;">
+                        WE CREATE<br>
+                        SPACES THAT<br>
+                        STAY WITH YOU.
+                    </h2>
+                    <p class="intro-text text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed font-light" style="color:#77736C;">
+                        ARCA presents a curated collection of residences shaped by architecture, material and the way people live.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FEATURED RESIDENCES ==================== -->
+    <section id="residences" class="py-20 md:py-32" style="background:#FFFFFF;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="text-center mb-14 md:mb-20">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-wide mb-4" style="font-family:'Playfair Display',serif;color:#111111;">SELECTED RESIDENCES</h2>
+                <p class="text-sm md:text-base font-light max-w-xl mx-auto" style="color:#77736C;">A considered collection of places to live, gather and belong.</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container max-w-xl mx-auto mb-14 md:mb-20">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="Search residences…" aria-label="Search residences" class="w-full bg-transparent border-b py-4 pr-12 text-base md:text-lg outline-none transition-all duration-300 focus:border-[#A56A52]" style="border-color:#C9C4BA;color:#111111;" autocomplete="off">
+                    <span class="absolute right-0 top-1/2 -translate-y-1/2 text-xl" style="color:#77736C;">⌕</span>
+                </div>
+                <p id="searchResult" class="text-sm mt-4 hidden text-center" style="color:#A56A52;">NO RESIDENCES FOUND<br><span class="text-xs text-[#77736C]">Try another search.</span></p>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16" role="group" aria-label="Property filters">
+                <div class="filter-group flex flex-wrap gap-2 md:gap-3">
+                    <button class="filter-btn active" data-filter="location" data-value="all">All Locations</button>
+                    <button class="filter-btn" data-filter="location" data-value="Jakarta">Jakarta</button>
+                    <button class="filter-btn" data-filter="location" data-value="Bali">Bali</button>
+                    <button class="filter-btn" data-filter="location" data-value="Bandung">Bandung</button>
+                    <button class="filter-btn" data-filter="location" data-value="Yogyakarta">Yogyakarta</button>
+                    <button class="filter-btn" data-filter="location" data-value="Lombok">Lombok</button>
+                </div>
+                <span class="filter-divider w-px h-5 hidden md:block" style="background:#C9C4BA;"></span>
+                <div class="filter-group flex flex-wrap gap-2 md:gap-3">
+                    <button class="filter-btn active" data-filter="type" data-value="all">All Types</button>
+                    <button class="filter-btn" data-filter="type" data-value="Residence">Residence</button>
+                    <button class="filter-btn" data-filter="type" data-value="Villa">Villa</button>
+                    <button class="filter-btn" data-filter="type" data-value="Townhouse">Townhouse</button>
+                </div>
+                <span class="filter-divider w-px h-5 hidden md:block" style="background:#C9C4BA;"></span>
+                <div class="filter-group flex flex-wrap gap-2 md:gap-3">
+                    <button class="filter-btn active" data-filter="price" data-value="all">All Prices</button>
+                    <button class="filter-btn" data-filter="price" data-value="under-5b">Under 5B</button>
+                    <button class="filter-btn" data-filter="price" data-value="5b-10b">5B — 10B</button>
+                    <button class="filter-btn" data-filter="price" data-value="10b-plus">10B+</button>
+                </div>
+            </div>
+
+            <!-- Property Grid -->
+            <div id="propertyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 md:gap-y-20">
+                <!-- Cards rendered by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ARCHITECTURE SECTION ==================== -->
+    <section id="architecture" class="py-20 md:py-32 lg:py-40" style="background:#111111;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                <div class="lg:col-span-7 order-2 lg:order-1">
+                    <div class="arch-image-wrapper overflow-hidden">
+                        <img src="assets/images/architecture.jpg" alt="Architectural philosophy — warm stone façade with deep shadows and natural light" class="w-full h-full object-cover arch-image" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    </div>
+                </div>
+                <div class="lg:col-span-5 order-1 lg:order-2">
+                    <p class="section-label text-[11px] tracking-[0.4em] uppercase mb-4" style="color:#A56A52;">02</p>
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.1] mb-6 md:mb-8 text-white" style="font-family:'Playfair Display',serif;">
+                        ARCHITECTURE<br>
+                        AS A WAY<br>
+                        OF LIVING.
+                    </h2>
+                    <p class="text-sm md:text-base lg:text-lg leading-relaxed font-light max-w-md" style="color:#C9C4BA;">
+                        We believe architecture is not simply about how a building looks. It is about how light enters, how materials age, and how a space changes with the people inside it.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MATERIAL SECTION ==================== -->
+    <section id="material" class="py-20 md:py-32" style="background:#F1EEE7;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="text-center mb-12 md:mb-16">
+                <p class="section-label text-[11px] tracking-[0.4em] uppercase mb-3" style="color:#A56A52;">03</p>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-wide" style="font-family:'Playfair Display',serif;color:#111111;">MATERIAL / LIGHT / SPACE</h2>
+            </div>
+
+            <div class="material-gallery flex gap-4 md:gap-6 overflow-x-auto pb-6 snap-x snap-mandatory" style="scrollbar-width:thin;scrollbar-color:#C9C4BA transparent;">
+                <div class="material-item min-w-[260px] md:min-w-[360px] snap-start flex-shrink-0">
+                    <img src="assets/images/property-01-detail.jpg" alt="Natural stone texture detail" class="w-full h-48 md:h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    <p class="material-label text-[11px] tracking-[0.3em] uppercase mt-4" style="color:#111111;">Natural Stone</p>
+                </div>
+                <div class="material-item min-w-[260px] md:min-w-[360px] snap-start flex-shrink-0">
+                    <img src="assets/images/property-03-detail.jpg" alt="Warm timber material detail" class="w-full h-48 md:h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    <p class="material-label text-[11px] tracking-[0.3em] uppercase mt-4" style="color:#111111;">Warm Timber</p>
+                </div>
+                <div class="material-item min-w-[260px] md:min-w-[360px] snap-start flex-shrink-0">
+                    <img src="assets/images/property-02-detail.jpg" alt="Brushed metal material detail" class="w-full h-48 md:h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    <p class="material-label text-[11px] tracking-[0.3em] uppercase mt-4" style="color:#111111;">Brushed Metal</p>
+                </div>
+                <div class="material-item min-w-[260px] md:min-w-[360px] snap-start flex-shrink-0">
+                    <img src="assets/images/property-05-detail.jpg" alt="Textured plaster material detail" class="w-full h-48 md:h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    <p class="material-label text-[11px] tracking-[0.3em] uppercase mt-4" style="color:#111111;">Textured Plaster</p>
+                </div>
+                <div class="material-item min-w-[260px] md:min-w-[360px] snap-start flex-shrink-0">
+                    <img src="assets/images/property-04-detail.jpg" alt="Natural fabric detail" class="w-full h-48 md:h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    <p class="material-label text-[11px] tracking-[0.3em] uppercase mt-4" style="color:#111111;">Natural Fabric</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LIFESTYLE SECTION ==================== -->
+    <section id="lifestyle" class="py-20 md:py-32 lg:py-40" style="background:#FFFFFF;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                <div class="lg:col-span-5">
+                    <p class="section-label text-[11px] tracking-[0.4em] uppercase mb-4" style="color:#A56A52;">04</p>
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.1] mb-6" style="font-family:'Playfair Display',serif;color:#111111;">
+                        LIFE,<br>
+                        CONSIDERED.
+                    </h2>
+                    <p class="text-sm md:text-base lg:text-lg leading-relaxed font-light max-w-md" style="color:#77736C;">
+                        Homes should not simply contain life. They should make room for it.
+                    </p>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="lifestyle-image-wrapper overflow-hidden">
+                        <img src="assets/images/lifestyle.jpg" alt="Lifestyle — warm interior with natural light and curated objects" class="w-full h-full object-cover lifestyle-image" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LOCATIONS ==================== -->
+    <section id="locations" class="py-20 md:py-32" style="background:#F1EEE7;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-wide" style="font-family:'Playfair Display',serif;color:#111111;">WHERE WE LIVE</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+                <div class="lg:col-span-5">
+                    <div class="overflow-hidden mb-8">
+                        <img src="assets/images/neighborhood.jpg" alt="Neighborhood aerial view — lush tropical surroundings" class="w-full h-full object-cover neighborhood-image" loading="lazy" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                    </div>
+                </div>
+                <div class="lg:col-span-7 flex flex-col justify-center">
+                    <p class="text-sm md:text-base font-light mb-6" style="color:#77736C;">Select a location to explore available residences.</p>
+                    <div class="location-selector flex flex-wrap gap-3 md:gap-4" role="group" aria-label="Location selector">
+                        <button class="location-btn active" data-location="all" aria-pressed="true">All</button>
+                        <button class="location-btn" data-location="Jakarta" aria-pressed="false">Jakarta</button>
+                        <button class="location-btn" data-location="Bali" aria-pressed="false">Bali</button>
+                        <button class="location-btn" data-location="Bandung" aria-pressed="false">Bandung</button>
+                        <button class="location-btn" data-location="Yogyakarta" aria-pressed="false">Yogyakarta</button>
+                        <button class="location-btn" data-location="Lombok" aria-pressed="false">Lombok</button>
+                    </div>
+                    <div id="locationResult" class="mt-6 text-sm" style="color:#111111;">
+                        <span class="font-medium">All locations selected.</span> <span class="text-[#77736C]">6 residences available.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="py-20 md:py-32 lg:py-40" style="background:#111111;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+                <div class="lg:col-span-6">
+                    <p class="section-label text-[11px] tracking-[0.4em] uppercase mb-4" style="color:#A56A52;">05</p>
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.1] mb-8 text-white" style="font-family:'Playfair Display',serif;">
+                        WE BELIEVE<br>
+                        GOOD SPACES<br>
+                        CHANGE DAILY LIFE.
+                    </h2>
+                    <p class="text-sm md:text-base lg:text-lg leading-relaxed font-light max-w-lg text-[#C9C4BA]">
+                        ARCA is a fictional independent real estate studio focused on thoughtfully designed residences and architecture-led living.
+                    </p>
+                </div>
+                <div class="lg:col-span-6 flex flex-col justify-center gap-8 md:gap-10">
+                    <div class="about-principle">
+                        <span class="text-[12px] tracking-[0.4em] uppercase" style="color:#A56A52;">01</span>
+                        <p class="text-2xl md:text-3xl font-medium mt-2 text-white" style="font-family:'Playfair Display',serif;">MATERIAL</p>
+                    </div>
+                    <div class="about-principle">
+                        <span class="text-[12px] tracking-[0.4em] uppercase" style="color:#A56A52;">02</span>
+                        <p class="text-2xl md:text-3xl font-medium mt-2 text-white" style="font-family:'Playfair Display',serif;">PROPORTION</p>
+                    </div>
+                    <div class="about-principle">
+                        <span class="text-[12px] tracking-[0.4em] uppercase" style="color:#A56A52;">03</span>
+                        <p class="text-2xl md:text-3xl font-medium mt-2 text-white" style="font-family:'Playfair Display',serif;">PLACE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== INQUIRY SECTION ==================== -->
+    <section id="inquiry" class="py-20 md:py-32" style="background:#F1EEE7;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium mb-8 md:mb-12" style="font-family:'Playfair Display',serif;color:#111111;">
+                    FIND YOUR<br>
+                    NEXT PLACE.
+                </h2>
+
+                <form id="inquiryForm" class="text-left space-y-6" novalidate>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="inqName" class="form-label text-[11px] tracking-[0.25em] uppercase mb-2 block" style="color:#77736C;">Nama</label>
+                            <input type="text" id="inqName" name="name" required class="form-input w-full bg-transparent border-b py-3 px-0 text-base outline-none transition-colors duration-300 focus:border-[#A56A52]" style="border-color:#C9C4BA;color:#111111;" placeholder="Your name" autocomplete="name">
+                        </div>
+                        <div>
+                            <label for="inqEmail" class="form-label text-[11px] tracking-[0.25em] uppercase mb-2 block" style="color:#77736C;">Email</label>
+                            <input type="email" id="inqEmail" name="email" required class="form-input w-full bg-transparent border-b py-3 px-0 text-base outline-none transition-colors duration-300 focus:border-[#A56A52]" style="border-color:#C9C4BA;color:#111111;" placeholder="your@email.com" autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="inqWhatsApp" class="form-label text-[11px] tracking-[0.25em] uppercase mb-2 block" style="color:#77736C;">WhatsApp</label>
+                            <input type="tel" id="inqWhatsApp" name="whatsapp" required class="form-input w-full bg-transparent border-b py-3 px-0 text-base outline-none transition-colors duration-300 focus:border-[#A56A52]" style="border-color:#C9C4BA;color:#111111;" placeholder="+62 xxx" autocomplete="tel">
+                        </div>
+                        <div>
+                            <label for="inqProperty" class="form-label text-[11px] tracking-[0.25em] uppercase mb-2 block" style="color:#77736C;">Property</label>
+                            <select id="inqProperty" name="property" required class="form-select w-full bg-transparent border-b py-3 px-0 text-base outline-none transition-colors duration-300 focus:border-[#A56A52]" style="border-color:#C9C4BA;color:#111111;">
+                                <option value="">Select a residence</option>
+                                <option value="CASA NO. 17">CASA NO. 17</option>
+                                <option value="VILLA SENJA">VILLA SENJA</option>
+                                <option value="HOUSE NO. 08">HOUSE NO. 08</option>
+                                <option value="THE COURTYARD">THE COURTYARD</option>
+                                <option value="LAGOON RESIDENCE">LAGOON RESIDENCE</option>
+                                <option value="TERRACE HOUSE">TERRACE HOUSE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="inqMessage" class="form-label text-[11px] tracking-[0.25em] uppercase mb-2 block" style="color:#77736C;">Message</label>
+                        <textarea id="inqMessage" name="message" rows="4" class="form-input w-full bg-transparent border-b py-3 px-0 text-base outline-none transition-colors duration-300 focus:border-[#A56A52] resize-none" style="border-color:#C9C4BA;color:#111111;" placeholder="Tell us about your interest…"></textarea>
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" id="sendInquiryBtn" class="w-full md:w-auto px-10 py-4 text-[12px] tracking-[0.3em] uppercase font-medium transition-all duration-300 bg-[#111111] text-white hover:bg-[#A56A52] hover:text-white">
+                            Send Inquiry
+                        </button>
+                    </div>
+                </form>
+
+                <div id="inquirySuccess" class="hidden mt-8 py-10 px-6 text-center" style="border:1px solid #C9C4BA;">
+                    <p class="text-2xl md:text-3xl font-medium mb-2" style="font-family:'Playfair Display',serif;color:#111111;">THANK YOU.</p>
+                    <p class="text-sm md:text-base font-light" style="color:#77736C;">YOUR INQUIRY HAS BEEN RECEIVED.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-14 md:py-20" style="background:#111111;">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-0 mb-10 md:mb-14">
+                <div>
+                    <p class="footer-logo text-2xl md:text-3xl tracking-[0.3em] font-semibold text-white mb-2" style="font-family:'Playfair Display',serif;">ARCA</p>
+                    <p class="text-[10px] tracking-[0.4em] uppercase text-white/40">Spaces Worth Living In.</p>
+                </div>
+                <nav class="flex flex-wrap gap-6 md:gap-8" aria-label="Footer navigation">
+                    <a href="#residences" class="footer-link text-[11px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors duration-300">Residences</a>
+                    <a href="#architecture" class="footer-link text-[11px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors duration-300">Architecture</a>
+                    <a href="#locations" class="footer-link text-[11px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors duration-300">Locations</a>
+                    <a href="#about" class="footer-link text-[11px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors duration-300">About</a>
+                    <a href="#inquiry" class="footer-link text-[11px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors duration-300">Inquire</a>
+                </nav>
+                <div class="flex gap-5">
+                    <a href="#" class="social-link text-white/50 hover:text-white transition-colors duration-300 text-[11px] tracking-[0.2em] uppercase" aria-label="Instagram">Instagram</a>
+                    <a href="#" class="social-link text-white/50 hover:text-white transition-colors duration-300 text-[11px] tracking-[0.2em] uppercase" aria-label="Pinterest">Pinterest</a>
+                </div>
+            </div>
+            <div class="border-t pt-6 flex justify-center md:justify-between items-center flex-col md:flex-row gap-4" style="border-color:rgba(255,255,255,0.1);">
+                <p class="text-[10px] tracking-[0.3em] uppercase text-white/30">© 2026 ARCA</p>
+                <p class="text-[10px] tracking-[0.3em] uppercase text-white/30">Architecture-Led Residences</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== PROPERTY DETAIL OVERLAY ==================== -->
+    <div id="propertyDetailOverlay" class="fixed inset-0 z-[70] opacity-0 pointer-events-none transition-opacity duration-500" style="background:#111111;" role="dialog" aria-modal="true" aria-label="Property detail">
+        <button id="detailCloseBtn" class="absolute top-6 right-6 z-20 text-white/70 hover:text-white transition-colors duration-300 p-3" aria-label="Close property detail">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+
+        <div class="h-full overflow-y-auto">
+            <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-24">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+                    <!-- Gallery -->
+                    <div class="lg:col-span-7">
+                        <div class="detail-gallery relative overflow-hidden bg-black/20">
+                            <img id="detailMainImage" src="assets/images/property-01-exterior.jpg" alt="Property main view" class="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover transition-all duration-400" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                            <button id="galleryPrev" class="gallery-nav absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-300 p-3 bg-black/30 rounded-full" aria-label="Previous image">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+                            </button>
+                            <button id="galleryNext" class="gallery-nav absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-300 p-3 bg-black/30 rounded-full" aria-label="Next image">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+                            </button>
+                        </div>
+                        <div class="gallery-thumbnails flex gap-3 mt-4">
+                            <button class="gallery-thumb active w-20 h-14 overflow-hidden border-2 border-transparent transition-all duration-300" data-gallery-index="0" aria-label="View exterior image">
+                                <img src="assets/images/property-01-exterior.jpg" alt="Exterior view" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                            </button>
+                            <button class="gallery-thumb w-20 h-14 overflow-hidden border-2 border-transparent transition-all duration-300" data-gallery-index="1" aria-label="View interior image">
+                                <img src="assets/images/property-01-interior.jpg" alt="Interior view" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                            </button>
+                            <button class="gallery-thumb w-20 h-14 overflow-hidden border-2 border-transparent transition-all duration-300" data-gallery-index="2" aria-label="View detail image">
+                                <img src="assets/images/property-01-detail.jpg" alt="Material detail" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='assets/images/hero.jpg';">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="lg:col-span-5 text-white">
+                        <p id="detailLocation" class="text-[11px] tracking-[0.4em] uppercase mb-2" style="color:#A56A52;">Jakarta Selatan</p>
+                        <h2 id="detailName" class="text-4xl md:text-5xl font-medium mb-4" style="font-family:'Playfair Display',serif;">CASA NO. 17</h2>
+                        <p id="detailPrice" class="text-2xl md:text-3xl font-light mb-6" style="color:#C9C4BA;">Rp 8.5 M</p>
+
+                        <div class="grid grid-cols-2 gap-4 mb-8 md:mb-10">
+                            <div class="detail-spec py-3 border-b" style="border-color:rgba(255,255,255,0.15);">
+                                <p class="text-[10px] tracking-[0.25em] uppercase text-white/40">Size</p>
+                                <p id="detailSize" class="text-lg font-medium mt-1">480 M²</p>
+                            </div>
+                            <div class="detail-spec py-3 border-b" style="border-color:rgba(255,255,255,0.15);">
+                                <p class="text-[10px] tracking-[0.25em] uppercase text-white/40">Bedrooms</p>
+                                <p id="detailBedrooms" class="text-lg font-medium mt-1">4</p>
+                            </div>
+                            <div class="detail-spec py-3 border-b" style="border-color:rgba(255,255,255,0.15);">
+                                <p class="text-[10px] tracking-[0.25em] uppercase text-white/40">Bathrooms</p>
+                                <p id="detailBathrooms" class="text-lg font-medium mt-1">4</p>
+                            </div>
+                            <div class="detail-spec py-3 border-b" style="border-color:rgba(255,255,255,0.15);">
+                                <p class="text-[10px] tracking-[0.25em] uppercase text-white/40">Parking</p>
+                                <p id="detailParking" class="text-lg font-medium mt-1">2</p>
+                            </div>
+                        </div>
+
+                        <p id="detailDescription" class="text-sm md:text-base leading-relaxed font-light mb-8 text-[#C9C4BA]">
+                            A contemporary residence shaped around light, privacy and natural material.
+                        </p>
+
+                        <div class="border-t pt-6 mb-8" style="border-color:rgba(255,255,255,0.15);">
+                            <h3 class="text-[11px] tracking-[0.3em] uppercase mb-4 text-white/60">Details</h3>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between gap-4">
+                                    <span class="text-white/50">Architecture</span>
+                                    <span id="detailArchitecture" class="text-white/80 font-medium">Contemporary Tropical</span>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <span class="text-white/50">Land</span>
+                                    <span id="detailLand" class="text-white/80 font-medium">620 M²</span>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <span class="text-white/50">Building</span>
+                                    <span id="detailBuilding" class="text-white/80 font-medium">480 M²</span>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <span class="text-white/50">Completion</span>
+                                    <span id="detailCompletion" class="text-white/80 font-medium">2026</span>
+                                </div>
+                                <div class="flex justify-between gap-4">
+                                    <span class="text-white/50">Availability</span>
+                                    <span id="detailAvailability" class="text-white/80 font-medium">Private Viewing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="#inquiry" id="detailInquireBtn" class="inline-block px-8 py-4 text-[11px] tracking-[0.3em] uppercase font-medium border transition-all duration-300 text-white border-white/40 hover:bg-[#A56A52] hover:border-[#A56A52]">
+                            Inquire About This Residence
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SCROLL TO TOP ==================== -->
+    <button id="scrollToTopBtn" class="fixed bottom-6 right-6 z-40 w-12 h-12 flex items-center justify-center border transition-all duration-300 opacity-0 pointer-events-none" style="background:#111111;border-color:#C9C4BA;" aria-label="Scroll to top">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F1EEE7" stroke-width="1.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
