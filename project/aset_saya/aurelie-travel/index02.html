@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURELIA — Go Somewhere Worth Remembering</title>
+    <meta name="description" content="Discover destinations, build your itinerary, and plan a trip worth remembering with AURELIA.">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style02.css">
+    <link rel="icon" type="image/jpg" href="assets/images/favicon.jpg">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#17201C',
+                        deepgreen: '#27483D',
+                        cream: '#F5F1E7',
+                        sand: '#D8C9AD',
+                        coral: '#E87961',
+                        sky: '#DCEBE8',
+                        muted: '#737A75',
+                        border: '#DCDDD7',
+                    },
+                    fontFamily: {
+                        display: ['"DM Serif Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    maxWidth: {
+                        '8xl': '1440px',
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-ink bg-white antialiased overflow-x-hidden">
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border transition-all duration-300" id="navbar" role="banner">
+        <nav class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="#hero" class="flex items-center gap-2 shrink-0" aria-label="AURELIA home">
+                    <img src="assets/images/logo.png" alt="" class="h-9 w-9 rounded-full object-cover" onerror="this.style.display='none'">
+                    <span class="font-display text-2xl md:text-3xl text-ink tracking-tight">AURELIA</span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#discover" class="text-sm font-medium text-ink hover:text-deepgreen transition-colors">Discover</a>
+                    <a href="#my-trip" class="text-sm font-medium text-ink hover:text-deepgreen transition-colors">My Trip</a>
+                    <a href="#tips" class="text-sm font-medium text-ink hover:text-deepgreen transition-colors">Journal</a>
+                    <a href="#tips" class="text-sm font-medium text-ink hover:text-deepgreen transition-colors">Travel Tips</a>
+                    <a href="#about" class="text-sm font-medium text-ink hover:text-deepgreen transition-colors">About</a>
+                    <a href="#my-trip" class="inline-flex items-center gap-2 bg-coral text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d9664e] transition-all duration-200 shadow-sm hover:shadow-md">
+                        PLAN A TRIP
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+
+                <div class="flex md:hidden items-center gap-2">
+                    <button class="p-2.5 rounded-full text-ink hover:bg-cream transition-colors" aria-label="Saved destinations" onclick="openSavedDrawer();" style="min-width:44px;min-height:44px;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
+                    </button>
+                    <button class="p-2.5 rounded-full text-ink hover:bg-cream transition-colors" aria-label="My trip" onclick="openMobileTripDrawer();" style="min-width:44px;min-height:44px;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6"/></svg>
+                    </button>
+                    <button class="p-2.5 rounded-full text-ink hover:bg-cream transition-colors" id="hamburger-btn" aria-label="Open menu" onclick="openMobileMenu();" style="min-width:44px;min-height:44px;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ==================== MOBILE MENU DRAWER ==================== -->
+    <div class="fixed inset-0 z-[60] pointer-events-none" id="mobile-menu-overlay" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" id="mobile-menu-backdrop" onclick="closeMobileMenu();"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-[82%] max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-out" id="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Mobile menu">
+            <div class="flex items-center justify-between p-5 border-b border-border">
+                <span class="font-display text-xl text-ink">Menu</span>
+                <button class="p-3 rounded-full hover:bg-cream transition-colors" onclick="closeMobileMenu();" aria-label="Close menu" style="min-width:44px;min-height:44px;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav class="p-5 flex flex-col gap-1" aria-label="Mobile navigation">
+                <a href="#discover" onclick="closeMobileMenu();" class="py-3.5 px-4 rounded-lg text-ink font-medium hover:bg-cream transition-colors text-base">Discover</a>
+                <a href="#my-trip" onclick="closeMobileMenu();" class="py-3.5 px-4 rounded-lg text-ink font-medium hover:bg-cream transition-colors text-base">My Trip</a>
+                <a href="#tips" onclick="closeMobileMenu();" class="py-3.5 px-4 rounded-lg text-ink font-medium hover:bg-cream transition-colors text-base">Journal</a>
+                <a href="#tips" onclick="closeMobileMenu();" class="py-3.5 px-4 rounded-lg text-ink font-medium hover:bg-cream transition-colors text-base">Travel Tips</a>
+                <a href="#about" onclick="closeMobileMenu();" class="py-3.5 px-4 rounded-lg text-ink font-medium hover:bg-cream transition-colors text-base">About</a>
+                <a href="#my-trip" onclick="closeMobileMenu();" class="mt-4 inline-flex items-center justify-center gap-2 bg-coral text-white px-5 py-3.5 rounded-full text-sm font-semibold hover:bg-[#d9664e] transition-colors">
+                    PLAN A TRIP
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ==================== SAVED DRAWER ==================== -->
+    <div class="fixed inset-0 z-[70] pointer-events-none" id="saved-drawer" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="closeDrawer('saved-drawer');"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-out">
+            <div class="flex items-center justify-between p-5 border-b border-border">
+                <span class="font-display text-xl text-ink">Saved Places</span>
+                <button class="p-3 rounded-full hover:bg-cream transition-colors" onclick="closeDrawer('saved-drawer');" aria-label="Close saved destinations" style="min-width:44px;min-height:44px;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto max-h-[calc(100vh-80px)]" id="saved-drawer-content">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MOBILE TRIP DRAWER ==================== -->
+    <div class="fixed inset-0 z-[70] pointer-events-none" id="mobile-trip-drawer" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="closeDrawer('mobile-trip-drawer');"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-out">
+            <div class="flex items-center justify-between p-5 border-b border-border">
+                <span class="font-display text-xl text-ink">My Trip</span>
+                <button class="p-3 rounded-full hover:bg-cream transition-colors" onclick="closeDrawer('mobile-trip-drawer');" aria-label="Close trip drawer" style="min-width:44px;min-height:44px;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto max-h-[calc(100vh-80px)]" id="mobile-trip-drawer-content">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="pt-16 md:pt-20 bg-cream" aria-labelledby="hero-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-20">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                <div class="order-2 md:order-1 text-center md:text-left">
+                    <h1 id="hero-heading" class="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] text-ink mb-6">
+                        GO SOMEWHERE<br>
+                        WORTH<br>
+                        REMEMBERING.
+                    </h1>
+                    <p class="text-base md:text-lg text-muted leading-relaxed max-w-md mx-auto md:mx-0 mb-8">
+                        Discover destinations, build your itinerary, and plan a trip that feels entirely yours.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                        <a href="#discover" class="inline-flex items-center justify-center gap-2 bg-deepgreen text-white px-7 py-4 rounded-full text-sm font-semibold hover:bg-[#1d3a30] transition-all duration-200 shadow-md hover:shadow-lg min-h-[52px]">
+                            EXPLORE DESTINATIONS
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                        </a>
+                        <a href="#my-trip" class="inline-flex items-center justify-center gap-2 border-2 border-ink text-ink px-7 py-4 rounded-full text-sm font-semibold hover:bg-ink hover:text-white transition-all duration-200 min-h-[52px]">
+                            PLAN A TRIP
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <img src="assets/images/hero.jpg"
+                    alt="Scenic mountain landscape at golden hour"
+                    class="w-full h-64 sm:h-80 md:h-[500px] object-cover rounded-3xl md:rounded-[32px] shadow-lg"
+                    loading="eager"
+                    onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== DISCOVER SECTION ==================== -->
+    <section id="discover" class="py-12 md:py-20 bg-white" aria-labelledby="discover-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Discover</p>
+                <h2 id="discover-heading" class="font-display text-[clamp(2rem,4vw,3rem)] text-ink leading-tight mb-4">
+                    DISCOVER YOUR NEXT PLACE
+                </h2>
+                <p class="text-muted text-base max-w-xl">Find the destination that matches how you want to travel.</p>
+            </div>
+
+            <div class="mb-4">
+                <label for="search-input" class="sr-only">Search destinations</label>
+                <div class="relative max-w-md">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" id="search-input" placeholder="Search destinations..." autocomplete="off"
+                    class="w-full pl-12 pr-4 py-3.5 rounded-full border border-border bg-cream/50 text-ink placeholder-muted text-sm focus:outline-none focus:ring-2 focus:ring-deepgreen focus:border-transparent transition-all"
+                    aria-label="Search destinations">
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 mb-6 overflow-x-auto pb-2 -mx-1 px-1" aria-label="Destination filters">
+                <div class="flex gap-2 flex-wrap" role="group" aria-label="Category filter">
+                    <button class="filter-btn active" data-filter="category" data-value="all" onclick="setFilter('category','all',this);">All</button>
+                    <button class="filter-btn" data-filter="category" data-value="Beach" onclick="setFilter('category','Beach',this);">Beach</button>
+                    <button class="filter-btn" data-filter="category" data-value="Nature" onclick="setFilter('category','Nature',this);">Nature</button>
+                    <button class="filter-btn" data-filter="category" data-value="Culture" onclick="setFilter('category','Culture',this);">Culture</button>
+                    <button class="filter-btn" data-filter="category" data-value="City" onclick="setFilter('category','City',this);">City</button>
+                    <button class="filter-btn" data-filter="category" data-value="Adventure" onclick="setFilter('category','Adventure',this);">Adventure</button>
+                    <button class="filter-btn" data-filter="category" data-value="Relax" onclick="setFilter('category','Relax',this);">Relax</button>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 mb-8 overflow-x-auto pb-2 -mx-1 px-1">
+                <div class="flex gap-2 flex-wrap" role="group" aria-label="Budget filter">
+                    <button class="filter-btn active" data-filter="budget" data-value="all" onclick="setFilter('budget','all',this);">All Budgets</button>
+                    <button class="filter-btn" data-filter="budget" data-value="under7" onclick="setFilter('budget','under7',this);">Under 7M</button>
+                    <button class="filter-btn" data-filter="budget" data-value="7to10" onclick="setFilter('budget','7to10',this);">7M–10M</button>
+                    <button class="filter-btn" data-filter="budget" data-value="above10" onclick="setFilter('budget','above10',this);">Above 10M</button>
+                </div>
+                <span class="w-px h-6 bg-border mx-2" aria-hidden="true"></span>
+                <div class="flex gap-2 flex-wrap" role="group" aria-label="Duration filter">
+                    <button class="filter-btn active" data-filter="duration" data-value="all" onclick="setFilter('duration','all',this);">All Durations</button>
+                    <button class="filter-btn" data-filter="duration" data-value="4to5" onclick="setFilter('duration','4to5',this);">4–5 Days</button>
+                    <button class="filter-btn" data-filter="duration" data-value="6to7" onclick="setFilter('duration','6to7',this);">6–7 Days</button>
+                    <button class="filter-btn" data-filter="duration" data-value="8plus" onclick="setFilter('duration','8plus',this);">8+ Days</button>
+                </div>
+            </div>
+
+            <div id="destination-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6" aria-live="polite">
+                <!-- Rendered by JS -->
+            </div>
+
+            <div id="destination-empty" class="hidden text-center py-16" aria-live="polite">
+                <div class="max-w-sm mx-auto">
+                    <svg class="w-16 h-16 mx-auto text-muted mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <h3 class="font-display text-xl text-ink mb-2">No destinations found</h3>
+                    <p class="text-muted text-sm mb-6">Try adjusting your search or filters to find your perfect place.</p>
+                    <button class="inline-flex items-center gap-2 bg-cream text-ink px-6 py-3 rounded-full text-sm font-semibold hover:bg-sand transition-colors" onclick="resetFilters();">
+                        Reset all filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TRAVEL STYLE ==================== -->
+    <section class="py-12 md:py-20 bg-cream" aria-labelledby="travel-style-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Travel Style</p>
+                <h2 id="travel-style-heading" class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] text-ink leading-tight">
+                    HOW DO YOU WANT TO TRAVEL?
+                </h2>
+            </div>
+            <div class="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 md:flex-wrap md:overflow-visible md:px-0" id="travel-styles" aria-label="Travel styles">
+                <button class="travel-style-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-white text-ink hover:border-deepgreen transition-all min-w-[160px] text-left" data-style="Beach Escape" onclick="setTravelStyle('Beach Escape');">
+                    <span class="block text-2xl mb-1">🏖️</span>
+                    <span class="font-semibold text-sm">Beach Escape</span>
+                </button>
+                <button class="travel-style-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-white text-ink hover:border-deepgreen transition-all min-w-[160px] text-left" data-style="Cultural Journey" onclick="setTravelStyle('Cultural Journey');">
+                    <span class="block text-2xl mb-1">🏛️</span>
+                    <span class="font-semibold text-sm">Cultural Journey</span>
+                </button>
+                <button class="travel-style-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-white text-ink hover:border-deepgreen transition-all min-w-[160px] text-left" data-style="Nature & Adventure" onclick="setTravelStyle('Nature & Adventure');">
+                    <span class="block text-2xl mb-1">⛰️</span>
+                    <span class="font-semibold text-sm">Nature & Adventure</span>
+                </button>
+                <button class="travel-style-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-white text-ink hover:border-deepgreen transition-all min-w-[160px] text-left" data-style="City Explorer" onclick="setTravelStyle('City Explorer');">
+                    <span class="block text-2xl mb-1">🌆</span>
+                    <span class="font-semibold text-sm">City Explorer</span>
+                </button>
+                <button class="travel-style-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-white text-ink hover:border-deepgreen transition-all min-w-[160px] text-left" data-style="Slow Travel" onclick="setTravelStyle('Slow Travel');">
+                    <span class="block text-2xl mb-1">🍃</span>
+                    <span class="font-semibold text-sm">Slow Travel</span>
+                </button>
+            </div>
+            <div id="style-recommendation" class="mt-6 hidden" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- ==================== MOOD SELECTOR ==================== -->
+    <section class="py-12 md:py-16 bg-white" aria-labelledby="mood-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-10">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Your Mood</p>
+                <h2 id="mood-heading" class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] text-ink leading-tight">
+                    HOW DO YOU WANT TO FEEL?
+                </h2>
+            </div>
+            <div class="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 md:flex-wrap md:overflow-visible md:px-0" aria-label="Mood options">
+                <button class="mood-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-cream/50 text-ink hover:border-coral hover:bg-white transition-all min-w-[130px]" data-mood="Relax" onclick="setMood('Relax');">😌 Relax</button>
+                <button class="mood-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-cream/50 text-ink hover:border-coral hover:bg-white transition-all min-w-[130px]" data-mood="Explore" onclick="setMood('Explore');">🔍 Explore</button>
+                <button class="mood-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-cream/50 text-ink hover:border-coral hover:bg-white transition-all min-w-[130px]" data-mood="Reconnect" onclick="setMood('Reconnect');">💛 Reconnect</button>
+                <button class="mood-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-cream/50 text-ink hover:border-coral hover:bg-white transition-all min-w-[130px]" data-mood="Adventure" onclick="setMood('Adventure');">🔥 Adventure</button>
+                <button class="mood-btn flex-shrink-0 px-6 py-4 rounded-2xl border-2 border-border bg-cream/50 text-ink hover:border-coral hover:bg-white transition-all min-w-[130px]" data-mood="Discover" onclick="setMood('Discover');">✨ Discover</button>
+            </div>
+            <div id="mood-recommendation" class="mt-6 hidden" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- ==================== MY TRIP ==================== -->
+    <section id="my-trip" class="py-12 md:py-20 bg-cream" aria-labelledby="my-trip-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Workspace</p>
+                <h2 id="my-trip-heading" class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] text-ink leading-tight">
+                    MY TRIP
+                </h2>
+            </div>
+            <div id="my-trip-content" aria-live="polite">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FEATURED ITINERARY ==================== -->
+    <section class="py-12 md:py-20 bg-white" aria-labelledby="featured-itinerary-heading">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-10 text-center">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Featured Itinerary</p>
+                <h2 id="featured-itinerary-heading" class="font-display text-[clamp(1.8rem,3vw,2.5rem)] text-ink leading-tight">
+                    5 DAYS IN KYOTO
+                </h2>
+                <p class="text-muted text-sm mt-3">A carefully curated journey through Japan's cultural heart.</p>
+            </div>
+            <div class="space-y-3" id="kyoto-accordion">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TRAVEL TIPS ==================== -->
+    <section id="tips" class="py-12 md:py-20 bg-cream" aria-labelledby="tips-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Journal</p>
+                <h2 id="tips-heading" class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] text-ink leading-tight">
+                    TRAVEL TIPS
+                </h2>
+            </div>
+            <div id="tips-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== REVIEWS ==================== -->
+    <section class="py-12 md:py-20 bg-white" aria-labelledby="reviews-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-10">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Stories</p>
+                <h2 id="reviews-heading" class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] text-ink leading-tight">
+                    TRAVELER REVIEWS
+                </h2>
+            </div>
+            <div id="reviews-container" class="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GALLERY ==================== -->
+    <section class="py-12 md:py-20 bg-cream" aria-labelledby="gallery-heading">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-10">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Gallery</p>
+                <h2 id="gallery-heading" class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] text-ink leading-tight">
+                    MOMENTS TO REMEMBER
+                </h2>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4" id="gallery-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAP ==================== -->
+    <section class="py-12 md:py-16 bg-white" aria-labelledby="map-heading">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 text-center">
+                <p class="text-xs font-semibold tracking-widest text-coral uppercase mb-2">Explore</p>
+                <h2 id="map-heading" class="font-display text-[clamp(1.8rem,3vw,2.5rem)] text-ink leading-tight">
+                    WHERE WILL YOU GO?
+                </h2>
+            </div>
+            <div id="simple-map" class="relative w-full aspect-[16/10] md:aspect-[16/7] bg-sky/60 rounded-3xl overflow-hidden border border-border">
+                <!-- SVG map rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SHARE / ADVISOR ==================== -->
+    <section id="share" class="py-12 md:py-16 bg-cream" aria-labelledby="share-heading">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 id="share-heading" class="font-display text-[clamp(1.8rem,3vw,2.5rem)] text-ink leading-tight mb-4">
+                SHARE YOUR JOURNEY
+            </h2>
+            <p class="text-muted text-base max-w-lg mx-auto mb-8">
+                Share your trip plan with friends, or get personalized help from a travel advisor.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+                <button id="share-trip-btn" class="inline-flex items-center justify-center gap-2 bg-deepgreen text-white px-7 py-4 rounded-full text-sm font-semibold hover:bg-[#1d3a30] transition-colors min-h-[52px]" onclick="shareTrip();">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/></svg>
+                    SHARE MY TRIP
+                </button>
+                <button id="whatsapp-btn" class="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-sm font-semibold hover:bg-[#1eb857] transition-colors min-h-[52px]" onclick="openWhatsApp();">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 004.79 1.22c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.83 14.12c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.15-.19-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.42.5-.14.14-.29.29-.13.56.16.27.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.25 1.39.28.14.44.12.6-.07.16-.19.69-.8.87-1.08.18-.27.36-.23.6-.14.24.09 1.54.73 1.8.86.27.14.45.2.51.31.07.12.07.66-.17 1.34z"/></svg>
+                    WHATSAPP ADVISOR
+                </button>
+            </div>
+            <p id="share-feedback" class="text-sm text-deepgreen font-medium hidden" aria-live="polite"></p>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="py-12 md:py-16 bg-white" aria-labelledby="about-heading">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 id="about-heading" class="font-display text-[clamp(1.8rem,3vw,2.5rem)] text-ink leading-tight mb-4">
+                ABOUT AURELIA
+            </h2>
+            <p class="text-muted text-base leading-relaxed max-w-2xl mx-auto">
+                AURELIA is a travel discovery and personal trip planner designed for those who want more than a checklist.
+                We believe travel is about finding places that resonate — and planning journeys that feel entirely your own.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-10 md:py-12 bg-ink text-white" role="contentinfo">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <span class="font-display text-2xl">AURELIA</span>
+                <p class="text-sm text-white/60">GO SOMEWHERE WORTH REMEMBERING.</p>
+                <div class="flex gap-5 text-sm text-white/70">
+                    <a href="#discover" class="hover:text-white transition-colors">Discover</a>
+                    <a href="#my-trip" class="hover:text-white transition-colors">My Trip</a>
+                    <a href="#tips" class="hover:text-white transition-colors">Journal</a>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-6 pt-6 text-center text-xs text-white/50">
+                &copy; 2026 AURELIA. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== DESTINATION DETAIL MODAL ==================== -->
+    <div class="fixed inset-0 z-[80] pointer-events-none" id="destination-modal" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300" id="destination-modal-backdrop" onclick="closeDestinationModal();"></div>
+        <div class="absolute inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center pointer-events-none">
+            <div class="pointer-events-auto bg-white w-full md:max-w-2xl lg:max-w-3xl md:rounded-3xl rounded-t-3xl shadow-2xl transform translate-y-full md:translate-y-0 md:scale-95 md:opacity-0 transition-all duration-300 ease-out max-h-[90vh] md:max-h-[85vh] overflow-y-auto" id="destination-modal-panel" role="dialog" aria-modal="true" aria-label="Destination details">
+                <div class="relative">
+                    <button class="absolute top-4 right-4 z-10 p-3 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors" onclick="closeDestinationModal();" aria-label="Close destination details" style="min-width:44px;min-height:44px;">
+                        <svg class="w-5 h-5 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                    <div id="destination-modal-content">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TIP DETAIL MODAL ==================== -->
+    <div class="fixed inset-0 z-[80] pointer-events-none" id="tip-modal" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300" id="tip-modal-backdrop" onclick="closeTipModal();"></div>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+            <div class="pointer-events-auto bg-white w-full max-w-lg rounded-3xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 ease-out max-h-[80vh] overflow-y-auto" id="tip-modal-panel" role="dialog" aria-modal="true" aria-label="Travel tip details">
+                <div class="p-6 md:p-8">
+                    <button class="float-right p-3 rounded-full hover:bg-cream transition-colors -mr-2 -mt-2" onclick="closeTipModal();" aria-label="Close tip details" style="min-width:44px;min-height:44px;">
+                        <svg class="w-5 h-5 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                    <div id="tip-modal-content">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LIGHTBOX (HIDDEN BY DEFAULT) ==================== -->
+    <div class="fixed inset-0 z-[90] pointer-events-none invisible" id="lightbox" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/80 opacity-0 transition-opacity duration-300" id="lightbox-backdrop" onclick="closeLightbox();"></div>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+            <div class="pointer-events-auto relative max-w-4xl w-full">
+                <button class="absolute -top-12 right-0 p-3 rounded-full text-white hover:text-coral transition-colors" onclick="closeLightbox();" aria-label="Close lightbox" style="min-width:44px;min-height:44px;">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <button class="absolute left-0 top-1/2 -translate-y-1/2 p-3 rounded-full text-white hover:text-coral transition-colors bg-black/30" onclick="navigateLightbox(-1);" aria-label="Previous image" style="min-width:44px;min-height:44px;">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button class="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-full text-white hover:text-coral transition-colors bg-black/30" onclick="navigateLightbox(1);" aria-label="Next image" style="min-width:44px;min-height:44px;">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <img id="lightbox-img" src="" alt="" class="w-full max-h-[75vh] object-contain rounded-2xl">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script02.js">
+    </script>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURELIA — Go Somewhere Worth Remembering</title>
+    <meta name="description" content="Discover destinations, build itineraries, and plan your next journey with AURELIA.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#17201C',
+                        deepgreen: '#27483D',
+                        cream: '#F5F1E7',
+                        sand: '#D8C9AD',
+                        coral: '#E87961',
+                        sky: '#DCEBE8',
+                        muted: '#737A75',
+                        border: '#DCDDD7'
+                    },
+                    fontFamily: {
+                        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"DM Serif Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-cream text-ink font-jakarta antialiased">
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-md border-b border-border transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2" aria-label="AURELIA Home">
+                    <img src="assets/images/logo.png" alt="AURELIA Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain" onerror="this.style.display='none'">
+                    <span class="text-2xl md:text-3xl font-serif tracking-wider text-ink">AURELIA</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#explore" class="text-sm font-medium text-ink/70 hover:text-ink transition-colors">Explore</a>
+                    <a href="#destinations" class="text-sm font-medium text-ink/70 hover:text-ink transition-colors">Destinations</a>
+                    <a href="#inspiration" class="text-sm font-medium text-ink/70 hover:text-ink transition-colors">Inspiration</a>
+                    <a href="#about" class="text-sm font-medium text-ink/70 hover:text-ink transition-colors">About</a>
+                    <a href="#my-trip" class="inline-flex items-center gap-2 bg-deepgreen text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-ink transition-all">
+                        My Trip
+                        <span id="nav-trip-count" class="hidden bg-coral text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center">0</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger -->
+                <button id="hamburger-btn" class="md:hidden flex flex-col justify-center items-center w-11 h-11 rounded-lg border border-border hover:bg-sky transition-colors" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger-line w-6 h-0.5 bg-ink mb-1.5 transition-all duration-300"></span>
+                    <span class="hamburger-line w-6 h-0.5 bg-ink mb-1.5 transition-all duration-300"></span>
+                    <span class="hamburger-line w-4 h-0.5 bg-ink transition-all duration-300"></span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-6 pt-2">
+                <div class="flex flex-col gap-1">
+                    <a href="#explore" class="mobile-nav-link px-4 py-3 text-base font-medium text-ink/80 hover:bg-sky rounded-lg transition-colors">Explore</a>
+                    <a href="#destinations" class="mobile-nav-link px-4 py-3 text-base font-medium text-ink/80 hover:bg-sky rounded-lg transition-colors">Destinations</a>
+                    <a href="#inspiration" class="mobile-nav-link px-4 py-3 text-base font-medium text-ink/80 hover:bg-sky rounded-lg transition-colors">Inspiration</a>
+                    <a href="#about" class="mobile-nav-link px-4 py-3 text-base font-medium text-ink/80 hover:bg-sky rounded-lg transition-colors">About</a>
+                    <div class="border-t border-border mt-2 pt-4 px-4">
+                        <a href="#my-trip" class="mobile-nav-link inline-flex items-center justify-center gap-2 w-full bg-deepgreen text-white px-5 py-3.5 rounded-full text-base font-semibold hover:bg-ink transition-all">
+                            MY TRIP
+                            <span id="mobile-nav-trip-count" class="hidden bg-coral text-white text-xs font-bold rounded-full px-2 py-0.5">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="relative min-h-screen flex items-end md:items-center pt-16 md:pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="assets/images/hero.jpg" alt="Travel destination landscape" class="w-full h-full object-cover" loading="eager" onerror="this.outerHTML='<div class=&quot;w-full h-full bg-gradient-to-br from-deepgreen via-ink to-sand&quot;></div>'">
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/30 to-transparent md:bg-gradient-to-r md:from-ink/60 md:via-ink/20 md:to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16 md:pb-28 pt-24 md:pt-40">
+            <div class="max-w-3xl">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.3em] uppercase mb-4 animate-fade-in">Travel Discovery & Itinerary Planner</p>
+                <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-6 animate-fade-in-up" style="text-shadow: 0 2px 30px rgba(0,0,0,0.3);">
+                    Go Somewhere<br>Worth<br>Remembering.
+                </h1>
+                <p class="text-white/80 text-base md:text-lg max-w-xl mb-8 animate-fade-in-up leading-relaxed">
+                    Discover places, build your itinerary, and make every journey yours.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 animate-fade-in-up">
+                    <a href="#destinations" class="inline-flex items-center justify-center gap-2 bg-coral text-white px-7 py-4 rounded-full text-base font-semibold hover:bg-deepgreen transition-all min-h-[52px]">
+                        Explore Destinations
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                    <a href="#my-trip" class="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white px-7 py-4 rounded-full text-base font-semibold hover:bg-white/20 transition-all min-h-[52px]">
+                        Plan My Trip
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SEARCH PLANNER ==================== -->
+    <section id="explore" class="relative z-20 -mt-8 md:-mt-12 pb-12 md:pb-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-ink/10 border border-border p-5 md:p-8">
+                <h2 class="font-serif text-xl md:text-2xl text-ink mb-5 md:mb-6">Where do you want to go?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+                    <div>
+                        <label for="search-destination" class="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">Destination</label>
+                        <input type="text" id="search-destination" placeholder="e.g., Bali, Kyoto, Japan..." class="w-full px-4 py-3.5 bg-cream border border-border rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-deepgreen focus:border-transparent transition-all" autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="search-month" class="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">When?</label>
+                        <select id="search-month" class="w-full px-4 py-3.5 bg-cream border border-border rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-deepgreen focus:border-transparent transition-all appearance-none">
+                            <option value="">Any Month</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="search-style" class="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">Travel Style</label>
+                        <select id="search-style" class="w-full px-4 py-3.5 bg-cream border border-border rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-deepgreen focus:border-transparent transition-all appearance-none">
+                            <option value="">Any Style</option>
+                            <option value="Beach">Beach</option>
+                            <option value="City">City</option>
+                            <option value="Nature">Nature</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Relax">Relax</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="search-btn" class="mt-5 w-full md:w-auto inline-flex items-center justify-center gap-2 bg-deepgreen text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-ink transition-all min-h-[52px]">
+                    Explore
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                </button>
+                <p id="search-no-results" class="hidden mt-4 text-sm text-coral font-medium"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUICK STATS ==================== -->
+    <section class="py-12 md:py-16 bg-white border-y border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+                <div class="text-center md:text-left reveal">
+                    <p class="font-serif text-4xl md:text-5xl text-ink">120+</p>
+                    <p class="text-sm text-muted mt-2 uppercase tracking-wider font-medium">Destinations</p>
+                </div>
+                <div class="text-center md:text-left reveal">
+                    <p class="font-serif text-4xl md:text-5xl text-ink">48</p>
+                    <p class="text-sm text-muted mt-2 uppercase tracking-wider font-medium">Travel Guides</p>
+                </div>
+                <div class="text-center md:text-left reveal">
+                    <p class="font-serif text-4xl md:text-5xl text-ink">320+</p>
+                    <p class="text-sm text-muted mt-2 uppercase tracking-wider font-medium">Curated Activities</p>
+                </div>
+                <div class="text-center md:text-left reveal">
+                    <p class="font-serif text-4xl md:text-5xl text-ink">4.9/5</p>
+                    <p class="text-sm text-muted mt-2 uppercase tracking-wider font-medium">Traveler Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== DESTINATION DISCOVERY ==================== -->
+    <section id="destinations" class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
+                <div>
+                    <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Destination Discovery</p>
+                    <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">Find Your Next Place</h2>
+                </div>
+                <!-- Mobile Filter Button -->
+                <button id="mobile-filter-btn" class="md:hidden inline-flex items-center justify-center gap-2 bg-deepgreen text-white px-6 py-3.5 rounded-full text-sm font-semibold min-h-[48px]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                    Filter
+                </button>
+            </div>
+
+            <!-- Desktop Filter Tabs -->
+            <div class="hidden md:flex flex-wrap gap-2 mb-8" id="desktop-filters">
+                <button class="filter-tab active" data-filter="All">All</button>
+                <button class="filter-tab" data-filter="Beach">Beach</button>
+                <button class="filter-tab" data-filter="City">City</button>
+                <button class="filter-tab" data-filter="Nature">Nature</button>
+                <button class="filter-tab" data-filter="Culture">Culture</button>
+                <button class="filter-tab" data-filter="Adventure">Adventure</button>
+                <button class="filter-tab" data-filter="Relax">Relax</button>
+            </div>
+
+            <!-- Mobile Filter Tabs (horizontal scroll) -->
+            <div class="md:hidden flex overflow-x-auto gap-2 pb-4 mb-4 -mx-4 px-4 no-scrollbar" id="mobile-filters">
+                <button class="filter-tab-mobile active flex-shrink-0" data-filter="All">All</button>
+                <button class="filter-tab-mobile flex-shrink-0" data-filter="Beach">Beach</button>
+                <button class="filter-tab-mobile flex-shrink-0" data-filter="City">City</button>
+                <button class="filter-tab-mobile flex-shrink-0" data-filter="Nature">Nature</button>
+                <button class="filter-tab-mobile flex-shrink-0" data-filter="Culture">Culture</button>
+                <button class="filter-tab-mobile flex-shrink-0" data-filter="Adventure">Adventure</button>
+                <button class="filter-tab-mobile flex-shrink-0" data-filter="Relax">Relax</button>
+            </div>
+
+            <!-- Destination Cards Grid -->
+            <div id="destination-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"></div>
+        </div>
+    </section>
+
+    <!-- ==================== TRAVEL STYLE ==================== -->
+    <section class="py-16 md:py-24 bg-deepgreen text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Travel Your Way</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-white leading-tight reveal">Choose Your Journey</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6" id="travel-style-grid">
+                <button class="travel-style-card text-left p-6 md:p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all group reveal" data-style="Relax">
+                    <span class="text-5xl md:text-6xl font-serif text-coral block mb-4">01</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-3 group-hover:text-coral transition-colors">Slow Escape</h3>
+                    <p class="text-white/60 text-sm leading-relaxed">Unwind, breathe deeply, and let the world move at your pace.</p>
+                </button>
+                <button class="travel-style-card text-left p-6 md:p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all group reveal" data-style="City">
+                    <span class="text-5xl md:text-6xl font-serif text-coral block mb-4">02</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-3 group-hover:text-coral transition-colors">City Energy</h3>
+                    <p class="text-white/60 text-sm leading-relaxed">Immerse in vibrant streets, hidden cafés, and urban rhythm.</p>
+                </button>
+                <button class="travel-style-card text-left p-6 md:p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all group reveal" data-style="Adventure">
+                    <span class="text-5xl md:text-6xl font-serif text-coral block mb-4">03</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-3 group-hover:text-coral transition-colors">Wild & Free</h3>
+                    <p class="text-white/60 text-sm leading-relaxed">Chase adrenaline, conquer peaks, and embrace the unknown.</p>
+                </button>
+                <button class="travel-style-card text-left p-6 md:p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all group reveal" data-style="Culture">
+                    <span class="text-5xl md:text-6xl font-serif text-coral block mb-4">04</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-3 group-hover:text-coral transition-colors">Culture Hunt</h3>
+                    <p class="text-white/60 text-sm leading-relaxed">Seek stories, traditions, and the soul of every place.</p>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FEATURED ITINERARY ==================== -->
+    <section class="py-16 md:py-24 bg-cream">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Featured Itinerary</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">5 Days in Kyoto</h2>
+            </div>
+
+            <!-- Accordion -->
+            <div id="featured-accordion" class="space-y-3">
+                <div class="accordion-item bg-white rounded-xl border border-border overflow-hidden reveal">
+                    <button class="accordion-header w-full flex items-center justify-between p-5 md:p-6 text-left" aria-expanded="false">
+                        <span class="font-semibold text-ink">Day 01 — Arrival & Gion</span>
+                        <svg class="accordion-icon w-5 h-5 text-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-body hidden px-5 md:px-6 pb-5">
+                        <p class="text-muted text-sm leading-relaxed">Arrive at Kyoto Station, check into your accommodation near Gion. Evening walk through the historic geisha district, visiting Yasaka Shrine and strolling along Hanamikoji Street.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-xl border border-border overflow-hidden reveal">
+                    <button class="accordion-header w-full flex items-center justify-between p-5 md:p-6 text-left" aria-expanded="false">
+                        <span class="font-semibold text-ink">Day 02 — Temples & Tea</span>
+                        <svg class="accordion-icon w-5 h-5 text-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-body hidden px-5 md:px-6 pb-5">
+                        <p class="text-muted text-sm leading-relaxed">Visit Kinkaku-ji (Golden Pavilion) and Ryoan-ji Temple. Afternoon tea ceremony experience. Evening exploration of Nishiki Market for local street food.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-xl border border-border overflow-hidden reveal">
+                    <button class="accordion-header w-full flex items-center justify-between p-5 md:p-6 text-left" aria-expanded="false">
+                        <span class="font-semibold text-ink">Day 03 — Arashiyama</span>
+                        <svg class="accordion-icon w-5 h-5 text-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-body hidden px-5 md:px-6 pb-5">
+                        <p class="text-muted text-sm leading-relaxed">Full day in Arashiyama — bamboo grove at sunrise, Tenryu-ji Temple, and a scenic walk along the Katsura River. Optional monkey park visit.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-xl border border-border overflow-hidden reveal">
+                    <button class="accordion-header w-full flex items-center justify-between p-5 md:p-6 text-left" aria-expanded="false">
+                        <span class="font-semibold text-ink">Day 04 — Hidden Kyoto</span>
+                        <svg class="accordion-icon w-5 h-5 text-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-body hidden px-5 md:px-6 pb-5">
+                        <p class="text-muted text-sm leading-relaxed">Explore hidden gems — Fushimi Inari Shrine at dawn, Tofuku-ji Temple gardens, and the quieter streets of Higashiyama. Evening at a local izakaya.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-xl border border-border overflow-hidden reveal">
+                    <button class="accordion-header w-full flex items-center justify-between p-5 md:p-6 text-left" aria-expanded="false">
+                        <span class="font-semibold text-ink">Day 05 — Slow Morning & Departure</span>
+                        <svg class="accordion-icon w-5 h-5 text-muted transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-body hidden px-5 md:px-6 pb-5">
+                        <p class="text-muted text-sm leading-relaxed">Leisurely breakfast, final souvenir shopping, and a quiet walk along the Kamogawa River before heading to Kyoto Station for departure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MY TRIP DASHBOARD ==================== -->
+    <section id="my-trip" class="py-16 md:py-24 bg-white border-y border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Your Journey</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">My Trip</h2>
+            </div>
+
+            <!-- Trip Progress -->
+            <div id="trip-progress-section" class="mb-8 md:mb-10 reveal">
+                <div class="flex items-center justify-between mb-2">
+                    <p id="trip-progress-label" class="text-sm font-semibold text-ink">0 / 0 Days Planned</p>
+                    <p id="trip-progress-percent" class="text-sm font-bold text-deepgreen">0%</p>
+                </div>
+                <div class="w-full h-3 bg-cream rounded-full overflow-hidden">
+                    <div id="trip-progress-bar" class="h-full bg-deepgreen rounded-full transition-all duration-500" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Trip Dashboard Content -->
+            <div id="trip-dashboard">
+                <!-- Empty state -->
+                <div id="trip-empty-state" class="text-center py-12 md:py-16 reveal">
+                    <div class="text-6xl mb-4">🗺️</div>
+                    <h3 class="font-serif text-2xl md:text-3xl text-ink mb-3">Your trip is empty.</h3>
+                    <p class="text-muted mb-6 max-w-md mx-auto">Start exploring destinations and build your journey.</p>
+                    <a href="#destinations" class="inline-flex items-center gap-2 bg-deepgreen text-white px-7 py-3.5 rounded-full font-semibold hover:bg-ink transition-all">
+                        Explore Destinations
+                    </a>
+                </div>
+
+                <!-- Trip content -->
+                <div id="trip-content" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+                        <!-- Itinerary Builder (2/3 width) -->
+                        <div class="lg:col-span-2">
+                            <div id="trip-header" class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                                <div>
+                                    <h3 id="trip-name" class="font-serif text-2xl md:text-3xl text-ink">Trip Name</h3>
+                                    <p id="trip-meta" class="text-sm text-muted mt-1">5 Days · 0 Activities</p>
+                                </div>
+                                <button id="clear-trip-btn" class="text-sm text-coral font-medium hover:text-red-600 transition-colors">Clear Trip</button>
+                            </div>
+
+                            <div id="itinerary-days" class="space-y-4"></div>
+                        </div>
+
+                        <!-- Budget Calculator (1/3 width) -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-cream rounded-2xl p-5 md:p-6 sticky top-20">
+                                <h3 class="font-serif text-xl md:text-2xl mb-5">Trip Budget</h3>
+
+                                <div class="space-y-4">
+                                    <div>
+                                        <p class="text-sm text-muted mb-1">Activities</p>
+                                        <p id="budget-activities" class="text-lg font-semibold text-ink">Rp0</p>
+                                    </div>
+                                    <div>
+                                        <label for="budget-accommodation" class="text-sm text-muted mb-1 block">Accommodation</label>
+                                        <input type="number" id="budget-accommodation" min="0" step="50000" value="3000000" class="w-full px-3 py-2.5 bg-white border border-border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-deepgreen transition-all">
+                                    </div>
+                                    <div>
+                                        <label for="budget-transport" class="text-sm text-muted mb-1 block">Transport</label>
+                                        <input type="number" id="budget-transport" min="0" step="50000" value="1500000" class="w-full px-3 py-2.5 bg-white border border-border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-deepgreen transition-all">
+                                    </div>
+                                    <div>
+                                        <label for="budget-food" class="text-sm text-muted mb-1 block">Food</label>
+                                        <input type="number" id="budget-food" min="0" step="50000" value="1000000" class="w-full px-3 py-2.5 bg-white border border-border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-deepgreen transition-all">
+                                    </div>
+                                    <div class="border-t border-border pt-4">
+                                        <p class="text-sm text-muted mb-1">Estimated Total</p>
+                                        <p id="budget-total" class="text-2xl font-serif text-deepgreen font-bold">Rp0</p>
+                                    </div>
+                                </div>
+
+                                <button id="share-trip-btn" class="mt-5 w-full inline-flex items-center justify-center gap-2 bg-deepgreen text-white px-5 py-3.5 rounded-full font-semibold hover:bg-ink transition-all min-h-[48px]">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                                    Share Trip
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ACTIVITY LIST ==================== -->
+    <section class="py-16 md:py-24 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Curated Activities</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">Add to Your Days</h2>
+            </div>
+            <div id="activity-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"></div>
+        </div>
+    </section>
+
+    <!-- ==================== TRAVEL INSPIRATION (MOOD) ==================== -->
+    <section id="inspiration" class="py-16 md:py-24 bg-white border-y border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Go With The Mood</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">What Moves You?</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6" id="mood-grid">
+                <button class="mood-card bg-cream border border-border rounded-2xl p-6 md:p-8 text-left hover:border-deepgreen hover:shadow-lg transition-all group reveal" data-mood="relax">
+                    <span class="text-3xl mb-4 block">🌿</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-2 group-hover:text-deepgreen transition-colors">I Want to Slow Down</h3>
+                    <p class="text-muted text-sm">Peaceful escapes, gentle mornings, and time to breathe.</p>
+                </button>
+                <button class="mood-card bg-cream border border-border rounded-2xl p-6 md:p-8 text-left hover:border-deepgreen hover:shadow-lg transition-all group reveal" data-mood="explore">
+                    <span class="text-3xl mb-4 block">⛰️</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-2 group-hover:text-deepgreen transition-colors">I Want to Explore</h3>
+                    <p class="text-muted text-sm">Vast landscapes, hidden trails, and endless discovery.</p>
+                </button>
+                <button class="mood-card bg-cream border border-border rounded-2xl p-6 md:p-8 text-left hover:border-deepgreen hover:shadow-lg transition-all group reveal" data-mood="eat">
+                    <span class="text-3xl mb-4 block">🍜</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-2 group-hover:text-deepgreen transition-colors">I Want to Eat</h3>
+                    <p class="text-muted text-sm">Flavors, street food, and unforgettable culinary moments.</p>
+                </button>
+                <button class="mood-card bg-cream border border-border rounded-2xl p-6 md:p-8 text-left hover:border-deepgreen hover:shadow-lg transition-all group reveal" data-mood="disconnect">
+                    <span class="text-3xl mb-4 block">🌊</span>
+                    <h3 class="font-serif text-xl md:text-2xl mb-2 group-hover:text-deepgreen transition-colors">I Want to Disconnect</h3>
+                    <p class="text-muted text-sm">Off-grid retreats, nature immersion, and digital detox.</p>
+                </button>
+            </div>
+            <div id="mood-result" class="hidden mt-8 p-6 bg-deepgreen text-white rounded-2xl reveal"></div>
+        </div>
+    </section>
+
+    <!-- ==================== TRAVEL CHECKLIST ==================== -->
+    <section class="py-16 md:py-24 bg-cream">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-10">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Before You Go</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">Travel Checklist</h2>
+            </div>
+            <div id="checklist" class="space-y-3">
+                <label class="checklist-item flex items-center gap-4 p-4 bg-white border border-border rounded-xl cursor-pointer hover:border-deepgreen transition-all reveal">
+                    <input type="checkbox" class="checklist-checkbox w-5 h-5 accent-deepgreen cursor-pointer" data-checklist="passport">
+                    <span class="text-ink font-medium">Passport</span>
+                </label>
+                <label class="checklist-item flex items-center gap-4 p-4 bg-white border border-border rounded-xl cursor-pointer hover:border-deepgreen transition-all reveal">
+                    <input type="checkbox" class="checklist-checkbox w-5 h-5 accent-deepgreen cursor-pointer" data-checklist="insurance">
+                    <span class="text-ink font-medium">Travel insurance</span>
+                </label>
+                <label class="checklist-item flex items-center gap-4 p-4 bg-white border border-border rounded-xl cursor-pointer hover:border-deepgreen transition-all reveal">
+                    <input type="checkbox" class="checklist-checkbox w-5 h-5 accent-deepgreen cursor-pointer" data-checklist="accommodation">
+                    <span class="text-ink font-medium">Accommodation</span>
+                </label>
+                <label class="checklist-item flex items-center gap-4 p-4 bg-white border border-border rounded-xl cursor-pointer hover:border-deepgreen transition-all reveal">
+                    <input type="checkbox" class="checklist-checkbox w-5 h-5 accent-deepgreen cursor-pointer" data-checklist="transport">
+                    <span class="text-ink font-medium">Transport</span>
+                </label>
+                <label class="checklist-item flex items-center gap-4 p-4 bg-white border border-border rounded-xl cursor-pointer hover:border-deepgreen transition-all reveal">
+                    <input type="checkbox" class="checklist-checkbox w-5 h-5 accent-deepgreen cursor-pointer" data-checklist="currency">
+                    <span class="text-ink font-medium">Local currency</span>
+                </label>
+                <label class="checklist-item flex items-center gap-4 p-4 bg-white border border-border rounded-xl cursor-pointer hover:border-deepgreen transition-all reveal">
+                    <input type="checkbox" class="checklist-checkbox w-5 h-5 accent-deepgreen cursor-pointer" data-checklist="documents">
+                    <span class="text-ink font-medium">Essential documents</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TRAVEL TIPS ==================== -->
+    <section class="py-16 md:py-24 bg-white border-y border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-12">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Travel Tips</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">Practical Wisdom</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                <button class="tip-card text-left p-6 bg-cream border border-border rounded-2xl hover:border-deepgreen hover:shadow-lg transition-all reveal" data-tip="when">
+                    <span class="text-3xl mb-3 block">📅</span>
+                    <h3 class="font-semibold text-lg mb-2">When to Go</h3>
+                    <p class="text-sm text-muted">Timing transforms experiences.</p>
+                </button>
+                <button class="tip-card text-left p-6 bg-cream border border-border rounded-2xl hover:border-deepgreen hover:shadow-lg transition-all reveal" data-tip="pack">
+                    <span class="text-3xl mb-3 block">🎒</span>
+                    <h3 class="font-semibold text-lg mb-2">What to Pack</h3>
+                    <p class="text-sm text-muted">Smart packing, lighter journey.</p>
+                </button>
+                <button class="tip-card text-left p-6 bg-cream border border-border rounded-2xl hover:border-deepgreen hover:shadow-lg transition-all reveal" data-tip="etiquette">
+                    <span class="text-3xl mb-3 block">🤝</span>
+                    <h3 class="font-semibold text-lg mb-2">Local Etiquette</h3>
+                    <p class="text-sm text-muted">Respect opens doors.</p>
+                </button>
+                <button class="tip-card text-left p-6 bg-cream border border-border rounded-2xl hover:border-deepgreen hover:shadow-lg transition-all reveal" data-tip="around">
+                    <span class="text-3xl mb-3 block">🚇</span>
+                    <h3 class="font-semibold text-lg mb-2">Getting Around</h3>
+                    <p class="text-sm text-muted">Navigate like a local.</p>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAP VISUALIZATION ==================== -->
+    <section class="py-16 md:py-24 bg-cream">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 md:mb-10">
+                <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-3 reveal">Route Preview</p>
+                <h2 class="font-serif text-3xl md:text-5xl text-ink leading-tight reveal">Visualize Your Journey</h2>
+            </div>
+            <div id="map-container" class="bg-white border border-border rounded-2xl p-6 md:p-10 reveal">
+                <svg id="map-svg" viewBox="0 0 400 500" class="w-full max-w-md mx-auto" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Line -->
+                    <line x1="200" y1="50" x2="200" y2="450" stroke="#27483D" stroke-width="3" stroke-dasharray="8,6"/>
+                    <!-- Stop 1 -->
+                    <circle cx="200" cy="80" r="12" fill="#E87961" stroke="#fff" stroke-width="3"/>
+                    <text x="225" y="85" class="text-xs fill-ink font-semibold" font-family="Plus Jakarta Sans, sans-serif">Gion</text>
+                    <!-- Stop 2 -->
+                    <circle cx="200" cy="175" r="12" fill="#E87961" stroke="#fff" stroke-width="3"/>
+                    <text x="225" y="180" class="text-xs fill-ink font-semibold" font-family="Plus Jakarta Sans, sans-serif">Fushimi</text>
+                    <!-- Stop 3 -->
+                    <circle cx="200" cy="270" r="12" fill="#E87961" stroke="#fff" stroke-width="3"/>
+                    <text x="225" y="275" class="text-xs fill-ink font-semibold" font-family="Plus Jakarta Sans, sans-serif">Arashiyama</text>
+                    <!-- Stop 4 -->
+                    <circle cx="200" cy="365" r="12" fill="#E87961" stroke="#fff" stroke-width="3"/>
+                    <text x="225" y="370" class="text-xs fill-ink font-semibold" font-family="Plus Jakarta Sans, sans-serif">Kyoto Station</text>
+                    <!-- Start marker -->
+                    <circle cx="200" cy="50" r="6" fill="#27483D" stroke="#fff" stroke-width="2"/>
+                    <text x="210" y="45" class="text-xs fill-muted font-medium" font-family="Plus Jakarta Sans, sans-serif">KYOTO</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="py-16 md:py-24 bg-deepgreen text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-coral font-semibold text-xs md:text-sm tracking-[0.25em] uppercase mb-4 reveal">About AURELIA</p>
+            <h2 class="font-serif text-3xl md:text-5xl text-white leading-tight mb-6 reveal">Travel Should Feel Like Yours.</h2>
+            <p class="text-white/70 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal">
+                AURELIA helps travelers turn inspiration into intentional journeys — from choosing a destination to planning each day, estimating budgets, and organizing everything in one place.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== WHATSAPP CTA ==================== -->
+    <section class="py-12 md:py-16 bg-cream">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="font-serif text-2xl md:text-3xl text-ink mb-3 reveal">Talk to a Travel Advisor</h3>
+            <p class="text-muted mb-6 reveal">Get personalized recommendations for your next journey.</p>
+            <button id="whatsapp-btn" class="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-full text-base font-semibold hover:opacity-90 transition-all min-h-[52px]">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Chat on WhatsApp
+            </button>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-ink text-white py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div>
+                    <h3 class="font-serif text-2xl mb-3">AURELIA</h3>
+                    <p class="text-white/50 text-sm">Go somewhere worth remembering.</p>
+                </div>
+                <div>
+                    <p class="text-white/70 font-semibold text-sm uppercase tracking-wider mb-3">Explore</p>
+                    <ul class="space-y-2 text-sm text-white/50">
+                        <li><a href="#destinations" class="hover:text-white transition-colors">Destinations</a></li>
+                        <li><a href="#my-trip" class="hover:text-white transition-colors">My Trip</a></li>
+                        <li><a href="#inspiration" class="hover:text-white transition-colors">Inspiration</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-white/70 font-semibold text-sm uppercase tracking-wider mb-3">Contact</p>
+                    <ul class="space-y-2 text-sm text-white/50">
+                        <li><a href="#" id="footer-whatsapp" class="hover:text-white transition-colors">WhatsApp</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-6 text-center text-sm text-white/40">
+                © 2026 AURELIA
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== DESTINATION DETAIL MODAL ==================== -->
+    <div id="destination-modal" class="modal-overlay hidden fixed inset-0 z-[100] bg-ink/70 backdrop-blur-sm">
+        <div class="modal-content absolute inset-0 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-2xl md:w-full md:max-h-[90vh] bg-white md:rounded-3xl overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-border p-4 md:p-5 flex items-center justify-between z-10">
+                <h3 id="modal-title" class="font-serif text-xl md:text-2xl text-ink">Destination</h3>
+                <button id="modal-close" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-cream transition-colors" aria-label="Close modal">
+                    <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="modal-body" class="p-4 md:p-6"></div>
+        </div>
+    </div>
+
+    <!-- ==================== MOBILE FILTER BOTTOM SHEET ==================== -->
+    <div id="filter-sheet" class="hidden fixed inset-0 z-[90]">
+        <div id="filter-sheet-backdrop" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+        <div id="filter-sheet-panel" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-5 md:p-6 max-h-[70vh] overflow-y-auto translate-y-full transition-transform duration-300">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="font-serif text-xl text-ink">Filter Destinations</h3>
+                <button id="filter-sheet-close" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-cream transition-colors" aria-label="Close filter sheet">
+                    <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Travel Style -->
+            <div class="mb-5">
+                <p class="text-sm font-semibold text-ink mb-3">Travel Style</p>
+                <div class="flex flex-wrap gap-2" id="sheet-style-filters">
+                    <button class="sheet-filter-chip" data-style-filter="Beach">Beach</button>
+                    <button class="sheet-filter-chip" data-style-filter="City">City</button>
+                    <button class="sheet-filter-chip" data-style-filter="Nature">Nature</button>
+                    <button class="sheet-filter-chip" data-style-filter="Culture">Culture</button>
+                    <button class="sheet-filter-chip" data-style-filter="Adventure">Adventure</button>
+                    <button class="sheet-filter-chip" data-style-filter="Relax">Relax</button>
+                </div>
+            </div>
+
+            <!-- Budget -->
+            <div class="mb-5">
+                <p class="text-sm font-semibold text-ink mb-3">Budget</p>
+                <div class="flex flex-wrap gap-2" id="sheet-budget-filters">
+                    <button class="sheet-filter-chip" data-budget-filter="under5">Under Rp5M</button>
+                    <button class="sheet-filter-chip" data-budget-filter="5to10">Rp5M–10M</button>
+                    <button class="sheet-filter-chip" data-budget-filter="above10">Above Rp10M</button>
+                </div>
+            </div>
+
+            <!-- Duration -->
+            <div class="mb-5">
+                <p class="text-sm font-semibold text-ink mb-3">Duration</p>
+                <div class="flex flex-wrap gap-2" id="sheet-duration-filters">
+                    <button class="sheet-filter-chip" data-duration-filter="1-3">1–3 days</button>
+                    <button class="sheet-filter-chip" data-duration-filter="4-7">4–7 days</button>
+                    <button class="sheet-filter-chip" data-duration-filter="8+">8+ days</button>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <button id="sheet-apply" class="flex-1 bg-deepgreen text-white py-3.5 rounded-full font-semibold hover:bg-ink transition-all min-h-[48px]">Apply Filters</button>
+                <button id="sheet-reset" class="flex-1 bg-cream text-ink py-3.5 rounded-full font-semibold hover:bg-sky transition-all min-h-[48px]">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TIP MODAL ==================== -->
+    <div id="tip-modal" class="modal-overlay hidden fixed inset-0 z-[100] bg-ink/70 backdrop-blur-sm">
+        <div class="modal-content absolute inset-0 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-lg md:w-full md:max-h-[80vh] bg-white md:rounded-3xl overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-border p-4 md:p-5 flex items-center justify-between z-10">
+                <h3 id="tip-modal-title" class="font-serif text-xl md:text-2xl text-ink">Tip</h3>
+                <button class="tip-modal-close w-10 h-10 flex items-center justify-center rounded-full hover:bg-cream transition-colors" aria-label="Close tip modal">
+                    <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="tip-modal-body" class="p-4 md:p-6"></div>
+        </div>
+    </div>
+
+    <!-- ==================== ADD TO TRIP MODAL ==================== -->
+    <div id="add-trip-modal" class="modal-overlay hidden fixed inset-0 z-[100] bg-ink/70 backdrop-blur-sm">
+        <div class="modal-content absolute inset-0 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-sm md:w-full bg-white md:rounded-3xl overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-border p-4 md:p-5 flex items-center justify-between z-10">
+                <h3 class="font-serif text-xl text-ink">Add to Trip</h3>
+                <button class="add-trip-close w-10 h-10 flex items-center justify-center rounded-full hover:bg-cream transition-colors" aria-label="Close">
+                    <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="add-trip-body" class="p-4 md:p-6"></div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script src="js/script.js"></script>
+</body>
+</html>

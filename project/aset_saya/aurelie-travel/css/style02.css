@@ -1,0 +1,200 @@
+/* ============================================================
+   AURELIA V3 — style.css
+   Custom styles beyond Tailwind utilities
+   ============================================================ */
+
+:root {
+    --ink: #17201C;
+    --deepgreen: #27483D;
+    --cream: #F5F1E7;
+    --sand: #D8C9AD;
+    --coral: #E87961;
+    --sky: #DCEBE8;
+    --muted: #737A75;
+    --border: #DCDDD7;
+    --white: #FFFFFF;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    min-height: 100vh;
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, .font-display {
+    font-family: 'DM Serif Display', serif;
+}
+
+/* Filter Buttons */
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all var(--transition);
+    cursor: pointer;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+.filter-btn:hover {
+    border-color: var(--deepgreen);
+    background: var(--cream);
+}
+
+.filter-btn.active {
+    border-color: var(--deepgreen);
+    background: var(--deepgreen);
+    color: var(--white);
+}
+
+/* Travel style & mood buttons */
+.travel-style-btn,
+.mood-btn {
+    transition: all var(--transition);
+    cursor: pointer;
+    border: 2px solid var(--border);
+    background: var(--white);
+    color: var(--ink);
+}
+
+.travel-style-btn:hover,
+.mood-btn:hover {
+    border-color: var(--coral);
+    background: var(--cream);
+}
+
+.travel-style-btn.active,
+.mood-btn.active {
+    border-color: var(--coral);
+    background: #fff5f2;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Cards */
+.destination-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    cursor: pointer;
+}
+
+.destination-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Progress bars */
+.progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--deepgreen);
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+}
+
+/* Checklist item */
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Itinerary timeline */
+.day-card {
+    border-left: 3px solid var(--sand);
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+/* Accordion */
+.accordion-button {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--border);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 16px;
+    background: var(--cream);
+    border-radius: 0 0 12px 12px;
+}
+
+.accordion-content.open {
+    max-height: 500px;
+    padding: 16px;
+}
+
+/* Lightbox */
+#lightbox-img {
+    max-height: 75vh;
+    width: auto;
+    max-width: 100%;
+}
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+    .destination-card img {
+        height: 180px;
+    }
+}
+
+/* Accessibility: Focus visible */
+*:focus-visible {
+    outline: 2px solid var(--coral);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
