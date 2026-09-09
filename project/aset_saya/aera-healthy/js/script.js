@@ -1,11 +1,11 @@
 /* ==========================================
-   AERA HEALTH — script.js
-   Vanilla JavaScript, centralized state,
-   modal manager, render architecture
-   (FIXED VERSION)
+   AERA HEALTH — script.js (REVISED FINAL)
+   Perbaikan: updateAppointmentStepVisibility
+   agar setiap tombol next di step yang sesuai
+   diatur status disabled‑nya.
 ========================================== */
 
-// ============ DEFAULT DATA ============
+// ============ DEFAULT DATA (tidak berubah) ============
 const defaultDoctors = [
     {
         id: 'doc-01',
@@ -295,7 +295,6 @@ function loadState() {
                 appointmentState: { ...defaults.appointmentState, ...(parsed.appointmentState || {}) },
                 galleryImages: { ...defaults.galleryImages, ...(parsed.galleryImages || {}) }
             };
-            // pastikan step terdefinisi
             if (typeof merged.appointmentState.step === 'undefined') {
                 merged.appointmentState.step = 0;
             }
@@ -909,26 +908,44 @@ function getCurrentStepIndex() {
     return appState.appointmentState.step || 0;
 }
 
+// ========== PERBAIKAN UTAMA ==========
 function updateAppointmentStepVisibility() {
     const steps = modalRoot.querySelectorAll('.appointment-step');
     const current = getCurrentStepIndex();
+    
+    // Update active class untuk semua step
     steps.forEach((step, idx) => {
         step.classList.toggle('active', idx === current);
     });
+
+    // Update indikator
     const dots = modalRoot.querySelectorAll('.step-dot');
     dots.forEach((dot, idx) => {
         dot.classList.toggle('active', idx === current);
         dot.classList.toggle('completed', idx < current);
     });
-    const nextBtn = modalRoot.querySelector(`[data-action="next-step"]`);
-    if (nextBtn) {
-        if (current === 0) nextBtn.disabled = !appState.appointmentState.doctor;
-        if (current === 1) nextBtn.disabled = !appState.appointmentState.date;
-        if (current === 2) nextBtn.disabled = !appState.appointmentState.time;
-        if (current === 3) nextBtn.disabled = false; // akan divalidasi saat klik
-        if (current === 4) nextBtn.style.display = 'none';
-    }
-    const confirmBtn = modalRoot.querySelector(`[data-action="confirm-appointment"]`);
+
+    // Perbarui tombol "Next" pada setiap step sesuai kondisinya
+    const nextButtons = modalRoot.querySelectorAll('[data-action="next-step"]');
+    nextButtons.forEach(btn => {
+        const parentStep = btn.closest('.appointment-step');
+        if (!parentStep) return;
+        const stepIndex = parseInt(parentStep.dataset.step, 10);
+        
+        // Tentukan status disabled berdasarkan stepIndex
+        if (stepIndex === 0) btn.disabled = !appState.appointmentState.doctor;
+        else if (stepIndex === 1) btn.disabled = !appState.appointmentState.date;
+        else if (stepIndex === 2) btn.disabled = !appState.appointmentState.time;
+        else if (stepIndex === 3) btn.disabled = false; // validasi dilakukan saat klik
+        // Step 4 tidak memiliki tombol next, abaikan
+    });
+
+    // Pastikan tombol next di step 4 (jika ada) disembunyikan
+    const reviewNextBtn = modalRoot.querySelector('.appointment-step[data-step="4"] [data-action="next-step"]');
+    if (reviewNextBtn) reviewNextBtn.style.display = 'none';
+
+    // Tampilkan tombol confirm hanya di step 4
+    const confirmBtn = modalRoot.querySelector('[data-action="confirm-appointment"]');
     if (confirmBtn) {
         confirmBtn.style.display = current === 4 ? 'inline-flex' : 'none';
     }
@@ -1097,7 +1114,7 @@ function openGallery(imageKey) {
     };
 }
 
-// Mobile Drawer (handled separately, but registered for consistency)
+// Mobile Drawer
 function openMobileDrawer() {
     const drawer = document.getElementById('mobileDrawer');
     if (drawer) {
@@ -1147,10 +1164,8 @@ document.addEventListener('click', (e) => {
     const date = target.dataset.date;
     const time = target.dataset.time;
     const galleryKey = target.dataset.gallery;
-    const stepIndex = target.dataset.step;
 
     switch (action) {
-        // Doctor actions
         case 'view-doctor':
             openModal('doctorDetail', doctorId);
             break;
@@ -1163,7 +1178,6 @@ document.addEventListener('click', (e) => {
         case 'toggle-save-from-detail':
             toggleSaveDoctor(doctorId);
             if (appState.activeModal === 'doctorDetail') {
-                const doc = getDoctorById(doctorId);
                 const saveBtn = modalRoot.querySelector('[data-action="toggle-save-from-detail"]');
                 if (saveBtn) {
                     saveBtn.textContent = appState.savedDoctors.includes(doctorId) ? 'Saved ✓' : 'Save';
@@ -1178,7 +1192,6 @@ document.addEventListener('click', (e) => {
             removeSavedDoctor(doctorId);
             break;
 
-        // Service actions
         case 'view-service':
             openModal('serviceDetail', serviceId);
             break;
@@ -1187,7 +1200,6 @@ document.addEventListener('click', (e) => {
             document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' });
             break;
 
-        // Appointment actions
         case 'start-appointment':
         case 'book-appointment':
             openModal('appointment');
@@ -1233,7 +1245,6 @@ document.addEventListener('click', (e) => {
             cancelAppointment(appointmentId);
             break;
 
-        // Profile actions
         case 'edit-profile':
             openModal('profileEdit');
             break;
@@ -1241,12 +1252,10 @@ document.addEventListener('click', (e) => {
             saveProfile();
             break;
 
-        // Wellness actions
         case 'view-wellness':
             openModal('wellnessDetail', wellnessId);
             break;
 
-        // Package actions
         case 'view-package':
             openModal('packageDetail', packageId);
             break;
@@ -1255,20 +1264,16 @@ document.addEventListener('click', (e) => {
             showToast('Fitur booking paket akan segera hadir', 'info');
             break;
 
-        // Gallery actions
         case 'gallery':
-            // Perbaikan: gunakan galleryKey langsung
             if (galleryKey) {
                 openModal('galleryLightbox', galleryKey);
             }
             break;
 
-        // FAQ
         case 'toggle-faq':
             toggleFaq(faqIndex);
             break;
 
-        // Quick access
         case 'find-doctor':
             document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' });
             break;
@@ -1279,7 +1284,6 @@ document.addEventListener('click', (e) => {
             document.getElementById('myAppointments')?.scrollIntoView({ behavior: 'smooth' });
             break;
 
-        // Drawer
         case 'drawer-close':
             closeMobileDrawer();
             break;
@@ -1288,7 +1292,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Handle modal close via backdrop or close button
+// Handle modal close
 document.addEventListener('click', (e) => {
     const closeBtn = e.target.closest('[data-modal-close]');
     if (closeBtn) {
@@ -1307,7 +1311,6 @@ document.addEventListener('click', (e) => {
 
 // ============ EVENT LISTENERS ============
 function initializeStaticEvents() {
-    // Search input
     const searchInput = document.getElementById('doctorSearchInput');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -1317,7 +1320,6 @@ function initializeStaticEvents() {
         });
     }
 
-    // Filter selects
     const filterSpecialty = document.getElementById('filterSpecialty');
     const filterLocation = document.getElementById('filterLocation');
     const filterAvailability = document.getElementById('filterAvailability');
@@ -1356,13 +1358,11 @@ function initializeStaticEvents() {
         });
     }
 
-    // Contact form
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', handleContactSubmit);
     }
 
-    // Mobile drawer
     const menuToggle = document.getElementById('menuToggle');
     const drawerClose = document.getElementById('drawerClose');
     const drawerFindDoctor = document.getElementById('drawerFindDoctor');
@@ -1387,7 +1387,6 @@ function initializeStaticEvents() {
         link.addEventListener('click', closeMobileDrawer);
     });
 
-    // Mobile search button
     const mobileSearchBtn = document.getElementById('mobileSearchBtn');
     if (mobileSearchBtn) {
         mobileSearchBtn.addEventListener('click', () => {
@@ -1399,7 +1398,6 @@ function initializeStaticEvents() {
         });
     }
 
-    // Nav find doctor
     const navFindDoctor = document.getElementById('navFindDoctor');
     if (navFindDoctor) {
         navFindDoctor.addEventListener('click', (e) => {
@@ -1408,7 +1406,6 @@ function initializeStaticEvents() {
         });
     }
 
-    // Start appointment button
     const startAppointmentBtn = document.getElementById('startAppointment');
     if (startAppointmentBtn) {
         startAppointmentBtn.addEventListener('click', () => {
@@ -1416,7 +1413,6 @@ function initializeStaticEvents() {
         });
     }
 
-    // Bottom nav active state
     const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
     if (bottomNavItems.length) {
         bottomNavItems.forEach(item => {
