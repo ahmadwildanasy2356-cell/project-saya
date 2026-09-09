@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AERA HEALTH — Care, Designed Around You.</title>
+    <meta name="description" content="AERA HEALTH — Healthcare modern yang personal, sederhana, dan dekat dengan kebutuhanmu. Temukan dokter, buat janji, dan kelola kesehatanmu dalam satu platform.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317324D'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-size='28' fill='%232C8C89' text-anchor='middle' font-weight='bold'%3EA%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ==================== HEADER / NAVBAR ==================== -->
+    <header id="siteHeader" class="site-header" role="banner">
+        <nav class="navbar container" aria-label="Navigasi utama">
+            <a href="#" class="navbar-logo" aria-label="AERA HEALTH — Beranda">
+                <span class="logo-mark">A</span>
+                <span class="logo-text">AERA <span>HEALTH</span></span>
+            </a>
+
+            <div class="navbar-links" id="desktopNav" role="navigation" aria-label="Menu desktop">
+                <a href="#doctors" class="nav-link">Doctors</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#appointments" class="nav-link">Appointments</a>
+                <a href="#wellness" class="nav-link">Wellness</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#location" class="nav-link">Locations</a>
+                <a href="#" class="btn btn-primary btn-sm" id="navFindDoctor">Temukan Dokter</a>
+            </div>
+
+            <div class="navbar-mobile-actions" aria-hidden="false">
+                <button class="icon-btn" id="mobileSearchBtn" aria-label="Cari dokter" title="Cari">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+                <button class="icon-btn" id="menuToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileDrawer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="14" y2="17"/></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ==================== MOBILE DRAWER ==================== -->
+    <div id="mobileDrawer" class="drawer-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Menu mobile">
+        <div class="drawer-backdrop" id="drawerBackdrop"></div>
+        <div class="drawer-panel" role="document">
+            <div class="drawer-header">
+                <span class="drawer-title">AERA HEALTH</span>
+                <button class="icon-btn" id="drawerClose" aria-label="Tutup menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav class="drawer-nav" aria-label="Menu mobile">
+                <a href="#" class="drawer-link" data-drawer-close>Home</a>
+                <a href="#doctors" class="drawer-link" data-drawer-close>Doctors</a>
+                <a href="#services" class="drawer-link" data-drawer-close>Services</a>
+                <a href="#appointments" class="drawer-link" data-drawer-close>Appointments</a>
+                <a href="#wellness" class="drawer-link" data-drawer-close>Wellness</a>
+                <a href="#about" class="drawer-link" data-drawer-close>About</a>
+                <a href="#location" class="drawer-link" data-drawer-close>Locations</a>
+                <a href="#contact" class="drawer-link" data-drawer-close>Contact</a>
+            </nav>
+            <div class="drawer-footer">
+                <button class="btn btn-primary btn-full" id="drawerFindDoctor">Temukan Dokter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main id="mainContent" role="main">
+
+        <!-- ===== HERO ===== -->
+        <section class="hero" id="hero" aria-label="Hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <p class="hero-eyebrow">AERA HEALTH</p>
+                    <h1 class="hero-headline">CARE, DESIGNED<br>AROUND YOU.</h1>
+                    <p class="hero-description">Healthcare yang lebih personal, lebih sederhana, dan lebih dekat dengan kebutuhanmu.</p>
+                    <div class="hero-actions">
+                        <a href="#doctors" class="btn btn-primary btn-lg">Temukan Dokter</a>
+                        <a href="#services" class="btn btn-outline btn-lg">Lihat Layanan</a>
+                    </div>
+                    <div class="hero-trust">
+                        <div class="trust-item"><span class="trust-number">50+</span><span class="trust-label">Specialists</span></div>
+                        <div class="trust-divider"></div>
+                        <div class="trust-item"><span class="trust-number">15+</span><span class="trust-label">Services</span></div>
+                        <div class="trust-divider"></div>
+                        <div class="trust-item"><span class="trust-number">4.9/5</span><span class="trust-label">Patient Rating</span></div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="assets/images/hero.jpg" alt="Tim medis profesional AERA HEALTH dalam suasana hangat" class="hero-image" loading="eager" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hero-image-fallback" style="display:none;">
+                        <span>AERA HEALTH</span>
+                        <small>Care, Designed Around You</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== QUICK ACCESS ===== -->
+        <section class="quick-access" aria-label="Akses cepat" id="quickAccess">
+            <div class="container">
+                <div class="quick-grid">
+                    <button class="quick-item" data-action="find-doctor" aria-label="Temukan dokter">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                        <span>Find a Doctor</span>
+                    </button>
+                    <button class="quick-item" data-action="book-appointment" aria-label="Buat janji temu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span>Book Appointment</span>
+                    </button>
+                    <button class="quick-item" data-action="view-services" aria-label="Lihat layanan">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                        <span>Our Services</span>
+                    </button>
+                    <button class="quick-item" data-action="my-appointments" aria-label="Janji temu saya">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <span>My Appointments</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DOCTORS ===== -->
+        <section class="section doctors-section" id="doctors" aria-label="Temukan dokter">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">DOCTOR DISCOVERY</p>
+                    <h2 class="section-title">Find the right doctor<br>for you.</h2>
+                    <p class="section-subtitle">Cari, filter, dan pilih dokter yang sesuai dengan kebutuhan kesehatanmu.</p>
+                </div>
+
+                <div class="doctor-search-bar" role="search" aria-label="Pencarian dokter">
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input type="text" id="doctorSearchInput" class="search-input" placeholder="Cari dokter, spesialisasi, atau kondisi..." aria-label="Cari dokter, spesialisasi, atau kondisi">
+                    </div>
+                    <div class="filter-group">
+                        <select id="filterSpecialty" class="filter-select" aria-label="Filter berdasarkan spesialisasi">
+                            <option value="">Semua Spesialisasi</option>
+                            <option value="General Practitioner">General Practitioner</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Internal Medicine">Internal Medicine</option>
+                        </select>
+                        <select id="filterLocation" class="filter-select" aria-label="Filter berdasarkan lokasi">
+                            <option value="">Semua Lokasi</option>
+                            <option value="Jakarta Selatan">Jakarta Selatan</option>
+                            <option value="Jakarta Pusat">Jakarta Pusat</option>
+                            <option value="Tangerang">Tangerang</option>
+                        </select>
+                        <select id="filterAvailability" class="filter-select" aria-label="Filter berdasarkan ketersediaan">
+                            <option value="">Semua Ketersediaan</option>
+                            <option value="available">Tersedia Hari Ini</option>
+                            <option value="unavailable">Tidak Tersedia</option>
+                        </select>
+                        <button class="btn btn-outline btn-sm" id="clearFilters" aria-label="Bersihkan filter">Clear</button>
+                    </div>
+                </div>
+
+                <div id="doctorsGrid" class="doctors-grid" aria-live="polite">
+                    <!-- Rendered by JavaScript -->
+                </div>
+                <p id="noDoctorsMessage" class="no-results" hidden>No doctors found.</p>
+            </div>
+        </section>
+
+        <!-- ===== SERVICES ===== -->
+        <section class="section services-section" id="services" aria-label="Layanan kami">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">OUR SERVICES</p>
+                    <h2 class="section-title">Care for every stage<br>of life.</h2>
+                    <p class="section-subtitle">Layanan medis lengkap dengan pendekatan yang humanis dan modern.</p>
+                </div>
+                <div id="servicesList" class="services-list">
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== APPOINTMENT CTA ===== -->
+        <section class="section appointment-cta-section" id="appointments" aria-label="Buat janji temu">
+            <div class="container">
+                <div class="appointment-cta">
+                    <div class="cta-content">
+                        <p class="section-eyebrow">APPOINTMENT</p>
+                        <h2 class="section-title">Buat janji temu<br>dengan mudah.</h2>
+                        <p class="section-subtitle">Pilih dokter, tanggal, dan waktu yang sesuai. Tanpa antre, tanpa ribet.</p>
+                        <button class="btn btn-primary btn-lg" id="startAppointment">Buat Janji Sekarang</button>
+                    </div>
+                    <div class="cta-visual" aria-hidden="true">
+                        <div class="cta-circle">+</div>
+                        <p>Easy<br>Booking</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MY APPOINTMENTS ===== -->
+        <section class="section my-appointments-section" id="myAppointments" aria-label="Janji temu saya">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">MY APPOINTMENTS</p>
+                    <h2 class="section-title">Jadwal Saya</h2>
+                </div>
+                <div id="myAppointmentsList" class="my-appointments-list">
+                    <!-- Rendered by JavaScript -->
+                </div>
+                <p id="noAppointmentsMessage" class="no-results" hidden>Belum ada janji temu. <a href="#doctors" class="link-primary">Temukan dokter</a> sekarang.</p>
+            </div>
+        </section>
+
+        <!-- ===== SAVED DOCTORS ===== -->
+        <section class="section saved-doctors-section" id="savedDoctors" aria-label="Dokter tersimpan">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">SAVED</p>
+                    <h2 class="section-title">Dokter Tersimpan</h2>
+                </div>
+                <div id="savedDoctorsList" class="saved-doctors-list">
+                    <!-- Rendered by JavaScript -->
+                </div>
+                <p id="noSavedDoctorsMessage" class="no-results" hidden>Belum ada dokter tersimpan. Jelajahi <a href="#doctors" class="link-primary">daftar dokter</a> dan simpan favoritmu.</p>
+            </div>
+        </section>
+
+        <!-- ===== WELLNESS ===== -->
+        <section class="section wellness-section" id="wellness" aria-label="Wellness">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">WELLNESS</p>
+                    <h2 class="section-title">Small steps.<br>Better health.</h2>
+                </div>
+                <div id="wellnessList" class="wellness-list">
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== HEALTH PACKAGES ===== -->
+        <section class="section packages-section" id="packages" aria-label="Paket kesehatan">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">HEALTH PACKAGES</p>
+                    <h2 class="section-title">Paket Kesehatan</h2>
+                </div>
+                <div id="packagesList" class="packages-grid">
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT ===== -->
+        <section class="section about-section" id="about" aria-label="Tentang AERA">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p class="section-eyebrow">ABOUT AERA</p>
+                        <h2 class="section-title">Healthcare that<br>feels human.</h2>
+                        <p class="section-subtitle">AERA HEALTH hadir dengan keyakinan bahwa layanan kesehatan harus berpusat pada pasien — bukan sekadar prosedur.</p>
+                        <p class="about-text">Kami menggabungkan teknologi modern dengan sentuhan manusiawi. Dari dokter berpengalaman, lingkungan yang nyaman, hingga sistem appointment yang mudah — semua dirancang agar kamu merasa didengar, dipahami, dan dirawat dengan baik.</p>
+                    </div>
+                    <div class="about-stats" id="statsContainer">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FACILITY ===== -->
+        <section class="section facility-section" id="facility" aria-label="Fasilitas">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">FACILITY</p>
+                    <h2 class="section-title">A calmer place<br>to heal.</h2>
+                </div>
+                <div class="facility-gallery">
+                    <button class="facility-item facility-main" data-action="gallery" data-gallery="facility" aria-label="Lihat foto fasilitas">
+                        <img src="assets/images/facility.jpg" alt="Fasilitas AERA HEALTH" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="facility-fallback" style="display:none;">Facility</div>
+                    </button>
+                    <button class="facility-item facility-secondary" data-action="gallery" data-gallery="clinic" aria-label="Lihat foto klinik">
+                        <img src="assets/images/clinic.jpg" alt="Klinik AERA HEALTH" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="facility-fallback" style="display:none;">Clinic</div>
+                    </button>
+                    <button class="facility-item facility-tertiary" data-action="gallery" data-gallery="wellness" aria-label="Lihat foto area wellness">
+                        <img src="assets/images/wellness.jpg" alt="Area wellness AERA HEALTH" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="facility-fallback" style="display:none;">Wellness</div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TESTIMONIALS ===== -->
+        <section class="section testimonials-section" id="testimonials" aria-label="Testimoni pasien">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">TESTIMONIALS</p>
+                    <h2 class="section-title">Apa kata mereka?</h2>
+                </div>
+                <div id="testimonialsContainer" class="testimonials-container">
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section class="section faq-section" id="faq" aria-label="Pertanyaan umum">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">FAQ</p>
+                    <h2 class="section-title">Pertanyaan Umum</h2>
+                </div>
+                <div id="faqList" class="faq-list">
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LOCATION ===== -->
+        <section class="section location-section" id="location" aria-label="Lokasi">
+            <div class="container">
+                <div class="location-grid">
+                    <div class="location-info">
+                        <p class="section-eyebrow">LOCATION</p>
+                        <h2 class="section-title">AERA Central</h2>
+                        <p class="location-address">Jl. Example No. 24<br>Jakarta Selatan</p>
+                        <div class="location-hours">
+                            <div><strong>Senin – Jumat</strong><span>08:00 – 20:00</span></div>
+                            <div><strong>Sabtu – Minggu</strong><span>09:00 – 17:00</span></div>
+                        </div>
+                        <a href="https://maps.google.com/?q=Jakarta+Selatan" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open Google Maps</a>
+                    </div>
+                    <div class="location-map-placeholder" aria-hidden="true">
+                        <span>AERA HEALTH</span>
+                        <small>Jakarta Selatan</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section class="section contact-section" id="contact" aria-label="Kontak">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p class="section-eyebrow">CONTACT</p>
+                        <h2 class="section-title">Hubungi Kami</h2>
+                        <div class="contact-details">
+                            <a href="tel:+62215550123" class="contact-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+                                +62 21 555 0123
+                            </a>
+                            <a href="https://wa.me/6281200000000" target="_blank" rel="noopener noreferrer" class="contact-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                                +62 812 0000 0000
+                            </a>
+                            <a href="mailto:hello@aera-health.example" class="contact-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                hello@aera-health.example
+                            </a>
+                        </div>
+                    </div>
+                    <form id="contactForm" class="contact-form" novalidate aria-label="Formulir kontak">
+                        <div class="form-group">
+                            <label for="contactName">Nama</label>
+                            <input type="text" id="contactName" name="contactName" required aria-required="true" autocomplete="name">
+                            <span class="error-message" id="contactNameError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required aria-required="true" autocomplete="email">
+                            <span class="error-message" id="contactEmailError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Pesan</label>
+                            <textarea id="contactMessage" name="contactMessage" rows="4" required aria-required="true"></textarea>
+                            <span class="error-message" id="contactMessageError"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PROFILE ===== -->
+        <section class="section profile-section" id="profile" aria-label="Profil pasien">
+            <div class="container">
+                <div class="section-header">
+                    <p class="section-eyebrow">PROFILE</p>
+                    <h2 class="section-title">Profil Saya</h2>
+                </div>
+                <div id="profileContainer" class="profile-container">
+                    <!-- Rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <span class="footer-logo">AERA <span>HEALTH</span></span>
+                <p>Care, designed around you.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#doctors">Doctors</a>
+                <a href="#services">Services</a>
+                <a href="#appointments">Appointments</a>
+                <a href="#wellness">Wellness</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2026 AERA HEALTH. Demo frontend.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MOBILE BOTTOM NAV ==================== -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="Navigasi bawah mobile" role="navigation">
+        <a href="#" class="bottom-nav-item active" aria-label="Beranda" data-nav="home">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9.5 12 2l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+            <span>Home</span>
+        </a>
+        <a href="#doctors" class="bottom-nav-item" aria-label="Dokter" data-nav="doctors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Doctors</span>
+        </a>
+        <a href="#appointments" class="bottom-nav-item" aria-label="Janji temu" data-nav="appointments">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Appointments</span>
+        </a>
+        <a href="#services" class="bottom-nav-item" aria-label="Layanan" data-nav="services">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <span>Services</span>
+        </a>
+        <a href="#profile" class="bottom-nav-item" aria-label="Profil" data-nav="profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- ==================== MODAL CONTAINER ==================== -->
+    <div id="modalRoot" aria-live="polite"></div>
+
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script src="js/script.js"></script>
+</body>
+</html>
