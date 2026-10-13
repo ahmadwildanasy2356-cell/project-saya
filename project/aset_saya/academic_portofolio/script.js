@@ -970,7 +970,7 @@
         {
             name: 'Hamzah — C1',
             issuer: 'Arabic Language Certification',
-            imageSrc: 'assets/certificates/certificate-hamzah.png',
+            imageSrc: 'assets/certificates/certificate-hamzah.jpg',
         },
         {
             name: 'Diploma Syariah — Markaz Ulum',
