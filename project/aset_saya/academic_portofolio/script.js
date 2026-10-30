@@ -1032,6 +1032,21 @@
             issuer: 'Daurah',
             imageSrc: 'assets/certificates/certificate-daurah-syarh-fadhl-islam.png'
         },
+        {
+            name: 'Daurah Tahdzir Bidah',
+            issuer: 'Daurah',
+            imageSrc: 'assets/certificates/certificate-daurah-tahdzir-bidah.png'
+        },
+        {
+            name: 'Daurah Persiapan Ramadhan',
+            issuer: 'Daurah',
+            imageSrc: 'assets/certificates/certificate-daurah-persiapan-ramadhan.png'
+        },
+        {
+            name: 'Daurah Aqidah Wasathiyah',
+            issuer: 'Daurah',
+            imageSrc: 'assets/certificates/certificate-daurah-aqidah-wasatiyah.png'
+        },
     ];
 
     /* ===== INITIALIZATION ===== */
