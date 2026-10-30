@@ -970,7 +970,7 @@
         {
             name: 'Hamzah — C1',
             issuer: 'Arabic Language Certification',
-            imageSrc: 'assets/certificates/certificate-hamzah.jpg',
+            imageSrc: 'assets/certificates/certificate-hamzah.png',
         },
         {
             name: 'Diploma Syariah — Markaz Ulum',
@@ -1016,6 +1016,21 @@
             name: 'Sertifikat Public Speaking',
             issuer: 'Webinar',
             imageSrc: 'assets/certificates/certificate-public-speaking.png'
+        },
+        {
+            name: 'Daurah Aqidah Wasathiyah',
+            issuer: 'Daurah',
+            imageSrc: 'assets/certificates/certificate-daurah-aqidah-wasatiyah.png'
+        },
+        {
+            name: 'Daurah Cara Sholat Nabi',
+            issuer: 'Daurah',
+            imageSrc: 'assets/certificates/certificate-daurah-sholat-nabi.png'
+        },
+        {
+            name: 'Daurah Kitab فضل الإسلام ',
+            issuer: 'Daurah',
+            imageSrc: 'assets/certificates/certificate-daurah-syarh-fadhl-islam.png'
         },
     ];
 
