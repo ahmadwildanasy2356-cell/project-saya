@@ -1043,9 +1043,9 @@
             imageSrc: 'assets/certificates/certificate-daurah-persiapan-ramadhan.png'
         },
         {
-            name: 'Daurah Aqidah Wasathiyah',
+            name: 'Daurah Haji dan Umrah',
             issuer: 'Daurah',
-            imageSrc: 'assets/certificates/certificate-daurah-aqidah-wasatiyah.png'
+            imageSrc: 'assets/certificates/certificate-daurah-haji-dan-umrah.png'
         },
     ];
 
