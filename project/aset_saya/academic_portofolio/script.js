@@ -1047,6 +1047,11 @@
             issuer: 'Daurah',
             imageSrc: 'assets/certificates/certificate-daurah-haji-dan-umrah.png'
         },
+        {
+            name: 'Akademi Tajwid II - ASAS',
+            issuer: 'ASAS',
+            imageSrc: 'assets/certificates/certificate-akademi-tajwid-II.png'
+        },
     ];
 
     /* ===== INITIALIZATION ===== */
