@@ -1052,6 +1052,21 @@
             issuer: 'ASAS',
             imageSrc: 'assets/certificates/certificate-akademi-tajwid-II.png'
         },
+        {
+            name: 'Akademi Tajwid II - ASAS',
+            issuer: 'ASAS',
+            imageSrc: 'assets/certificates/certificate-akademi-tajwid-II.png'
+        },
+        {
+            name: 'Akademi Tajwid II - ASAS',
+            issuer: 'ASAS',
+            imageSrc: 'assets/certificates/certificate-akademi-tajwid-II.png'
+        },
+        {
+            name: 'Akademi Tajwid II - ASAS',
+            issuer: 'ASAS',
+            imageSrc: 'assets/certificates/certificate-akademi-tajwid-II.png'
+        },
     ];
 
     /* ===== INITIALIZATION ===== */
